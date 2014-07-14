@@ -24,9 +24,9 @@ namespace qiquanui
     public partial class MainWindow : Window
     {
 
-        private double oldx, oldy, originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper;
+        private double oldx, oldy, originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper;
 
-        private Storyboard futureMarketListViewStoryboard, futureMarketListViewStoryboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard;
+        private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard;
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             oldx = e.GetPosition(this).X;
@@ -35,13 +35,16 @@ namespace qiquanui
 
         private void Top1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-                double x = e.GetPosition(this).X;
-                double y = e.GetPosition(this).Y;
-                this.Left += (x - oldx);
-                this.Top += (y - oldy);
-            }
+
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+
+                    double x = e.GetPosition(this).X;
+                    double y = e.GetPosition(this).Y;
+                    this.Left += (x - oldx);
+                    this.Top += (y - oldy);
+                }
+           
         }
         private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -87,8 +90,11 @@ namespace qiquanui
             userManageListVieww = userManageListView.Width;
             statusBar1w = statusBar1.Width;
 
-            futureMarketListViewStoryboard = (Storyboard)this.FindResource("futureMarketAnimate");
-            futureMarketListViewStoryboard_Leave = (Storyboard)this.FindResource("futureMarketAnimate_Leave");
+            Grid1w = Grid1.Width;
+            Grid1h = Grid1.Height;
+
+            grid1Storyboard = (Storyboard)this.FindResource("grid1Animate");
+            grid1Storyboard_Leave = (Storyboard)this.FindResource("grid1Animate_Leave");
             canvas1Storyboard = (Storyboard)this.FindResource("canvas1Animate");
             canvas1Storyboard_Leave = (Storyboard)this.FindResource("canvas1Animate_Leave");
   
@@ -134,16 +140,16 @@ namespace qiquanui
         }
         private bool ResizeControl()
         {
-            list1wper =  (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w ));
+            Grid1wper=list1wper =  (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w ));
             userManageListViewwper=historyListViewwper = optionsHoldDetailListViewwper = optionsTradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
             list1hper = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
-            grid3hper  = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
+            Grid1hper=grid3hper  = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
             statusBar1wper = this.Width / originalWidth;
             canvas2hper=canvas1hper = (this.Height-(originalHeight-canvas1h)) / (originalHeight-(originalHeight-canvas1h));
             Border1.Height = this.Height - 14.0;
             Border1.Width = this.Width - 14.0;
-            futuresMarketListView.Width = list1w * list1wper;
-            futuresMarketListView.Height = list1h * list1hper;
+            Grid1.Width=futuresMarketListView.Width = list1w * list1wper;
+            Grid1.Height=futuresMarketListView.Height = list1h * list1hper;
             historyListView.Width = historyListVieww * historyListViewwper;
             userManageListView.Width = userManageListVieww * userManageListViewwper;
         
@@ -211,19 +217,17 @@ namespace qiquanui
             Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
             canvas2Storyboard_Leave.Begin(this);
         }
-         private void futuresMarketListView_MouseEnter(object sender, MouseEventArgs e)
-         {
+       
+        private void Grid1_MouseEnter(object sender, MouseEventArgs e)
+        {
+            grid1Storyboard.Begin(this);
+        }
 
-             futureMarketListViewStoryboard.Begin(this);
-         }
-
-         private void futuresMarketListView_MouseLeave(object sender, MouseEventArgs e)
-         {
-             futureMarketListViewStoryboard_Leave.Begin(this);
-         }
-
-
-
+        private void Grid1_MouseLeave(object sender, MouseEventArgs e)
+        {
+            grid1Storyboard_Leave.Begin(this);
+        }
+       
          private void Grid3_MouseEnter(object sender, MouseEventArgs e)
          {
              grid3Storyboard.Begin(this);
@@ -238,7 +242,34 @@ namespace qiquanui
          {
 
          }
+         private bool closeStoryBoardCompleted = false;
+         private DoubleAnimation closeAnimation1;
+         private void closeWindow_Completed(object sender, EventArgs e)
+         {
+             closeStoryBoardCompleted = true;
+             this.Close();
+         }
+         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+         {
+             if (!closeStoryBoardCompleted)
+             {
+                 closeAnimation1 = new DoubleAnimation();
+                 closeAnimation1.From = 1;    //初始值   1为  整个窗体     0.1表示窗体的十分之一
+                 closeAnimation1.To = 0;    //结束值    0为完全关闭
+                 closeAnimation1.Duration = new Duration(TimeSpan.Parse("0:0:0.3"));    //所用时间的间隔
+                 closeAnimation1.Completed += new EventHandler(closeWindow_Completed);
+                 ScaleTransform st = new ScaleTransform();
 
+                 st.CenterY = this.Height / 2;    //以纵向的方式缩小
+                 this.RenderTransform = st;
+                 st.BeginAnimation(ScaleTransform.ScaleYProperty, closeAnimation1);
+                 e.Cancel = true;
+             }
+         }
+
+         
+
+         
          
 
     }

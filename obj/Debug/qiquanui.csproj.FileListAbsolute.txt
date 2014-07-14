@@ -40,11 +40,8 @@ D:\program\花旗杯\derivativeTrading\qiquanui\qiquanui\obj\Debug\qiquanui.cspr
 D:\program\花旗杯\derivativeTrading\qiquanui\qiquanui\bin\Debug\qiquanui.exe
 D:\program\花旗杯\derivativeTrading\qiquanui\qiquanui\bin\Debug\qiquanui.pdb
 H:\GitHub\DerivativeTradingInterface\bin\Debug\qiquanui.exe.config
-H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.exe
-H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.pdb
 H:\GitHub\DerivativeTradingInterface\bin\Debug\qiquanui.exe
 H:\GitHub\DerivativeTradingInterface\bin\Debug\qiquanui.pdb
-H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.csprojResolveAssemblyReference.cache
 H:\GitHub\DerivativeTradingInterface\obj\Debug\MainWindow.baml
 H:\GitHub\DerivativeTradingInterface\obj\Debug\MainWindow.g.cs
 H:\GitHub\DerivativeTradingInterface\obj\Debug\App.g.cs
@@ -52,3 +49,6 @@ H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui_MarkupCompile.cache
 H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.g.resources
 H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.Properties.Resources.resources
 H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.csproj.GenerateResource.Cache
+H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.exe
+H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.pdb
+H:\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.csprojResolveAssemblyReference.cache
