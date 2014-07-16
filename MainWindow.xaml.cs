@@ -267,10 +267,21 @@ namespace qiquanui
              }
          }
 
-         
+         private void futuresComboBoxItem_Selected(object sender, RoutedEventArgs e)
+         {
+             optionsMarketListView.Visibility = Visibility.Hidden;
+             optionsTraderComboBox.Visibility = Visibility.Hidden;
+             futuresMarketListView.Visibility = Visibility.Visible;
+             futuresTraderComboBox.Visibility = Visibility.Visible;
+         }
 
+         private void optionsComboBoxItem_Selected(object sender, RoutedEventArgs e)
+         {
+             futuresMarketListView.Visibility = Visibility.Hidden;
+             futuresTraderComboBox.Visibility = Visibility.Hidden;
+             optionsMarketListView.Visibility = Visibility.Visible;
+             optionsTraderComboBox.Visibility = Visibility.Visible;
+         }
          
-         
-
     }
 }

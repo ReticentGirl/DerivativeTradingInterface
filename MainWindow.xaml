@@ -1100,10 +1100,38 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseMove="Top1_MouseMove" MouseDoubleClick="Top1_MouseDoubleClick"/>
+
+        <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}"/>
+        <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}"/>
+        <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}"/>
+
+        <Label x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Left" Margin="352,6,0,0" VerticalAlignment="Top" Foreground="#FFFFFEFE"/>
+        <ComboBox x:Name="typeComboBox" HorizontalAlignment="Left" Margin="427,8,0,0" VerticalAlignment="Top" Width="65">            
+            <ComboBoxItem Name="futuresComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresComboBoxItem_Selected"/>
+            <ComboBoxItem Name="optionsComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsComboBoxItem_Selected" />
+        </ComboBox>
+
+        <Label x:Name="traderLabel" Content="交易商" HorizontalAlignment="Left" Margin="515,6,0,0" VerticalAlignment="Top" Foreground="#FFFFFEFE" RenderTransformOrigin="0.522,0.52"/>
+        <ComboBox Name="futuresTraderComboBox" HorizontalAlignment="Left" Margin="566,9,0,0" VerticalAlignment="Top" Width="80" SelectedIndex="0" >
+            <ComboBoxItem Name="futuresTraderComboBoxItem2" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
+            <ComboBoxItem Name="futuresTraderComboBoxItem1" Content=" 大商所" HorizontalAlignment="Left" Width="80"/>
+            <ComboBoxItem Name="futuresTraderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
+            <ComboBoxItem Name="futuresTraderComboBoxItem4" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
+        </ComboBox>
+        <ComboBox Name="optionsTraderComboBox" HorizontalAlignment="Left" Margin="566,8,0,0" VerticalAlignment="Top" Width="80" SelectedIndex="0" >            
+            <ComboBoxItem Name="optionsTraderComboBoxItem2" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
+            <ComboBoxItem Name="optionsTraderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
+        </ComboBox>
+
         <Grid x:Name="Grid1" HorizontalAlignment="Left" Height="287" Margin="29,38,0,0" VerticalAlignment="Top" Width="1127" ClipToBounds="True" Background="#FF292932" MouseEnter="Grid1_MouseEnter" MouseLeave="Grid1_MouseLeave">
-            <ListView x:Name="futuresMarketListView" Height="287" Width="1127" Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="51*"/>
+                <ColumnDefinition Width="110*"/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="futuresMarketListView" Height="287" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="2">
                 <ListView.View>
-                    <GridView AllowsColumnReorder="False" >
+                    <GridView AllowsColumnReorder="True">
                         <!-- 不允许列重新排序-->
                         <GridViewColumn Header=" 名称" Width=" 100" />
                         <GridViewColumn Header=" 最新价格" Width=" 100"/>
@@ -1112,20 +1140,23 @@
                         <GridViewColumn Header=" 买价" Width=" 100"/>
                         <GridViewColumn Header=" 涨跌" Width=" 100"/>
                         <GridViewColumn Header=" 涨跌幅度" Width=" 100"/>
+                        <GridViewColumn Header=" 最高价" Width=" 100"/>
+                        <GridViewColumn Header=" 最低价" Width=" 100"/>
                         <GridViewColumn Header=" 买/卖量" Width=" 100"/>
+                        <GridViewColumn Header=" 上次结算价" Width=" 100"/>
+                        <GridViewColumn Header=" 昨日收盘价" Width=" 100"/>
+                        <GridViewColumn Header=" 今日开盘价" Width=" 100"/>
+                        <GridViewColumn Header=" 昨日持仓量" Width=" 100"/>
+                        <GridViewColumn Header=" 涨停板价" Width=" 100"/>
+                        <GridViewColumn Header=" 跌停板价" Width=" 100"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </Grid>
 
-
-        <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1186" Background="#FF007ACC" Margin="0,0,0,1"/>
-
-        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseMove="Top1_MouseMove" MouseDoubleClick="Top1_MouseDoubleClick"/>
-
         <ListView x:Name="optionsMarketListView" Height="287" VerticalAlignment="Top" HorizontalAlignment="Left" Width="808" Margin="37,38,0,0" Visibility="Hidden" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
             <ListView.View>
-                <GridView>
+                <GridView AllowsColumnReorder="True">
                     <GridViewColumn Header=" 买价" Width=" 80" />
                     <GridViewColumn Header=" 卖价" Width=" 80"/>
                     <GridViewColumn Header=" 最新价" Width=" 80"/>
@@ -1161,8 +1192,8 @@
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
                                                 <ComboBox x:Name="typeOfOptionsComboBox">
-                                                    <System:String>看涨期权</System:String>
-                                                    <System:String>看跌期权</System:String>
+                                                    <ComboBoxItem Content="看涨" HorizontalAlignment="Left" Width="80"/>
+                                                    <ComboBoxItem Content="看跌" HorizontalAlignment="Left" Width="80"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -1172,10 +1203,10 @@
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
                                                 <ComboBox x:Name="typeOfTradingComboBox">
-                                                    <System:String>买</System:String>
-                                                    <System:String>卖</System:String>
-                                                    <System:String>开</System:String>
-                                                    <System:String>平</System:String>
+                                                    <ComboBoxItem Content="买" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="卖" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="开" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="平" HorizontalAlignment="Left" Width="60"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -1331,9 +1362,7 @@
                 </TabItem>
             </TabControl>
         </Grid>
-        <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}"/>
-        <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}"/>
-        <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}"/>
+
         <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519" MouseEnter="Canvas1_MouseEnter" MouseLeave="Canvas1_MouseLeave" ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft">
             <Image HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Width="53" Source="Resources\kanzhang.png" Canvas.Top="37" Canvas.Left="32" ToolTip="看涨策略" FlowDirection="RightToLeft" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True"/>
             <Image HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Width="53" Source="Resources\kandie.png" Canvas.Left="32" Canvas.Top="93" ToolTip="看跌策略" FlowDirection="RightToLeft" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True"/>
@@ -1352,7 +1381,10 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
+        
 
+        <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1186" Background="#FF007ACC" Margin="0,0,0,1"/>
+        
 
     </Grid>
 </Window>
