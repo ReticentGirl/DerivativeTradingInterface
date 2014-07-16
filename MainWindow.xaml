@@ -1379,7 +1379,7 @@
                     </ListView.View>
                 </ListView>
                 <Label x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF9198AC" Background="{x:Null}" Canvas.Left="224" Canvas.Bottom="1"/>
-                <ComboBox x:Name="typeComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="65" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" Canvas.Left="159" Canvas.Bottom="1" FlowDirection="LeftToRight" Canvas.Top="263">
+                <ComboBox x:Name="typeComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="65" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" Canvas.Left="159" Canvas.Bottom="1" FlowDirection="LeftToRight">
                     <ComboBoxItem x:Name="futuresComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresComboBoxItem_Selected"/>
                     <ComboBoxItem x:Name="optionsComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsComboBoxItem_Selected" />
                 </ComboBox>
@@ -1388,7 +1388,7 @@
                     <ComboBoxItem x:Name="optionsTraderComboBoxItem2" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="optionsTraderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
                 </ComboBox>
-                <ComboBox x:Name="futuresTraderComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" Canvas.Left="27" Canvas.Bottom="1" FlowDirection="LeftToRight" RenderTransformOrigin="0.5,0.522" Canvas.Top="263">
+                <ComboBox x:Name="futuresTraderComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" Canvas.Left="27" Canvas.Bottom="1" FlowDirection="LeftToRight" RenderTransformOrigin="0.5,0.522">
                     <ComboBoxItem x:Name="futuresTraderComboBoxItem2" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="futuresTraderComboBoxItem1" Content=" 大商所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="futuresTraderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
