@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Media.Animation;  
+using System.Windows.Media.Animation;
 
 namespace qiquanui
 {
@@ -67,10 +67,15 @@ namespace qiquanui
             }
         }
 
-
+        static MktData mkt = null;
         public MainWindow()
         {
+
+            mkt = new MktData();
+            mkt.Run();
+
             InitializeComponent();
+
             this.Left = 50;
             this.Top = 20;
             originalHeight = this.Height;
@@ -120,6 +125,7 @@ namespace qiquanui
 
         private void MaxButton_Click_1(object sender, RoutedEventArgs e)
         {
+            
             if (this.WindowState == WindowState.Normal)
             {
                 this.WindowState = WindowState.Maximized;

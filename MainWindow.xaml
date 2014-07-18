@@ -1398,10 +1398,11 @@
         </Grid>
         <Grid x:Name="Grid3" HorizontalAlignment="Left" Height="308" Margin="29,0,0,21" VerticalAlignment="Bottom" Width="915" Background="#FF0D0D11" MouseEnter="Grid3_MouseEnter" MouseLeave="Grid3_MouseLeave">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="162*"/>
+                <ColumnDefinition Width="143*"/>
             </Grid.ColumnDefinitions>
 
-            <TabControl x:Name="multipleTabControl" HorizontalAlignment="Left" Height="346" VerticalAlignment="Top" Width="915" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,-35,0,-3">
+            <TabControl x:Name="multipleTabControl" HorizontalAlignment="Left" Height="346" VerticalAlignment="Top" Width="915" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,-72,0,0" Grid.ColumnSpan="2">
                 <TabItem Header="交易区" Foreground="White"  Style="{StaticResource TabItemStyle}" Margin="-2,6,2,-10">
 
                     <Grid Margin="-4,0,-3,0">
@@ -1409,7 +1410,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="131,662,-131,-655" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="合约名称 " Width="100"/>
