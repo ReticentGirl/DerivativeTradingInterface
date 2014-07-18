@@ -1319,16 +1319,18 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="32*"/>
+            <ColumnDefinition Width="229*"/>
+            <ColumnDefinition Width="925*"/>
         </Grid.ColumnDefinitions>
 
-        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseMove="Top1_MouseMove" MouseDoubleClick="Top1_MouseDoubleClick"/>
+        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseMove="Top1_MouseMove" MouseDoubleClick="Top1_MouseDoubleClick" Grid.ColumnSpan="3"/>
 
-        <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}"/>
-        <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}"/>
-        <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}"/>
+        <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}" Grid.Column="2"/>
+        <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}" Grid.Column="2"/>
+        <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}" Grid.Column="2"/>
 
-        <Grid x:Name="Grid1" HorizontalAlignment="Right" Height="287" Margin="0,0,30,361" VerticalAlignment="Bottom" Width="1127" ClipToBounds="True" Background="#FF292932" MouseEnter="Grid1_MouseEnter" MouseLeave="Grid1_MouseLeave" FlowDirection="RightToLeft">
+        <Grid x:Name="Grid1" HorizontalAlignment="Right" Height="287" Margin="0,0,30,361" VerticalAlignment="Bottom" Width="1127" ClipToBounds="True" Background="#FF292932" MouseEnter="Grid1_MouseEnter" MouseLeave="Grid1_MouseLeave" FlowDirection="RightToLeft" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -1342,61 +1344,67 @@
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <!-- 不允许列重新排序-->
-                            <GridViewColumn Header=" 名称" Width=" 100" />
-                            <GridViewColumn Header=" 最新价格" Width=" 100"/>
-                            <GridViewColumn Header=" 成交量" Width=" 100"/>
-                            <GridViewColumn Header=" 卖价" Width=" 100"/>
-                            <GridViewColumn Header=" 买价" Width=" 100"/>
-                            <GridViewColumn Header=" 涨跌" Width=" 100"/>
-                            <GridViewColumn Header=" 涨跌幅度" Width=" 100"/>
-                            <GridViewColumn Header=" 最高价" Width=" 100"/>
-                            <GridViewColumn Header=" 最低价" Width=" 100"/>
-                            <GridViewColumn Header=" 买/卖量" Width=" 100"/>
-                            <GridViewColumn Header=" 上次结算价" Width=" 100"/>
-                            <GridViewColumn Header=" 昨日收盘价" Width=" 100"/>
-                            <GridViewColumn Header=" 今日开盘价" Width=" 100"/>
-                            <GridViewColumn Header=" 昨日持仓量" Width=" 100"/>
-                            <GridViewColumn Header=" 涨停板价" Width=" 100"/>
-                            <GridViewColumn Header=" 跌停板价" Width=" 100"/>
+                            <GridViewColumn x:Name="nameOfFMGVCH" Header=" 名称" Width=" 100" />
+                            <GridViewColumn x:Name="newPriceOfFMGVCH" Header=" 最新价格" Width=" 100"/>
+                            <GridViewColumn x:Name="tradeVolumnOfFMGVCH" Header=" 成交量" Width=" 100"/>
+                            <GridViewColumn x:Name="sellPriceOfFMGVCH" Header=" 卖价" Width=" 100"/>
+                            <GridViewColumn x:Name="buyPriceOfFMGVCH" Header=" 买价" Width=" 100"/>
+                            <GridViewColumn x:Name="upAndDownOfFMGVCH" Header=" 涨跌" Width=" 100"/>
+                            <GridViewColumn x:Name="amountOfUpAndDownOfFMGVCH" Header=" 涨跌幅度" Width=" 100"/>
+                            <GridViewColumn x:Name="highestPriceOfFMGVCH" Header=" 最高价" Width=" 100"/>
+                            <GridViewColumn x:Name="lowestPriceOfFMGVCH" Header=" 最低价" Width=" 100"/>
+                            <GridViewColumn x:Name="amountOfTradeOfFMGVCH" Header=" 买/卖量" Width=" 100"/>
+                            <GridViewColumn x:Name="settlePriceOfFMGVCH" Header=" 上次结算价" Width=" 100"/>
+                            <GridViewColumn x:Name="closePriceOfFMGVCH" Header=" 昨日收盘价" Width=" 100"/>
+                            <GridViewColumn x:Name="openPriceOfFMGVCH" Header=" 今日开盘价" Width=" 100"/>
+                            <GridViewColumn x:Name="positionOfFMGVCH" Header=" 昨日持仓量" Width=" 100"/>
+                            <GridViewColumn x:Name="raiseLimitPriceOfFMGVCH" Header=" 涨停板价" Width=" 100"/>
+                            <GridViewColumn x:Name="downLimitPriceOfFMGVCH" Header=" 跌停板价" Width=" 100"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
                 <ListView x:Name="optionsMarketListView" Height="262" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Visibility="Hidden" FlowDirection="LeftToRight">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn Header=" 买价" Width=" 80" />
-                            <GridViewColumn Header=" 卖价" Width=" 80"/>
-                            <GridViewColumn Header=" 最新价" Width=" 80"/>
-                            <GridViewColumn Header=" 现量" Width=" 80"/>
-                            <GridViewColumn Header=" 成交量" Width=" 80"/>
-                            <GridViewColumn Header=" 行权价" Width=" 80"/>
-                            <GridViewColumn Header=" 成交量" Width=" 80"/>
-                            <GridViewColumn Header=" 现量" Width=" 80"/>
-                            <GridViewColumn Header=" 最新价" Width=" 80"/>
-                            <GridViewColumn Header=" 卖价" Width=" 80"/>
-                            <GridViewColumn Header=" 买价" Width=" 80"/>
+                            <GridViewColumn x:Name="buyPriceOfROMGVCH" Header=" 买价" Width=" 80" />
+                            <GridViewColumn x:Name="sellPriceOfROMGVCH" Header=" 卖价" Width=" 80"/>
+                            <GridViewColumn x:Name="newPriceOfROMGVCH" Header=" 最新价" Width=" 80"/>
+                            <GridViewColumn x:Name="amountOfROMGVCH" Header=" 现量" Width=" 80"/>
+                            <GridViewColumn x:Name="tradeVolumnOfROMGVCH" Header=" 成交量" Width=" 80"/>
+                            <GridViewColumn x:Name="exercisePriceOfOMGVCH" Header=" 行权价" Width=" 80"/>
+                            <GridViewColumn x:Name="tradeVolumnOfDOMGVCH" Header=" 成交量" Width=" 80"/>
+                            <GridViewColumn x:Name="amountOfDOMGVCH" Header=" 现量" Width=" 80"/>
+                            <GridViewColumn x:Name="newPriceOfRDOMGVCH" Header=" 最新价" Width=" 80"/>
+                            <GridViewColumn x:Name="sellPriceOfDOMGVCH" Header=" 卖价" Width=" 80"/>
+                            <GridViewColumn x:Name="buyPriceOfDOMGVCH" Header=" 买价" Width=" 80"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Label x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF9198AC" Background="{x:Null}" Canvas.Left="224" Canvas.Bottom="1"/>
-                <ComboBox x:Name="typeComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="65" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" Canvas.Left="159" Canvas.Bottom="1" FlowDirection="LeftToRight">
+
+                <Label x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF9198AC" Background="{x:Null}" Canvas.Left="355" Canvas.Bottom="1" Canvas.Top="261"/>
+                <ComboBox x:Name="typeComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="65" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" Canvas.Left="290" Canvas.Bottom="1" FlowDirection="LeftToRight" Canvas.Top="263">
                     <ComboBoxItem x:Name="futuresComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresComboBoxItem_Selected"/>
                     <ComboBoxItem x:Name="optionsComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsComboBoxItem_Selected" />
                 </ComboBox>
-                <Label x:Name="traderLabel" Content="交易商" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="107" Canvas.Bottom="1"/>
-                <ComboBox x:Name="optionsTraderComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" Canvas.Left="27" Canvas.Bottom="1" FlowDirection="LeftToRight">
+                <Label x:Name="traderLabel" Content="交易商" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="238" Canvas.Bottom="1" Canvas.Top="261"/>
+                <ComboBox x:Name="optionsTraderComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" Canvas.Left="158" Canvas.Bottom="1" FlowDirection="LeftToRight" >
                     <ComboBoxItem x:Name="optionsTraderComboBoxItem2" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="optionsTraderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
                 </ComboBox>
-                <ComboBox x:Name="futuresTraderComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" Canvas.Left="27" Canvas.Bottom="1" FlowDirection="LeftToRight" RenderTransformOrigin="0.5,0.522">
+                <ComboBox x:Name="futuresTraderComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" Canvas.Left="158" Canvas.Bottom="1" FlowDirection="LeftToRight" RenderTransformOrigin="0.5,0.522" >
                     <ComboBoxItem x:Name="futuresTraderComboBoxItem2" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="futuresTraderComboBoxItem1" Content=" 大商所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="futuresTraderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="futuresTraderComboBoxItem4" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
                 </ComboBox>
+                <Label x:Name="nameLabel" Content="标的期货" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF9198AC" Background="{x:Null}" Canvas.Left="91" Canvas.Bottom="1" Canvas.Top="261"/>
+                <ComboBox x:Name="nameComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" Canvas.Left="11" Canvas.Bottom="1" FlowDirection="LeftToRight" Canvas.Top="263" >
+
+                </ComboBox>
             </Canvas>
         </Grid>
-        <Grid x:Name="Grid3" HorizontalAlignment="Left" Height="308" Margin="29,0,0,21" VerticalAlignment="Bottom" Width="915" Background="#FF0D0D11" MouseEnter="Grid3_MouseEnter" MouseLeave="Grid3_MouseLeave">
+
+        <Grid x:Name="Grid3" HorizontalAlignment="Left" Height="308" Margin="29,0,0,21" VerticalAlignment="Bottom" Width="915" Background="#FF0D0D11" MouseEnter="Grid3_MouseEnter" MouseLeave="Grid3_MouseLeave" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="162*"/>
                 <ColumnDefinition Width="143*"/>
@@ -1413,8 +1421,9 @@
                         <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="131,662,-131,-655" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header="合约名称 " Width="100"/>
-                                    <GridViewColumn Header="合约类型 " Width="80">
+                                    <GridViewColumn x:Name="userOfOTGVCH" Header="投资账户 " Width="100"/>
+                                    <GridViewColumn x:Name="nameOfOTGVCH" Header="合约名称 " Width="100"/>
+                                    <GridViewColumn x:Name="typeOfOTGVCH" Header="合约类型 " Width="80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
                                                 <ComboBox x:Name="typeOfOptionsComboBox">
@@ -1424,8 +1433,8 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="行权价 " Width="80"/>
-                                    <GridViewColumn Header=" 交易类型" Width="60">
+                                    <GridViewColumn x:Name="exercisePriceOfOTGVCH" Header="行权价 " Width="80"/>
+                                    <GridViewColumn x:Name="typeOfTradeOfOTGVCH" Header=" 交易类型" Width="60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
                                                 <ComboBox x:Name="typeOfTradingComboBox">
@@ -1437,46 +1446,48 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header=" 交易手数" Width="60">
+                                    <GridViewColumn x:Name="lotOfOTGVCH" Header=" 交易手数" Width="60">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate >
-                                                <ListBox />
+                                                <ListBox x:Name="lotListBox" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header=" 委托方式" Width=" 60">
+                                    <GridViewColumn x:Name="formOfClientageOfOTGVCH" Header=" 委托方式" Width=" 60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOfPendingOrderComboBox">
-                                                    <System:String>ROD FOK IOC</System:String>
+                                                <ComboBox x:Name="formOfClientageComboBox">
+                                                    <ComboBoxItem Content=" ROD" HorizontalAlignment="Left" Width=" 60"/>
+                                                    <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 60"/>
+                                                    <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 60"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header=" 委托价格" Width=" 80">
+                                    <GridViewColumn x:Name="priceOfClientageOfOTGVCH" Header=" 委托价格" Width=" 80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="priceOfPendingOrderTextBox" Text=" " Width=" 80"/>
+                                                <TextBox x:Name="priceOfClientageTextBox" Text=" " Width=" 80"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header=" 市场价格" Width=" 80"/>
-                                    <GridViewColumn Header=" 有效期" Width=" 100"/>
-                                    <GridViewColumn Header=" 设置梯度" Width=" 60">
+                                    <GridViewColumn x:Name="priceOfMarketOfOTGVCH" Header=" 市场价格" Width=" 80"/>
+                                    <GridViewColumn x:Name="timeLimitOfOTGVCH" Header=" 有效期" Width=" 100"/>
+                                    <GridViewColumn x:Name="setGradientOfOTGVCH" Header=" 设置梯度" Width=" 60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
                                                 <CheckBox />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header=" 精确度" Width=" 50">
+                                    <GridViewColumn x:Name="accuracyOfOTGVCH" Header=" 精确度" Width=" 50">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
                                                 <TextBox x:Name="accuracyTextBox" Text=" " Width=" 50"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn Header="手数等差 " Width=" Auto">
+                                    <GridViewColumn x:Name="arithmeticProgressionOfOTGVCH" Header="手数等差 " Width=" Auto">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
                                                 <TextBox x:Name="arithmeticProgressionTextBox" Text=" " Width=" 60"/>
@@ -1494,22 +1505,20 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="optionsHoldDetailListView" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="916" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,7,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="916" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,7,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header=" 交易所"/>
-                                    <GridViewColumn Header=" 品种"/>
-                                    <GridViewColumn Header=" 交割期"/>
-                                    <GridViewColumn Header=" 开仓日期"/>
-                                    <GridViewColumn Header=" 投/保"/>
-                                    <GridViewColumn Header=" 买/卖"/>
-                                    <GridViewColumn Header=" 持仓量"/>
-                                    <GridViewColumn Header=" 开仓价"/>
-                                    <GridViewColumn Header=" 昨结算"/>
-                                    <GridViewColumn Header=" 结算价"/>
-                                    <GridViewColumn Header=" 浮动盈亏"/>
-                                    <GridViewColumn Header=" 盯市盈亏"/>
-                                    <GridViewColumn Header=" 保证金"/>
+                                    <GridViewColumn x:Name="userOfHDGVCH" Header="投资账户 " />
+                                    <GridViewColumn x:Name="traderOfHDGVCH" Header=" 交易商"/>
+                                    <GridViewColumn x:Name="typeOfHDGVCH" Header=" 品种"/>
+                                    <GridViewColumn x:Name="openTransactionOfHDGVCH" Header=" 开仓日期"/>
+                                    <GridViewColumn x:Name="costOfHDGVCH" Header=" 成本"/>
+                                    <GridViewColumn x:Name="lotOfHDGVCH" Header=" 手数"/>
+                                    <GridViewColumn x:Name="typeOfTradeOfHDGVCH" Header=" 买/卖"/>
+                                    <GridViewColumn x:Name="deliveryTimeOfHDGVCH" Header=" 交割期"/>
+                                    <GridViewColumn x:Name="profitAndLossOfHDGVCH" Header=" 浮动盈亏"/>
+                                    <GridViewColumn x:Name="marketProfitAndLossOfHDGVCH" Header=" 盯市盈亏"/>
+                                    <GridViewColumn x:Name="cashDepositOfHDGVCH" Header=" 保证金"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -1527,20 +1536,14 @@
                                     <GridViewColumn Header=" 衍生品名称"/>
                                     <GridViewColumn Header=" 交易时间"/>
                                     <GridViewColumn Header=" 交易类型"/>
+                                    <!-- 卖开卖平买开买平-->
                                     <GridViewColumn Header=" 挂单手数"/>
                                     <GridViewColumn Header=" 成交手数"/>
+                                    <GridViewColumn Header=" 成交状态"/>
                                     <GridViewColumn Header=" 挂单价格"/>
                                     <GridViewColumn Header=" 成交价格"/>
-                                    <GridViewColumn Header=" 价格条件"/>
                                     <GridViewColumn Header=" 有效期"/>
-                                    <GridViewColumn Header=" 挂单状态"/>
-                                    <GridViewColumn Header=" 投资者"/>
-                                    <GridViewColumn Header=" 开平"/>
-                                    <GridViewColumn Header=" 触价"/>
-                                    <GridViewColumn Header=" 当冲"/>
-                                    <GridViewColumn Header=" 外部指示"/>
-                                    <GridViewColumn Header=" 日期"/>
-                                    <GridViewColumn Header=" 交易员"/>
+                                    <GridViewColumn Header=" 投资账户"/>
                                     <GridViewColumn Header=" 交易单号"/>
                                 </GridView>
                             </ListView.View>
@@ -1562,24 +1565,28 @@
                         <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="285" VerticalAlignment="Top" Width="915"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="-3,7,-3,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn Header=" 账户名称" Width=" 100"/>
+                                    <GridViewColumn Header=" 账户号" Width=" 100"/>
                                     <GridViewColumn Header=" 登录状态" Width=" 70"/>
-                                    <GridViewColumn Header=" 总资产" Width=" Auto"/>
-                                    <GridViewColumn Header=" 最新资产" Width=" Auto"/>
+                                    <GridViewColumn Header=" 期初结存" Width=" Auto"/>
+                                    <GridViewColumn Header=" 基础保证金" Width=" Auto"/>
+                                    <GridViewColumn Header=" 市值权益" Width=" Auto"/>
                                     <GridViewColumn Header=" 可用资金" Width=" Auto"/>
-                                    <GridViewColumn Header=" 浮动盈亏" Width=" Auto"/>
+                                    <GridViewColumn Header=" 应追加资金" Width=" Auto"/>
+                                    <GridViewColumn Header=" 出入金" Width=" Auto"/>
                                     <GridViewColumn Header=" 平仓盈亏" Width=" Auto"/>
-                                    <GridViewColumn Header=" 上日结存" Width=" Auto"/>
-                                    <GridViewColumn Header=" 买冻结" Width=" Auto"/>
-                                    <GridViewColumn Header=" 卖冻结" Width=" Auto"/>
-                                    <GridViewColumn Header=" 冻结金额" Width=" Auto"/>
-                                    <GridViewColumn Header=" 当日出入金" Width=" Auto"/>
-                                    <GridViewColumn Header=" 买保证金" Width=" Auto"/>
-                                    <GridViewColumn Header=" 卖保证金" Width=" Auto"/>
-                                    <GridViewColumn Header=" 保证金" Width=" Auto"/>
-                                    <GridViewColumn Header=" 信用金额" Width=" Auto"/>
-                                    <GridViewColumn Header=" 动态权益" Width=" Auto"/>
-                                    <GridViewColumn Header=" 动态风险" Width=" Auto"/>
+                                    <GridViewColumn Header=" 浮动盈亏" Width=" Auto"/>
+                                    <GridViewColumn Header=" 执行盈亏" Width=" Auto"/>
+                                    <GridViewColumn Header=" 手续费" Width=" Auto"/>
+                                    <GridViewColumn Header=" 行权手续费" Width=" Auto"/>
+                                    <GridViewColumn Header=" 交割手续费" Width=" Auto"/>
+                                    <GridViewColumn Header=" 权利金收入" Width=" Auto"/>
+                                    <GridViewColumn Header=" 权利金支出" Width=" Auto"/>
+                                    <GridViewColumn Header=" 期末结存" Width=" Auto"/>
+                                    <GridViewColumn Header=" 质押金" Width=" Auto"/>
+                                    <GridViewColumn Header=" 客户权益" Width=" Auto"/>
+                                    <GridViewColumn Header=" 保证金占用" Width=" Auto"/>
+                                    <GridViewColumn Header=" 交割保证金" Width=" Auto"/>
+                                    <GridViewColumn Header=" 风险度" Width=" Auto"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -1589,14 +1596,17 @@
             </TabControl>
         </Grid>
 
-        <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519" MouseEnter="Canvas1_MouseEnter" MouseLeave="Canvas1_MouseLeave" ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft">
-            <Image HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Width="53" Source="Resources\kanzhang.png" Canvas.Top="37" Canvas.Left="32" ToolTip="看涨策略" FlowDirection="RightToLeft" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True"/>
-            <Image HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Width="53" Source="Resources\kandie.png" Canvas.Left="32" Canvas.Top="93" ToolTip="看跌策略" FlowDirection="RightToLeft" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True"/>
-            <Image HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Width="53" Source="Resources\kuankuashi.png" Canvas.Left="32" Canvas.Top="202" ToolTip="宽跨式策略" FlowDirection="RightToLeft" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True" RenderTransformOrigin="0.264,0.543"/>
-            <Image HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Width="53" Source="Resources\dieshi.png" Canvas.Left="32" Canvas.Top="268" ToolTip="蝶式策略" FlowDirection="RightToLeft" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True"/>
-            <Image HorizontalAlignment="Right" Height="35" VerticalAlignment="Top" Width="53" Source="Resources\kuashi.png" Canvas.Left="32" Canvas.Top="151" ToolTip="跨式策略" FlowDirection="RightToLeft" ScrollViewer.CanContentScroll="True" UseLayoutRounding="True"/>
+        <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="292" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519" MouseEnter="Canvas1_MouseEnter" MouseLeave="Canvas1_MouseLeave" ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft" Grid.ColumnSpan="3">
+            <Label x:Name="predictLabel" Content="情景预测：" Canvas.Left="177" Canvas.Top="65" Foreground="White" Width="80" FlowDirection="LeftToRight"/>
+            <ComboBox x:Name="predictComboBox" Canvas.Left="69" Canvas.Top="69" Width="80" FlowDirection="LeftToRight">
+                <ComboBoxItem Content=" 上涨" HorizontalAlignment="Left"/>
+                <ComboBoxItem Content=" 下跌" HorizontalAlignment="Left"/>
+                <ComboBoxItem Content=" 波动" HorizontalAlignment="Left"/>
+            </ComboBox>
+            <Label x:Name="amountOfUpAndDownLabel" Content="最高涨跌幅：" Canvas.Left="177" Canvas.Top="112" Foreground="White" Width="80" FlowDirection="LeftToRight"/>
+            <TextBox x:Name="amountOfUpAndDownTextBox" Height="23" Canvas.Left="95" TextWrapping="Wrap" Text="%" Canvas.Top="112" Width="54"/>
         </Canvas>
-        <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="30" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave" FlowDirection="RightToLeft"/>
+        <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="30" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave" FlowDirection="RightToLeft" Grid.Column="2"/>
         <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border.RenderTransform>
                 <TransformGroup>
@@ -1609,7 +1619,7 @@
         </Border>
 
 
-        <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1186" Background="#FF007ACC" Margin="0,0,0,1"/>
+        <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1186" Background="#FF007ACC" Margin="0,0,0,1" Grid.ColumnSpan="3"/>
 
 
     </Grid>
