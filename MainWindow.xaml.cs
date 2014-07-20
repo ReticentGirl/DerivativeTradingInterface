@@ -25,9 +25,9 @@ namespace qiquanui
     public partial class MainWindow : Window
     {
 
-        private double oldx, oldy, originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper,futuresTradingListVieww,futuresTradingListViewwper;
+        private double oldx, oldy, originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, futuresTradingListVieww, futuresTradingListViewwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
 
-        private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard;
+        private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard;
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             oldx = e.GetPosition(this).X;
@@ -101,6 +101,8 @@ namespace qiquanui
             TopCanvas1h=TopCanvas1.Height;
             TopCanvasButtomGridw = TopCanvasButtomGrid.Width;
             futuresTradingListVieww=futuresTradingListView.Width;
+            optionsMarketTitleGridw = optionsMarketTitleGrid.Width;
+            titileBorder4w = titileBorder4.Width;
 
 
             Grid1w = Grid1.Width;
@@ -117,8 +119,20 @@ namespace qiquanui
             canvas2Storyboard = (Storyboard)this.FindResource("canvas2Animate");
             canvas2Storyboard_Leave = (Storyboard)this.FindResource("canvas2Animate_Leave");
 
+            optionsMarketTitleGridStoryboard=(Storyboard)this.FindResource("optionsMarketTitleGridAnimate");
+            optionsMarketTitleGridStoryboard_Leave = (Storyboard)this.FindResource("optionsMarketTitleGridAnimate_Leave");
+
+            TopCanvasButtomGridStoryboard = (Storyboard)this.FindResource("TopCanvasButtomGridAnimate");
+            TopCanvasButtomGridStoryboard_Leave = (Storyboard)this.FindResource("TopCanvasButtomGridAnimate_Leave");
+
+            strategyOfOptionsCanvasStoryboard = (Storyboard)this.FindResource("strategyOfOptionsCanvasAnimate");
+            strategyOfOptionsCanvasStoryboard_Leave = (Storyboard)this.FindResource("strategyOfOptionsCanvasAnimate_Leave");
+
+            strategyOfFuturesCanvasStoryboard = (Storyboard)this.FindResource("strategyOfFuturesCanvasAnimate");
+            strategyOfFuturesCanvasStoryboard_Leave = (Storyboard)this.FindResource("strategyOfFuturesCanvasAnimate_Leave");
+
             typeComboBox.SelectedIndex = 0;
-            typeInStrategyPanelComboBox.SelectedIndex  = 1;
+            typeInStrategyPanelComboBox.SelectedIndex = 1;
         }
 
 
@@ -156,11 +170,12 @@ namespace qiquanui
         }
         private bool ResizeControl()
         {
-            TopCanvasButtomGridwper=TopCanvas1wper = Grid1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w));
-            futuresTradingListViewwper=userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = optionsTradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
+            optionsMarketTitleGridwper = TopCanvasButtomGridwper = TopCanvas1wper = Grid1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w));
+            futuresTradingListViewwper = userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = optionsTradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
             list1hper = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
             optionsMarketListViewhper = (this.Height - (originalHeight - optionsMarketListViewh)) / (originalHeight - (originalHeight - optionsMarketListViewh));
             TopCanvas1hper=Grid1hper = grid3hper =  (this.Height - (originalHeight - Grid1h)) / (originalHeight - (originalHeight - Grid1h));
+            titileBorder4wper = (this.Width - (originalWidth - titileBorder4w)) / (originalWidth - (originalWidth - titileBorder4w));
             
             statusBar1wper = this.Width / originalWidth;
             canvas2hper=canvas1hper = (this.Height-(originalHeight-canvas1h)) / (originalHeight-(originalHeight-canvas1h));
@@ -187,6 +202,8 @@ namespace qiquanui
             TopCanvas1.Width = TopCanvas1w * TopCanvas1wper;
             TopCanvas1.Height = TopCanvas1h * TopCanvas1hper;
             TopCanvasButtomGrid.Width = TopCanvasButtomGridw * TopCanvasButtomGridwper;
+            optionsMarketTitleGrid.Width = optionsMarketTitleGridwper * optionsMarketTitleGridw;
+            titileBorder4.Width = titileBorder4wper * titileBorder4w;
             return true;
         }
         private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
@@ -262,6 +279,45 @@ namespace qiquanui
          {
              grid3Storyboard_Leave.Begin(this);
          }
+        private void optionsMarketTitleGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            optionsMarketTitleGridStoryboard.Begin(this);
+
+        }
+
+        private void optionsMarketTitleGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            optionsMarketTitleGridStoryboard_Leave.Begin(this);
+        }
+        private void TopCanvasButtomGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            TopCanvasButtomGridStoryboard.Begin(this);
+        }
+
+        private void TopCanvasButtomGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            TopCanvasButtomGridStoryboard_Leave.Begin(this);
+
+        }
+        private void strategyOfOptionsCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            strategyOfOptionsCanvasStoryboard.Begin(this);
+        }
+
+        private void strategyOfOptionsCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            strategyOfOptionsCanvasStoryboard_Leave.Begin(this);
+        }
+
+        private void strategyOfFuturesCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            strategyOfFuturesCanvasStoryboard.Begin(this);
+        }
+
+        private void strategyOfFuturesCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            strategyOfFuturesCanvasStoryboard_Leave.Begin(this);
+        }
 
          private void optionsTradingListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
          {
@@ -304,7 +360,8 @@ namespace qiquanui
                  futuresTradingListView.Visibility = Visibility.Visible;
                  futuresMarketListView.Visibility = Visibility.Visible;
                  futuresTraderComboBox.Visibility = Visibility.Visible;
-           
+                 
+                 futuresOfOptionGrid.Visibility = Visibility.Hidden;
          }
 
          private void optionsComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -319,6 +376,7 @@ namespace qiquanui
              optionsTradingListView.Visibility = Visibility.Visible;
              nameLabel.Visibility = Visibility.Visible;
              nameComboBox.Visibility = Visibility.Visible;
+             futuresOfOptionGrid.Visibility = Visibility.Visible;
             
          }
 
@@ -370,6 +428,12 @@ namespace qiquanui
             strategyOfOptionsCanvas.Visibility = Visibility.Visible;
             strategyOfFuturesCanvas.Visibility = Visibility.Hidden;
         }
+
+       
+      
+
+ 
+       
 
 
          
