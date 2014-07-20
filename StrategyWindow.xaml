@@ -3,6 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="StrategyWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF1D1D21" Foreground="#FF627095">
     <Grid>
-        
+        <!--<Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseMove="Top1_MouseMove" MouseDoubleClick="Top1_MouseDoubleClick"/>
+
+        <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/min.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/max.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/close.png"/>
+            </Button.Background>
+        </Button>-->
+
     </Grid>
 </Window>

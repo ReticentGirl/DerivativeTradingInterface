@@ -1344,18 +1344,17 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="32*"/>
-            <ColumnDefinition Width="229*"/>
-            <ColumnDefinition Width="925*"/>
+            <ColumnDefinition Width="253*"/>
+            <ColumnDefinition Width="933*"/>
         </Grid.ColumnDefinitions>
 
-        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseMove="Top1_MouseMove" MouseDoubleClick="Top1_MouseDoubleClick" Grid.ColumnSpan="3"/>
+        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseMove="Top1_MouseMove" MouseDoubleClick="Top1_MouseDoubleClick" Grid.ColumnSpan="2"/>
 
-        <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}" Grid.Column="2"/>
-        <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}" Grid.Column="2"/>
-        <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}" Grid.Column="2"/>
+        <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}" Grid.Column="1"/>
+        <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}" Grid.Column="1"/>
+        <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}" Grid.Column="1"/>
 
-        <Grid x:Name="Grid1" HorizontalAlignment="Right" Height="287" Margin="0,0,30,361" VerticalAlignment="Bottom" Width="1127" ClipToBounds="True" Background="#FF292932" MouseEnter="Grid1_MouseEnter" MouseLeave="Grid1_MouseLeave" Grid.ColumnSpan="3">
+        <Grid x:Name="Grid1" HorizontalAlignment="Left" Height="356" Margin="29,38,0,0" VerticalAlignment="Top" Width="1127" ClipToBounds="True" Background="#FF292932" MouseEnter="Grid1_MouseEnter" MouseLeave="Grid1_MouseLeave" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -1363,8 +1362,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Canvas x:Name="TopCanvas1" HorizontalAlignment="Right" Height="287" Margin="0" VerticalAlignment="Bottom" Width="1127">
-                <Grid x:Name="TopCanvasButtomGrid" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="1127" Canvas.Bottom="1" Background="#FF101013" Canvas.Top="1">
+            <Canvas x:Name="TopCanvas1" HorizontalAlignment="Right" Height="356" Margin="0" VerticalAlignment="Bottom" Width="1127">
+                <Grid x:Name="TopCanvasButtomGrid" HorizontalAlignment="Left" Height="30" VerticalAlignment="Top" Width="1127" Canvas.Bottom="1" Background="#FF101013" Canvas.Top="0">
                     <Label x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" Background="{x:Null}" Margin="11,2,0,0"/>
                     <ComboBox x:Name="typeComboBox" VerticalAlignment="Top" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" Margin="80,3,0,0" HorizontalAlignment="Left" Height="23" Width="70" >
                         <ComboBoxItem x:Name="futuresComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresComboBoxItem_Selected"/>
@@ -1384,7 +1383,7 @@
                     <Label x:Name="nameLabel" Content="标的期货" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" Background="{x:Null}" Margin="276,2,0,0" />
                     <ComboBox x:Name="nameComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="334,3,0,0" />
                 </Grid>
-                <ListView x:Name="futuresMarketListView" Height="256" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="31" Visibility="Hidden">
+                <ListView x:Name="futuresMarketListView" Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="nameFMGVCH" Header=" 名称" Width=" 100" />
@@ -1407,8 +1406,39 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+
                 <Border BorderBrush="#FF414559"></Border>
-                <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Height="25" Width="882" FlowDirection="LeftToRight" MaxWidth="882" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" Canvas.Top="31" >
+                <Grid x:Name="futuresOfOptionGrid" Height="49" Canvas.Top="30" Width="882">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions >
+                        <RowDefinition />
+                        <RowDefinition />                        
+                    </Grid.RowDefinitions>
+                    
+                    <TextBlock Text="最新价" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 0" Grid.Row=" 0"/>
+                    <TextBlock Text="涨跌" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 1" Grid.Row=" 0"/>
+                    <TextBlock Text="涨跌幅" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 2" Grid.Row=" 0"/>
+                    <TextBlock Text="买价" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 3" Grid.Row=" 0"/>
+                    <TextBlock Text="卖价" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 4" Grid.Row=" 0"/>
+                    <TextBlock Text="最高价" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 5" Grid.Row=" 0"/>
+                    <TextBlock Text="最低价" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 6" Grid.Row=" 0"/>
+                    <TextBlock Text="成交量" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 7" Grid.Row=" 0"/>
+                    <TextBlock Text="到期日" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 8" Grid.Row=" 0"/>
+                    <TextBlock Text="更新时间" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 9" Grid.Row=" 0"/>
+                    <TextBox x:Name="newPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 0" Grid.Row=" 1"/>
+                </Grid>
+                <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Height="25" Width="882" FlowDirection="LeftToRight" MaxWidth="882" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" Canvas.Top="100" >
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="403" />
                         <ColumnDefinition Width="79" />
@@ -1416,13 +1446,13 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <Border BorderThickness="0,0,1,0" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="403" MaxWidth="403" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="#FF414559" />
-                    <Border BorderBrush="#FF414559" BorderThickness="0,0,1,0" Grid.Column="1" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="79" MaxWidth="79" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
-                    <Border BorderBrush="#FF414559" BorderThickness="0,0,1,0" Grid.Column="2" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="400" MaxWidth="400" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="1,0,-1,0" />
+                    <Border BorderThickness="0,1,1,0" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="403" MaxWidth="403" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" BorderBrush="#FF414559" />
+                    <Border BorderBrush="#FF414559" BorderThickness="0,1,1,0" Grid.Column="1" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="79" MaxWidth="79" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
+                    <Border BorderBrush="#FF414559" BorderThickness="0,1,1,0" Grid.Column="2" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="400" MaxWidth="400" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="1,0,-1,0" />
                     <TextBlock Text=" 看涨" TextAlignment="Center" Grid.Row=" 0" Grid.Column=" 0" Margin="3,0,0,0" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A"/>
                     <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column=" 2" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Margin="1,0,-1,0"/>
                 </Grid>
-                <ListView Name="optionsMarketListView" Height="231" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="56" >
+                <ListView Name="optionsMarketListView" Height="231" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="125" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="buyPriceROMGVCH" Header=" 买价" Width="80"  />
@@ -1439,16 +1469,15 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-
             </Canvas>
         </Grid>
 
-        <Grid x:Name="Grid3" HorizontalAlignment="Left" Height="308" Margin="29,0,0,21" VerticalAlignment="Bottom" Width="915" Background="#FF0D0D11" MouseEnter="Grid3_MouseEnter" MouseLeave="Grid3_MouseLeave" Grid.ColumnSpan="3">
+        <Grid x:Name="Grid3" HorizontalAlignment="Left" Height="238" Margin="29,0,0,21" VerticalAlignment="Bottom" Width="915" Background="#FF0D0D11" MouseEnter="Grid3_MouseEnter" MouseLeave="Grid3_MouseLeave" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TabControl x:Name="multipleTabControl" HorizontalAlignment="Left" Height="346" VerticalAlignment="Top" Width="915" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,-35,0,-3">
+            <TabControl x:Name="multipleTabControl" HorizontalAlignment="Left" Height="273" VerticalAlignment="Top" Width="915" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,-35,0,0">
                 <TabItem Header="交易区" Foreground="White"  Style="{StaticResource TabItemStyle}" Margin="-2,6,2,-10">
 
                     <Grid Margin="-4,0,-3,0">
@@ -1456,7 +1485,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userOTGVCH" Header="投资账户 " Width="100"/>
@@ -1536,7 +1565,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <ListView x:Name="futuresTradingListView" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Visibility="Hidden">
+                        <ListView x:Name="futuresTradingListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Visibility="Hidden">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userFTGVCH" Header="投资账户 " Width="100"/>
@@ -1623,7 +1652,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="312" VerticalAlignment="Top" Width="916" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,7,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,7,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userHDGVCH" Header="投资账户 " />
@@ -1649,7 +1678,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="285" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="nameHGVCH" Header=" 衍生品名称"/>
@@ -1682,7 +1711,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="285" VerticalAlignment="Top" Width="915"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="-3,7,-3,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}">
+                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="209" VerticalAlignment="Top" Width="915"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="-3,7,-3,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userUMGVCH" Header=" 账户号" Width=" 100"/>
@@ -1716,28 +1745,51 @@
             </TabControl>
         </Grid>
 
-        <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519" MouseEnter="Canvas1_MouseEnter" MouseLeave="Canvas1_MouseLeave" ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft" Grid.ColumnSpan="3">
-            <Label x:Name="predictLabel" Content="情景预测：" Canvas.Left="177" Canvas.Top="65" Foreground="#FF70728A" Width="80" FlowDirection="LeftToRight"/>
-            <ComboBox x:Name="predictComboBox" Canvas.Left="69" Canvas.Top="69" Width="80" FlowDirection="LeftToRight"  Style="{StaticResource CboCommomStyle}" Foreground="#FF70728A" >
-                <ComboBoxItem x:Name ="predictComboBoxItem1" Content=" 上涨" HorizontalAlignment="Left" Selected="predictComboBoxItem_Selected" />
-                <ComboBoxItem x:Name="predictComboBoxItem2" Content=" 下跌" HorizontalAlignment="Left" Selected="predictComboBoxItem2_Selected" />
-                <ComboBoxItem x:Name="predictComboBoxItem3" Content=" 波动" HorizontalAlignment="Left" Selected="predictComboBoxItem3_Selected" />
+        <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519" MouseEnter="Canvas1_MouseEnter" MouseLeave="Canvas1_MouseLeave" ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft">
+            <Label x:Name="type" Content="衍生品种类：" Foreground="#FF70728A" Width="80" FlowDirection="LeftToRight" Canvas.Left="177" Canvas.Top="40"/>
+            <ComboBox x:Name="typeInStrategyPanelComboBox" VerticalAlignment="Top" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" HorizontalAlignment="Left" Height="23" Width="70" Canvas.Left="79" Canvas.Top="40" >
+                <ComboBoxItem x:Name="futuresInStrategyPanelComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresInStrategyPanelComboBoxItem_Selected" />
+                <ComboBoxItem x:Name="optionsInStrategyPanelComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsInStrategyPanelComboBoxItem_Selected" />
             </ComboBox>
-            <Label x:Name="amountOfUpAndDownLabel" Content="最高涨跌幅：" Canvas.Left="177" Canvas.Top="112" Foreground="#FF70728A" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
-            <TextBox x:Name="amountOfUpAndDownTextBox" Height="23" Canvas.Left="94" TextWrapping="Wrap" Text="%" Canvas.Top="112" Width="54" Style="{StaticResource textboxStyle}" Visibility="Hidden"/>
-            <Label x:Name="volatilityLabel" Content="波动率：" Canvas.Left="177" Canvas.Top="112" Foreground="#FF70728A" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
-            <ComboBox x:Name="volatilityComboBox" FlowDirection="LeftToRight" Canvas.Left="104" Canvas.Top="112" Width="45" Height="23"  Style="{StaticResource CboCommomStyle}" Foreground="#FF70728A" Visibility="Hidden" >
-                <ComboBoxItem Content=" 高" HorizontalAlignment="Left" />
-                <ComboBoxItem Content=" 低" HorizontalAlignment="Left" />
-            </ComboBox>
-            <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="107" Canvas.Top="156" Width="75" Style="{StaticResource darkButton}"/>
+            <Canvas x:Name="strategyOfOptionsCanvas" HorizontalAlignment="Left" Height="122" Background="#FF151519" Width="234" Canvas.Left="23" Canvas.Top="79">
+                <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="175" FlowDirection="LeftToRight" />
+                <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Canvas.Left="44" >
+                    <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
+                    <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem2" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
+                </ComboBox>
+                <Label x:Name="nameInStrategyPanelLabel" Content="标的期货：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" Background="{x:Null}" Canvas.Left="163" Canvas.Top="30" FlowDirection="LeftToRight" />
+                <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Canvas.Left="44" Canvas.Top="30" />
+                <Label x:Name="predictLabel" Content="情景预测：" Canvas.Left="153" Foreground="#FF70728A" Width="80" FlowDirection="LeftToRight" Canvas.Top="60"/>
+                <ComboBox x:Name="predictComboBox" Canvas.Left="13" Canvas.Top="62" Width="111" FlowDirection="LeftToRight"  Style="{StaticResource CboCommomStyle}" Foreground="#FF70728A" >
+                    <ComboBoxItem x:Name ="predictComboBoxItem1" Content=" 上涨" HorizontalAlignment="Left" Selected="predictComboBoxItem_Selected" />
+                    <ComboBoxItem x:Name="predictComboBoxItem2" Content=" 下跌" HorizontalAlignment="Left" Selected="predictComboBoxItem2_Selected" />
+                    <ComboBoxItem x:Name="predictComboBoxItem3" Content=" 波动" HorizontalAlignment="Left" Selected="predictComboBoxItem3_Selected" />
+                    <ComboBoxItem x:Name="predictComboBoxItem4" Content=" 与标的物组合" HorizontalAlignment="Left" Selected="predictComboBoxItem4_Selected"  />
+                </ComboBox>
+                <Label x:Name="amountOfUpAndDownLabel" Content="最高涨跌幅：" Canvas.Left="154" Canvas.Top="90" Foreground="#FF70728A" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
+                <TextBox x:Name="amountOfUpAndDownTextBox" Height="23" Canvas.Left="70" TextWrapping="Wrap" Text="%" Canvas.Top="92" Width="54" Style="{StaticResource textboxStyle}" Visibility="Hidden"/>
+                <Label x:Name="volatilityLabel" Content="波动率：" Canvas.Left="153" Canvas.Top="90" Foreground="#FF70728A" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
+                <ComboBox x:Name="volatilityComboBox" FlowDirection="LeftToRight" Canvas.Left="79" Canvas.Top="92" Width="45" Height="23"  Style="{StaticResource CboCommomStyle}" Foreground="#FF70728A" Visibility="Hidden" >
+                    <ComboBoxItem Content=" 高" HorizontalAlignment="Left" />
+                    <ComboBoxItem Content=" 低" HorizontalAlignment="Left" />
+                </ComboBox>
+            </Canvas>
+
+            <Canvas x:Name="strategyOfFuturesCanvas" HorizontalAlignment="Left" Height="29" Background="#FF151519" Width="234" Canvas.Left="26" Canvas.Top="79" Visibility="Hidden">
+                <Label x:Name="typeOfArbitrageLabel" Content=" 套利类型：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="160" FlowDirection="LeftToRight" />
+                <ComboBox x:Name="typeOfArbitrageComoBox" Width="100" FlowDirection="LeftToRight"  Style="{StaticResource CboCommomStyle}" Foreground="#FF70728A" Canvas.Left="22" Canvas.Top="2">
+                    <ComboBoxItem x:Name="typeOfArbitrageComoBox1" Content=" 期权与期货" HorizontalAlignment="Left" />
+                    <ComboBoxItem x:Name="typeOfArbitrageComoBox2" Content=" 期货与期货" HorizontalAlignment="Left" />
+                </ComboBox>
+            </Canvas>
+            <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="116" Canvas.Top="217" Width="75" Style="{StaticResource darkButton}" Height="22"/>
         </Canvas>
 
-        <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="30" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave" FlowDirection="RightToLeft" Grid.Column="2"/>
+        <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="30" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave" FlowDirection="RightToLeft" Grid.Column="1"/>
 
 
-        <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1186" Background="#FF007ACC" Margin="0,0,0,1" Grid.ColumnSpan="3"/>
-        <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="3" Panel.ZIndex="10">
+        <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1186" Background="#FF007ACC" Margin="0,0,0,1" Grid.ColumnSpan="2"/>
+        <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.ColumnSpan="2" Height="686" Width="1186" Visibility="Hidden">
             <Border.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
