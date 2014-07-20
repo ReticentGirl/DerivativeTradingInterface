@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -33,7 +34,7 @@ namespace qiquanui
             oldy = e.GetPosition(this).Y;
         }
 
-        private void Top1_MouseMove(object sender, MouseEventArgs e)
+        private void Top1_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
 
                 if (e.LeftButton == MouseButtonState.Pressed)
@@ -71,8 +72,8 @@ namespace qiquanui
         public MainWindow()
         {
 
-            mkt = new MktData();
-            mkt.Run();
+            //mkt = new MktData();
+            //mkt.Run();
 
             InitializeComponent();
 
@@ -90,7 +91,7 @@ namespace qiquanui
             canvas2h = Canvas2.Height;
             optionsTradingListVieww = optionsTradingListView.Width;
             multipleTabControlw = multipleTabControl.Width;
-            optionsHoldDetailListVieww = optionsHoldDetailListView.Width;
+            optionsHoldDetailListVieww = holdDetailListView.Width;
             historyListVieww = historyListView.Width;
             userManageListVieww = userManageListView.Width;
             statusBar1w = statusBar1.Width;
@@ -173,7 +174,7 @@ namespace qiquanui
             Canvas2.Height = canvas2h * canvas2hper;
             optionsTradingListView.Width = optionsTradingListVieww * optionsTradingListViewwper;
             multipleTabControl.Width = multipleTabControlw * multipleTabControlwper;
-            optionsHoldDetailListView.Width = optionsHoldDetailListVieww * optionsHoldDetailListViewwper;
+            holdDetailListView.Width = optionsHoldDetailListVieww * optionsHoldDetailListViewwper;
             statusBar1.Width = statusBar1w * statusBar1wper;
             optionsMarketListView.Width = optionsMarketListVieww * optionsMarketListViewwper;
             optionsMarketListView.Height = optionsMarketListViewh * optionsMarketListViewhper;
@@ -187,12 +188,12 @@ namespace qiquanui
             ResizeControl();
         }
 
-        private void Canvas1_MouseEnter(object sender, MouseEventArgs e)
+        private void Canvas1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (Canvas1.Width == 29.0)
             {
                 DoubleAnimation animate = new DoubleAnimation();
-                animate.To = 120;
+                animate.To = 292;
                 animate.Duration = new Duration(TimeSpan.FromSeconds(0.4));
                 animate.DecelerationRatio = 1;
                 //   animate.AccelerationRatio = 0.33;
@@ -201,7 +202,7 @@ namespace qiquanui
             }
         }
 
-        private void Canvas1_MouseLeave(object sender, MouseEventArgs e)
+        private void Canvas1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             DoubleAnimation animate = new DoubleAnimation();
             animate.To = 29.0;
@@ -211,7 +212,7 @@ namespace qiquanui
             Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
             canvas1Storyboard_Leave.Begin(this);
         }
-        private void Canvas2_MouseEnter(object sender, MouseEventArgs e)
+        private void Canvas2_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (Canvas2.Width == 29.0)
             {
@@ -225,7 +226,7 @@ namespace qiquanui
             }
         }
 
-        private void Canvas2_MouseLeave(object sender, MouseEventArgs e)
+        private void Canvas2_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             DoubleAnimation animate1 = new DoubleAnimation();
             animate1.To = 29.0;
@@ -235,23 +236,23 @@ namespace qiquanui
             Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
             canvas2Storyboard_Leave.Begin(this);
         }
-       
-        private void Grid1_MouseEnter(object sender, MouseEventArgs e)
+
+        private void Grid1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             grid1Storyboard.Begin(this);
         }
 
-        private void Grid1_MouseLeave(object sender, MouseEventArgs e)
+        private void Grid1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             grid1Storyboard_Leave.Begin(this);
         }
-       
-         private void Grid3_MouseEnter(object sender, MouseEventArgs e)
+
+        private void Grid3_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
          {
              grid3Storyboard.Begin(this);
          }
 
-         private void Grid3_MouseLeave(object sender, MouseEventArgs e)
+        private void Grid3_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
          {
              grid3Storyboard_Leave.Begin(this);
          }
@@ -290,6 +291,9 @@ namespace qiquanui
             
                  optionsMarketListView.Visibility = Visibility.Hidden;
                  optionsTraderComboBox.Visibility = Visibility.Hidden;
+                 optionsMarketTitleGrid.Visibility = Visibility.Hidden;
+                 optionsTradingListView.Visibility = Visibility.Hidden;
+                 futuresTradingListView.Visibility = Visibility.Visible;
                  futuresMarketListView.Visibility = Visibility.Visible;
                  futuresTraderComboBox.Visibility = Visibility.Visible;
            
@@ -300,9 +304,41 @@ namespace qiquanui
              
              futuresMarketListView.Visibility = Visibility.Hidden;
              futuresTraderComboBox.Visibility = Visibility.Hidden;
+             futuresTradingListView.Visibility = Visibility.Hidden;
              optionsMarketListView.Visibility = Visibility.Visible;
              optionsTraderComboBox.Visibility = Visibility.Visible;
+             optionsMarketTitleGrid.Visibility = Visibility.Visible;
+             optionsTradingListView.Visibility = Visibility.Visible;
             
+         }
+
+         private void predictComboBoxItem_Selected(object sender, RoutedEventArgs e)
+         {
+             amountOfUpAndDownLabel.Visibility = Visibility.Visible;
+             amountOfUpAndDownTextBox.Visibility = Visibility.Visible;
+             volatilityLabel.Visibility = Visibility.Hidden;
+             volatilityComboBox.Visibility = Visibility.Hidden;
+         }
+
+         private void predictComboBoxItem2_Selected(object sender, RoutedEventArgs e)
+         {
+             amountOfUpAndDownLabel.Visibility = Visibility.Visible;
+             amountOfUpAndDownTextBox.Visibility = Visibility.Visible;
+             volatilityLabel.Visibility = Visibility.Hidden;
+             volatilityComboBox.Visibility = Visibility.Hidden;
+         }
+
+         private void predictComboBoxItem3_Selected(object sender, RoutedEventArgs e)
+         {
+             amountOfUpAndDownLabel.Visibility = Visibility.Hidden;
+             amountOfUpAndDownTextBox.Visibility = Visibility.Hidden;
+             volatilityLabel.Visibility = Visibility.Visible;
+             volatilityComboBox.Visibility = Visibility.Visible;
+         }
+
+        private void optionsMarketListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+         {
+
          }
          
     }

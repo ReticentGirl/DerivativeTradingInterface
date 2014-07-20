@@ -92,3 +92,6 @@ G:\Documents\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.g.resources
 G:\Documents\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.Properties.Resources.resources
 G:\Documents\GitHub\DerivativeTradingInterface\obj\Debug\qiquanui.csproj.GenerateResource.Cache
 G:\Documents\GitHub\DerivativeTradingInterface\bin\Debug\CTP.dll
+D:\program\花旗杯\derivativeTrading\DerivativeTradingInterface\bin\Debug\CTP.dll
+D:\program\花旗杯\derivativeTrading\DerivativeTradingInterface\obj\Debug\StrategyWindow.baml
+D:\program\花旗杯\derivativeTrading\DerivativeTradingInterface\obj\Debug\StrategyWindow.g.cs
