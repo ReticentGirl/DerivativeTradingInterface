@@ -95,3 +95,6 @@ G:\Documents\GitHub\DerivativeTradingInterface\bin\Debug\CTP.dll
 D:\program\花旗杯\derivativeTrading\DerivativeTradingInterface\bin\Debug\CTP.dll
 D:\program\花旗杯\derivativeTrading\DerivativeTradingInterface\obj\Debug\StrategyWindow.baml
 D:\program\花旗杯\derivativeTrading\DerivativeTradingInterface\obj\Debug\StrategyWindow.g.cs
+H:\wpf\DerivativeTradingInterface\bin\Debug\CTP.dll
+H:\wpf\DerivativeTradingInterface\obj\Debug\StrategyWindow.baml
+H:\wpf\DerivativeTradingInterface\obj\Debug\StrategyWindow.g.cs

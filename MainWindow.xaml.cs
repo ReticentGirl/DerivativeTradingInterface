@@ -154,7 +154,8 @@ namespace qiquanui
         {
             TopCanvasButtomGridwper=TopCanvas1wper = Grid1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w));
             userManageListViewwper=historyListViewwper = optionsHoldDetailListViewwper = optionsTradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
-            optionsMarketListViewhper = list1hper = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
+            list1hper = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
+            optionsMarketListViewhper = (this.Height - (originalHeight - optionsMarketListViewh)) / (originalHeight - (originalHeight - optionsMarketListViewh));
             TopCanvas1hper=Grid1hper = grid3hper =  (this.Height - (originalHeight - Grid1h)) / (originalHeight - (originalHeight - Grid1h));
             
             statusBar1wper = this.Width / originalWidth;
@@ -340,6 +341,8 @@ namespace qiquanui
          {
 
          }
+
+
          
     }
 }
