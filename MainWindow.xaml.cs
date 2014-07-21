@@ -362,6 +362,7 @@ namespace qiquanui
                  futuresTraderComboBox.Visibility = Visibility.Visible;
                  
                  futuresOfOptionGrid.Visibility = Visibility.Hidden;
+                 titileBorder4.Visibility = Visibility.Hidden;
          }
 
          private void optionsComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -377,7 +378,7 @@ namespace qiquanui
              nameLabel.Visibility = Visibility.Visible;
              nameComboBox.Visibility = Visibility.Visible;
              futuresOfOptionGrid.Visibility = Visibility.Visible;
-            
+             titileBorder4.Visibility = Visibility.Visible;
          }
 
          private void predictComboBoxItem_Selected(object sender, RoutedEventArgs e)
