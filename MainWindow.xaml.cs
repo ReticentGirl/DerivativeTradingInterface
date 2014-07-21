@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
+using System.Collections.ObjectModel;
 
 namespace qiquanui
 {
@@ -28,6 +29,11 @@ namespace qiquanui
         private double oldx, oldy, originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, futuresTradingListVieww, futuresTradingListViewwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
 
         private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard;
+        public struct option
+        {
+            public string Bid, Ask;
+            public int Price;
+        }
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             oldx = e.GetPosition(this).X;
@@ -67,8 +73,9 @@ namespace qiquanui
 
             }
         }
+        public ObservableCollection<option> ObservableObj = new ObservableCollection<option>();
+        //static MktData mkt = null;
 
-        static MktData mkt = null;
         public MainWindow()
         {
 
@@ -76,6 +83,16 @@ namespace qiquanui
             //mkt.Run();
 
             InitializeComponent();
+            ObservableObj.Clear();
+            ObservableObj.Add(new option() { Bid = "帅波", Ask = "男", Price = 20 });
+            ObservableObj.Add(new option() { Bid = "帅波2", Ask = "女", Price = 60 });
+            ObservableObj.Add(new option() { Bid = "帅波3", Ask = "女", Price = 50 });
+            ObservableObj.Add(new option() { Bid = "帅波4", Ask = "女", Price = 40 });
+            ObservableObj.Add(new option() { Bid = "帅波5", Ask = "男", Price = 20 });
+            optionsMarketListView.DataContext = ObservableObj;
+            optionsMarketListView.ItemsSource = ObservableObj;
+
+
 
             this.Left = 50;
             this.Top = 20;
@@ -428,6 +445,13 @@ namespace qiquanui
         {
             strategyOfOptionsCanvas.Visibility = Visibility.Visible;
             strategyOfFuturesCanvas.Visibility = Visibility.Hidden;
+        }
+
+        private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            StrategyWindow strategyWindow = new StrategyWindow();
+            strategyWindow.Show();
+           
         }
 
        

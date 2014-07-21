@@ -688,7 +688,7 @@
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
             <Setter Property="BorderBrush" Value="White" />
             <Setter Property="BorderThickness" Value="0,3,0,0" />
-            <Setter Property="Foreground" Value="#FF042271" />
+            <Setter Property="Foreground" Value="#FF67697F" />
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
@@ -744,7 +744,7 @@
             <Setter Property="Background" Value="#FF272935" />
             <Setter Property="BorderBrush" Value="White" />
             <Setter Property="BorderThickness" Value="0,1" />
-            <Setter Property="Foreground" Value="#FF042271" />
+            <Setter Property="Foreground" Value="#FF67697F" />
             <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
@@ -801,13 +801,13 @@
             <Setter Property="Control.Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Rectangle Stroke="#8E6EA6F5" StrokeThickness="1" RadiusX="2" RadiusY="2" />
+                        <Rectangle Stroke="#FFC0C4DA" StrokeThickness="1" RadiusX="2" RadiusY="2" />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="ListViewItem1" TargetType="{x:Type ListViewItem}">
+        <Style x:Key="ListViewItem" TargetType="{x:Type ListViewItem}">
             <Setter Property="Foreground" Value="White" />
             <Setter Property="FocusVisualStyle" Value="{StaticResource ListViewItemFocusVisual}" />
             <Setter Property="Background" Value="#FFBEBED8" />
@@ -1010,63 +1010,44 @@
         <!--ListViewItem的样式-->
 
         <Style TargetType="{x:Type ListViewItem}">
-
             <Style.Setters>
-
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
-
                 <Setter Property="Template">
-
                     <Setter.Value>
-
                         <ControlTemplate TargetType="{x:Type ListViewItem}">
-
                             <Border x:Name="bd"  
-                               BorderThickness="1"  
+                               BorderThickness="0,0,0,1"  
                                 Padding="{TemplateBinding Padding}"  
-                               SnapsToDevicePixels="True">
-
+                               SnapsToDevicePixels="True" BorderBrush="#FF414559">
                                 <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
                                                   Margin="3"/>
-
                             </Border>
-
                             <ControlTemplate.Triggers>
-
                                 <Trigger Property="IsSelected" Value="True">
-
                                     <Trigger.Setters>
-
                                         <Setter TargetName="bd" Property="Background">
-
                                             <Setter.Value>
-
-                                                <LinearGradientBrush StartPoint="0.5,0.22" EndPoint="0.5,1">
-
-                                                    <GradientStop Color="LightGray" Offset="0.31"/>
-
-                                                    <GradientStop Color="Gray" Offset="0.88"/>
-
-                                                </LinearGradientBrush>
-
+                                                <SolidColorBrush Color="#FF0A0A0E" Opacity="0.5"/>
                                             </Setter.Value>
-
                                         </Setter>
+                                        
 
                                     </Trigger.Setters>
-
                                 </Trigger>
-
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="bd" Property="Background">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF1F212C" Opacity="0.5"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger.Setters>
+                                </Trigger>
                             </ControlTemplate.Triggers>
-
                         </ControlTemplate>
-
                     </Setter.Value>
-
                 </Setter>
-
             </Style.Setters>
-
         </Style>
 
 
@@ -1441,7 +1422,7 @@
                     <Label x:Name="nameLabel" Content="标的期货" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" Background="{x:Null}" Margin="276,2,0,0" />
                     <ComboBox x:Name="nameComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="334,3,0,0" />
                 </Grid>
-                <ListView x:Name="futuresMarketListView" Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden">
+                <ListView x:Name="futuresMarketListView" Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="#FF9198AC">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="nameFMGVCH" Header=" 名称" Width=" 100" />
@@ -1531,20 +1512,20 @@
                         <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Grid.ColumnSpan="2" Margin="79,0,0,0"/>
                     </Grid>
                 </Border>
-                <ListView Name="optionsMarketListView" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="{x:Null}" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" >
+                <ListView Name="optionsMarketListView"  ItemsSource="{Binding}" DataContext="{Binding}" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn x:Name="buyPriceROMGVCH" Header=" 买价" Width="80"  />
-                            <GridViewColumn x:Name="sellPriceROMGVCH" Header=" 卖价" Width=" 80"/>
-                            <GridViewColumn x:Name="newPriceROMGVCH" Header=" 最新价" Width=" 80"/>
-                            <GridViewColumn x:Name="amountROMGVCH" Header=" 现量" Width=" 80"/>
-                            <GridViewColumn x:Name="tradeVolumnROMGVCH" Header=" 成交量" Width=" 80"/>
-                            <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价" Width=" 80"/>
-                            <GridViewColumn x:Name="tradeVolumnDOMGVCH" Header=" 成交量" Width=" 80"/>
-                            <GridViewColumn x:Name="amountDOMGVCH" Header=" 现量" Width=" 80"/>
-                            <GridViewColumn x:Name="newPriceRDOMGVCH" Header=" 最新价" Width=" 80"/>
-                            <GridViewColumn x:Name="sellPriceDOMGVCH" Header=" 卖价" Width=" 80"/>
-                            <GridViewColumn x:Name="buyPriceDOMGVCH" Header=" 买价" Width=" 80"/>
+                            <GridViewColumn x:Name="buyPriceROMGVCH" Header=" 买价" DisplayMemberBinding="{Binding Path=Bid}" Width="80"/>
+                            <GridViewColumn x:Name="sellPriceROMGVCH" Header=" 卖价" DisplayMemberBinding="{Binding Path=Ask}" Width="80"/>
+                            <GridViewColumn x:Name="newPriceROMGVCH" Header=" 最新价"  Width="80"/>
+                            <GridViewColumn x:Name="amountROMGVCH" Header=" 现量"  Width="80"/>
+                            <GridViewColumn x:Name="tradeVolumnROMGVCH" Header=" 成交量"  Width=" 80"/>
+                            <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价" DisplayMemberBinding="{Binding Path=Price}" Width=" 80"/>
+                            <GridViewColumn x:Name="tradeVolumnDOMGVCH" Header=" 成交量"  Width=" 80"/>
+                            <GridViewColumn x:Name="amountDOMGVCH" Header=" 现量"  Width=" 80"/>
+                            <GridViewColumn x:Name="newPriceRDOMGVCH" Header=" 最新价"  Width=" 80"/>
+                            <GridViewColumn x:Name="sellPriceDOMGVCH" Header=" 卖价"  Width=" 80"/>
+                            <GridViewColumn x:Name="buyPriceDOMGVCH" Header=" 买价"  Width=" 80"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -1564,7 +1545,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userOTGVCH" Header="投资账户 " Width="100"/>
@@ -1644,7 +1625,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <ListView x:Name="futuresTradingListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Visibility="Hidden">
+                        <ListView x:Name="futuresTradingListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Visibility="Hidden" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userFTGVCH" Header="投资账户 " Width="100"/>
@@ -1731,7 +1712,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,7,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="#FF9198AC" Margin="0,7,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userHDGVCH" Header="投资账户 " />
@@ -1790,7 +1771,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="209" VerticalAlignment="Top" Width="915"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="-3,7,-3,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}">
+                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="209" VerticalAlignment="Top" Width="915"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="-3,7,-3,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userUMGVCH" Header=" 账户号" Width=" 100"/>
@@ -1861,7 +1842,7 @@
                     <ComboBoxItem x:Name="typeOfArbitrageComoBox2" Content=" 期货与期货" HorizontalAlignment="Left" />
                 </ComboBox>
             </Canvas>
-            <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="102" Canvas.Top="216" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White"/>
+            <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="102" Canvas.Top="216" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Click="startStrategyBtn_Click"/>
         </Canvas>
 
         <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="30" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave" FlowDirection="RightToLeft"/>
