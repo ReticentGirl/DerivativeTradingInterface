@@ -1495,8 +1495,17 @@
                     <TextBlock Text="到期日" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="8" Grid.Row=" 0" Foreground="#FF76768B" Margin="26,4"/>
                     <TextBlock Text="更新时间" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="9" Grid.Row=" 0" Foreground="#FF76768B" Margin="21,4,20,4"/>
                     <TextBox x:Name="newPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 0" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="upAndDownTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 1" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="amountOfUpAndDownTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 2" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="buyPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 3" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="sellPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 4" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="topPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 5" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="bottomPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 6" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="amountOfTradeTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 7" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="timeLimitTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 8" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBox x:Name="updateTimeTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 9" Grid.Row=" 1" Margin="41,4,41,3"/>
                 </Grid>
-                <Border x:Name="titileBorder4" BorderBrush="#FF414559" BorderThickness="0,1,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" Width="1128" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="100" >
+                <Border x:Name="titileBorder4" BorderBrush="#FF414559" BorderThickness="0,1,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" Width="1128" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="79" >
                     <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Height="25" Width="1128" FlowDirection="LeftToRight" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" Canvas.Top="100" RenderTransformOrigin="0.5,0.5" MouseEnter="optionsMarketTitleGrid_MouseEnter" MouseLeave="optionsMarketTitleGrid_MouseLeave" >
 
                         <Grid.RenderTransform>
@@ -1522,7 +1531,7 @@
                         <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Grid.ColumnSpan="2" Margin="79,0,0,0"/>
                     </Grid>
                 </Border>
-                <ListView Name="optionsMarketListView" Height="231" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="{x:Null}" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="125" >
+                <ListView Name="optionsMarketListView" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="{x:Null}" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="buyPriceROMGVCH" Header=" 买价" Width="80"  />
@@ -1837,7 +1846,7 @@
                     <ComboBoxItem x:Name="predictComboBoxItem4" Content=" 与标的物组合" HorizontalAlignment="Left" Selected="predictComboBoxItem4_Selected"  />
                 </ComboBox>
                 <Label x:Name="amountOfUpAndDownLabel" Content="最高涨跌幅：" Canvas.Left="154" Canvas.Top="90" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
-                <TextBox x:Name="amountOfUpAndDownTextBox" Height="23" Canvas.Left="70" TextWrapping="Wrap" Text="%" Canvas.Top="92" Width="54" Style="{StaticResource textboxStyle}" Visibility="Hidden" Foreground="#FF9198AC"/>
+                <TextBox x:Name="MaxAmountOfUpAndDownTextBox" Height="23" Canvas.Left="70" TextWrapping="Wrap" Text="%" Canvas.Top="92" Width="54" Style="{StaticResource textboxStyle}" Foreground="#FF9198AC" Visibility="Hidden"/>
                 <Label x:Name="volatilityLabel" Content="波动率：" Canvas.Left="153" Canvas.Top="90" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
                 <ComboBox x:Name="volatilityComboBox" FlowDirection="LeftToRight" Canvas.Left="79" Canvas.Top="92" Width="45" Height="23"  Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" Visibility="Hidden" >
                     <ComboBoxItem Content=" 高" HorizontalAlignment="Left" />

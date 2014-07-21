@@ -384,7 +384,7 @@ namespace qiquanui
          private void predictComboBoxItem_Selected(object sender, RoutedEventArgs e)
          {
              amountOfUpAndDownLabel.Visibility = Visibility.Visible;
-             amountOfUpAndDownTextBox.Visibility = Visibility.Visible;
+             MaxAmountOfUpAndDownTextBox.Visibility = Visibility.Visible;
              volatilityLabel.Visibility = Visibility.Hidden;
              volatilityComboBox.Visibility = Visibility.Hidden;
          }
@@ -392,7 +392,7 @@ namespace qiquanui
          private void predictComboBoxItem2_Selected(object sender, RoutedEventArgs e)
          {
              amountOfUpAndDownLabel.Visibility = Visibility.Visible;
-             amountOfUpAndDownTextBox.Visibility = Visibility.Visible;
+             MaxAmountOfUpAndDownTextBox.Visibility = Visibility.Visible;
              volatilityLabel.Visibility = Visibility.Hidden;
              volatilityComboBox.Visibility = Visibility.Hidden;
          }
