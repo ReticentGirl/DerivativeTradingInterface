@@ -15,6 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Collections.ObjectModel;
+using System.Data;
+using System.Data.SQLite;
+using System.Data.Common;
 
 namespace qiquanui
 {
@@ -150,6 +153,11 @@ namespace qiquanui
 
             typeComboBox.SelectedIndex = 0;
             typeInStrategyPanelComboBox.SelectedIndex = 1;
+
+            
+           
+            
+
         }
 
 
@@ -453,6 +461,8 @@ namespace qiquanui
             strategyWindow.Show();
            
         }
+
+       
 
        
       
