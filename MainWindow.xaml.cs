@@ -18,6 +18,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SQLite;
 using System.Data.Common;
+using System.ComponentModel;
 
 namespace qiquanui
 {
@@ -32,11 +33,117 @@ namespace qiquanui
         private double oldx, oldy, originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, futuresTradingListVieww, futuresTradingListViewwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
 
         private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard;
-        public struct option
+        public struct option  : INotifyPropertyChanged
         {
-            public string Bid, Ask;
-            public int Price;
+            private double bidPrice1;
+            private double askPrice1;
+            private double lastPrice1;
+            private int volume1;
+            private int openInterest1;
+            private int exercisePrice;
+            private int openInterest2;
+            private int volume2;
+            private double bidPrice2;
+            private double askPrice2;
+            private double lastPrice2;
+
+            public double BidPrice1
+            {
+                get { return bidPrice1; }
+                set
+                {
+                    bidPrice1 = value; 
+                    //OnPropertyChanged(new PropertyChangedEventArgs("Name"));
+                }
+            }
+            public double AskPrice1
+            {
+                get { return askPrice1; }
+                set { 
+                    askPrice1 = value; 
+                    OnPropertyChanged(new PropertyChangedEventArgs("ImageUrl")); 
+                }
+            }
+            public double LastPrice1
+            {
+                get { return lastPrice1; }
+                set
+                {
+                    lastPrice1 = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs("lastPrice1"));
+                }
+            }
+            public int Volume1
+            {
+                get { return volume1; }
+                set { volume1 = value; OnPropertyChanged(new PropertyChangedEventArgs("Age")); }
+            }
+            public int OpenInterest1
+            {
+                get { return openInterest1; }
+                set { openInterest1 = value; OnPropertyChanged(new PropertyChangedEventArgs("Age")); }
+            }
+            public int ExercisePrice
+            {
+                get { return exercisePrice; }
+                set { exercisePrice = value;
+                    //OnPropertyChanged(new PropertyChangedEventArgs("Age")); 
+                }
+            }
+
+            public double BidPrice2
+            {
+                get { return bidPrice2; }
+                set
+                {
+                    bidPrice2 = value;
+                    //OnPropertyChanged(new PropertyChangedEventArgs("Name"));
+                }
+            }
+            public double AskPrice2
+            {
+                get { return askPrice2; }
+                set { askPrice2 = value; OnPropertyChanged(new PropertyChangedEventArgs("ImageUrl")); }
+            }
+            public double LastPrice2
+            {
+                get { return lastPrice2; }
+                set
+                {
+                    lastPrice2 = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs("LastPrice2"));
+                }
+            }
+            public int Volume2
+            {
+                get { return volume2; }
+                set { volume2 = value; 
+                    //OnPropertyChanged(new PropertyChangedEventArgs("Age"));
+                }
+            }
+            public int OpenInterest2
+            {
+                get { return openInterest2; }
+                set { openInterest2 = value; 
+                    //OnPropertyChanged(new PropertyChangedEventArgs("Age")); 
+                }
+            }
+
+
+            #region INotifyPropertyChanged 成员
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            public void OnPropertyChanged(PropertyChangedEventArgs e)
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, e);
+                }
+            }
+            #endregion
         }
+
+
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             oldx = e.GetPosition(this).X;
@@ -87,13 +194,77 @@ namespace qiquanui
 
             InitializeComponent();
             ObservableObj.Clear();
-            ObservableObj.Add(new option() { Bid = "帅波", Ask = "男", Price = 20 });
-            ObservableObj.Add(new option() { Bid = "帅波2", Ask = "女", Price = 60 });
-            ObservableObj.Add(new option() { Bid = "帅波3", Ask = "女", Price = 50 });
-            ObservableObj.Add(new option() { Bid = "帅波4", Ask = "女", Price = 40 });
-            ObservableObj.Add(new option() { Bid = "帅波5", Ask = "男", Price = 20 });
+            ObservableObj.Add(new option()
+            {
+                BidPrice1 = 3243,
+                AskPrice1 = 324,
+                LastPrice1 = 324,
+                Volume1 = 234,
+                OpenInterest1 = 324,
+                ExercisePrice = 2250,
+                BidPrice2 = 3243,
+                AskPrice2 = 324,
+                LastPrice2 = 324,
+                Volume2 = 234,
+                OpenInterest2 = 324,
+            });
+            ObservableObj.Add(new option()
+            {
+                BidPrice1 = 3243,
+                AskPrice1 = 324,
+                LastPrice1 = 324,
+                Volume1 = 234,
+                OpenInterest1 = 324,
+                ExercisePrice = 2250,
+                BidPrice2 = 3243,
+                AskPrice2 = 324,
+                LastPrice2 = 324,
+                Volume2 = 234,
+                OpenInterest2 = 324,
+            });
+            ObservableObj.Add(new option()
+            {
+                BidPrice1 = 3243,
+                AskPrice1 = 324,
+                LastPrice1 = 324,
+                Volume1 = 234,
+                OpenInterest1 = 324,
+                ExercisePrice = 2250,
+                BidPrice2 = 3243,
+                AskPrice2 = 324,
+                LastPrice2 = 324,
+                Volume2 = 234,
+                OpenInterest2 = 324,
+            });
+            ObservableObj.Add(new option()
+            {
+                BidPrice1 = 3243,
+                AskPrice1 = 324,
+                LastPrice1 = 324,
+                Volume1 = 234,
+                OpenInterest1 = 324,
+                ExercisePrice = 2250,
+                BidPrice2 = 3243,
+                AskPrice2 = 324,
+                LastPrice2 = 324,
+                Volume2 = 234,
+                OpenInterest2 = 324,
+            });
+            ObservableObj.Add(new option()
+            {
+                BidPrice1 = 3243,
+                AskPrice1 = 324,
+                LastPrice1 = 324,
+                Volume1 = 234,
+                OpenInterest1 = 324,
+                ExercisePrice = 2250,
+                BidPrice2 = 3243,
+                AskPrice2 = 324,
+                LastPrice2 = 324,
+                Volume2 = 234,
+                OpenInterest2 = 324,
+            });
             optionsMarketListView.DataContext = ObservableObj;
-            optionsMarketListView.ItemsSource = ObservableObj;
 
 
 

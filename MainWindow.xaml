@@ -1515,17 +1515,17 @@
                 <ListView Name="optionsMarketListView"  ItemsSource="{Binding}" DataContext="{Binding}" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn x:Name="buyPriceROMGVCH" Header=" 买价" DisplayMemberBinding="{Binding Path=Bid}" Width="80"/>
-                            <GridViewColumn x:Name="sellPriceROMGVCH" Header=" 卖价" DisplayMemberBinding="{Binding Path=Ask}" Width="80"/>
-                            <GridViewColumn x:Name="newPriceROMGVCH" Header=" 最新价"  Width="80"/>
-                            <GridViewColumn x:Name="amountROMGVCH" Header=" 现量"  Width="80"/>
-                            <GridViewColumn x:Name="tradeVolumnROMGVCH" Header=" 成交量"  Width=" 80"/>
-                            <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价" DisplayMemberBinding="{Binding Path=Price}" Width=" 80"/>
-                            <GridViewColumn x:Name="tradeVolumnDOMGVCH" Header=" 成交量"  Width=" 80"/>
-                            <GridViewColumn x:Name="amountDOMGVCH" Header=" 现量"  Width=" 80"/>
-                            <GridViewColumn x:Name="newPriceRDOMGVCH" Header=" 最新价"  Width=" 80"/>
-                            <GridViewColumn x:Name="sellPriceDOMGVCH" Header=" 卖价"  Width=" 80"/>
-                            <GridViewColumn x:Name="buyPriceDOMGVCH" Header=" 买价"  Width=" 80"/>
+                            <GridViewColumn x:Name="buyPriceROMGVCH" Header=" 买价" DisplayMemberBinding="{Binding Path=BidPrice1}" Width="80"/>
+                            <GridViewColumn x:Name="sellPriceROMGVCH" Header=" 卖价" DisplayMemberBinding="{Binding Path=AskPrice1}" Width="80"/>
+                            <GridViewColumn x:Name="newPriceROMGVCH" Header=" 最新价" DisplayMemberBinding="{Binding Path=LastPrice1}" Width="80"/>
+                            <GridViewColumn x:Name="amountROMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Path=Volume1}" Width="80"/>
+                            <GridViewColumn x:Name="tradeVolumnROMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding Path=OpenInterest1}" Width=" 80"/>
+                            <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价" DisplayMemberBinding="{Binding Path=ExercisePrice}" Width=" 80"/>
+                            <GridViewColumn x:Name="tradeVolumnDOMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding Path=OpenInterest2}" Width=" 80"/>
+                            <GridViewColumn x:Name="amountDOMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Path=Volume2}" Width=" 80"/>
+                            <GridViewColumn x:Name="newPriceRDOMGVCH" Header=" 最新价" DisplayMemberBinding="{Binding Path=LastPrice2}" Width=" 80"/>
+                            <GridViewColumn x:Name="sellPriceDOMGVCH" Header=" 卖价" DisplayMemberBinding="{Binding Path=AskPrice2}"  Width=" 80"/>
+                            <GridViewColumn x:Name="buyPriceDOMGVCH" Header=" 买价" DisplayMemberBinding="{Binding Path=BidPrice2}"   Width=" 80"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
