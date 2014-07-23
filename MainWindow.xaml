@@ -1030,7 +1030,7 @@
                                                 <SolidColorBrush Color="#FF0A0A0E" Opacity="0.5"/>
                                             </Setter.Value>
                                         </Setter>
-                                        
+
 
                                     </Trigger.Setters>
                                 </Trigger>
@@ -1392,7 +1392,7 @@
         <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}"/>
         <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}"/>
         <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}"/>
-
+        <!--行情区-->
         <Grid x:Name="Grid1" HorizontalAlignment="Left" Height="356" Margin="29,38,0,0" VerticalAlignment="Top" Width="1127" ClipToBounds="True" Background="#FF292932" MouseEnter="Grid1_MouseEnter" MouseLeave="Grid1_MouseLeave">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -1402,13 +1402,14 @@
             </Grid.ColumnDefinitions>
 
             <Canvas x:Name="TopCanvas1" HorizontalAlignment="Right" Height="356" Margin="0" VerticalAlignment="Bottom" Width="1127">
+                <!--指定种类、交易商、标的资产、到期年月-->
                 <Grid x:Name="TopCanvasButtomGrid" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="1128" Canvas.Bottom="1" Background="#FF101013" Canvas.Top="1" MouseEnter="TopCanvasButtomGrid_MouseEnter" MouseLeave="TopCanvasButtomGrid_MouseLeave">
-                    <Label x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" Background="{x:Null}" Margin="11,2,0,0"/>
+                    <TextBlock  x:Name="typeLabel" Text="衍生品种类" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="11,2,0,0"/>
                     <ComboBox x:Name="typeComboBox" VerticalAlignment="Top" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" Margin="80,3,0,0" HorizontalAlignment="Left" Height="23" Width="70" >
                         <ComboBoxItem x:Name="futuresComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresComboBoxItem_Selected"/>
                         <ComboBoxItem x:Name="optionsComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsComboBoxItem_Selected" />
                     </ComboBox>
-                    <Label x:Name="traderLabel" Content="交易商" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Margin="150,2,0,0" />
+                    <TextBlock x:Name="exchangeNameLabel" Text="交易商" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Margin="150,2,0,0" />
                     <ComboBox x:Name="optionsTraderComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="196,3,0,0" >
                         <ComboBoxItem x:Name="optionsTraderComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="optionsTraderComboBoxItem2" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
@@ -1419,38 +1420,53 @@
                         <ComboBoxItem x:Name="futuresTraderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="futuresTraderComboBoxItem4" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
-                    <Label x:Name="nameLabel" Content="标的期货" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" Background="{x:Null}" Margin="276,2,0,0" />
-                    <ComboBox x:Name="nameComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="334,3,0,0" SelectionChanged="nameComboBox_SelectionChanged" >
-                        <ComboBoxItem x:Name="nameComboBoxItem1" Content="沪深300期权" HorizontalAlignment="Left" Width="80"/>
+                    <TextBlock x:Name="subjectMatterLabel" Text="标的资产" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="276,2,0,0" />
+                    <ComboBox x:Name="subjectMatterComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="334,3,0,0">
+<ComboBoxItem x:Name="nameComboBoxItem1" Content="沪深300期权" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="nameComboBoxItem2" Content="上证50期权" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
+
+                    <TextBlock x:Name="dueDateLabel" Text="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="414,0,0,0" />
+                    <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="472,2,0,0" />
                 </Grid>
+
                 <ListView x:Name="futuresMarketListView" Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="#FF9198AC">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn x:Name="nameFMGVCH" Header=" 名称" Width=" 100" />
-                            <GridViewColumn x:Name="newPriceFMGVCH" Header=" 最新价格" Width=" 100"/>
-                            <GridViewColumn x:Name="sellPriceFMGVCH" Header=" 卖价" Width=" 100"/>
-                            <GridViewColumn x:Name="buyPriceFMGVCH" Header=" 买价" Width=" 100"/>
-                            <GridViewColumn x:Name="buyVolumnFMGVCH" Header=" 买量" Width=" 100"/>
-                            <GridViewColumn x:Name="sellVolumnFMGVCH" Header=" 卖量" Width=" 100"/>
-                            <GridViewColumn x:Name="tradeVolumnFMGVCH" Header=" 成交量" Width=" 100"/>
+                            <GridViewColumn x:Name="instrumentNameFMGVCH" Header=" 名称" Width=" 100" />
+                            <GridViewColumn x:Name="lastPriceFMGVCH" Header=" 最新价格" Width=" 100"/>
+                            <GridViewColumn x:Name="askPriceFMGVCH" Header=" 卖价" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="askFMBtn" Content="" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="bidPriceFMGVCH" Header=" 买价" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="bidFMBtn" Content="" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="bidVolumeFMGVCH" Header=" 买量" Width=" 100"/>
+                            <GridViewColumn x:Name="askVolumeFMGVCH" Header=" 卖量" Width=" 100"/>
+                            <GridViewColumn x:Name="openInterestFMGVCH" Header=" 成交量" Width=" 100"/>
                             <GridViewColumn x:Name="openPriceFMGVCH" Header=" 今日开盘价" Width=" 100"/>
-                            <GridViewColumn x:Name="upAndDownFMGVCH" Header=" 涨跌" Width=" 100"/>
-                            <GridViewColumn x:Name="amountOfUpAndDownFMGVCH" Header=" 涨跌幅度" Width=" 100"/>
+                            <GridViewColumn x:Name="riseAndFallFMGVCH" Header=" 涨跌" Width=" 100"/>
+                            <GridViewColumn x:Name="riseAndFallRateFMGVCH" Header=" 涨跌幅度" Width=" 100"/>
                             <GridViewColumn x:Name="highestPriceFMGVCH" Header=" 最高价" Width=" 100"/>
                             <GridViewColumn x:Name="lowestPriceFMGVCH" Header=" 最低价" Width=" 100"/>
-                            <GridViewColumn x:Name="raiseLimitPriceFMGVCH" Header=" 涨停板价" Width=" 100"/>
-                            <GridViewColumn x:Name="downLimitPriceFMGVCH" Header=" 跌停板价" Width=" 100"/>
-                            <GridViewColumn x:Name="settlePriceFMGVCH" Header=" 昨日结算价" Width=" 100"/>
-                            <GridViewColumn x:Name="closePriceFMGVCH" Header=" 昨日收盘价" Width=" 100"/>
-                            <GridViewColumn x:Name="yesterdayTradeVolumnFMGVCH" Header=" 昨日成交量" Width=" 100"/>
+                            <GridViewColumn x:Name="upperLimitPriceFMGVCH" Header=" 涨停板价" Width=" 100"/>
+                            <GridViewColumn x:Name="lowerLimitPriceFMGVCH" Header=" 跌停板价" Width=" 100"/>
+                            <GridViewColumn x:Name="preSettlementPriceFMGVCH" Header=" 昨日结算价" Width=" 100"/>
+                            <GridViewColumn x:Name="preClosePriceFMGVCH" Header=" 昨日收盘价" Width=" 100"/>
+                            <GridViewColumn x:Name="preOpenInterestFMGVCH" Header=" 昨日成交量" Width=" 100"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
 
-                <Border BorderBrush="#FF414559"></Border>
-                <Grid x:Name="futuresOfOptionGrid" Height="49" Canvas.Top="30" Width="882">
+                <Grid x:Name="subjectMatterMarketGrid" Height="49" Canvas.Top="30" Width="882">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="88*" />
                         <ColumnDefinition Width="88*" />
@@ -1478,16 +1494,16 @@
                     <TextBlock Text="成交量" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="7" Grid.Row=" 0" Foreground="#FF76768B" Margin="26,4,27,4"/>
                     <TextBlock Text="到期日" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="8" Grid.Row=" 0" Foreground="#FF76768B" Margin="26,4"/>
                     <TextBlock Text="更新时间" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="9" Grid.Row=" 0" Foreground="#FF76768B" Margin="21,4,20,4"/>
-                    <TextBox x:Name="newPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 0" Grid.Row=" 1" Margin="41,4,41,3"/>
-                    <TextBox x:Name="upAndDownTextBox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Column=" 1" Grid.Row=" 1" Margin="41,0,41,3"/>
-                    <TextBox x:Name="amountOfUpAndDownTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 2" Grid.Row=" 1" Margin="41,4,41,3"/>
-                    <TextBox x:Name="buyPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 3" Grid.Row=" 1" Margin="41,4,41,3"/>
-                    <TextBox x:Name="sellPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 4" Grid.Row=" 1" Margin="41,4,41,3"/>
-                    <TextBox x:Name="topPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 5" Grid.Row=" 1" Margin="41,4,41,3"/>
-                    <TextBox x:Name="bottomPriceTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 6" Grid.Row=" 1" Margin="41,4,41,3"/>
-                    <TextBox x:Name="amountOfTradeTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 7" Grid.Row=" 1" Margin="41,4,41,3"/>
-                    <TextBox x:Name="timeLimitTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 8" Grid.Row=" 1" Margin="41,4,41,3"/>
-                    <TextBox x:Name="updateTimeTextBox" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 9" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="lastPriceOMTB" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 0" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="riseAndFallTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 1" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="riseAndFallRateTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 2" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="bidPriceTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 3" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="askPriceTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 4" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="heightestPriceTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 5" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="lowestPriceTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 6" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="openInterestTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 7" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="dueDateTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 8" Grid.Row=" 1" Margin="41,4,41,3"/>
+                    <TextBlock x:Name="updateTimeTextBox" Text="" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column=" 9" Grid.Row=" 1" Margin="41,4,41,3"/>
                 </Grid>
                 <Border x:Name="titileBorder4" BorderBrush="#FF414559" BorderThickness="0,1,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" Width="1128" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="79" >
                     <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Height="25" Width="1128" FlowDirection="LeftToRight" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" Canvas.Top="100" RenderTransformOrigin="0.5,0.5" MouseEnter="optionsMarketTitleGrid_MouseEnter" MouseLeave="optionsMarketTitleGrid_MouseLeave" >
@@ -1515,26 +1531,39 @@
                         <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Grid.ColumnSpan="2" Margin="79,0,0,0"/>
                     </Grid>
                 </Border>
-                <ListView Name="optionsMarketListView"  ItemsSource="{Binding}" DataContext="{Binding}" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" >
+                <ListView Name="optionsMarketListView" ItemsSource="{Binding}" DataContext="{Binding}" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn x:Name="buyPriceROMGVCH" Header=" 买价" DisplayMemberBinding="{Binding Path=BidPrice1}" Width="80"/>
-                            <GridViewColumn x:Name="sellPriceROMGVCH" Header=" 卖价" DisplayMemberBinding="{Binding Path=AskPrice1}" Width="80"/>
-                            <GridViewColumn x:Name="newPriceROMGVCH" Header=" 最新价" DisplayMemberBinding="{Binding Path=LastPrice1}" Width="80"/>
-                            <GridViewColumn x:Name="amountROMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Path=Volume1}" Width="80"/>
-                            <GridViewColumn x:Name="tradeVolumnROMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding Path=OpenInterest1}" Width=" 80"/>
+                            <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" DisplayMemberBinding="{Binding Path=BidPrice1}" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="bidOMBtn" Content="{Binding Path=BidPrice1}" Width=" 80"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="askPriceROMGVCH" Header=" 卖价" DisplayMemberBinding="{Binding Path=AskPrice1}" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button x:Name="askOMBtn" Content="{Binding Path=AskPrice1}" Width="80"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="lastPriceROMGVCH" Header=" 最新价" DisplayMemberBinding="{Binding Path=LastPrice1}" Width="80"/>
+                            <GridViewColumn x:Name="volumeROMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Path=Volume1}" Width="80"/>
+                            <GridViewColumn x:Name="openInterestROMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding Path=OpenInterest1}" Width=" 80"/>
                             <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价" DisplayMemberBinding="{Binding Path=ExercisePrice}" Width=" 80"/>
-                            <GridViewColumn x:Name="tradeVolumnDOMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding Path=OpenInterest2}" Width=" 80"/>
-                            <GridViewColumn x:Name="amountDOMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Path=Volume2}" Width=" 80"/>
-                            <GridViewColumn x:Name="newPriceRDOMGVCH" Header=" 最新价" DisplayMemberBinding="{Binding Path=LastPrice2}" Width=" 80"/>
-                            <GridViewColumn x:Name="sellPriceDOMGVCH" Header=" 卖价" DisplayMemberBinding="{Binding Path=AskPrice2}"  Width=" 80"/>
-                            <GridViewColumn x:Name="buyPriceDOMGVCH" Header=" 买价" DisplayMemberBinding="{Binding Path=BidPrice2}"   Width=" 80"/>
+                            <GridViewColumn x:Name="openInterestDOMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding Path=OpenInterest2}" Width=" 80"/>
+                            <GridViewColumn x:Name="volumeDOMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Path=Volume2}" Width=" 80"/>
+                            <GridViewColumn x:Name="lastPriceRDOMGVCH" Header=" 最新价" DisplayMemberBinding="{Binding Path=LastPrice2}" Width=" 80"/>
+                            <GridViewColumn x:Name="askPriceDOMGVCH" Header=" 卖价" DisplayMemberBinding="{Binding Path=AskPrice2}" Width=" 80"/>
+                            <GridViewColumn x:Name="bidPriceDOMGVCH" Header=" 买价" DisplayMemberBinding="{Binding Path=BidPrice2}" Width=" 80"/>
                         </GridView>
                     </ListView.View>
+                    <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="12"/>
                 </ListView>
             </Canvas>
         </Grid>
-
+        <!--操作区-->
         <Grid x:Name="Grid3" HorizontalAlignment="Left" Height="238" Margin="29,0,0,21" VerticalAlignment="Bottom" Width="915" Background="#FF0D0D11" MouseEnter="Grid3_MouseEnter" MouseLeave="Grid3_MouseLeave">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -1548,15 +1577,22 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC">
+                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="208" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
+                                    <GridViewColumn x:Name="ifChooseOTGVCH" Header="" Width="Auto">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <CheckBox x:Name="ifChooseOTCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn x:Name="userOTGVCH" Header="投资账户 " Width="100"/>
                                     <GridViewColumn x:Name="nameOTGVCH" Header="合约名称 " Width="100"/>
                                     <GridViewColumn x:Name="typeOTGVCH" Header="合约类型 " Width="80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOfOptionsComboBox">
+                                                <ComboBox x:Name="typeOTComboBox">
                                                     <ComboBoxItem Content="看涨" HorizontalAlignment="Left" Width="80"/>
                                                     <ComboBoxItem Content="看跌" HorizontalAlignment="Left" Width="80"/>
                                                 </ComboBox>
@@ -1567,29 +1603,32 @@
                                     <GridViewColumn x:Name="typeOfTradeOTGVCH" Header=" 交易类型" Width="60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOfTradingComboBox">
-                                                    <ComboBoxItem Content="买" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="卖" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="开" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="平" HorizontalAlignment="Left" Width="60"/>
+                                                <ComboBox x:Name="typeOfTradingOTComboBox" SelectedIndex="0">
+                                                    <ComboBoxItem Content="买开" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="卖开" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="买平" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="卖平" HorizontalAlignment="Left" Width="60"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="lotOTGVCH" Header=" 交易手数" Width="60">
-                                        <GridViewColumn.CellTemplate>
+                                        <!--<GridViewColumn.CellTemplate>
                                             <DataTemplate >
-                                                <ListBox x:Name="lotListBox" />
+                                                <TextBox HorizontalAlignment="Left" Height="24" Margin="271,172,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="40"/>                                                
                                             </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="12"/>
+                                                <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="12"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>-->
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="formOfClientageOTGVCH" Header=" 委托方式" Width=" 60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="formOfClientageComboBox">
-                                                    <ComboBoxItem Content=" ROD" HorizontalAlignment="Left" Width=" 60"/>
-                                                    <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 60"/>
-                                                    <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 60"/>
+                                                <ComboBox x:Name="formOfClientageOTComboBox">
+                                                    <ComboBoxItem x:Name="marketPriceOTCBI" Content=" 市价" HorizontalAlignment="Left" Width=" 60" />
+                                                    <ComboBoxItem x:Name="limitPriceOTCBI" Content=" 限价" HorizontalAlignment="Left" Width=" 60"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -1597,30 +1636,40 @@
                                     <GridViewColumn x:Name="priceOfClientageOTGVCH" Header=" 委托价格" Width=" 80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="priceOfClientageTextBox" Text=" " Width=" 80"/>
+                                                <TextBox x:Name="priceOfClientageOTTextBox" Text=" " Width=" 80"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="priceOfMarketOTGVCH" Header=" 市场价格" Width=" 80"/>
-                                    <GridViewColumn x:Name="timeLimitOTGVCH" Header=" 有效期" Width=" 100"/>
+                                    <GridViewColumn x:Name="conditionOTGVCH" Header=" 托单条件" Width=" 100">
+                                        <GridViewColumn.CellTemplate >
+                                            <DataTemplate>
+                                                <ComboBox x:Name="conditionOTComboBox">
+                                                    <ComboBoxItem x:Name="comboBoxItem1" Content=" ROD" HorizontalAlignment="Left" Width=" 60"/>
+                                                    <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 60"/>
+                                                    <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 60"/>
+                                                </ComboBox>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn x:Name="setGradientOTGVCH" Header=" 设置梯度" Width=" 60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <CheckBox />
+                                                <CheckBox x:Name="setGradientOTCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="accuracyOTGVCH" Header=" 精确度" Width=" 50">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="accuracyTextBox" Text=" " Width=" 50"/>
+                                                <TextBox x:Name="accuracyOTTextBox" Text=" " Width=" 50"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="arithmeticProgressionOTGVCH" Header="手数等差 " Width=" Auto">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="arithmeticProgressionTextBox" Text=" " Width=" 60"/>
+                                                <TextBox x:Name="arithmeticProgressionOTTextBox" Text=" " Width=" 60"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -1631,44 +1680,46 @@
                         <ListView x:Name="futuresTradingListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Visibility="Hidden" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn x:Name="userFTGVCH" Header="投资账户 " Width="100"/>
-                                    <GridViewColumn x:Name="namefTGVCH" Header="商品名称 " Width="100"/>
-                                    <GridViewColumn x:Name="typeFTGVCH" Header="合约类型 " Width="80">
-                                        <GridViewColumn.CellTemplate >
+                                    <GridViewColumn x:Name="ifChooseFTGVH" Header="" Width="Auto">
+                                        <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOfOptionsComboBox">
-                                                    <ComboBoxItem Content="看涨" HorizontalAlignment="Left" Width="80"/>
-                                                    <ComboBoxItem Content="看跌" HorizontalAlignment="Left" Width="80"/>
-                                                </ComboBox>
+                                                <CheckBox x:Name="ifChooseFTCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn x:Name="userFTGVCH" Header="投资账户 " Width="100"/>
+                                    <GridViewColumn x:Name="namefTGVCH" Header="合约名称 " Width="100"/>
+                                    <GridViewColumn x:Name="typeFTGVCH" Header="合约类型 " Width="80">                                        
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="typeOfTradeFTGVCH" Header=" 交易类型" Width="60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOfTradingComboBox">
-                                                    <ComboBoxItem Content="买" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="卖" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="开" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="平" HorizontalAlignment="Left" Width="60"/>
+                                                <ComboBox x:Name="typeOfTradingFTComboBox" SelectedIndex="0">
+                                                    <ComboBoxItem Content="买开" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="卖开" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="买平" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="卖平" HorizontalAlignment="Left" Width="60"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="lotFTGVCH" Header=" 交易手数" Width="60">
-                                        <GridViewColumn.CellTemplate>
+                                        <!--<GridViewColumn.CellTemplate>
                                             <DataTemplate >
-                                                <ListBox x:Name="lotListBox" />
+                                                <TextBox HorizontalAlignment="Left" Height="24" Margin="271,172,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="40"/>                                                
                                             </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="12"/>
+                                                <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="12"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>-->
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="formOfClientageFTGVCH" Header=" 委托方式" Width=" 60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="formOfClientageComboBox">
-                                                    <ComboBoxItem Content=" ROD" HorizontalAlignment="Left" Width=" 60"/>
-                                                    <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 60"/>
-                                                    <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 60"/>
+                                                <ComboBox x:Name="formOfClientageFTComboBox">
+                                                    <ComboBoxItem x:Name="marketPriceFTCBI" Content=" 市价" HorizontalAlignment="Left" Width=" 60" />
+                                                    <ComboBoxItem x:Name="limitPriceFTCBI" Content=" 限价" HorizontalAlignment="Left" Width=" 60"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -1681,31 +1732,43 @@
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="priceOfMarketFTGVCH" Header=" 市场价格" Width=" 80"/>
-                                    <GridViewColumn x:Name="timeLimitFTGVCH" Header=" 有效期" Width=" 100"/>
+                                    <GridViewColumn x:Name="conditionFTGVCH" Header=" 托单条件" Width=" 100">
+                                        <GridViewColumn.CellTemplate >
+                                            <DataTemplate>
+                                                <ComboBox x:Name="conditionFTComboBox">
+                                                    <ComboBoxItem x:Name="comboBoxItem1" Content=" ROD" HorizontalAlignment="Left" Width=" 60"/>
+                                                    <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 60"/>
+                                                    <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 60"/>
+                                                </ComboBox>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn x:Name="setGradientFTGVCH" Header=" 设置梯度" Width=" 60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <CheckBox />
+                                                <CheckBox x:Name="setGradientFTCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="accuracyFTGVCH" Header=" 精确度" Width=" 50">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="accuracyTextBox" Text=" " Width=" 50"/>
+                                                <TextBox x:Name="accuracyFTTextBox" Text=" " Width=" 50"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="arithmeticProgressionFTGVCH" Header="手数等差 " Width=" Auto">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="arithmeticProgressionTextBox" Text=" " Width=" 60"/>
+                                                <TextBox x:Name="arithmeticProgressionFTTextBox" Text=" " Width=" 60"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                        
+                        <Button x:Name="placeOrderBtn" Content="下单" HorizontalAlignment="Left" Margin="756,220,0,0" VerticalAlignment="Top" Width="75"/>
                     </Grid>
                 </TabItem>
 
@@ -1765,7 +1828,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="账户管理"  Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,6,2,-10">
+                <TabItem Header="账户管理"  Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-3,6,3,-10">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -1807,7 +1870,7 @@
                 </TabItem>
             </TabControl>
         </Grid>
-
+        <!--策略实验室伸缩面板-->
         <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519" MouseEnter="Canvas1_MouseEnter" MouseLeave="Canvas1_MouseLeave" ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft">
             <Label x:Name="type" Content="衍生品种类：" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Canvas.Left="177" Canvas.Top="40"/>
             <ComboBox x:Name="typeInStrategyPanelComboBox" VerticalAlignment="Top" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" HorizontalAlignment="Left" Height="23" Width="70" Canvas.Left="79" Canvas.Top="40" >
@@ -1829,8 +1892,8 @@
                     <ComboBoxItem x:Name="predictComboBoxItem3" Content=" 波动" HorizontalAlignment="Left" Selected="predictComboBoxItem3_Selected" />
                     <ComboBoxItem x:Name="predictComboBoxItem4" Content=" 与标的物组合" HorizontalAlignment="Left" Selected="predictComboBoxItem4_Selected"  />
                 </ComboBox>
-                <Label x:Name="amountOfUpAndDownLabel" Content="最高涨跌幅：" Canvas.Left="154" Canvas.Top="90" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
-                <TextBox x:Name="MaxAmountOfUpAndDownTextBox" Height="23" Canvas.Left="70" TextWrapping="Wrap" Text="%" Canvas.Top="92" Width="54" Style="{StaticResource textboxStyle}" Foreground="#FF9198AC" Visibility="Hidden"/>
+                <Label x:Name="maxAmountOfUpAndDownLabel" Content="最高涨跌幅：" Canvas.Left="154" Canvas.Top="90" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
+                <TextBox x:Name="maxAmountOfUpAndDownTextBox" Height="23" Canvas.Left="70" TextWrapping="Wrap" Text="%" Canvas.Top="92" Width="54" Style="{StaticResource textboxStyle}" Foreground="#FF9198AC" Visibility="Hidden"/>
                 <Label x:Name="volatilityLabel" Content="波动率：" Canvas.Left="153" Canvas.Top="90" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
                 <ComboBox x:Name="volatilityComboBox" FlowDirection="LeftToRight" Canvas.Left="79" Canvas.Top="92" Width="45" Height="23"  Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" Visibility="Hidden" >
                     <ComboBoxItem Content=" 高" HorizontalAlignment="Left" />
@@ -1847,7 +1910,7 @@
             </Canvas>
             <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="102" Canvas.Top="216" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Click="startStrategyBtn_Click"/>
         </Canvas>
-
+        <!--风险实验室伸缩面板-->
         <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="30" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave" FlowDirection="RightToLeft"/>
 
 
@@ -1862,6 +1925,7 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
+        
 
 
     </Grid>
