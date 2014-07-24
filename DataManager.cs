@@ -291,6 +291,7 @@ namespace qiquanui
             }
             else
             {
+                
                 pwindow.optionsMarketListView.DataContext = ObservableObj;
             }
 
@@ -313,7 +314,7 @@ namespace qiquanui
             {
                 string box_type=pwindow.typeComboBox.Text ;
                 string box_exchange=pwindow.futuresTraderComboBox.Text;
-                string box_future = pwindow.nameComboBox.Text;
+                string box_future = pwindow.subjectMatterComboBox.Text;
                 string instrumentname=box_future;
                 string box_time = "1409";
                 updatesql = String.Format("SELECT CallOrPut,UpdateTime,UpdateMillisec,LastPrice,AskPrice1,BidPrice1,ExercisePrice,OpenInterest,Volume FROM alldata0722 a,staticdata s where s.instrumentid=a.instrumentid and s.instrumentname='{0}' and s.duedate='{1}'  and a.updatetime<'09:31:00' order by updatetime", instrumentname, box_time);

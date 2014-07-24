@@ -657,10 +657,18 @@ namespace qiquanui
         {
             dm.Update();
         }
-        private void nameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+
+
+        private void subjectMatterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dataThread = new Thread(new ThreadStart(DmUpdate));
+ dataThread = new Thread(new ThreadStart(DmUpdate));
             dataThread.Start();
+        }
+
+        private void optionsMarketListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
 
