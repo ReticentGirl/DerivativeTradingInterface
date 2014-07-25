@@ -1163,7 +1163,7 @@
 
             <Button x:Name="placeOrderButton" Content="一键下单" Canvas.Right="20" Canvas.Bottom="4" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="65" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
         </Canvas>
-        <Border x:Name="Border1" BorderBrush="#FFFF7400" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" >
+        <Border x:Name="Border1" BorderBrush="#FFC35B04" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" >
             <Border.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

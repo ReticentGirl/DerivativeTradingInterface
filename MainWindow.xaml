@@ -650,41 +650,177 @@
             </Setter>
         </Style>
 
-        <!-- Simple ListBox - 它使用 SimpleScrollViewer 来使项滚动，并使用 SimpleListBoxItem 定义每个项的外观 -->
-        <Style x:Key="SimpleListBox" TargetType="{x:Type ListBox}">
-            <Setter Property="SnapsToDevicePixels" Value="true"/>
-            <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource SolidBorderBrush}"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
+
+
+        <!--listview的样式{x:Static GridView.GridViewScrollViewerStyleKey}-->
+
+        <Style x:Key="futureGridViewScrollViewerStyle"
+       TargetType="ScrollViewer">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBox}">
-                        <Grid>
-                            <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"/>
-                            <ScrollViewer Margin="1" Style="{DynamicResource SimpleScrollViewer}" Focusable="false" Background="{TemplateBinding Background}">
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 
-                                <!-- StackPanel 用来显示子级，方法是将 IsItemsHost 设置为 True -->
-                                <StackPanel Margin="2" IsItemsHost="true"/>
+                            <DockPanel Margin="{TemplateBinding Padding}">
+                                <ScrollViewer DockPanel.Dock="Top"
+              HorizontalScrollBarVisibility="Hidden"
+              VerticalScrollBarVisibility="Hidden"
+              Focusable="false" Style="{StaticResource futureSimpleScrollViewer}"
+>
+                                    <GridViewHeaderRowPresenter Margin="2,0,2,0"
+                Columns="{Binding Path=TemplatedParent.View.Columns,
+                          RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderContainerStyle="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderContainerStyle,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderTemplate="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderTemplate,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderTemplateSelector="{Binding 
+                             Path=TemplatedParent.View.ColumnHeaderTemplateSelector,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                AllowsColumnReorder="{Binding
+                             Path=TemplatedParent.View.AllowsColumnReorder,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderContextMenu="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderContextMenu,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderToolTip="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderToolTip,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </ScrollViewer>
 
-                            </ScrollViewer>
+                                <ScrollContentPresenter Name="PART_ScrollContentPresenter"
+              KeyboardNavigation.DirectionalNavigation="Local"
+              CanContentScroll="True" CanHorizontallyScroll="False" 
+              CanVerticallyScroll="False"/>
+                            </DockPanel>
+
+                            <ScrollBar Name="PART_HorizontalScrollBar"
+            Orientation="Horizontal"
+            Grid.Row="1"
+            Maximum="{TemplateBinding ScrollableWidth}"
+            ViewportSize="{TemplateBinding ViewportWidth}"
+            Value="{TemplateBinding HorizontalOffset}"
+            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                       Style="{StaticResource futureSimpleScrollBar}"/>
+
+                            <ScrollBar Name="PART_VerticalScrollBar"
+            Grid.Column="1"
+            Maximum="{TemplateBinding ScrollableHeight}"
+            ViewportSize="{TemplateBinding ViewportHeight}"
+            Value="{TemplateBinding VerticalOffset}"
+            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                     Style="{StaticResource futureSimpleScrollBar}"  />
+
                         </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" Value="{DynamicResource DisabledBackgroundBrush}" TargetName="Border"/>
-                                <Setter Property="BorderBrush" Value="{DynamicResource DisabledBorderBrush}" TargetName="Border"/>
-                            </Trigger>
-                            <Trigger Property="IsGrouping" Value="true">
-                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
 
-        <Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
+
+
+        <Style x:Key="GridViewScrollViewerStyle"
+       TargetType="ScrollViewer">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel Margin="{TemplateBinding Padding}">
+                                <ScrollViewer DockPanel.Dock="Top"
+              HorizontalScrollBarVisibility="Hidden"
+              VerticalScrollBarVisibility="Hidden"
+              Focusable="false" Style="{StaticResource SimpleScrollViewer}"
+>
+                                    <GridViewHeaderRowPresenter Margin="2,0,2,0"
+                Columns="{Binding Path=TemplatedParent.View.Columns,
+                          RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderContainerStyle="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderContainerStyle,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderTemplate="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderTemplate,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderTemplateSelector="{Binding 
+                             Path=TemplatedParent.View.ColumnHeaderTemplateSelector,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                AllowsColumnReorder="{Binding
+                             Path=TemplatedParent.View.AllowsColumnReorder,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderContextMenu="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderContextMenu,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderToolTip="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderToolTip,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </ScrollViewer>
+
+                                <ScrollContentPresenter Name="PART_ScrollContentPresenter"
+              KeyboardNavigation.DirectionalNavigation="Local"
+              CanContentScroll="True" CanHorizontallyScroll="False" 
+              CanVerticallyScroll="False"/>
+                            </DockPanel>
+
+                            <ScrollBar Name="PART_HorizontalScrollBar"
+            Orientation="Horizontal"
+            Grid.Row="1"
+            Maximum="{TemplateBinding ScrollableWidth}"
+            ViewportSize="{TemplateBinding ViewportWidth}"
+            Value="{TemplateBinding HorizontalOffset}"
+            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                       Style="{StaticResource SimpleScrollBar}"/>
+
+                            <ScrollBar Name="PART_VerticalScrollBar"
+            Grid.Column="1"
+            Maximum="{TemplateBinding ScrollableHeight}"
+            ViewportSize="{TemplateBinding ViewportHeight}"
+            Value="{TemplateBinding VerticalOffset}"
+            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                     Style="{StaticResource SimpleScrollBar}"  />
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
+            <Setter Property="Width" Value="18"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Padding="{TemplateBinding Padding}"
+          Background="Transparent">
+                            <Rectangle HorizontalAlignment="Center"
+            Width="1"
+            Fill="{TemplateBinding Background}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--<Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
             <Setter Property="BorderBrush" Value="White" />
             <Setter Property="BorderThickness" Value="0,3,0,0" />
@@ -693,6 +829,7 @@
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+            
 
             <Setter Property="Template">
                 <Setter.Value>
@@ -717,7 +854,7 @@
             ColumnHeaderToolTip="{Binding View.ColumnHeaderToolTip, RelativeSource={RelativeSource TemplatedParent}}"
             Columns="{Binding View.Columns, RelativeSource={RelativeSource TemplatedParent}}"/>
 
-                                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="Center" />
 
                                     </StackPanel>
                                 </ScrollViewer>
@@ -739,59 +876,61 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-        <Style x:Key="futureListViewStyle" TargetType="{x:Type ListView}">
-            <Setter Property="Background" Value="#FF272935" />
-            <Setter Property="BorderBrush" Value="White" />
-            <Setter Property="BorderThickness" Value="0,1" />
-            <Setter Property="Foreground" Value="#FF67697F" />
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-            <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-
+        </Style>-->
+        <Style x:Key="futureListViewStyle" TargetType="ListView">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="Template">
                 <Setter.Value>
-
-                    <ControlTemplate TargetType="{x:Type ListView}">
-                        <Grid>
-
-                            <Border x:Name="Bd" CornerRadius="0,0,0,0" BorderBrush="#FF454757" Background="{DynamicResource ControlBackgroundBrush}" BorderThickness="0,1,0,1">
-
-                                <ScrollViewer Padding="{TemplateBinding Padding}" Style="{StaticResource futureSimpleScrollViewer}">
-                                    <StackPanel Margin="{TemplateBinding Padding}">
-
-                                        <GridViewHeaderRowPresenter
-            Margin="2,0,2,0"
-            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-            AllowsColumnReorder="{Binding View.AllowsColumnReorder, RelativeSource={RelativeSource TemplatedParent}}"
-            ColumnHeaderContainerStyle="{Binding View.ColumnHeaderContainerStyle, RelativeSource={RelativeSource TemplatedParent}}"
-            ColumnHeaderContextMenu="{Binding View.ColumnHeaderContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
-            ColumnHeaderStringFormat="{Binding View.ColumnHeaderStringFormat, RelativeSource={RelativeSource TemplatedParent}}"
-            ColumnHeaderTemplate="{Binding View.ColumnHeaderTemplate, RelativeSource={RelativeSource TemplatedParent}}"
-            ColumnHeaderTemplateSelector="{Binding View.ColumnHeaderTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}"
-            ColumnHeaderToolTip="{Binding View.ColumnHeaderToolTip, RelativeSource={RelativeSource TemplatedParent}}"
-            Columns="{Binding View.Columns, RelativeSource={RelativeSource TemplatedParent}}"
-                                           />
-
-                                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-
-                                    </StackPanel>
-                                </ScrollViewer>
-
-
-                            </Border>
-
-
-                        </Grid>
-
+                    <ControlTemplate TargetType="ListView">
+                        <Border Name="Border"
+          BorderThickness="0,1"
+          BorderBrush="#FF454757"
+          Background="Transparent">
+                            <ScrollViewer Style="{StaticResource futureGridViewScrollViewerStyle}">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsGrouping" Value="true">
-                                <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                            <Trigger Property="IsGrouping"
+                   Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="false"/>
                             </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+                            <Trigger Property="IsEnabled"
+                   Value="false"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ListViewStyle" TargetType="ListView">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <Border x:Name="Bd" CornerRadius="0,0,0,0" BorderBrush="#FF0076C8" Background="{DynamicResource ControlBackgroundBrush}" BorderThickness="0,3,0,0">
+                            <ScrollViewer Style="{StaticResource GridViewScrollViewerStyle}">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsGrouping"
+                   Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="false"/>
                             </Trigger>
+                            <Trigger Property="IsEnabled"
+                   Value="false"/>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -807,164 +946,24 @@
             </Setter>
         </Style>
 
-        <Style x:Key="ListViewItem" TargetType="{x:Type ListViewItem}">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FocusVisualStyle" Value="{StaticResource ListViewItemFocusVisual}" />
-            <Setter Property="Background" Value="#FFBEBED8" />
-            <Setter Property="BorderBrush" Value="#FFCB3434" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Margin" Value="0,0,0,1" />
-            <Setter Property="Padding" Value="5,2,5,2" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                        <ControlTemplate.Resources>
-                            <Storyboard x:Key="HoverOn">
-
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
-                                </DoubleAnimationUsingKeyFrames>
-
-                            </Storyboard>
-                            <Storyboard x:Key="HoverOff">
-
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
-                                </DoubleAnimationUsingKeyFrames>
-
-                            </Storyboard>
-                            <Storyboard x:Key="SelectedOn">
-
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="SelectedRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
-                                </DoubleAnimationUsingKeyFrames>
-
-                            </Storyboard>
-                            <Storyboard x:Key="SelectedOff">
-
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="SelectedRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
-                                </DoubleAnimationUsingKeyFrames>
-
-                            </Storyboard>
-                            <Storyboard x:Key="FocussedOn">
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                            <Storyboard x:Key="FocussedOff">
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </ControlTemplate.Resources>
-
-                        <Border SnapsToDevicePixels="true" CornerRadius="2" x:Name="border" Background="#FF833F3F" BorderThickness="1,1,1,0">
-
-                            <Grid>
-                                <Rectangle x:Name="Background" IsHitTestVisible="False" Opacity="0.25" Fill="White" RadiusX="1" RadiusY="1"/>
-                                <Rectangle x:Name="HoverRectangle" IsHitTestVisible="False" Opacity="0" Fill="#FF665959" RadiusX="1" RadiusY="1"/>
-                                <Rectangle x:Name="SelectedRectangle" IsHitTestVisible="False" Opacity="0" Fill="#FF4D1A1A" RadiusX="1" RadiusY="1"/>
-                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="0,4,0,4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="{Binding}">
-                                </ContentPresenter>
-                                <!--<GridViewRowPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="0,10,0,10" VerticalAlignment="Stretch" Content="{Binding}" />-->
-                            </Grid>
-
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard Storyboard="{StaticResource SelectedOff}" x:Name="SelectedOff_BeginStoryboard"/>
-                                </Trigger.ExitActions>
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard Storyboard="{StaticResource SelectedOn}" x:Name="SelectedOn_BeginStoryboard"/>
-                                </Trigger.EnterActions>
-
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.ExitActions>
-                                    <BeginStoryboard Storyboard="{StaticResource HoverOff}" x:Name="HoverOff_BeginStoryboard"/>
-                                </MultiTrigger.ExitActions>
-                                <MultiTrigger.EnterActions>
-                                    <BeginStoryboard Storyboard="{StaticResource HoverOn}"/>
-                                </MultiTrigger.EnterActions>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True" />
-                                    <Condition Property="Selector.IsSelected" Value="False" />
-                                </MultiTrigger.Conditions>
-
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelected" Value="True" />
-                                    <Condition Property="IsMouseOver" Value="True" />
-                                </MultiTrigger.Conditions>
-
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
-                                <Setter Property="Fill" TargetName="Background" Value="{DynamicResource DisabledBackgroundBrush}"/>
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsSelected" Value="true" />
-                                    <Condition Property="Selector.IsSelectionActive" Value="false" />
-                                </MultiTrigger.Conditions>
-
-
-                            </MultiTrigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="Selector.IsSelected" Value="True">
-                    <Setter Property="Foreground">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-
-
         <ControlTemplate x:Key="tmpForThumb" TargetType="{x:Type Thumb}">
-
             <Border>
-
                 <Rectangle Width="1" Name="rec">
-
                     <Rectangle.Fill>
-
                         <LinearGradientBrush StartPoint="0.5,0.3" EndPoint="1,1" Opacity="0.2">
-
                             <GradientStop Color="#FF939BCB"/>
-
                             <GradientStop Color="Transparent" Offset="1"/>
-
                         </LinearGradientBrush>
-
                     </Rectangle.Fill>
-
                 </Rectangle>
-
             </Border>
-
             <ControlTemplate.Triggers>
-
                 <Trigger Property="IsMouseOver" Value="True">
-
                     <Setter TargetName="rec" Property="Fill" Value="#FF767EA8"/>
-
                 </Trigger>
-
             </ControlTemplate.Triggers>
-
         </ControlTemplate>
+
 
         <Style  TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -983,9 +982,9 @@
                                 </LinearGradientBrush>
                             </Grid.Background>
                             <Border Name="bd" Padding="{TemplateBinding Padding}">
-                                <ContentPresenter Margin="5,4,1,3"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                <ContentPresenter Margin="5"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <Thumb Name="PART_HeaderGripper" Template="{StaticResource tmpForThumb}" HorizontalAlignment="Right" Margin="0,0,-1,0"/>
+                            <Thumb Name="PART_HeaderGripper" Template="{StaticResource tmpForThumb}" HorizontalAlignment="Right" Margin="0"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -1008,10 +1007,61 @@
         <!--数据源-->
 
         <!--ListViewItem的样式-->
-
         <Style TargetType="{x:Type ListViewItem}">
             <Style.Setters>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="bd"  
+                               BorderThickness="0,0,0,1"  
+                                Padding="{TemplateBinding Padding}"  
+                               SnapsToDevicePixels="True" BorderBrush="#FF414559">
+                                <GridViewRowPresenter HorizontalAlignment="Center"  
+                                                  Margin="0,5"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Trigger.Setters>
+
+                                        <Setter TargetName="bd" Property="Background">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF0A0A0E" Opacity="0.5"/>
+                                            </Setter.Value>
+                                        </Setter>
+
+
+                                    </Trigger.Setters>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="bd" Property="Background">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="#FF1B1C21" Opacity="0.5"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger.Setters>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+        </Style>
+        <!-- <Style TargetType="{x:Type ListViewItem}">
+            <Style.Setters>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -1023,9 +1073,11 @@
                                                   Margin="3"/>
                             </Border>
                             <ControlTemplate.Triggers>
+                                
                                 <Trigger Property="IsSelected" Value="True">
                                     <Trigger.Setters>
-                                        <Setter TargetName="bd" Property="Background">
+                                        
+                                <Setter TargetName="bd" Property="Background">
                                             <Setter.Value>
                                                 <SolidColorBrush Color="#FF0A0A0E" Opacity="0.5"/>
                                             </Setter.Value>
@@ -1048,7 +1100,7 @@
                     </Setter.Value>
                 </Setter>
             </Style.Setters>
-        </Style>
+        </Style>-->
 
 
         <!--checkbox样式-->
@@ -1092,7 +1144,7 @@
                                         </LinearGradientBrush>
                                     </Border.Background>
                                     <Path x:Name="cp" Width="12" Height="12"  
-                        Stroke="#FFCDCDD6"  
+                        Stroke="#FF007ACC"  
                              StrokeThickness="1"/>
                                 </Border>
                             </BulletDecorator.Bullet>
@@ -1106,7 +1158,8 @@
                                 <!-- 画上一个勾 -->
                                 <Setter TargetName="cp" Property="Data"  
           Value="M 0,6 L 6,12 12,0"/>
-                                <Setter Property="Foreground" Value="#FF999EB2"/>
+                                <Setter Property="Foreground" Value="#FF007ACC"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#FF007ACC"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="bd" Property="Background">
@@ -1117,7 +1170,12 @@
                                         </LinearGradientBrush>
                                     </Setter.Value>
                                 </Setter>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="#FFA6A9BB"/>
                             </Trigger>
+
+
+
+
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -1195,9 +1253,23 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <my:ButtonChrome x:Name="Chrome" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RoundCorners="false" SnapsToDevicePixels="true" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
-                            <Path x:Name="Arrow" Data="{StaticResource DownArrowGeometry}" Fill="Black" HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center"/>
-                        </my:ButtonChrome>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Border
+      x:Name="Border" 
+      Grid.ColumnSpan="2"
+      CornerRadius="2"
+      Background="{DynamicResource ButtonNormalBorder}"
+      BorderBrush="White"
+      BorderThickness="1" />
+
+                            <my:ButtonChrome x:Name="Chrome" Background="{TemplateBinding Background}" RenderMouseOver="{TemplateBinding IsMouseOver}" RenderPressed="{TemplateBinding IsPressed}" RoundCorners="false" SnapsToDevicePixels="true" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
+                                <Path x:Name="Arrow" Data="{StaticResource DownArrowGeometry}" Fill="Black" HorizontalAlignment="Center" Margin="0,1,0,0" VerticalAlignment="Center"/>
+                            </my:ButtonChrome>
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsChecked" Value="true">
                                 <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
@@ -1206,9 +1278,9 @@
                                 <Setter Property="Fill" TargetName="Arrow" Value="#FF51546A"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" Value="#FF3F4149"/>
-                                <Setter Property="BorderBrush" Value="White"/>
-                                <Setter Property="BorderThickness" Value="1"/>
+                                <Setter TargetName="Border" Property="Background" Value="#FF3F4149"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="White"/>
+                            
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -1364,13 +1436,133 @@
             <Setter Property="BorderBrush" Value="#FF2E3143"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="SelectionBrush" Value="#FF3E414D"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border 
+          Name="Border"
+          CornerRadius="0" 
+          Padding="2"
+          BorderBrush="#FF2E3143"
+          BorderThickness="1" >
+                            <Border.Background>
+                                <SolidColorBrush Color="Transparent" Opacity="0"/>
+                            </Border.Background>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="Transparent"/>
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FF2E3143" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FF8A92A9" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF2E3143"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF007ACC"/>
+                                <Setter Property="Foreground" Value="#FF8A92A9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
 
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" Value="#FF3E414D"/>
+        </Style>
 
-                </Trigger>
-            </Style.Triggers>
+        <!--定义按钮样式-->
+        <Style x:Key="marketListViewButtom" TargetType="Button" >
+            <!--修改模板属性-->
+           
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--只有Grid才能装下这么多Child-->
+                        <Grid>
+                            <!--带特效的底层背景-->
+                            <Border x:Name="back" Opacity="0.8" CornerRadius="0">
+                                <Border.BitmapEffect>
+                                    <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="#FF090A0F" />
+                                </Border.BitmapEffect>
+                                <Rectangle x:Name="buttonRect" Width="49" Height="49">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="#FF8A92A9"/>
+                                            <GradientStop Offset="1" Color="#FF272935"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                            </Border>
+
+                            <!--按钮内容-->
+                            <ContentPresenter 
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            RecognizesAccessKey="True"
+                                />
+
+                        </Grid>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+                            
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="White" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF272935" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="Transparent" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF8A92A9" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX=".98" ScaleY=".98"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value=".55,.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
     </Window.Resources>
@@ -1405,17 +1597,15 @@
                 <!--指定种类、交易商、标的资产、到期年月-->
                 <Grid x:Name="TopCanvasButtomGrid" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="1128" Canvas.Bottom="1" Background="#FF101013" Canvas.Top="1" MouseEnter="TopCanvasButtomGrid_MouseEnter" MouseLeave="TopCanvasButtomGrid_MouseLeave">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="30*"/>
-                        <ColumnDefinition Width="19*"/>
-                        <ColumnDefinition Width="45*"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label  x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="11,3,0,0" Height="26"/>
+                    <Label  x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="10,2,0,1" Height="26"/>
                     <ComboBox x:Name="typeComboBox" VerticalAlignment="Top" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" Margin="77,3,0,0" HorizontalAlignment="Left" Height="23" Width="70" >
                         <ComboBoxItem x:Name="futuresComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresComboBoxItem_Selected"/>
                         <ComboBoxItem x:Name="optionsComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsComboBoxItem_Selected" />
                     </ComboBox>
-                    <Label x:Name="exchangeNameLabel" Content="交易商" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Margin="156,3,0,3" Height="23" />
-                    <ComboBox x:Name="optionsTraderComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="67" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="196,3,0,0" >
+                    <Label x:Name="exchangeNameLabel" Content="交易商" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Margin="155,2,0,4" Height="23" />
+                    <ComboBox x:Name="optionsTraderComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="67" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="197,3,0,0" >
                         <ComboBoxItem x:Name="optionsTraderComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="optionsTraderComboBoxItem2" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
@@ -1425,14 +1615,14 @@
                         <ComboBoxItem x:Name="futuresTraderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="futuresTraderComboBoxItem4" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
-                    <Label x:Name="subjectMatterLabel" Content="标的资产" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="277,3,0,3" Height="23" />
-                    <ComboBox x:Name="subjectMatterComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="331,3,0,0" Grid.ColumnSpan="2" SelectionChanged="subjectMatterComboBox_SelectionChanged">
+                    <Label x:Name="subjectMatterLabel" Content="标的资产" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="422,2,0,4" Height="23" />
+                    <ComboBox x:Name="subjectMatterComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="476,3,0,0" SelectionChanged="subjectMatterComboBox_SelectionChanged">
                         <ComboBoxItem x:Name="nameComboBoxItem1" Content="沪深300期权" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="nameComboBoxItem2" Content="上证50期权" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
 
-                    <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="97,0,0,3" Grid.Column="1" Height="26" />
-                    <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="152,3,0,0" Grid.Column="1" Grid.ColumnSpan="2" />
+                    <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="275,2,0,1" Height="26" />
+                    <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="330,3,0,0" />
                 </Grid>
 
                 <ListView x:Name="futuresMarketListView" Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="#FF9198AC">
@@ -1536,20 +1726,21 @@
                         <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Grid.ColumnSpan="2" Margin="79,0,0,0"/>
                     </Grid>
                 </Border>
-                <ListView Name="optionsMarketListView" ItemsSource="{Binding}" DataContext="{Binding}" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="109" >
+                <ListView Name="optionsMarketListView" ItemsSource="{Binding}" DataContext="{Binding}" Height="252" Width="1127" VerticalAlignment="Center" HorizontalAlignment="Center" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" HorizontalContentAlignment="Center" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidOMBtn" Content="{Binding Path=BidPrice1}" Width=" 80"/>
+                                        <!--{Binding Path=BidPrice1}-->
+                                        <Button x:Name="bidOMBtn" Content="{Binding Path=BidPrice1}" Width=" 80" Style="{StaticResource marketListViewButtom}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="askPriceROMGVCH" Header=" 卖价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="askOMBtn" Content="{Binding Path=AskPrice1}" Width="80"/>
+                                        <Button x:Name="askOMBtn" Content="{Binding Path=AskPrice1}" Width="80" Style="{StaticResource marketListViewButtom}"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1581,7 +1772,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="208" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC">
+                        <ListView x:Name="optionsTradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseOTGVCH" Header="" Width="Auto">
@@ -1681,7 +1872,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <ListView x:Name="futuresTradingListView" HorizontalAlignment="Left" Height="208" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Visibility="Hidden" Foreground="#FF9198AC">
+                        <ListView x:Name="futuresTradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Visibility="Hidden" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseFTGVH" Header="" Width="Auto">
@@ -1772,7 +1963,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <Button x:Name="placeOrderBtn" Content="下单" HorizontalAlignment="Left" Margin="756,220,0,0" VerticalAlignment="Top" Width="75"/>
+                        <Button x:Name="placeOrderBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                     </Grid>
                 </TabItem>
 
