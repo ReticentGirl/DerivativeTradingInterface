@@ -40,3 +40,5 @@ bin/Debug/
 obj/Debug/
 !bin/Debug/*.dll
 !bin/Debug/*.dll
+
+*.sqlite
