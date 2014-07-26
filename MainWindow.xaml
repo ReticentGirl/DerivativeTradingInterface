@@ -982,7 +982,7 @@
                                 </LinearGradientBrush>
                             </Grid.Background>
                             <Border Name="bd" Padding="{TemplateBinding Padding}">
-                                <ContentPresenter Margin="5"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <ContentPresenter Margin="0,5"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <Thumb Name="PART_HeaderGripper" Template="{StaticResource tmpForThumb}" HorizontalAlignment="Right" Margin="0"/>
                         </Grid>
@@ -1019,7 +1019,7 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListViewItem}">
                             <Border x:Name="bd"  
-                               BorderThickness="0,0,0,1"  
+                               BorderThickness="0,0,0,0"  
                                 Padding="{TemplateBinding Padding}"  
                                SnapsToDevicePixels="True" BorderBrush="#FF414559">
                                 <GridViewRowPresenter HorizontalAlignment="Center"  
@@ -1579,7 +1579,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseMove="Top1_MouseMove" MouseDoubleClick="Top1_MouseDoubleClick"/>
+        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseDoubleClick="Top1_MouseDoubleClick"/>
 
         <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}"/>
         <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}"/>
@@ -1726,7 +1726,7 @@
                         <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Grid.ColumnSpan="2" Margin="79,0,0,0"/>
                     </Grid>
                 </Border>
-                <ListView Name="optionsMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="109" >
+                <ListView Name="optionsMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">

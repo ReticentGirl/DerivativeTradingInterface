@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -31,7 +32,7 @@ namespace qiquanui
     public partial class MainWindow : Window
     {
         DataManager dm;
-        private double oldx, oldy, originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, futuresTradingListVieww, futuresTradingListViewwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
+        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, futuresTradingListVieww, futuresTradingListViewwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
 
         private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard;
 
@@ -195,26 +196,13 @@ namespace qiquanui
 
         }
 
-
+       
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            oldx = e.GetPosition(this).X;
-            oldy = e.GetPosition(this).Y;
-        } //点击标题栏准备移动窗口
-
-        private void Top1_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-
-                double x = e.GetPosition(this).X;
-                double y = e.GetPosition(this).Y;
-                this.Left += (x - oldx);
-                this.Top += (y - oldy);
-            }
-
-        }//窗口移动
+            this.DragMove();
+        }
+      
+        //窗口移动
         private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (this.WindowState == WindowState.Normal)
@@ -554,6 +542,10 @@ namespace qiquanui
             dataThread = new Thread(new ThreadStart(DmUpdate));
             dataThread.Start();
         }
+
+        
+
+        
       
     }
 }

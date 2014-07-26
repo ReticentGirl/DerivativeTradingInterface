@@ -20,7 +20,7 @@ namespace qiquanui
     
     public partial class StrategyWindow : Window
     {
-        private double oldx, oldy, originalHeight, originalWidth, Top1_StrategyLabw, Top1_StrategyLabwper, groupListVieww, groupListViewwper, groupListViewh, groupListViewhper;
+        private double originalHeight, originalWidth, Top1_StrategyLabw, Top1_StrategyLabwper, groupListVieww, groupListViewwper, groupListViewh, groupListViewhper;
         private Storyboard groupCanvasStoryboard, groupCanvasStoryboard_Leave;
         public StrategyWindow()
         {
@@ -38,23 +38,9 @@ namespace qiquanui
         }
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            oldx = e.GetPosition(this).X;
-            oldy = e.GetPosition(this).Y;
+            this.DragMove();
         }
-
-        private void Top1_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
-            if (e.LeftButton == MouseButtonState.Pressed)
-            {
-
-                double x = e.GetPosition(this).X;
-                double y = e.GetPosition(this).Y;
-                this.Left += (x - oldx);
-                this.Top += (y - oldy);
-            }
-
-        }
+      
         private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (this.WindowState == WindowState.Normal)

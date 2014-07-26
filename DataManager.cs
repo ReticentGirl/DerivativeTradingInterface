@@ -216,7 +216,7 @@ namespace qiquanui
             string uptime;
             int uptimemill;
             int datatime;
-            int nowtime=TimeToInt(now);
+            int nowtime = TimeToInt(now);
             while (i <dt.Rows.Count)
             {
                 uptime = (string)dt.Rows[i]["UpdateTime"];
