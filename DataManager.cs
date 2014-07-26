@@ -138,7 +138,7 @@ namespace qiquanui
         public DataManager(MainWindow window)
         {
             pwindow = window;
-            timer = new System.Timers.Timer(100);
+            timer = new System.Timers.Timer(500);
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             now = new DateTime(2014, 7, 22, 14, 0, 25);
         }
@@ -160,6 +160,20 @@ namespace qiquanui
             return (hour * 3600 + min * 60 + sec) * 1000 + millisec;
         }
 
+        public string TimeToString(DateTime dt)
+        { 
+            string str="";
+            if (dt.Hour<10) str+="0"+dt.Hour;
+            else str+=dt.Hour;
+            str += ":";
+            if (dt.Minute<10) str+="0"+dt.Minute;
+            else str+=dt.Minute;
+            str += ":";
+            if (dt.Second<10) str+="0"+dt.Second;
+            else str+=dt.Second;
+            return str;
+        }
+
         delegate void ClearObCallBack();
         public void ClearOb()
         {
@@ -176,21 +190,24 @@ namespace qiquanui
             }
 
         }
-
+        Hashtable ep_no = new Hashtable(50);//行权价对应的行数
+        int tot_line=0;
         public void Update()
         {
+            timer.Stop();
             ClearOb();
 
             GetChoice();
             DataTable list = DataControl.QueryTable(exercisesql);
-            Hashtable ep = new Hashtable(50);
-            Hashtable position= new Hashtable(50);
-        
-            for (int j = 0; j < list.Rows.Count; j++)
+            Hashtable ep_op = new Hashtable(50);
+            Hashtable epcp_row = new Hashtable(50);
+            tot_line = list.Rows.Count;
+
+            for (int j = 0; j < tot_line; j++)
             {
                 double x=(double)list.Rows[j][0];
-                ep[(int)x] = new option();
-
+                ep_op[(int)x] = new option();
+                ep_no[(int)x] = j;
             }
 
 
@@ -200,7 +217,7 @@ namespace qiquanui
             int uptimemill;
             int datatime;
             int nowtime=TimeToInt(now);
-            while (i < dt.Rows.Count)
+            while (i <dt.Rows.Count)
             {
                 uptime = (string)dt.Rows[i]["UpdateTime"];
                 uptimemill = (int)(Int64)dt.Rows[i]["UpdateMillisec"];
@@ -212,11 +229,11 @@ namespace qiquanui
 
                     if (!_callOrPut)
                     {
-                        position["" + _ep + "C"] = i;
+                        epcp_row["" + _ep + "C"] = i;
 
                     }
                     else
-                        position["" + _ep + "P"] = i;
+                        epcp_row["" + _ep + "P"] = i;
                 }
                 else break;
                 i++;
@@ -225,33 +242,33 @@ namespace qiquanui
             for (int j = 0; j < list.Rows.Count; j++)
             {
 
-                option _op = (option)ep[(int)((double)list.Rows[j][0])];
-                int rowid =(int) position["" + list.Rows[j][0] + "C"];
+                option _op = (option)ep_op[(int)((double)list.Rows[j][0])];
+                int rowid = (int)epcp_row["" + list.Rows[j][0] + "C"];
                 if (rowid < 0)
                 {
                     Console.WriteLine("ROWID < 0!");
                 }
                 else
                 {
-                    _op.AskPrice1 = (double)dt.Rows[rowid]["AskPrice1"];
-                    _op.BidPrice1 = (double)dt.Rows[rowid]["BidPrice1"];
+                    _op.AskPrice1 = Math.Round((double)dt.Rows[rowid]["AskPrice1"],1);
+                    _op.BidPrice1 = Math.Round((double)dt.Rows[rowid]["BidPrice1"],1);
                     _op.ExercisePrice = (int)(double)dt.Rows[rowid]["ExercisePrice"];
                     _op.OpenInterest1 = (int)(double)dt.Rows[rowid]["OpenInterest"];
-                    _op.LastPrice1 = (double)dt.Rows[rowid]["LastPrice"];
+                    _op.LastPrice1 = Math.Round((double)dt.Rows[rowid]["LastPrice"],1);
                     _op.Volume1 = (int)(Int64)dt.Rows[rowid]["Volume"];
                 }
 
-                rowid = (int)position["" + list.Rows[j][0] + "P"];
+                rowid = (int)epcp_row["" + list.Rows[j][0] + "P"];
                 if (rowid < 0)
                 {
                     Console.WriteLine("ROWID < 0!");
                 }
                 else
                 {
-                    _op.AskPrice2 = (double)dt.Rows[rowid]["AskPrice1"];
-                    _op.BidPrice2 = (double)dt.Rows[rowid]["BidPrice1"];
+                    _op.AskPrice2 = Math.Round( (double)dt.Rows[rowid]["AskPrice1"],1);
+                    _op.BidPrice2 =Math.Round( (double)dt.Rows[rowid]["BidPrice1"],1);
                     _op.OpenInterest2 = (int)(double)dt.Rows[rowid]["OpenInterest"];
-                    _op.LastPrice2 = (double)dt.Rows[rowid]["LastPrice"];
+                    _op.LastPrice2 = Math.Round((double)dt.Rows[rowid]["LastPrice"],1);
                     _op.Volume2 = (int)(Int64)dt.Rows[rowid]["Volume"];
                 }
 
@@ -260,8 +277,94 @@ namespace qiquanui
          
             Binding();
 
+            ////prepare for the dynamic change
+            prepare();
+            timer.Start();
+            
+        }
+
+        int pt = 0;
+        DataTable dtminute;
+        public void prepare()
+        {
+            dynamicsql = String.Format("SELECT CallOrPut,UpdateTime,UpdateMillisec,LastPrice,AskPrice1,BidPrice1,ExercisePrice,OpenInterest,Volume FROM alldata0722 a,staticdata s where s.instrumentid=a.instrumentid and s.instrumentname='{0}' and s.duedate='{1}'  and a.updatetime >= '{2}' and a.updatetime <= '{3}' order by updatetime,updatemillisec", instrumentname, box_time, TimeToString(now), TimeToString(now.AddMinutes(1)));
+            dtminute = DataControl.QueryTable(dynamicsql);
+            pt = 0;
+        }
+
+
+
+        bool[] ob_no = new bool[30];
+        option[] ob_op = new option[30];
+
+        public void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            if (pt >= dtminute.Rows.Count) return;
+            timer.Stop();
+            string uptime = (string)dtminute.Rows[pt]["UpdateTime"];
+            int uptimemill = (int)(Int64)dtminute.Rows[pt]["UpdateMillisec"];
+            now = now.AddMilliseconds(500);
+            bool changed = false;
+            for (int i = 0; i < tot_line; i++)
+                ob_no[i] = false;
+            while (pt<dtminute.Rows.Count && TimeToInt(now) >= TimeToInt(uptime, uptimemill))
+            {
+                int _line=(int)ep_no[(int)((double)dtminute.Rows[pt]["ExercisePrice"])];
+                option _op = ObservableObj.ElementAt<option>(_line);
+                bool _callOrPut = (bool)dtminute.Rows[pt]["CallOrPut"];
+                if ( _callOrPut)
+                {
+                    _op.AskPrice1 = Math.Round((double)dtminute.Rows[pt]["AskPrice1"], 1);
+                    _op.BidPrice1 = Math.Round((double)dtminute.Rows[pt]["BidPrice1"], 1);
+                    _op.ExercisePrice = (int)(double)dtminute.Rows[pt]["ExercisePrice"];
+                    _op.OpenInterest1 = (int)(double)dtminute.Rows[pt]["OpenInterest"];
+                    _op.LastPrice1 = Math.Round((double)dtminute.Rows[pt]["LastPrice"], 1);
+                    _op.Volume1 = (int)(Int64)dtminute.Rows[pt]["Volume"];
+                }
+                else
+                {
+                    _op.AskPrice2 = Math.Round((double)dtminute.Rows[pt]["AskPrice1"], 1);
+                    _op.BidPrice2 = Math.Round((double)dtminute.Rows[pt]["BidPrice1"], 1);
+                    _op.OpenInterest2 = (int)(double)dtminute.Rows[pt]["OpenInterest"];
+                    _op.LastPrice2 = Math.Round((double)dtminute.Rows[pt]["LastPrice"], 1);
+                    _op.Volume2 = (int)(Int64)dtminute.Rows[pt]["Volume"];
+                }
+                
+                uptime = (string)dtminute.Rows[pt]["UpdateTime"];
+                uptimemill = (int)(Int64)dtminute.Rows[pt]["UpdateMillisec"];
+                pt++;
+                changed = true;
+                ob_no[_line]=true;
+                ob_op[_line]=_op;
+            }
+
+            if (changed)
+                Refresh();
+            timer.Start();
+        }
+
+        delegate void RefreshCallBack();
+        public void Refresh()
+        {
+
+            RefreshCallBack d;
+            if (System.Threading.Thread.CurrentThread != pwindow.Dispatcher.Thread)
+            {
+                d = new RefreshCallBack(Refresh);
+                pwindow.Dispatcher.Invoke(d, new object[] {  });
+            }
+            else
+            {
+                for (int i = 0; i < tot_line; i++)
+                if (ob_no[i]){
+                    ObservableObj.RemoveAt(i);
+                    ObservableObj.Insert(i, ob_op[i]);
+                }
+                //pwindow.optionsMarketListView.Items.Refresh();
+            }
 
         }
+
         delegate void AddingCallBack(option _op);
         public void Adding(option _op)
         {
@@ -299,7 +402,7 @@ namespace qiquanui
 
 
 
-        static string updatesql,exercisesql;
+        static string updatesql,exercisesql,dynamicsql,box_type,box_exchange,box_future,box_time,instrumentname;
         delegate void SetTextCallback();
         public void GetChoice()
         {
@@ -312,23 +415,22 @@ namespace qiquanui
             }
             else
             {
-                string box_type=pwindow.typeComboBox.Text ;
-                string box_exchange=pwindow.futuresTraderComboBox.Text;
-                string box_future = pwindow.subjectMatterComboBox.Text;
-                string instrumentname=box_future;
-                string box_time = "1409";
-                updatesql = String.Format("SELECT CallOrPut,UpdateTime,UpdateMillisec,LastPrice,AskPrice1,BidPrice1,ExercisePrice,OpenInterest,Volume FROM alldata0722 a,staticdata s where s.instrumentid=a.instrumentid and s.instrumentname='{0}' and s.duedate='{1}'  and a.updatetime<'09:31:00' order by updatetime", instrumentname, box_time);
-                exercisesql = String.Format("select exerciseprice from staticdata where instrumentname='{0}' and duedate='{1}' and callorput=0 ",instrumentname, box_time);
-               
+                box_type=pwindow.typeComboBox.Text ;
+                box_exchange=pwindow.futuresTraderComboBox.Text;
+                box_future = pwindow.subjectMatterComboBox.Text;
+                instrumentname = box_future;
+                box_time = "1409";
+                updatesql = String.Format("SELECT CallOrPut,UpdateTime,UpdateMillisec,LastPrice,AskPrice1,BidPrice1,ExercisePrice,OpenInterest,Volume FROM minutedata a,staticdata s where s.instrumentid=a.instrumentid and s.instrumentname='{0}' and s.duedate='{1}'  and a.updatetime<'09:31:00' order by updatetime", instrumentname, box_time);
+                exercisesql = String.Format("select exerciseprice from staticdata where instrumentname='{0}' and duedate='{1}' and callorput=0 order by exerciseprice ", instrumentname, box_time);
             }
          
             
         }
 
-        public void OnTimedEvent(object sender, ElapsedEventArgs e)
-        {
-            
-        }
+
+
+
+
         
     }
 }

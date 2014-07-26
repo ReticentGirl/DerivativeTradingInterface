@@ -47,6 +47,7 @@ namespace qiquanui
         {
 
             new Thread(new ThreadStart(dataStart)).Start();
+            //dataStart();
 
             InitializeComponent();
 
