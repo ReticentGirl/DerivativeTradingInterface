@@ -1779,7 +1779,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" SelectionChanged="optionsTradingListView_SelectionChanged" IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC">
+                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseTGVCH" Header="勾选" Width="50" >
@@ -1792,19 +1792,28 @@
                                     <GridViewColumn x:Name="userTGVCH" Header="投资账户" Width="100">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox x:Name="userTComboBox"  Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
-
+                                                <ComboBox x:Name="userTComboBox"  Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn x:Name="nameOTGVCH" Header="合约名称 "  DisplayMemberBinding="{Binding InstrumentID}" Width="100"/>
+                                    <GridViewColumn x:Name="typeOTGVCH" Header="合约类型 " DisplayMemberBinding="{Binding CallOrPut}" Width="80">
+                                        <GridViewColumn.CellTemplate >
+                                            <DataTemplate>
+                                                <ComboBox x:Name="typeOTComboBox" >
+                                                    <ComboBoxItem Content="看涨" HorizontalAlignment="Left" Width="80"/>
+                                                    <ComboBoxItem Content="看跌" HorizontalAlignment="Left" Width="80"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="nameTGVCH" Header="合约名称 " Width="100" />
                                     <GridViewColumn x:Name="typeTGVCH" Header="合约类型 " Width="60"/>
-                                    <GridViewColumn x:Name="exercisePriceTGVCH" Header="行权价 " Width="60"/>
-                                    <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="60">
+                                        <GridViewColumn x:Name="exercisePriceTGVCH" Header="行权价 " Width="60" DisplayMemberBinding="{Binding ExercisePrice}"/>
+                                        <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="60" >
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="0">
+                                                <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                                     <ComboBoxItem Content="买开" HorizontalAlignment="Left" Width="60"/>
                                                     <ComboBoxItem Content="卖开" HorizontalAlignment="Left" Width="60"/>
                                                     <ComboBoxItem Content="买平" HorizontalAlignment="Left" Width="60"/>

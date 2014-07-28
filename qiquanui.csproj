@@ -72,6 +72,8 @@
     <Compile Include="placeOrder.xaml.cs">
       <DependentUpon>placeOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TradingData.cs" />
+    <Compile Include="TradingManager.cs" />
     <Compile Include="StaticData.cs" />
     <Compile Include="StrategyWindow.xaml.cs">
       <DependentUpon>StrategyWindow.xaml</DependentUpon>

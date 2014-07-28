@@ -34,6 +34,10 @@ namespace qiquanui
         DataManager dm;
         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
 
+        TradingManager otm;   //维护交易区的类
+
+        private List<int> selectIndex = new List<int>();//保存交易区被选行 
+
         private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard;
 
 
@@ -50,8 +54,11 @@ namespace qiquanui
             new Thread(new ThreadStart(dataStart)).Start();
             //dataStart();
 
-            InitializeComponent();
 
+            InitializeComponent();
+            otm = new TradingManager(this);
+            otm.OnAdd();
+           
             //设置窗口距离显示屏边界距离
             this.Left = 50;
             this.Top = 20;
@@ -322,10 +329,8 @@ namespace qiquanui
             strategyOfFuturesCanvasStoryboard_Leave.Begin(this);
         }
 
-         private void optionsTradingListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-         {
+         
 
-         }
          private void Canvas1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
          {
              if (Canvas1.Width == 29.0)
@@ -446,7 +451,31 @@ namespace qiquanui
         {
             dataThread = new Thread(new ThreadStart(DmUpdate));
             dataThread.Start();
+        } 
+
+
+        private void placeOrderBtn_Click(object sender, RoutedEventArgs e)
+        {
+           
+            if (tradingListView.Items.Count > 0)
+            {
+                for (int i = 0; i < tradingListView.Items.Count; i++)
+                {
+                   
+                    TradingData otd = (TradingData)
+                    tradingListView.Items[i];
+                    if (otd.IfChooseOTGVCH ==true)
+                        System.Windows.MessageBox.Show(otd.InstrumentID);
+                }
+            }
+
+
         }
+
+
+     
+
+ 
 
         
 
