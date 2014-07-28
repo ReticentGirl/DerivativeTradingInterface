@@ -4,10 +4,10 @@
     xmlns:local="clr-namespace:qiquanui">
 
 
-    <Style TargetType="{x:Type local:NumericUpAndDownCustomControl}">
+    <Style TargetType="{x:Type local:NumericUpAndDownUserControl}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:NumericUpAndDownCustomControl}">
+                <ControlTemplate TargetType="{x:Type local:NumericUpAndDownUserControl}">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}">

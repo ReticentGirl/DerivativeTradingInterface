@@ -69,6 +69,9 @@
     <Compile Include="NumericUpAndDownUserControl.xaml.cs">
       <DependentUpon>NumericUpAndDownUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="placeOrder.xaml.cs">
+      <DependentUpon>placeOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StaticData.cs" />
     <Compile Include="StrategyWindow.xaml.cs">
       <DependentUpon>StrategyWindow.xaml</DependentUpon>
@@ -86,6 +89,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NumericUpAndDownUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="placeOrder.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,6 +278,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\scroll_top_unable.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\down.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\up.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

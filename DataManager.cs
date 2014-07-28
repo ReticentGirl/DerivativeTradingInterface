@@ -416,7 +416,7 @@ namespace qiquanui
             else
             {
                 box_type=pwindow.typeComboBox.Text ;
-                box_exchange=pwindow.futuresTraderComboBox.Text;
+                box_exchange=pwindow.traderComboBox.Text;
                 box_future = pwindow.subjectMatterComboBox.Text;
                 instrumentname = box_future;
                 box_time = "1409";

@@ -32,7 +32,7 @@ namespace qiquanui
     public partial class MainWindow : Window
     {
         DataManager dm;
-        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, optionsTradingListVieww, optionsTradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, futuresTradingListVieww, futuresTradingListViewwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
+        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
 
         private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard;
 
@@ -52,84 +52,6 @@ namespace qiquanui
 
             InitializeComponent();
 
-            /*            
-            // 导入期权行情数据
-            ObservableObj.Clear();
-            ObservableObj.Add(new option()
-            {
-                BidPrice1 = 3243,
-                AskPrice1 = 324,
-                LastPrice1 = 324,
-                Volume1 = 234,
-                OpenInterest1 = 324,
-                ExercisePrice = 2250,
-                BidPrice2 = 3243,
-                AskPrice2 = 324,
-                LastPrice2 = 324,
-                Volume2 = 234,
-                OpenInterest2 = 324,
-            });
-            ObservableObj.Add(new option()
-            {
-                BidPrice1 = 3243,
-                AskPrice1 = 324,
-                LastPrice1 = 324,
-                Volume1 = 234,
-                OpenInterest1 = 324,
-                ExercisePrice = 2250,
-                BidPrice2 = 3243,
-                AskPrice2 = 324,
-                LastPrice2 = 324,
-                Volume2 = 234,
-                OpenInterest2 = 324,
-            });
-            ObservableObj.Add(new option()
-            {
-                BidPrice1 = 3243,
-                AskPrice1 = 324,
-                LastPrice1 = 324,
-                Volume1 = 234,
-                OpenInterest1 = 324,
-                ExercisePrice = 2250,
-                BidPrice2 = 3243,
-                AskPrice2 = 324,
-                LastPrice2 = 324,
-                Volume2 = 234,
-                OpenInterest2 = 324,
-            });
-            ObservableObj.Add(new option()
-            {
-                BidPrice1 = 3243,
-                AskPrice1 = 324,
-                LastPrice1 = 324,
-                Volume1 = 234,
-                OpenInterest1 = 324,
-                ExercisePrice = 2250,
-                BidPrice2 = 3243,
-                AskPrice2 = 324,
-                LastPrice2 = 324,
-                Volume2 = 234,
-                OpenInterest2 = 324,
-            });
-            ObservableObj.Add(new option()
-            {
-                BidPrice1 = 3243,
-                AskPrice1 = 324,
-                LastPrice1 = 324,
-                Volume1 = 234,
-                OpenInterest1 = 324,
-                ExercisePrice = 2250,
-                BidPrice2 = 3243,
-                AskPrice2 = 324,
-                LastPrice2 = 324,
-                Volume2 = 234,
-                OpenInterest2 = 324,
-            });
-           
-            optionsMarketListView.DataContext = ObservableObj;
-
- */          
-
             //设置窗口距离显示屏边界距离
             this.Left = 50;
             this.Top = 20;
@@ -144,7 +66,7 @@ namespace qiquanui
             top1w = Top1.Width;
             canvas1h = Canvas1.Height;
             canvas2h = Canvas2.Height;
-            optionsTradingListVieww = optionsTradingListView.Width;
+            tradingListVieww = tradingListView.Width;
             multipleTabControlw = multipleTabControl.Width;
             optionsHoldDetailListVieww = holdDetailListView.Width;
             historyListVieww = historyListView.Width;
@@ -155,11 +77,8 @@ namespace qiquanui
             TopCanvas1w = TopCanvas1.Width;
             TopCanvas1h=TopCanvas1.Height;
             TopCanvasButtomGridw = TopCanvasButtomGrid.Width;
-            futuresTradingListVieww=futuresTradingListView.Width;
             optionsMarketTitleGridw = optionsMarketTitleGrid.Width;
             titileBorder4w = titileBorder4.Width;
-
-
             Grid1w = Grid1.Width;
             Grid1h = Grid1.Height;
 
@@ -188,21 +107,17 @@ namespace qiquanui
             strategyOfFuturesCanvasStoryboard_Leave = (Storyboard)this.FindResource("strategyOfFuturesCanvasAnimate_Leave");
 
             typeComboBox.SelectedIndex = 0;
-            typeInStrategyPanelComboBox.SelectedIndex = 1;
-
-            
-           
-            
-
+            typeInStrategyPanelComboBox.SelectedIndex = 1;            
+                      
         }
 
-       
+        
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
-        }
+        }//窗口移动
       
-        //窗口移动
+        
         private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             if (this.WindowState == WindowState.Normal)
@@ -250,10 +165,10 @@ namespace qiquanui
 
         } //最大化窗口按钮
 
-        private void CloseButton_Click_1(object sender, RoutedEventArgs e) //关闭窗口按钮
+        private void CloseButton_Click_1(object sender, RoutedEventArgs e) 
         {
             this.Close();
-        }
+        }//关闭窗口按钮
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -284,7 +199,7 @@ namespace qiquanui
         private bool ResizeControl()
         {
             optionsMarketTitleGridwper = TopCanvasButtomGridwper = TopCanvas1wper = Grid1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w));
-            futuresTradingListViewwper = userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = optionsTradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
+            userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = tradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
             list1hper = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
             optionsMarketListViewhper = (this.Height - (originalHeight - optionsMarketListViewh)) / (originalHeight - (originalHeight - optionsMarketListViewh));
             TopCanvas1hper=Grid1hper = grid3hper =  (this.Height - (originalHeight - Grid1h)) / (originalHeight - (originalHeight - Grid1h));
@@ -305,8 +220,7 @@ namespace qiquanui
             Top1.Width = top1w * top1wper;
             Canvas1.Height = canvas1h * canvas1hper;
             Canvas2.Height = canvas2h * canvas2hper;
-            optionsTradingListView.Width = optionsTradingListVieww * optionsTradingListViewwper;
-            futuresTradingListView.Width=futuresTradingListVieww*futuresTradingListViewwper;
+            tradingListView.Width = tradingListVieww * tradingListViewwper;
             multipleTabControl.Width = multipleTabControlw * multipleTabControlwper;
             holdDetailListView.Width = optionsHoldDetailListVieww * optionsHoldDetailListViewwper;
             statusBar1.Width = statusBar1w * statusBar1wper;
@@ -359,15 +273,10 @@ namespace qiquanui
         {
 
             optionsMarketListView.Visibility = Visibility.Hidden;
-            optionsTraderComboBox.Visibility = Visibility.Hidden;
             optionsMarketTitleGrid.Visibility = Visibility.Hidden;
-            optionsTradingListView.Visibility = Visibility.Hidden;
             subjectMatterLabel.Visibility = Visibility.Hidden;
             subjectMatterComboBox.Visibility = Visibility.Hidden;
-            futuresTradingListView.Visibility = Visibility.Visible;
             futuresMarketListView.Visibility = Visibility.Visible;
-            futuresTraderComboBox.Visibility = Visibility.Visible;
-
             subjectMatterMarketGrid.Visibility = Visibility.Hidden;
             titileBorder4.Visibility = Visibility.Hidden;
         } //行情区，“衍生品种类”选择“期货”，隐藏“标的期货”、期权行情，显示期货行情
@@ -376,12 +285,8 @@ namespace qiquanui
         {
 
             futuresMarketListView.Visibility = Visibility.Hidden;
-            futuresTraderComboBox.Visibility = Visibility.Hidden;
-            futuresTradingListView.Visibility = Visibility.Hidden;
             optionsMarketListView.Visibility = Visibility.Visible;
-            optionsTraderComboBox.Visibility = Visibility.Visible;
             optionsMarketTitleGrid.Visibility = Visibility.Visible;
-            optionsTradingListView.Visibility = Visibility.Visible;
             subjectMatterLabel.Visibility = Visibility.Visible;
             subjectMatterComboBox.Visibility = Visibility.Visible;
             subjectMatterMarketGrid.Visibility = Visibility.Visible;
