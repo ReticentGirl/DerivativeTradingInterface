@@ -51,8 +51,8 @@ namespace qiquanui
         public MainWindow()
         {
 
-            new Thread(new ThreadStart(dataStart)).Start();
-            //dataStart();
+            //new Thread(new ThreadStart(dataStart)).Start();
+            dataStart();
 
 
             InitializeComponent();

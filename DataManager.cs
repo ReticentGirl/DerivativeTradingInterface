@@ -178,8 +178,9 @@ namespace qiquanui
             pwindow = window;
             timer = new System.Timers.Timer(500);
             timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            timer_z = new System.Timers.Timer(300);
+            timer_z = new System.Timers.Timer(500);
             timer_z.Elapsed += new ElapsedEventHandler(OnTimedEvent2);
+
             now = new DateTime(2014, 7, 23, 14, 0, 25);
 
             initial();
@@ -210,8 +211,11 @@ namespace qiquanui
         /// <param name="e"></param>
         public void OnTimedEvent2(object sender, ElapsedEventArgs e)
         {
-            timer_z.Stop();
-            timer.Stop();
+            //timer_z.Stop();
+            //timer.Stop();
+            timer_z.Enabled = false;
+            timer.Enabled = false;
+
             now = now.AddMilliseconds(500);
             if (now >= lastupdate.AddMinutes(1)) prepare();
             if (pt >= dtall.Rows.Count)
@@ -252,8 +256,11 @@ namespace qiquanui
                 pt++;
             }
 
-            timer_z.Start();
-            timer.Start();
+            //timer_z.Start();
+            //timer.Start();
+            timer_z.Enabled = true;
+            timer.Enabled = true;
+
         }
 
 
@@ -402,8 +409,10 @@ namespace qiquanui
         /// <param name="e"></param>
         public void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
-            timer_z.Stop();
-            timer.Stop();
+            //timer_z.Stop();
+            //timer.Stop();
+            timer_z.Enabled = false;
+            timer.Enabled = false;
             if (ObservableObj.Count < tot_line)
             {
                 timer_z.Start();
@@ -485,8 +494,11 @@ namespace qiquanui
 
 
             //Refresh();
-            timer.Start();
-            timer_z.Start();
+            //timer.Start();
+            //timer_z.Start();
+            timer_z.Enabled = true;
+            timer.Enabled = true;
+
         }
 
 
