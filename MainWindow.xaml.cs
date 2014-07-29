@@ -472,6 +472,12 @@ namespace qiquanui
 
         }
 
+        private void placeOrderTBtn_Click(object sender, RoutedEventArgs e)
+        {
+            placeOrder PlaceOrder = new placeOrder();
+            PlaceOrder.Show();
+        }
+
 
      
 
