@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:qiquanui"
        
         Closing="Window_Closing"
-        Title="placeOrder" Height="316" Width="796" WindowStyle="None" ResizeMode="CanMinimize" BorderThickness="7" AllowsTransparency="True">
+        Title="placeOrder" Height="316" Width="697" WindowStyle="None" ResizeMode="CanMinimize" BorderThickness="7" AllowsTransparency="True">
     <Window.Resources>
         <!-- MouseDown="Window_MouseDown"-->
         <Style x:Key="scrollTop" TargetType="{x:Type RepeatButton}">
@@ -468,39 +468,43 @@
     </Window.Effect>
 
     <Grid Background="#FF1A1A21" Height="302" VerticalAlignment="Top">
-        <Frame x:Name="Top1_placeOrder" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="626" MouseDown="Top1_MouseDown" Background="Transparent" />
-        
-        <Button x:Name="minButton" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}" Canvas.Left="598" Canvas.Top="10" RenderTransformOrigin="-1.267,1.75" Margin="0,10,30,0"/>
-        <Button x:Name="closeButton" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}" Canvas.Left="615" Canvas.Top="10" Margin="0,10,10,0"/>
-        <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        
-        <Canvas HorizontalAlignment="Left" Height="232" Margin="10,37,0,0" VerticalAlignment="Top" Width="762" Background="#FF23232C">
-            <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="126" VerticalAlignment="Top" Width="762" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" Style="{StaticResource ListViewStyle}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Frame x:Name="Top1_placeOrder" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="626" MouseDown="Top1_MouseDown" Background="Transparent" Foreground="#FFD5D5D8" />
+        <TextBlock x:Name="nameOfWindowTextBlock" Text="确认交易信息" Foreground="#FFD5D5D8" Margin="31,10,578,270" />
+
+        <Button x:Name="minButton" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}" RenderTransformOrigin="-1.267,1.75" Margin="0,10,30,0"/>
+        <Button x:Name="closeButton" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}" Margin="0,10,10,0"/>
+        <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="2" Width="2"/>
+
+        <Canvas HorizontalAlignment="Left" Height="232" Margin="10,37,0,0" VerticalAlignment="Top" Width="662" Background="#FF23232C">
+            <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="202" VerticalAlignment="Top" Width="661" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" Style="{StaticResource ListViewStyle}">
                 <ListView.View>
-                    <GridView>                       
+                    <GridView>
                         <GridViewColumn x:Name="userTGVCH" Header="投资账户" Width="80"/>
                         <GridViewColumn x:Name="nameOTGVCH" Header="合约名称 "  DisplayMemberBinding="{Binding InstrumentID}" Width="80"/>
                         <GridViewColumn x:Name="typeOTGVCH" Header="合约类型 " DisplayMemberBinding="{Binding CallOrPut}" Width="60"/>
-                        <GridViewColumn x:Name="nameTGVCH" Header="合约名称 " Width="80" />
-                        <GridViewColumn x:Name="typeTGVCH" Header="合约类型 " Width="60"/>
                         <GridViewColumn x:Name="exercisePriceTGVCH" Header="行权价 " Width="60" DisplayMemberBinding="{Binding ExercisePrice}"/>
-                        <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="60" />                            
+                        <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="60" />
                         <GridViewColumn x:Name="lotTGVCH" Header=" 交易手数" Width="60"/>
-                        <GridViewColumn x:Name="formOfClientageTGVCH" Header=" 委托方式" Width=" 60"/>                           
+                        <GridViewColumn x:Name="formOfClientageTGVCH" Header=" 委托方式" Width=" 60"/>
                         <GridViewColumn x:Name="priceOfClientageTGVCH" Header=" 委托价格" Width=" 60"/>
                         <GridViewColumn x:Name="priceOfMarketTGVCH" Header=" 市场价格" Width=" 60"/>
                         <GridViewColumn x:Name="conditionTGVCH" Header=" 托单条件" Width=" 60"/>
-                        <GridViewColumn x:Name="setGradientTGVCH" Header=" 设置梯度" Width=" 50"/>
-                        <GridViewColumn x:Name="accuracyTGVCH" Header=" 精确度" Width=" 40"/>
-                        <GridViewColumn x:Name="arithmeticProgressionTGVCH" Header="手数等差 " Width=" 50"/>
                     </GridView>
                 </ListView.View>
             </ListView>
 
+            <TextBlock x:Name="occupyCapitalTextBlock" Text="占用资金：" HorizontalAlignment="Left" Foreground="#FF969696" Canvas.Left="10" Canvas.Top="207" Margin="5,0,0,0"/>
+            <TextBlock x:Name="showOccupyCapitalTextBlock" Text="100,000" HorizontalAlignment="Left" Foreground="#FF969696" Canvas.Left="80" Canvas.Top="207" Margin="5,0,0,0"/>
+            <TextBlock x:Name="balanceTextBlock" Text="账户余额：" HorizontalAlignment="Left" Foreground="#FF969696" Canvas.Left="150" Canvas.Top="207" Margin="80,0,0,0"/>
+            <TextBlock x:Name="showBalanceTextBlock" Text="100,000" HorizontalAlignment="Left" Foreground="#FF969696" Canvas.Left="295" Canvas.Top="207" Margin="5,0,0,0" />
+
         </Canvas>
 
-        <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75"  Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel"/>
-        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="75"  Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
+        <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click" ToolTip="cancel"/>
+        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
 
     </Grid>
 
