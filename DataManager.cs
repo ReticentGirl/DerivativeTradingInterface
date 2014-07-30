@@ -7,11 +7,21 @@ using System.Text;
 using System.Timers;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Windows.Forms;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using System.Runtime.InteropServices;
+using qiquanui.Properties;
 
 namespace qiquanui
 {
@@ -137,11 +147,12 @@ namespace qiquanui
 
     class DataManager
     {
-        System.Timers.Timer timer, timer_z;
+        System.Timers.Timer timer;
         MainWindow pwindow;
         DateTime now;
         public ObservableCollection<option> ObservableObj = new ObservableCollection<option>();
-        static Hashtable All = new Hashtable(2000);
+        private ObservableCollection<option> ObservableObj2 = new ObservableCollection<option>();
+        public static Hashtable All = new Hashtable(2000);
         static string updatesql, exercisesql, dynamicsql, box_type, box_exchange, box_future, box_time, duedate = "", instrumentname = "";
 
         Hashtable ep_no = new Hashtable(50);//行权价对应的行数
@@ -152,6 +163,29 @@ namespace qiquanui
         bool[] ob_no = new bool[Max_line];//表示行index是否被修改（OnTimedEvent 更新面板数据时）
         option[] ob_op = new option[Max_line];
 
+        const int TIMER_UNIT = 100;
+        int mytimer = 0;
+        bool locked = false;
+        int[] timer_milli = { 300, 300 };
+        public void TimeManage(object sender, ElapsedEventArgs e)
+        {
+            if (locked) return;
+            locked = true;
+            mytimer+=TIMER_UNIT;
+            now=now.AddMilliseconds(TIMER_UNIT);
+            
+            if (mytimer % timer_milli[0]==0)
+            {
+                OnTimedEvent();
+            }
+            if (mytimer % timer_milli[1] == 0)
+            {
+                OnTimedEvent2();
+            }
+            if (mytimer >= 1000000)
+                mytimer -= 1000000;
+            locked = false;
+        }
 
         public void initial()
         {
@@ -176,16 +210,14 @@ namespace qiquanui
         public DataManager(MainWindow window)
         {
             pwindow = window;
-            timer = new System.Timers.Timer(500);
-            timer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            timer_z = new System.Timers.Timer(500);
-            timer_z.Elapsed += new ElapsedEventHandler(OnTimedEvent2);
+            timer = new System.Timers.Timer(TIMER_UNIT);
+            timer.Elapsed += new ElapsedEventHandler(TimeManage);
+            timer.Start();
 
             now = new DateTime(2014, 7, 23, 14, 0, 25);
 
             initial();
             prepare();
-            timer_z.Start();
         }
 
         int pt = 0;
@@ -209,19 +241,16 @@ namespace qiquanui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void OnTimedEvent2(object sender, ElapsedEventArgs e)
+        public void OnTimedEvent2()
         {
+            //Console.WriteLine("Timer elapsed! now=" + now+"  "+now.Millisecond+"  z");
+
             //timer_z.Stop();
             //timer.Stop();
-            timer_z.Enabled = false;
-            timer.Enabled = false;
 
-            now = now.AddMilliseconds(500);
             if (now >= lastupdate.AddMinutes(1)) prepare();
             if (pt >= dtall.Rows.Count)
             {
-                timer_z.Start();
-                timer.Start();
                 return;
             }
 
@@ -258,8 +287,6 @@ namespace qiquanui
 
             //timer_z.Start();
             //timer.Start();
-            timer_z.Enabled = true;
-            timer.Enabled = true;
 
         }
 
@@ -291,9 +318,8 @@ namespace qiquanui
         /// </summary>
         public void Update()
         {
-            timer.Stop();
-            timer_z.Stop();
-            ClearOb();
+            //ClearOb();
+            ObservableObj2 = new ObservableCollection<option>();
 
             ///将界面中所选的东西保存在全局变量中
             GetChoice();
@@ -345,6 +371,11 @@ namespace qiquanui
             {
 
                 option _op = new option();
+                if (epcp_row["" + list.Rows[j][0] + "C"] == null)
+                {
+                    Console.WriteLine("can't find epcp_row in " + list.Rows[j][0] + "C");
+                    continue;
+                }
                 int rowid = (int)epcp_row["" + list.Rows[j][0] + "C"];
                 if (rowid < 0)
                 {
@@ -365,7 +396,13 @@ namespace qiquanui
                    
                 }
 
+                if (epcp_row["" + list.Rows[j][0] + "P"] == null)
+                {
+                    Console.WriteLine("can't find epcp_row in " + list.Rows[j][0] + "P");
+                    continue;
+                }
                 rowid = (int)epcp_row["" + list.Rows[j][0] + "P"];
+
                 if (rowid < 0)
                 {
                     Console.WriteLine("ROWID < 0!");
@@ -385,7 +422,8 @@ namespace qiquanui
 
                 }
 
-                Adding(_op);
+                ObservableObj2.Add(_op);
+                //Adding(_op);
 
             }
 
@@ -394,8 +432,6 @@ namespace qiquanui
 
 
 
-            timer.Start();
-            timer_z.Start();
         }
 
 
@@ -407,16 +443,11 @@ namespace qiquanui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void OnTimedEvent(object sender, ElapsedEventArgs e)
+        public void OnTimedEvent()
         {
-            //timer_z.Stop();
-            //timer.Stop();
-            timer_z.Enabled = false;
-            timer.Enabled = false;
+            //Console.WriteLine("Timer elapsed! now=" + now + "  " + now.Millisecond + "  ");
             if (ObservableObj.Count < tot_line)
             {
-                timer_z.Start();
-                timer.Start();
                 return;
             }
 
@@ -491,13 +522,11 @@ namespace qiquanui
 
                 //ob_op[i] = _op;
             }
-
+            
 
             //Refresh();
             //timer.Start();
             //timer_z.Start();
-            timer_z.Enabled = true;
-            timer.Enabled = true;
 
         }
 
@@ -518,44 +547,48 @@ namespace qiquanui
             {
                 for (int i = 0; i < tot_line; i++)
                 {
-                    option _op = ObservableObj[i] as option;
+                    ////option _op = ObservableObj[i] as option;
                     for (int j = 0; j < 11; j++)
-                        if (ob_no2[i, j])
+                        if (ob_no2[i, j] && j<2 )
                         {
-                            //UIElement u = pwindow.optionsMarketListView.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
-                            //if (u == null) return;
+                            UIElement u = pwindow.optionsMarketListView.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
+                            if (u == null) return;
 
-                            //UIElement x = null;
-                            //while ((u = (VisualTreeHelper.GetChild(u, 0) as UIElement)) != null)
-                            //{
-                            //    if (u is GridViewRowPresenter)
-                            //    {
-                            //        x = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(u, j), 0) as UIElement;
-                            //        break;
-                            //    }
-                            //}
-                            //System.Windows.Controls.TextBlock b = (System.Windows.Controls.TextBlock)x;
-
-
-                            //System.Windows.Controls.ListViewItem lvi = (System.Windows.Controls.ListViewItem)pwindow.optionsMarketListView.Items[i];
-                            //b.Background = System.Windows.Media.Brushes.AliceBlue;
-                            //b.FontStyle = FontStyles.Italic;
-                            //UIElement u=pwindow.optionsMarketListView
-                            //((ListViewItem) pwindow.optionsMarketListView.Items[i]). SubItems[j].BackColor = Color.Red;
-
-                            switch (j)
+                            UIElement x = null;
+                            while ((u = (VisualTreeHelper.GetChild(u, 0) as UIElement)) != null)
                             {
-                                case 0: _op.BidPrice1 = ob_op[i].BidPrice1; break;
-                                case 1: _op.AskPrice1 = ob_op[i].AskPrice1; break;
-                                case 2: _op.LastPrice1 = ob_op[i].LastPrice1; break;
-                                case 3: _op.Volume1 = ob_op[i].Volume1; break;
-                                case 4: _op.OpenInterest1 = ob_op[i].OpenInterest1; break;
-                                case 6: _op.OpenInterest2 = ob_op[i].OpenInterest2; break;
-                                case 7: _op.Volume2 = ob_op[i].Volume2; break;
-                                case 8: _op.LastPrice2 = ob_op[i].LastPrice2; break;
-                                case 9: _op.AskPrice2 = ob_op[i].AskPrice2; break;
-                                case 10: _op.BidPrice2 = ob_op[i].BidPrice2; break;
+                                if (u is GridViewRowPresenter)
+                                {
+                                    x = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(u, j), 0) as UIElement;
+                                    break;
+                                }
                             }
+                            //option dr = (pwindow.optionsMarketListView.Items[0]) as option;
+
+                            System.Windows.Controls.Button b = x as System.Windows.Controls.Button;
+                            b.Style = pwindow.Resources["normalSty"] as Style;
+
+                            //System.Windows.Controls.ListViewItem lvi = pwindow.optionsMarketListView.Items[i] as System.Windows.Controls.ListViewItem;
+                            b.Background = System.Windows.Media.Brushes.Red;
+                            b.FontStyle = FontStyles.Italic;
+                            b.Foreground = System.Windows.Media.Brushes.Green; 
+                            //UIElement u = pwindow.optionsMarketListView
+                            //((ListViewItem)pwindow.optionsMarketListView.Items[i]).SubItems[j].BackColor = Color.Red;
+
+
+                            //switch (j)
+                            //{
+                            //    case 0: _op.BidPrice1 = ob_op[i].BidPrice1; break;
+                            //    case 1: _op.AskPrice1 = ob_op[i].AskPrice1; break;
+                            //    case 2: _op.LastPrice1 = ob_op[i].LastPrice1; break;
+                            //    case 3: _op.Volume1 = ob_op[i].Volume1; break;
+                            //    case 4: _op.OpenInterest1 = ob_op[i].OpenInterest1; break;
+                            //    case 6: _op.OpenInterest2 = ob_op[i].OpenInterest2; break;
+                            //    case 7: _op.Volume2 = ob_op[i].Volume2; break;
+                            //    case 8: _op.LastPrice2 = ob_op[i].LastPrice2; break;
+                            //    case 9: _op.AskPrice2 = ob_op[i].AskPrice2; break;
+                            //    case 10: _op.BidPrice2 = ob_op[i].BidPrice2; break;
+                            //}
                         }
                     
 
@@ -594,7 +627,7 @@ namespace qiquanui
             }
             else
             {
-
+                ObservableObj = ObservableObj2;
                 pwindow.optionsMarketListView.DataContext = ObservableObj;
             }
 
@@ -617,10 +650,13 @@ namespace qiquanui
                 box_type = pwindow.typeComboBox.Text;
                 box_exchange = pwindow.traderComboBox.Text;
                 box_future = pwindow.subjectMatterComboBox.Text;
-                instrumentname = box_future;
-                box_time = "1409";
+                for (int i = 0; i < MainWindow.NameSubject.Length; i++)
+                    if (MainWindow.NameSubject[i].Equals(box_future))
+                        instrumentname = MainWindow.NameOption[i];
+                //instrumentname = box_future;
+                box_time = pwindow.dueDateComboBox.Text;
                 duedate = box_time;
-                updatesql = String.Format("SELECT * FROM minutedata a,staticdata s where s.instrumentid=a.instrumentid and s.instrumentname='{0}' and s.duedate='{1}'  and a.updatetime<'09:31:00' order by updatetime", instrumentname, duedate);
+                updatesql = String.Format("SELECT * FROM minutedata a,staticdata s where s.instrumentid=a.instrumentid and s.instrumentname='{0}' and s.duedate='{1}'  and a.updatetime<'{2}' order by updatetime", instrumentname, duedate,TimeToString(now));
                 exercisesql = String.Format("select exerciseprice from staticdata where instrumentname='{0}' and duedate='{1}' and callorput=0 order by exerciseprice ", instrumentname, duedate);
             }
 

@@ -442,16 +442,6 @@ namespace qiquanui
         //    comboBoxItem1.Visibility = Visibility.Hidden;
         //} //期权交易区，“委托方式”选择“市价”，“托单方式”中“ROD”不可选
 
-        void DmUpdate()
-        {
-            dm.Update();
-        }
-
-        private void subjectMatterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            dataThread = new Thread(new ThreadStart(DmUpdate));
-            dataThread.Start();
-        } 
 
 
         private void placeOrderBtn_Click(object sender, RoutedEventArgs e)
@@ -479,13 +469,136 @@ namespace qiquanui
         }
 
 
-     
+        #region 顶端各选单逻辑 
+        /// <summary>
+        /// 顶端各选单逻辑 CREATED BY IVES DING
+        /// </summary>
 
- 
 
-        
 
-        
-      
+        void DmUpdate()
+        {
+            dm.Update();
+        }
+
+        public static string[] NameSubject = { "金", "铜", "白糖", "豆粕", "上证50", "沪深300" };
+        public static string[] NameOption = { "金期权", "铜期权", "白糖期权","豆粕期权", "上证50期权", "沪深300期权" };
+        /// <summary>
+        /// 标的期货
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void subjectMatterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0) return;
+            string _subject = (string)e.AddedItems[0];
+            subjectMatterComboBox.Text = _subject;
+            string _option="";
+            for (int i = 0; i < NameSubject.Length; i++)
+                if (NameSubject[i].Equals(_subject))
+                    _option = NameOption[i];
+            string duedatesql = "select duedate from staticdata where instrumentname='"+_option+"' group by duedate";
+            DataTable dt= DataControl.QueryTable(duedatesql);
+            dueDateComboBox.Items.Clear();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                string _duedate = (string) dt.Rows[i][0];
+                if (_duedate.Equals("1407")) continue;
+                dueDateComboBox.Items.Add(_duedate);
+            }
+            dueDateComboBox.SelectedIndex=0; 
+
+        }
+
+        /// <summary>
+        /// 交易商
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void traderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.RemovedItems.Count == 0) return;
+            string trader;
+            trader = (string)((ComboBoxItem)e.AddedItems[0]).Content;
+            trader=trader.Trim();
+            type_change(typeComboBox.Text.Trim(), trader);
+        }
+
+        private void type_change(string _type,string _trader)
+        {
+            if (!_type.Equals("期权")) {
+                string duedatesql = "SELECT duedate FROM staticdata s  where exchangename='"+_trader+"' and optionorfuture=1 group by duedate ";
+                DataTable dt = DataControl.QueryTable(duedatesql);
+                dueDateComboBox.Items.Clear();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    string _duedate = (string)dt.Rows[i][0];
+                    if (_duedate.Length==4 && _duedate[0].Equals('1'))
+                    dueDateComboBox.Items.Add(_duedate);
+                }
+                dueDateComboBox.SelectedIndex = 0;
+                return;
+            }
+            string trader = _trader;
+            subjectMatterComboBox.Items.Clear();
+            if (trader.Equals("上期所"))
+            {
+                subjectMatterComboBox.Items.Add("金");
+                subjectMatterComboBox.Items.Add("铜");
+            }
+            if (trader.Equals("大商所"))
+            {
+                subjectMatterComboBox.Items.Add("豆粕");
+            }
+            if (trader.Equals("中金所"))
+            {
+                subjectMatterComboBox.Items.Add("上证50");
+                subjectMatterComboBox.Items.Add("沪深300");
+            }
+            if (trader.Equals("郑商所"))
+            {
+                subjectMatterComboBox.Items.Add("白糖");
+            }
+            subjectMatterComboBox.SelectedItem = subjectMatterComboBox.Items[0];
+
+        }
+
+        private void dueDateComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0) return;
+
+            string trader = traderComboBox.Text.Trim();
+            string duedata = (string)e.AddedItems[0];
+            string subject = subjectMatterComboBox.Text.Trim();
+
+            if (trader.Equals("") || duedata.Equals("") || subject.Equals(""))
+                return;
+
+            dataThread = new Thread(new ThreadStart(DmUpdate));
+            dataThread.Start();
+        }
+
+
+        private void typeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.RemovedItems.Count == 0) type_change("期货", "中金所");
+            else
+            {
+                string type = ((string)((ComboBoxItem)e.AddedItems[0]).Content).Trim();
+                type_change(type, traderComboBox.Text.Trim());
+            }
+        }
+
+
+
+        #endregion
+
+
+
+
+
+
+
+
     }
 }

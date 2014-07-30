@@ -44,12 +44,12 @@ namespace qiquanui
             }
             catch (ArgumentException ae)
             {
-                Console.Write(ae.Message + " \n\n" + ae.Source + "\n\n" + ae.StackTrace + "\n\n" + ae.Data);
+                Console.WriteLine(ae.Message + " \n\n" + ae.Source + "\n\n" + ae.StackTrace + "\n\n" + ae.Data);
             }
             catch (Exception ex)
             {
                 //throw new Exception(ex.Message);  
-                Console.Write(ex.Message + " \n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Data);
+                Console.WriteLine(ex.Message + " \n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Data);
             }
 
             return dt;

@@ -1602,21 +1602,18 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Label  x:Name="typeLabel" Content="衍生品种类" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="10,2,0,1" Height="26"/>
-                    <ComboBox x:Name="typeComboBox" VerticalAlignment="Top" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" Margin="77,3,0,0" HorizontalAlignment="Left" Height="23" Width="70" >
+                    <ComboBox x:Name="typeComboBox" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" Margin="77,3,0,0" HorizontalAlignment="Left" Width="70" Height="23" VerticalAlignment="Top" SelectionChanged="typeComboBox_SelectionChanged" >
                         <ComboBoxItem x:Name="futuresComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresComboBoxItem_Selected"/>
                         <ComboBoxItem x:Name="optionsComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsComboBoxItem_Selected" />
                     </ComboBox>
                     <Label x:Name="exchangeNameLabel" Content="交易商" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Margin="155,2,0,4" Height="23" />
-                    <ComboBox x:Name="traderComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="67" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" RenderTransformOrigin="0.5,0.522" Margin="197,3,0,0" >
-                        <ComboBoxItem x:Name="traderComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
-                        <ComboBoxItem x:Name="traderComboBoxItem2" Content=" 大商所" HorizontalAlignment="Left" Width="80"/>
+                    <ComboBox x:Name="traderComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="67" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" RenderTransformOrigin="0.5,0.522" Margin="197,3,0,0" SelectionChanged="traderComboBox_SelectionChanged" >
                         <ComboBoxItem x:Name="traderComboBoxItem3" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="traderComboBoxItem4" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
+                        <ComboBoxItem x:Name="traderComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
                     <Label x:Name="subjectMatterLabel" Content="标的商品" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="422,2,0,4" Height="23" />
                     <ComboBox x:Name="subjectMatterComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="476,3,0,0" SelectionChanged="subjectMatterComboBox_SelectionChanged">
-                        <ComboBoxItem x:Name="nameComboBoxItem1" Content="沪深300期权" HorizontalAlignment="Left" Width="80"/>
-                        <ComboBoxItem x:Name="nameComboBoxItem2" Content="上证50期权" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
                     <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="275,2,0,1" Height="26" />
                     <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="330,3,0,0" />
@@ -1731,7 +1728,7 @@
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidROMBtn" Content="{Binding BidPrice1}" Width=" 80" Style="{StaticResource marketListViewButtom}" />
+                                        <Button x:Name="bidROMBtn" Content="{Binding BidPrice1}" Width=" 80"  Style="{StaticResource marketListViewButtom}"  />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
