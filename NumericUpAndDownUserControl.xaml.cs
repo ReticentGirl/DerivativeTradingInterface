@@ -23,9 +23,10 @@ namespace qiquanui
 			InitializeComponent();
 
 			_numMatch = new Regex(@"^-?\d+$");
+            //_numMatch = new Regex(@"^-?[1-9]\d*$");
 			Maximum = int.MaxValue;
 			Minimum = int.MinValue;
-			Value = 0;
+			//Value = 0;
 		}
 
 		private void ResetText(TextBox tb)
@@ -50,9 +51,15 @@ namespace qiquanui
 		private void value_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			var tb = (TextBox)sender;
-			if (!_numMatch.IsMatch(tb.Text)) ResetText(tb);
-			if (Value < Minimum) Value = Minimum;
-			if (Value > Maximum) Value = Maximum;
+            //bool test = _numMatch.IsMatch(tb.Text);
+            if (!_numMatch.IsMatch(tb.Text))
+                ResetText(tb);
+            else
+                Value = Convert.ToInt32(tb.Text);
+			if (Value < Minimum) 
+                Value = Minimum;
+			if (Value > Maximum) 
+                Value = Maximum;
 
 			RaiseEvent(new RoutedEventArgs(ValueChangedEvent));
 		}
@@ -76,11 +83,43 @@ namespace qiquanui
         /// <summary>The Value property represents the value of the control.</summary>
         /// <returns>The current value of the control</returns>
         [DefaultValue(0)]
+
+        //public int Value
+        //{
+        //    get { return Int32.Parse(value.Text); }
+        //    set { this.value.Text = value.ToString(); }
+        //}
+
+        ////////////////////////////////////////////////////////////////
         public int Value
         {
-            get { return Int32.Parse(value.Text); }
-            set { this.value.Text = value.ToString(); }
+            get { return (int)GetValue(ValueProperty); }
+            set
+            {
+                SetValue(ValueProperty, value);
+                this.Textvalue.Text = value.ToString();
+            }
         }
+
+
+        // Using a DependencyProperty as the backing store for Value.  This enables animation, styling, binding, etc...
+      
+
+        public static readonly DependencyProperty ValueProperty =
+           DependencyProperty.Register("Value", typeof(int), typeof(NumericUpAndDownUserControl), new PropertyMetadata(0, new PropertyChangedCallback(OnValueChanged)));
+
+
+        //public static readonly DependencyProperty ValueProperty =
+        //   DependencyProperty.Register("Value", typeof(int), typeof(NumericUpAndDownUserControl), new PropertyMetadata(0));
+
+        static void OnValueChanged(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            NumericUpAndDownUserControl source = (NumericUpAndDownUserControl)sender;
+            source.Textvalue.Text = ((int)args.NewValue).ToString();
+        }
+
+        /////////////////////////////////////////////////////////////////
+
 
         /// <summary>The Maximum property represents the maximum value of the control.</summary>
         /// <returns>The maximum possible value of the control</returns>

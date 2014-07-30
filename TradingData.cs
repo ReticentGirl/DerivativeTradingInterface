@@ -187,6 +187,7 @@ namespace qiquanui
               
               ifChooseOTGVCH = false;
 
+              tradingNum = 1;
               tradingType = 0;  //初始化为买开
              
 

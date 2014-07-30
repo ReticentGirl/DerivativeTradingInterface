@@ -7,7 +7,6 @@ using System.Text;
 using System.Timers;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
@@ -155,7 +154,7 @@ namespace qiquanui
         public static Hashtable All = new Hashtable(2000);
         static string updatesql, exercisesql, dynamicsql, box_type, box_exchange, box_future, box_time, duedate = "", instrumentname = "";
 
-        Hashtable ep_no = new Hashtable(50);//行权价对应的行数
+        public Hashtable ep_no = new Hashtable(50);//行权价对应的行数
         int tot_line = 0;
 
         const int Max_line = 30;

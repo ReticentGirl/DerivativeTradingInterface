@@ -34,9 +34,9 @@ namespace qiquanui
         DataManager dm;
         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
 
-        TradingManager otm;   //维护交易区的类
+        TradingManager otm;   //维护交易区的对象
 
-        private List<int> selectIndex = new List<int>();//保存交易区被选行 
+        
 
         private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard;
 
@@ -46,7 +46,15 @@ namespace qiquanui
             dm = new DataManager(this);
         }
 
+        //void tradingThreadStart()
+        //{
+        //    otm = new TradingManager(this);
+        //}
+            
+
         Thread dataThread;
+
+       // Thread tradingThread;
 
         public MainWindow()
         {
@@ -54,10 +62,20 @@ namespace qiquanui
             //new Thread(new ThreadStart(dataStart)).Start();
             dataStart();
 
+            //datathread = new thread(new threadstart(dmupdate));
+            //datathread.start();
+
+            //tradingthread = new thread(new threadstart(tradingthreadstart));    //交易区线程启动
+            //tradingthread.start();
+
+
+          
 
             InitializeComponent();
+
             otm = new TradingManager(this);
-            otm.OnAdd();
+
+            //otm.OnAdd();
            
             //设置窗口距离显示屏边界距离
             this.Left = 50;
@@ -444,29 +462,85 @@ namespace qiquanui
 
 
 
-        private void placeOrderBtn_Click(object sender, RoutedEventArgs e)
+       
+
+        private void placeOrderTBtn_Click(object sender, RoutedEventArgs e)         //交易区下单按钮
         {
-           
+            placeOrder PlaceOrder = new placeOrder();
+            PlaceOrder.Show();
+
             if (tradingListView.Items.Count > 0)
             {
                 for (int i = 0; i < tradingListView.Items.Count; i++)
                 {
-                   
-                    TradingData otd = (TradingData)
-                    tradingListView.Items[i];
-                    if (otd.IfChooseOTGVCH ==true)
+
+                    TradingData otd = (TradingData) tradingListView.Items[i];
+                    if (otd.IfChooseOTGVCH == true)
                         System.Windows.MessageBox.Show(otd.InstrumentID);
                 }
             }
-
-
         }
 
-        private void placeOrderTBtn_Click(object sender, RoutedEventArgs e)
+
+        private void deleteTBtn_Click(object sender, RoutedEventArgs e)      //交易区删除按钮
         {
-            placeOrder PlaceOrder = new placeOrder();
-            PlaceOrder.Show();
+          if (tradingListView.Items.Count > 0)
+            {
+            for (int i = tradingListView.Items.Count-1; i >=0; i--)    //倒回来写才删的干净
+                {
+
+                    TradingData otd = (TradingData)tradingListView.Items[i];
+                    if (otd.IfChooseOTGVCH == true)
+                    {
+                        otm.TradingOC.RemoveAt(i);
+                        
+                    }
+                        
+                }
+            }
         }
+
+        private void bidROMBtn_Click(object sender, RoutedEventArgs e)        //期权看涨 “买”按钮
+        {
+            int  exercisePrice = (int)((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
+
+            int buttonIndex = (int)dm.ep_no[(int)exercisePrice];    //根据哈希表获得行数
+
+            option selectedOption = dm.ObservableObj[buttonIndex];
+
+            string selectedUserID = "balabala";
+
+            string selectedInstrumentID = selectedOption.instrumentid1;   //看涨
+
+            string selectedCallOrPut = "看涨";
+
+            double selectedExercisePrice = selectedOption.ExercisePrice;
+
+            double selectedMarketPrice = selectedOption.BidPrice1;
+
+            bool haveSame = false;    //用以判断交易区中是否有相同的
+
+            if (otm.TradingOC.Count()>0)    //判断是否有相同的
+                 for (int i = 0; i < otm.TradingOC.Count();i++)
+                {
+                     TradingData td = otm.TradingOC[i];
+                     if (td.UserID == selectedUserID && td.InstrumentID == selectedInstrumentID && td.ExercisePrice == selectedExercisePrice)
+                         haveSame = true;
+                }
+
+            if(haveSame==false)    //没有相同的就加入到交易区列表中
+                otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut, selectedExercisePrice, selectedMarketPrice);
+    
+        }
+
+        private void tradingListView_SelectionChanged(object sender, SelectionChangedEventArgs e)    //交易区窗口选择列改变事件
+        {
+            //System.Windows.MessageBox.Show("change");
+           TradingData selectedItem = tradingListView.SelectedItem as TradingData;
+
+        }
+
+      
 
 
         #region 顶端各选单逻辑 

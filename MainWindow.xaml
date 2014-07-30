@@ -11,6 +11,7 @@
     
         Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF627095" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="974" MinHeight="650" Width="1200" Height="700.5" Opacity="0.95">
     <Window.Resources>
+        
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
 
         <!--实现鼠标经过渐变-->
@@ -1034,7 +1035,7 @@
 
                                         <Setter TargetName="bd" Property="Background">
                                             <Setter.Value>
-                                                <SolidColorBrush Color="#FF0A0A0E" Opacity="0.5"/>
+                                                <SolidColorBrush Color="Black" Opacity="0.5"/>
                                             </Setter.Value>
                                         </Setter>
 
@@ -1728,7 +1729,7 @@
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidROMBtn" Content="{Binding BidPrice1}" Width=" 80"  Style="{StaticResource marketListViewButtom}"  />
+                                        <Button x:Name="bidROMBtn" Content="{Binding BidPrice1}" Width=" 80" Tag="{Binding ExercisePrice}" Style="{StaticResource marketListViewButtom}" Click="bidROMBtn_Click" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1780,13 +1781,13 @@
                             <ColumnDefinition Width="787.25"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" Grid.ColumnSpan="2">
+                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" SelectionChanged="tradingListView_SelectionChanged" Grid.ColumnSpan="2">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseTGVCH" Header="勾选" Width="50" >
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ifChooseTCheckBox" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                                <CheckBox x:Name="ifChooseTCheckBox" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IfChooseOTGVCH, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -1801,7 +1802,7 @@
                                     <GridViewColumn x:Name="typeOTGVCH" Header="合约类型 " DisplayMemberBinding="{Binding CallOrPut}" Width="80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOTComboBox" >
+                                                <ComboBox x:Name="typeOTComboBox" SelectedIndex="{Binding CallOrPut,UpdateSourceTrigger=PropertyChanged}" >
                                                     <ComboBoxItem Content="看涨" HorizontalAlignment="Left" Width="80"/>
                                                     <ComboBoxItem Content="看跌" HorizontalAlignment="Left" Width="80"/>
                                                 </ComboBox>
@@ -1824,14 +1825,14 @@
                                     <GridViewColumn x:Name="lotTGVCH" Header=" 交易手数" Width="60">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <local:NumericUpAndDownUserControl x:Name="lotTNUAD" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <local:NumericUpAndDownUserControl x:Name="lotTNUAD" Width="Auto" HorizontalAlignment="Center"   Value="{Binding Path=TradingNum,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="formOfClientageTGVCH" Header=" 委托方式" Width=" 80">
+                                    <GridViewColumn x:Name="formOfClientageTGVCH" Header=" 委托方式" Width="80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="formOfClientageTComboBox">
+                                                <ComboBox x:Name="formOfClientageTComboBox" SelectedIndex="{Binding ClientageType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                                     <ComboBoxItem x:Name="marketPriceTCBI" Content=" 市价" HorizontalAlignment="Left" Width=" 80" />
                                                     <ComboBoxItem x:Name="limitPriceTCBI" Content=" 限价" HorizontalAlignment="Left" Width=" 80"/>
                                                 </ComboBox>
@@ -1841,15 +1842,15 @@
                                     <GridViewColumn x:Name="priceOfClientageTGVCH" Header=" 委托价格" Width=" 80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="priceOfClientageTTextBox" Text=" " Width="Auto"/>
+                                                <TextBox x:Name="priceOfClientageTTextBox" Text="{Binding ClientagePrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="priceOfMarketTGVCH" Header=" 市场价格" Width=" 80"/>
+                                    <GridViewColumn x:Name="priceOfMarketTGVCH" Header=" 市场价格" DisplayMemberBinding="{Binding MarketPrice}" Width=" 80"/>
                                     <GridViewColumn x:Name="conditionTGVCH" Header=" 托单条件" Width=" 80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="conditionTComboBox">
+                                                <ComboBox x:Name="conditionTComboBox" SelectedIndex="{Binding ClientageCondition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                                     <ComboBoxItem x:Name="comboBoxItem1" Content=" ROD" HorizontalAlignment="Left" Width=" 80"/>
                                                     <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 80"/>
                                                     <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 80"/>
@@ -1860,21 +1861,21 @@
                                     <GridViewColumn x:Name="setGradientTGVCH" Header=" 设置梯度" Width=" 60">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <CheckBox x:Name="setGradientTCheckBox" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <CheckBox x:Name="setGradientTCheckBox" IsChecked="{Binding IsSetGradient,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="accuracyTGVCH" Header=" 精确度" Width=" 50">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="accuracyTTextBox" Text=" " Width=" 50"/>
+                                                <TextBox x:Name="accuracyTTextBox" Text="{Binding Accuracy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsSetGradient,Mode=OneWay}" Width=" 50"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="arithmeticProgressionTGVCH" Header="手数等差 " Width=" 50">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="arithmeticProgressionTTextBox" Text=" " Width=" 50"/>
+                                                <TextBox x:Name="arithmeticProgressionTTextBox" IsEnabled="{Binding IsSetGradient,Mode=OneWay}"  Text="{Binding ArithmeticProgression,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width=" 50"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -1883,7 +1884,7 @@
                         </ListView>
 
                         <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click" Grid.Column="1"/>
-                        <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
+                        <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"  Click="deleteTBtn_Click"/>
                         <Button x:Name="addSubjectMatter" Content="加入标的资产" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="1"/>
                     </Grid>
                 </TabItem>
