@@ -499,8 +499,8 @@
 
         </Canvas>
 
-        <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click" ToolTip="cancel"/>
-        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
+        <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75"  Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel"/>
+        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="75"  Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
 
     </Grid>
 
