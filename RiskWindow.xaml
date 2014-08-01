@@ -252,6 +252,6 @@
         </TabControl>
 
         <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="1012,357,0,303" Height="26" />
-        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="1075,357,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
+        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0"  Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="1075,357,0,0" />
     </Grid>
 </Window>

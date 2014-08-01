@@ -1967,13 +1967,26 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn x:Name="lastPriceROMGVCH" Header=" 最新价" DisplayMemberBinding="{Binding LastPrice1}" Width="80"/>
+                            <GridViewColumn x:Name="lastPriceROMGVCH" Header=" 最新价"  Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="lastPriceROMBox"  Content="{Binding LastPrice1}" Width=" 80"    />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn x:Name="volumeROMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Volume1}" Width="80"/>
                             <GridViewColumn x:Name="openInterestROMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding OpenInterest1}" Width=" 80"/>
                             <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价" DisplayMemberBinding="{Binding ExercisePrice}" Width=" 80"/>
                             <GridViewColumn x:Name="openInterestDOMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding OpenInterest2}" Width=" 80"/>
                             <GridViewColumn x:Name="volumeDOMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Volume2}" Width=" 80"/>
-                            <GridViewColumn x:Name="lastPriceRDOMGVCH" Header=" 最新价" DisplayMemberBinding="{Binding LastPrice2}" Width=" 80"/>
+                            <GridViewColumn x:Name="lastPriceDOMGVCH" Header=" 最新价"  Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="lastPriceDOMBox" Content="{Binding LastPrice2}" Width=" 80"    />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
                             <GridViewColumn x:Name="askPriceDOMGVCH" Header=" 卖价" Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

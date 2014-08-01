@@ -46,7 +46,7 @@ namespace qiquanui
             set
             {
                 bidPrice1 = value;
-                //OnPropertyChanged(new PropertyChangedEventArgs("Name"));
+                OnPropertyChanged(new PropertyChangedEventArgs("BidPrice1"));
             }
         }
         public double AskPrice1
@@ -55,7 +55,7 @@ namespace qiquanui
             set
             {
                 askPrice1 = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("ImageUrl"));
+                OnPropertyChanged(new PropertyChangedEventArgs("AskPrice1"));
             }
         }
         public double LastPrice1
@@ -70,12 +70,12 @@ namespace qiquanui
         public int Volume1
         {
             get { return volume1; }
-            set { volume1 = value; OnPropertyChanged(new PropertyChangedEventArgs("Age")); }
+            set { volume1 = value; OnPropertyChanged(new PropertyChangedEventArgs("Volume1")); }
         }
         public int OpenInterest1
         {
             get { return openInterest1; }
-            set { openInterest1 = value; OnPropertyChanged(new PropertyChangedEventArgs("Age")); }
+            set { openInterest1 = value; OnPropertyChanged(new PropertyChangedEventArgs("OpenInterest1")); }
         }
         public int ExercisePrice
         {
@@ -83,7 +83,7 @@ namespace qiquanui
             set
             {
                 exercisePrice = value;
-                //OnPropertyChanged(new PropertyChangedEventArgs("Age")); 
+                OnPropertyChanged(new PropertyChangedEventArgs("ExercisePrice")); 
             }
         }
 
@@ -93,13 +93,13 @@ namespace qiquanui
             set
             {
                 bidPrice2 = value;
-                //OnPropertyChanged(new PropertyChangedEventArgs("Name"));
+                OnPropertyChanged(new PropertyChangedEventArgs("BidPrice2"));
             }
         }
         public double AskPrice2
         {
             get { return askPrice2; }
-            set { askPrice2 = value; OnPropertyChanged(new PropertyChangedEventArgs("ImageUrl")); }
+            set { askPrice2 = value; OnPropertyChanged(new PropertyChangedEventArgs("AskPrice2")); }
         }
         public double LastPrice2
         {
@@ -116,7 +116,7 @@ namespace qiquanui
             set
             {
                 volume2 = value;
-                //OnPropertyChanged(new PropertyChangedEventArgs("Age"));
+                OnPropertyChanged(new PropertyChangedEventArgs("Volume2"));
             }
         }
         public int OpenInterest2
@@ -125,7 +125,7 @@ namespace qiquanui
             set
             {
                 openInterest2 = value;
-                //OnPropertyChanged(new PropertyChangedEventArgs("Age")); 
+                OnPropertyChanged(new PropertyChangedEventArgs("OpenInterest2")); 
             }
         }
 
@@ -158,7 +158,8 @@ namespace qiquanui
         int tot_line = 0;
 
         const int Max_line = 30;
-        bool[,] ob_no2 = new bool[Max_line, 20];//表示行index1的第index2列是否被修改（OnTimedEvent更新面板数据时）
+        int[,] ob_no2 = new int[Max_line, 20];//表示行index1的第index2列是否被修改（OnTimedEvent更新面板数据时）
+        int[,] ob_timer = new int[Max_line, 20];
         bool[] ob_no = new bool[Max_line];//表示行index是否被修改（OnTimedEvent 更新面板数据时）
         option[] ob_op = new option[Max_line];
 
@@ -175,7 +176,7 @@ namespace qiquanui
             
             if (mytimer % timer_milli[0]==0)
             {
-                OnTimedEvent();
+                OnTimedEvent(false);
             }
             if (mytimer % timer_milli[1] == 0)
             {
@@ -213,7 +214,7 @@ namespace qiquanui
             timer.Elapsed += new ElapsedEventHandler(TimeManage);
             timer.Start();
 
-            now = new DateTime(2014, 7, 23, 14, 0, 25);
+            now = new DateTime(2014, 7, 25, 14, 0, 25);
 
             initial();
             prepare();
@@ -312,6 +313,9 @@ namespace qiquanui
 
 
 
+
+
+
         /// <summary>
         /// 从MinuteData中获取当前期权列表中每只期权的最接近当前的数据用作初始数据
         /// </summary>
@@ -334,7 +338,7 @@ namespace qiquanui
                 ep_no[(int)x] = j;
             }
 
-
+            /*
             /////主体
             ///扫描dt，计算出epcp_row
             DataTable dt = DataControl.QueryTable(updatesql);
@@ -354,10 +358,10 @@ namespace qiquanui
                     bool _callOrPut = (bool)dt.Rows[i]["CallOrPut"];
 
                     if (!_callOrPut)
-                    
+
                         epcp_row["" + _ep + "C"] = i;
 
-                    
+
                     else
                         epcp_row["" + _ep + "P"] = i;
                 }
@@ -390,9 +394,9 @@ namespace qiquanui
                     _op.LastPrice1 = Math.Round((double)dt.Rows[rowid]["LastPrice"], 1);
                     _op.Volume1 = (int)(Int64)dt.Rows[rowid]["Volume"];
                     _op.instrumentid1 = (string)dt.Rows[rowid]["InstrumentID"];
-                    
+
                     All[_op.instrumentid1] = dt.Rows[rowid];
-                   
+
                 }
 
                 if (epcp_row["" + list.Rows[j][0] + "P"] == null)
@@ -414,10 +418,10 @@ namespace qiquanui
                     _op.LastPrice2 = Math.Round((double)dt.Rows[rowid]["LastPrice"], 1);
                     _op.Volume2 = (int)(Int64)dt.Rows[rowid]["Volume"];
                     _op.instrumentid2 = (string)dt.Rows[rowid]["InstrumentID"];
-                    
+
 
                     All[_op.instrumentid2] = dt.Rows[rowid];
-                    
+
 
                 }
 
@@ -425,11 +429,32 @@ namespace qiquanui
                 //Adding(_op);
 
             }
+            */
 
+            while (locked) { }
+            locked = true;
+            ObservableObj2 = new ObservableCollection<option>();
+            updatesql = "SELECT instrumentID FROM staticdata where instrumentname='"+instrumentname+"' and duedate='"+duedate+"' order by exerciseprice,callorput";
+            DataTable dt = DataControl.QueryTable(updatesql);
+            for (int i = 0; i < tot_line; i++)
+            {
+                string _id=(string)dt.Rows[i * 2]["InstrumentID"];
+                option _op = new option();
+                _op.instrumentid1 = _id;
+                _id = (string)dt.Rows[i * 2 + 1]["InstrumentID"];
+                _op.instrumentid2 = _id;
+                ObservableObj2.Add(_op);
+                for (int j = 0; j < 11; j++)
+                {
+                    ob_timer[i, j] = 0;
+                    ob_no2[i, j] = 0;
+                }
+            }
 
             Binding();
-
-
+            OnTimedEvent(true);
+            Show();
+            locked = false;
 
         }
 
@@ -442,55 +467,136 @@ namespace qiquanui
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void OnTimedEvent()
+        public void OnTimedEvent(bool first)
         {
             //Console.WriteLine("Timer elapsed! now=" + now + "  " + now.Millisecond + "  ");
-            if (ObservableObj.Count < tot_line)
+            if (ObservableObj.Count < tot_line && !first)
             {
                 return;
             }
 
-            for (int i = 0; i < tot_line; i++)
-                for (int j = 0; j < 11; j++)
-                    ob_no2[i, j] = false;
-
+            bool changed = false;
+            int TIMES = 5;
             for (int i = 0; i < tot_line; i++)
             {
-
-                option _op=ObservableObj.ElementAt<option>(i);
+                option _op;
+                if (first)
+                    _op = ObservableObj2.ElementAt<option>(i);
+                else 
+                 _op=ObservableObj.ElementAt<option>(i);
 
                 DataRow _dr = (DataRow)All[_op.instrumentid1];
                 double _new_double;
                 int _new_int;
 
+                double _openPrice = (double)_dr["OpenPrice"];
                 _new_double = Math.Round((double)_dr["BidPrice1"], 1);
-                if (!_new_double.Equals(_op.BidPrice1)) 
-                    ob_no2[i, 0] = true;
+                if (!_new_double.Equals(_op.BidPrice1) && !_op.BidPrice1.Equals(0))
+                {
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 0] = 2;
+                    }
+                    else ob_no2[i, 0] = 3;
+                    ob_timer[i, 0] = TIMES;
+                    changed = true;
+                }
+                else
+                {
+                    if (ob_timer[i, 0] > 0) ob_timer[i, 0]--;
+                    else {
+                        int _temp = ob_no2[i, 0];
+                        if (_new_double > _openPrice)
+                        {
+                            ob_no2[i, 0] = 4;
+                        }
+                        else ob_no2[i, 0] = 5;
+                        if (_temp == ob_no2[i, 0])
+                            ob_no2[i, 0] = 0;
+                    }
+                }
                 _op.BidPrice1 = _new_double;
 
                 _new_double=Math.Round((double)_dr["AskPrice1"], 1);
-                if (!_new_double.Equals(_op.AskPrice1)) 
-                    ob_no2[i, 1] = true;
+                if (!_new_double.Equals(_op.AskPrice1) && !_op.AskPrice1.Equals(0))
+                {
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 1] = 2;
+                    }
+                    else ob_no2[i, 1] = 3;
+                    ob_timer[i, 1] = TIMES;
+
+                    changed = true;
+                }else
+                if (ob_timer[i, 1] > 0) ob_timer[i, 1]--;
+                else
+                {
+                    int _temp = ob_no2[i, 1];
+
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 1] = 4;
+                    }
+                    else ob_no2[i, 1] = 5;
+                    if (_temp == ob_no2[i, 1])
+                        ob_no2[i, 1] = 0;
+
+                }
+
                 _op.AskPrice1 = _new_double;
 
                 _new_double = Math.Round((double)_dr["LastPrice"], 1);
-                if (!_new_double.Equals(_op.LastPrice1)) 
-                    ob_no2[i, 2] = true;
+                if (!_new_double.Equals(_op.LastPrice1) && !_op.LastPrice1.Equals(0))
+                {
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 2] = 2;
+                    }
+                    else ob_no2[i, 2] = 3;
+                    ob_timer[i, 2] = TIMES;
+
+                    changed = true;
+                }else
+                if (ob_timer[i, 2] > 0) ob_timer[i, 2]--;
+                else
+                {
+                    int _temp = ob_no2[i, 2];
+
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 2] = 4;
+                    }
+                    else ob_no2[i, 2] = 5;
+                    if (_temp == ob_no2[i, 2])
+                        ob_no2[i, 2] = 0;
+
+                }
+
                 _op.LastPrice1 = _new_double;
 
                 _new_int = (int)(Int64)_dr["Volume"];
                 if (!_new_int.Equals(_op.Volume1)) 
-                    ob_no2[i, 3] = true;
+                {
+                    ob_no2[i, 3] = 1;
+                    changed = true;
+                }
                 _op.Volume1 = _new_int;
 
                 _new_int = (int)(double)_dr["OpenInterest"];
                 if (!_new_int.Equals(_op.OpenInterest1)) 
-                    ob_no2[i, 4] = true;
+                {
+                    ob_no2[i, 4] = 1;
+                    changed = true;
+                }
                  _op.OpenInterest1 = _new_int;
 
                 _new_int=(int)(double)_dr["ExercisePrice"];
                 if (!_new_int.Equals(_op.ExercisePrice)) 
-                    ob_no2[i, 5] = true;
+                {
+                    ob_no2[i, 5] = 1;
+                    changed = true;
+                }
                 _op.ExercisePrice = _new_int;
 
 
@@ -499,23 +605,106 @@ namespace qiquanui
                 _dr = (DataRow)All[_op.instrumentid2];
 
                 _new_int = (int)(double)_dr["OpenInterest"];
-                if (!_new_int.Equals(_op.OpenInterest2)) ob_no2[i, 6] = true;
+                if (!_new_int.Equals(_op.OpenInterest2))
+                {
+                    ob_no2[i, 6] = 1;
+                    changed = true;
+                }
                 _op.OpenInterest2 = _new_int;
 
                 _new_int = (int)(Int64)_dr["Volume"];
-                if (!_new_int.Equals(_op.Volume2)) ob_no2[i, 7] = true;
+                if (!_new_int.Equals(_op.Volume2))
+                {
+                    ob_no2[i, 7] = 1;
+                    changed = true;
+                }
                 _op.Volume2 = _new_int;
 
                 _new_double = Math.Round((double)_dr["LastPrice"], 1);
-                if (!_new_double.Equals(_op.LastPrice2)) ob_no2[i, 8] = true;
+                if (!_new_double.Equals(_op.LastPrice2) && !_op.LastPrice2.Equals(0))
+                {
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 8] = 2;
+                    }
+                    else ob_no2[i, 8] = 3;
+                    ob_timer[i, 8] = TIMES;
+
+                    changed = true;
+                }else
+                if (ob_timer[i, 8] > 0) ob_timer[i, 8]--;
+                else
+                {
+                    int _temp = ob_no2[i, 8];
+
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 8] = 4;
+                    }
+                    else ob_no2[i, 8] = 5;
+                    if (_temp == ob_no2[i, 8])
+                        ob_no2[i, 8] = 0;
+
+                }
+
                 _op.LastPrice2 = _new_double;
 
                 _new_double = Math.Round((double)_dr["AskPrice1"], 1);
-                if (!_new_double.Equals(_op.AskPrice2)) ob_no2[i, 9] = true;
+                if (!_new_double.Equals(_op.AskPrice2) && !_op.AskPrice2.Equals(0))
+                {
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 9] = 2;
+                    }
+                    else ob_no2[i, 9] = 3;
+                    ob_timer[i, 9] = TIMES;
+
+                    changed = true;
+                }else
+                if (ob_timer[i, 9] > 0) ob_timer[i, 9]--;
+                else
+                {
+                    int _temp = ob_no2[i, 9];
+
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 9] = 4;
+                    }
+                    else ob_no2[i, 9] = 5;
+                    if (_temp == ob_no2[i, 9])
+                        ob_no2[i, 9] = 0;
+
+                }
+
                 _op.AskPrice2 = _new_double;
 
                 _new_double = Math.Round((double)_dr["BidPrice1"], 1);
-                if (!_new_double.Equals(_op.BidPrice2)) ob_no2[i, 10] = true;
+                if (!_new_double.Equals(_op.BidPrice2) && !_op.BidPrice2.Equals(0))
+                {
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 10] = 2;
+                    }
+                    else ob_no2[i, 10] = 3;
+                    ob_timer[i, 10] = TIMES;
+
+                    changed = true;
+                }else
+                if (ob_timer[i, 10] > 0) ob_timer[i, 10]--;
+                else
+                {
+                    int _temp = ob_no2[i, 10];
+
+                    if (_new_double > _openPrice)
+                    {
+                        ob_no2[i, 10] = 4;
+                    }
+                    else ob_no2[i, 10] = 5;
+                    if (_temp == ob_no2[i, 10])
+                        ob_no2[i, 10] = 0;
+
+                }
+
                 _op.BidPrice2 = _new_double;
 
 
@@ -523,7 +712,7 @@ namespace qiquanui
             }
             
 
-            //Refresh();
+            Refresh();
             //timer.Start();
             //timer_z.Start();
 
@@ -548,7 +737,7 @@ namespace qiquanui
                 {
                     ////option _op = ObservableObj[i] as option;
                     for (int j = 0; j < 11; j++)
-                        if (ob_no2[i, j] && j<2 )
+                        if (ob_no2[i, j]>0 && (j<=2 || j>=8))
                         {
                             UIElement u = pwindow.optionsMarketListView.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
                             if (u == null) return;
@@ -564,13 +753,59 @@ namespace qiquanui
                             }
                             //option dr = (pwindow.optionsMarketListView.Items[0]) as option;
 
-                            System.Windows.Controls.Button b = x as System.Windows.Controls.Button;
-                            b.Style = pwindow.Resources["normalSty"] as Style;
+                            if (j <= 1 || j >= 9)
+                            {
 
-                            //System.Windows.Controls.ListViewItem lvi = pwindow.optionsMarketListView.Items[i] as System.Windows.Controls.ListViewItem;
-                            b.Background = System.Windows.Media.Brushes.Red;
-                            b.FontStyle = FontStyles.Italic;
-                            b.Foreground = System.Windows.Media.Brushes.Green; 
+                                System.Windows.Controls.Button b = x as System.Windows.Controls.Button;
+                                //b.Style = pwindow.Resources["normalSty"] as Style;
+
+                                //System.Windows.Controls.ListViewItem lvi = pwindow.optionsMarketListView.Items[i] as System.Windows.Controls.ListViewItem;
+                                //红底
+                                switch (ob_no2[i, j])
+                                {
+                                    case 2:
+                                        b.Background = System.Windows.Media.Brushes.Red;
+                                        b.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        break;
+                                    case 3:
+                                        b.Background = System.Windows.Media.Brushes.Green;
+                                        b.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        break;
+                                    case 4:
+                                        ///此处用红色背景样式
+                                        b.Background = System.Windows.Media.Brushes.Transparent;
+                                        b.Foreground = System.Windows.Media.Brushes.Red;
+                                        break;
+                                    case 5:
+                                        ///此处用绿色背景样式
+                                        b.Background = System.Windows.Media.Brushes.Transparent;
+                                        b.Foreground = System.Windows.Media.Brushes.Green;
+                                        break;
+                                }
+
+                            }
+                            else {
+                                System.Windows.Controls.Label t = x as System.Windows.Controls.Label;
+                                switch (ob_no2[i, j])
+                                {
+                                    case 2:
+                                        t.Background = System.Windows.Media.Brushes.Red;
+                                        t.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        break;
+                                    case 3:
+                                        t.Background = System.Windows.Media.Brushes.Green;
+                                        t.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        break;
+                                    case 4:
+                                        t.Background = System.Windows.Media.Brushes.Transparent;
+                                        t.Foreground = System.Windows.Media.Brushes.Red;
+                                        break;
+                                    case 5:
+                                        t.Background = System.Windows.Media.Brushes.Transparent;
+                                        t.Foreground = System.Windows.Media.Brushes.Green;
+                                        break;
+                                }
+                            }
                             //UIElement u = pwindow.optionsMarketListView
                             //((ListViewItem)pwindow.optionsMarketListView.Items[i]).SubItems[j].BackColor = Color.Red;
 
@@ -627,7 +862,25 @@ namespace qiquanui
             else
             {
                 ObservableObj = ObservableObj2;
+                pwindow.optionsMarketListView.Visibility=Visibility.Hidden;
                 pwindow.optionsMarketListView.DataContext = ObservableObj;
+            }
+
+        }
+
+        delegate void ShowCallBack();
+        public void Show()
+        {
+
+            ShowCallBack d;
+            if (System.Threading.Thread.CurrentThread != pwindow.Dispatcher.Thread)
+            {
+                d = new ShowCallBack(Show);
+                pwindow.Dispatcher.Invoke(d, new object[] { });
+            }
+            else
+            {
+                pwindow.optionsMarketListView.Visibility = Visibility.Visible;
             }
 
         }
@@ -655,7 +908,7 @@ namespace qiquanui
                 //instrumentname = box_future;
                 box_time = pwindow.dueDateComboBox.Text;
                 duedate = box_time;
-                updatesql = String.Format("SELECT * FROM minutedata a,staticdata s where s.instrumentid=a.instrumentid and s.instrumentname='{0}' and s.duedate='{1}'  and a.updatetime<'{2}' order by updatetime", instrumentname, duedate,TimeToString(now));
+                //updatesql = String.Format("SELECT * FROM minutedata a,staticdata s where s.instrumentid=a.instrumentid and s.instrumentname='{0}' and s.duedate='{1}'  and a.updatetime<'{2}' order by updatetime", instrumentname, duedate,TimeToString(now));
                 exercisesql = String.Format("select exerciseprice from staticdata where instrumentname='{0}' and duedate='{1}' and callorput=0 order by exerciseprice ", instrumentname, duedate);
             }
 
