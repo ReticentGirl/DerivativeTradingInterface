@@ -319,9 +319,11 @@ namespace qiquanui
             subjectMatterLabel.Visibility = Visibility.Hidden;
             subjectMatterComboBox.Visibility = Visibility.Hidden;
             futuresMarketListView.Visibility = Visibility.Visible;
+            cvxLabel.Visibility = Visibility.Hidden;
+            showcvxLabel.Visibility = Visibility.Hidden;
             subjectMatterMarketGrid.Visibility = Visibility.Hidden;
             titileBorder4.Visibility = Visibility.Hidden;
-        } //行情区，“衍生品种类”选择“期货”，隐藏“标的期货”、期权行情，显示期货行情
+        } //行情区，“衍生品种类”选择“期货”，隐藏“标的期货”、cvx指数、期权行情，显示期货行情
 
         private void optionsComboBoxItem_Selected(object sender, RoutedEventArgs e)
         {
@@ -331,9 +333,11 @@ namespace qiquanui
             optionsMarketTitleGrid.Visibility = Visibility.Visible;
             subjectMatterLabel.Visibility = Visibility.Visible;
             subjectMatterComboBox.Visibility = Visibility.Visible;
+            cvxLabel.Visibility = Visibility.Visible;
+            showcvxLabel.Visibility = Visibility.Visible;
             subjectMatterMarketGrid.Visibility = Visibility.Visible;
             titileBorder4.Visibility = Visibility.Visible;
-        } //行情区，“衍生品种类”选择“期权”，显示“标的期货”、期权行情，隐藏期货行情
+        } //行情区，“衍生品种类”选择“期权”，显示“标的商品”、cvx指数、期权行情，隐藏期货行情
         private void TopCanvasButtomGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             TopCanvasButtomGridStoryboard.Begin(this);
@@ -505,7 +509,7 @@ namespace qiquanui
 
         private void placeOrderTBtn_Click(object sender, RoutedEventArgs e)         //交易区下单按钮
         {
-            placeOrder PlaceOrder = new placeOrder();
+            PlaceOrder PlaceOrder = new PlaceOrder();
             PlaceOrder.Show();
 
             if (tradingListView.Items.Count > 0)

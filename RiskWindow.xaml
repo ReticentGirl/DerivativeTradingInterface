@@ -1,0 +1,257 @@
+﻿<Window x:Class="qiquanui.RiskWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:qiquanui"
+        
+        Closing="Window_Closing"
+        Title="RiskWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF0F0D0D" Foreground="#FFA89B9B" Opacity="0.95" BorderThickness="7" AllowsTransparency="True">
+    <Window.Resources>
+
+        <Style x:Key="minSty" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <StackPanel Orientation="Horizontal" >
+                            <Image x:Name="ImgBtnBg3" Source="Resources/min.png" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Resources\min_hover.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Source" Value="Resources\min_down.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Source" Value="Resources\min_unable.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--groupCanvas-->
+
+
+        <Style x:Key="maxSty" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <StackPanel Orientation="Horizontal" >
+                            <Image x:Name="ImgBtnBg3" Source="Resources/max.png" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Resources\max_hover.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Source" Value="Resources\max_down.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Source" Value="Resources\max_unable.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="closeSty" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <StackPanel Orientation="Horizontal" >
+                            <Image x:Name="ImgBtnBg3" Source="Resources/close.png" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Resources\close_hover.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Source" Value="Resources\close_down.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Source" Value="Resources\close_unable.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+    <Window.Effect>
+        <DropShadowEffect BlurRadius="7" Color="#FFFF7400" Direction="270" Opacity="0.75" ShadowDepth="3"/>
+    </Window.Effect>
+    <Grid>
+        <Frame x:Name="Top1_StrategyLab" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF0F0D0D" MouseDown="Top1_MouseDown" MouseDoubleClick="Top1_MouseDoubleClick"/>
+
+        <Border x:Name="Border1" BorderBrush="#FFC35B04" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" >
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Border.RenderTransform>
+        </Border>
+        <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/min.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/max.png"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="closeButton" Margin="0,11,10,0" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}">
+            <Button.Background>
+                <ImageBrush ImageSource="Resources/close.png"/>
+            </Button.Background>
+        </Button>
+
+        <!--组合-->
+        <Grid Margin="10,43,388,366" Background="#FF494242">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="151*"/>
+                <ColumnDefinition Width="637*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="119*"/>
+                <RowDefinition Height="158*"/>
+            </Grid.RowDefinitions>
+            <!--设置单元格背景色-->
+            <Label Grid.Column="0" Grid.RowSpan="2" Background="Black" />
+
+            <TextBlock x:Name="confidenceLevelCompoTB" Text="置信水平：" Grid.Column="0" Margin="16,9,0,133" VerticalAlignment="Center" Height="16" Grid.Row="1"/>
+            <TextBox x:Name="setConfidenceLevelCompoTBox" Grid.Column="0" Margin="76,9,25,133" VerticalAlignment="Center" Height="16" Grid.Row="1"/>
+            <Button x:Name="okCompoBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="35,35,41,103" Grid.Row="1" Height="20"/>
+
+            <TextBlock Text="当前组合：" Grid.Column="1" Grid.Row="0" Margin="20,10,553,91"/>
+            <Grid x:Name="compoGrid" Grid.Column="1" Grid.Row="0" Margin="50,33,40,30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="deltaCompoGTB" Text="Delta" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="2,2,0,1" Grid.Column="0" Grid.Row="0" />
+                <TextBlock x:Name="gammaCompoGTB" Text="Gamma" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,2,0,1" Grid.Column="1" Grid.Row="0" />
+                <TextBlock x:Name="thetaCompoGTB" Text="Theta" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,2,0,1" Grid.Column="2" Grid.Row="0" />
+                <TextBlock x:Name="vegaCompoGTB" Text="Vega" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,2,0,1" Grid.Column="3" Grid.Row="0" />
+                <TextBlock x:Name="rhoCompoGTB" Text="Rho" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,2,0,1" Grid.Column="4" Grid.Row="0" />
+                <TextBlock x:Name="rateCompoGTB" Text="隐波率" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,2,0,1" Grid.Column="5" Grid.Row="0" />
+                <TextBlock x:Name="varCompoGTB" Text="Var" Grid.Column="6" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,2,2,1" Grid.Column="6" Grid.Row="0" />
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="2,0,0,2" Grid.Column="0" Grid.Row="1" />
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,0,0,2" Grid.Column="1" Grid.Row="1" />
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,0,0,2" Grid.Column="2" Grid.Row="1" />
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,0,0,2" Grid.Column="3" Grid.Row="1" />
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,0,0,2" Grid.Column="4" Grid.Row="1" />
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,0,0,2" Grid.Column="5" Grid.Row="1" />
+                <Border BorderBrush="#FFF9F8F8" BorderThickness="1,0,2,2" Grid.Column="6" Grid.Row="1" />
+            </Grid>
+
+            <ListView x:Name="optionsRiskLV" Grid.Column="1" Grid.Row="1" Margin="29,10,21,10">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn x:Name="ifChooseORGVCH" Header="勾选" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox x:Name="ifChooseORCB" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="instrumentIDORGVCH" Header="交易代码" Width="110"/>
+                        <GridViewColumn x:Name="deltaORGVCH" Header="Delta" Width="60"/>
+                        <GridViewColumn x:Name="gammaORGVCH" Header="Gamma" Width="60"/>
+                        <GridViewColumn x:Name="thetaORGVCH" Header="Theta" Width="60"/>
+                        <GridViewColumn x:Name="VegaORGVCH" Header="Vega" Width="60"/>
+                        <GridViewColumn x:Name="rhoORGVCH" Header="Rho" Width="60"/>
+                        <GridViewColumn x:Name="rateORGVCH" Header="隐波率" Width="60"/>
+                        <GridViewColumn x:Name="varORGVCH" Header="Var" Width="60"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </Grid>
+
+        <!--推荐组合-->
+        <Grid Margin="10,397,388,30" Background="#FF645F5F">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="151*"/>
+                <ColumnDefinition Width="637*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <!--设置单元格背景色-->
+            <Label Grid.Column="0" Grid.RowSpan="2" Background="Black" />
+
+            <TextBlock x:Name="confidenceLevelRecomTB" Text="置信水平：" Grid.Column="0" Grid.RowSpan="2" Margin="16,0,0,0" VerticalAlignment="Center"/>
+            <TextBox x:Name="setConfidenceLevelRecomTBox" Width="50" Grid.Column="0" Grid.RowSpan="2" Margin="50,0,0,0" VerticalAlignment="Center"/>
+            <Button x:Name="okRecomBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Width="75" Margin="35,23,41,90" Grid.Row="1" Height="17"/>
+
+            <ListView x:Name="recomLV" Grid.Column="1" Grid.Row="0" Margin="29,10,21,36">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn x:Name="ifChooseRGVCH" Header="勾选" Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox x:Name="ifChooseRCB" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="instrumentIDRGVCH" Header="交易代码" Width="110"/>
+                        <GridViewColumn x:Name="typeRGCH" Header="交易类型" Width="60"/>
+                        <GridViewColumn x:Name="lotRGCH" Header="交易手数" Width="60">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <local:NumericUpAndDownUserControl x:Name="lotTNUAD" Width="Auto" HorizontalAlignment="Center"   Value="{Binding Path=TradingNum,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn x:Name="deltaRGVCH" Header="Delta" Width="60"/>
+                        <GridViewColumn x:Name="gammaRGVCH" Header="Gamma" Width="60"/>
+                        <GridViewColumn x:Name="thetaRGVCH" Header="Theta" Width="60"/>
+                        <GridViewColumn x:Name="VegaRGVCH" Header="Vega" Width="60"/>
+                        <GridViewColumn x:Name="rhoRGVCH" Header="Rho" Width="60"/>
+                        <GridViewColumn x:Name="rateRGVCH" Header="隐波率" Width="60"/>
+                        <GridViewColumn x:Name="varRGVCH" Header="Var" Width="60"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Button x:Name="placeOrderBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,21,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="1"/>
+
+        </Grid>
+
+
+        <!--单支期权delta图、gamma图-->
+        <TabControl HorizontalAlignment="Left" Height="282" Margin="832,38,0,0" VerticalAlignment="Top" Width="323">
+            <TabItem Header="Delta图">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="Gamma图">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+        </TabControl>
+
+        <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="1012,357,0,303" Height="26" />
+        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="1075,357,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
+    </Grid>
+</Window>

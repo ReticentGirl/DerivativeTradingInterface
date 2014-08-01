@@ -25,36 +25,70 @@ using System.Threading;
 namespace qiquanui
 {
     /// <summary>
-    /// placeOrder.xaml 的交互逻辑
+    /// RiskWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class PlaceOrder : Window
+    public partial class RiskWindow : Window
     {
-        private Storyboard tradingCanvasStoryboard, tradingCanvasStoryboard_Leave;
-
-        public PlaceOrder()
+        private double originalHeight, originalWidth;
+        public RiskWindow()
         {
             InitializeComponent();
-            Border1.Height = this.Height-14;
-            Border1.Width = this.Width-14;
+            originalHeight = this.Height;
+            originalWidth = this.Width;
 
-            tradingCanvasStoryboard = (Storyboard)this.FindResource("tradingCanvasAnimate");
-            tradingCanvasStoryboard_Leave = (Storyboard)this.FindResource("tradingCanvasAnimate_Leave");
+            Border1.Width = this.Width - 14;
+            Border1.Height = this.Height - 14;
         }
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-              this.DragMove();
-        }
-        
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-              this.DragMove();
-        }
+            this.DragMove();
+        }//窗口移动
+        private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                maxButton.Style = Resources["normalSty"] as Style;
+                this.Opacity = 1;
+                Border1.Visibility = Visibility.Hidden;
+            }
+            else if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                maxButton.Style = Resources["maxSty"] as Style;
+                this.Opacity = 0.95;
+                this.Left = 50;
+                this.Top = 50;
+                Border1.Visibility = Visibility.Visible;
+
+            }
+        } //双击标题栏最大化、还原
         private void MinButton_Click_1(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         } //最小化窗口按钮
 
-   
+        private void MaxButton_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            if (this.WindowState == WindowState.Normal)
+            {
+                this.WindowState = WindowState.Maximized;
+                maxButton.Style = Resources["normalSty"] as Style;
+                this.Opacity = 1;
+                Border1.Visibility = Visibility.Collapsed;
+            }
+            else if (this.WindowState == WindowState.Maximized)
+            {
+                this.WindowState = WindowState.Normal;
+                maxButton.Style = Resources["maxSty"] as Style;
+                this.Left = 50;
+                this.Top = 50;
+                this.Opacity = 0.95;
+                Border1.Visibility = Visibility.Visible;
+            }
+
+        } //最大化窗口按钮
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
@@ -85,16 +119,6 @@ namespace qiquanui
         {
             closeStoryBoardCompleted = true;
             this.Close();
-        }
-
-        private void tradingCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            tradingCanvasStoryboard.Begin(this);
-        }
-
-        private void tradingCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            tradingCanvasStoryboard_Leave.Begin(this);
         }
     }
 }

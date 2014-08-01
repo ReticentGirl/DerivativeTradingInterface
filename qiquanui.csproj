@@ -69,8 +69,11 @@
     <Compile Include="NumericUpAndDownUserControl.xaml.cs">
       <DependentUpon>NumericUpAndDownUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="placeOrder.xaml.cs">
-      <DependentUpon>placeOrder.xaml</DependentUpon>
+    <Compile Include="PlaceOrder.xaml.cs">
+      <DependentUpon>PlaceOrder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RiskWindow.xaml.cs">
+      <DependentUpon>RiskWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="TradingData.cs" />
     <Compile Include="TradingManager.cs" />
@@ -94,7 +97,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="placeOrder.xaml">
+    <Page Include="PlaceOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RiskWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

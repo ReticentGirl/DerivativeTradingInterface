@@ -1844,6 +1844,9 @@
                     <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="330,3,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
                     <Label x:Name="userLabel" Content="投资账户" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="601,2,0,1" Height="26" />
                     <ComboBox x:Name="userComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="655,3,0,0" />
+                    <Label x:Name="cvxLabel" Content="CVX指数：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="750,2,0,1" Height="26" />
+                    <Label x:Name="showcvxLabel" Content="12345" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="808,3,0,0" Height="26" />
+
                 </Grid>
 
                 <ListView x:Name="futuresMarketListView" Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="#FF9198AC">
@@ -2023,17 +2026,17 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="nameOTGVCH" Header="交易代码 "  DisplayMemberBinding="{Binding InstrumentID}" Width="100"/>
+                                    <GridViewColumn x:Name="nameOTGVCH" Header="交易代码 "  DisplayMemberBinding="{Binding InstrumentID}" Width="110"/>
                                     <GridViewColumn x:Name="typeOTGVCH" Header="合约类型 " DisplayMemberBinding="{Binding CallOrPut}" Width="80"/>
                                     <GridViewColumn x:Name="exercisePriceTGVCH" Header="行权价 " Width="60" DisplayMemberBinding="{Binding ExercisePrice}"/>
-                                    <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="60" >
+                                    <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="70" >
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
                                                 <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
-                                                    <ComboBoxItem Content="买开" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="卖开" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="买平" HorizontalAlignment="Left" Width="60"/>
-                                                    <ComboBoxItem Content="卖平" HorizontalAlignment="Left" Width="60"/>
+                                                    <ComboBoxItem Content="买开" HorizontalAlignment="Left" Width="70"/>
+                                                    <ComboBoxItem Content="卖开" HorizontalAlignment="Left" Width="70"/>
+                                                    <ComboBoxItem Content="买平" HorizontalAlignment="Left" Width="70"/>
+                                                    <ComboBoxItem Content="卖平" HorizontalAlignment="Left" Width="70"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
