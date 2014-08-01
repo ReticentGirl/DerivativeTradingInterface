@@ -477,8 +477,175 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <!--listview的样式{x:Static GridView.GridViewScrollViewerStyleKey}-->
 
-        <Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
+        <Style x:Key="futureGridViewScrollViewerStyle"
+       TargetType="ScrollViewer">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel Margin="{TemplateBinding Padding}">
+                                <ScrollViewer DockPanel.Dock="Top"
+              HorizontalScrollBarVisibility="Hidden"
+              VerticalScrollBarVisibility="Hidden"
+              Focusable="false" Style="{StaticResource futureSimpleScrollViewer}"
+>
+                                    <GridViewHeaderRowPresenter Margin="2,0,2,0"
+                Columns="{Binding Path=TemplatedParent.View.Columns,
+                          RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderContainerStyle="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderContainerStyle,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderTemplate="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderTemplate,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderTemplateSelector="{Binding 
+                             Path=TemplatedParent.View.ColumnHeaderTemplateSelector,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                AllowsColumnReorder="{Binding
+                             Path=TemplatedParent.View.AllowsColumnReorder,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderContextMenu="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderContextMenu,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderToolTip="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderToolTip,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </ScrollViewer>
+
+                                <ScrollContentPresenter Name="PART_ScrollContentPresenter"
+              KeyboardNavigation.DirectionalNavigation="Local"
+              CanContentScroll="True" CanHorizontallyScroll="False" 
+              CanVerticallyScroll="False"/>
+                            </DockPanel>
+
+                            <ScrollBar Name="PART_HorizontalScrollBar"
+            Orientation="Horizontal"
+            Grid.Row="1"
+            Maximum="{TemplateBinding ScrollableWidth}"
+            ViewportSize="{TemplateBinding ViewportWidth}"
+            Value="{TemplateBinding HorizontalOffset}"
+            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                       Style="{StaticResource futureSimpleScrollBar}"/>
+
+                            <ScrollBar Name="PART_VerticalScrollBar"
+            Grid.Column="1"
+            Maximum="{TemplateBinding ScrollableHeight}"
+            ViewportSize="{TemplateBinding ViewportHeight}"
+            Value="{TemplateBinding VerticalOffset}"
+            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                     Style="{StaticResource futureSimpleScrollBar}"  />
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+
+        <Style x:Key="GridViewScrollViewerStyle"
+       TargetType="ScrollViewer">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel Margin="{TemplateBinding Padding}">
+                                <ScrollViewer DockPanel.Dock="Top"
+              HorizontalScrollBarVisibility="Hidden"
+              VerticalScrollBarVisibility="Hidden"
+              Focusable="false" Style="{StaticResource SimpleScrollViewer}"
+>
+                                    <GridViewHeaderRowPresenter Margin="2,0,2,0"
+                Columns="{Binding Path=TemplatedParent.View.Columns,
+                          RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderContainerStyle="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderContainerStyle,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderTemplate="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderTemplate,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderTemplateSelector="{Binding 
+                             Path=TemplatedParent.View.ColumnHeaderTemplateSelector,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                AllowsColumnReorder="{Binding
+                             Path=TemplatedParent.View.AllowsColumnReorder,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderContextMenu="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderContextMenu,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                ColumnHeaderToolTip="{Binding
+                             Path=TemplatedParent.View.ColumnHeaderToolTip,
+                             RelativeSource={RelativeSource TemplatedParent}}"
+                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </ScrollViewer>
+
+                                <ScrollContentPresenter Name="PART_ScrollContentPresenter"
+              KeyboardNavigation.DirectionalNavigation="Local"
+              CanContentScroll="True" CanHorizontallyScroll="False" 
+              CanVerticallyScroll="False"/>
+                            </DockPanel>
+
+                            <ScrollBar Name="PART_HorizontalScrollBar"
+            Orientation="Horizontal"
+            Grid.Row="1"
+            Maximum="{TemplateBinding ScrollableWidth}"
+            ViewportSize="{TemplateBinding ViewportWidth}"
+            Value="{TemplateBinding HorizontalOffset}"
+            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                       Style="{StaticResource SimpleScrollBar}"/>
+
+                            <ScrollBar Name="PART_VerticalScrollBar"
+            Grid.Column="1"
+            Maximum="{TemplateBinding ScrollableHeight}"
+            ViewportSize="{TemplateBinding ViewportHeight}"
+            Value="{TemplateBinding VerticalOffset}"
+            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                     Style="{StaticResource SimpleScrollBar}"  />
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
+            <Setter Property="Width" Value="18"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Padding="{TemplateBinding Padding}"
+          Background="Transparent">
+                            <Rectangle HorizontalAlignment="Center"
+            Width="1"
+            Fill="{TemplateBinding Background}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--<Style x:Key="ListViewStyle" TargetType="{x:Type ListView}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
             <Setter Property="BorderBrush" Value="White" />
             <Setter Property="BorderThickness" Value="0,3,0,0" />
@@ -487,6 +654,7 @@
             <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
             <Setter Property="ScrollViewer.CanContentScroll" Value="true" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
+            
 
             <Setter Property="Template">
                 <Setter.Value>
@@ -494,7 +662,7 @@
                     <ControlTemplate TargetType="{x:Type ListView}">
                         <Grid>
 
-                            <Border x:Name="Bd" CornerRadius="0,0,0,0" BorderBrush="#FFFF8204" Background="{DynamicResource ControlBackgroundBrush}" BorderThickness="0,3,0,0">
+                            <Border x:Name="Bd" CornerRadius="0,0,0,0" BorderBrush="#FF0076C8" Background="{DynamicResource ControlBackgroundBrush}" BorderThickness="0,3,0,0">
 
                                 <ScrollViewer Padding="{TemplateBinding Padding}" Style="{StaticResource SimpleScrollViewer}">
                                     <StackPanel Margin="{TemplateBinding Padding}">
@@ -511,7 +679,7 @@
             ColumnHeaderToolTip="{Binding View.ColumnHeaderToolTip, RelativeSource={RelativeSource TemplatedParent}}"
             Columns="{Binding View.Columns, RelativeSource={RelativeSource TemplatedParent}}"/>
 
-                                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" HorizontalAlignment="Center" />
 
                                     </StackPanel>
                                 </ScrollViewer>
@@ -533,6 +701,65 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>-->
+        <Style x:Key="futureListViewStyle" TargetType="ListView">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <Border Name="Border"
+          BorderThickness="0,1"
+          BorderBrush="#FF454757"
+          Background="Transparent">
+                            <ScrollViewer Style="{StaticResource futureGridViewScrollViewerStyle}">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsGrouping"
+                   Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="false"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                   Value="false"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ListViewStyle" TargetType="ListView">
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListView">
+                        <Border x:Name="Bd" CornerRadius="0,0,0,0" BorderBrush="#FFFF7300" Background="{DynamicResource ControlBackgroundBrush}" BorderThickness="0,3,0,0">
+                            <ScrollViewer Style="{StaticResource GridViewScrollViewerStyle}">
+                                <ItemsPresenter />
+                            </ScrollViewer>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsGrouping"
+                   Value="true">
+                                <Setter Property="ScrollViewer.CanContentScroll"
+                    Value="false"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                   Value="false"/>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style x:Key="ListViewItemFocusVisual">
             <Setter Property="Control.Template">
@@ -544,168 +771,29 @@
             </Setter>
         </Style>
 
-        <Style x:Key="ListViewItem" TargetType="{x:Type ListViewItem}">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FocusVisualStyle" Value="{StaticResource ListViewItemFocusVisual}" />
-            <Setter Property="Background" Value="#FFBEBED8" />
-            <Setter Property="BorderBrush" Value="#FFCB3434" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Margin" Value="0,0,0,1" />
-            <Setter Property="Padding" Value="5,2,5,2" />
-            <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListViewItem}">
-                        <ControlTemplate.Resources>
-                            <Storyboard x:Key="HoverOn">
-
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
-                                </DoubleAnimationUsingKeyFrames>
-
-                            </Storyboard>
-                            <Storyboard x:Key="HoverOff">
-
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="HoverRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
-                                </DoubleAnimationUsingKeyFrames>
-
-                            </Storyboard>
-                            <Storyboard x:Key="SelectedOn">
-
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="SelectedRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
-                                </DoubleAnimationUsingKeyFrames>
-
-                            </Storyboard>
-                            <Storyboard x:Key="SelectedOff">
-
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="SelectedRectangle" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0"/>
-                                </DoubleAnimationUsingKeyFrames>
-
-                            </Storyboard>
-                            <Storyboard x:Key="FocussedOn">
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="1"/>
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                            <Storyboard x:Key="FocussedOff">
-                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="FocusVisualElement" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </ControlTemplate.Resources>
-
-                        <Border SnapsToDevicePixels="true" CornerRadius="2" x:Name="border" Background="#FF833F3F" BorderThickness="1,1,1,0">
-
-                            <Grid>
-                                <Rectangle x:Name="Background" IsHitTestVisible="False" Opacity="0.25" Fill="White" RadiusX="1" RadiusY="1"/>
-                                <Rectangle x:Name="HoverRectangle" IsHitTestVisible="False" Opacity="0" Fill="#FF665959" RadiusX="1" RadiusY="1"/>
-                                <Rectangle x:Name="SelectedRectangle" IsHitTestVisible="False" Opacity="0" Fill="#FF4D1A1A" RadiusX="1" RadiusY="1"/>
-                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="0,4,0,4" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Content="{Binding}">
-                                </ContentPresenter>
-                                <!--<GridViewRowPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="0,10,0,10" VerticalAlignment="Stretch" Content="{Binding}" />-->
-                            </Grid>
-
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected" Value="true">
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard Storyboard="{StaticResource SelectedOff}" x:Name="SelectedOff_BeginStoryboard"/>
-                                </Trigger.ExitActions>
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard Storyboard="{StaticResource SelectedOn}" x:Name="SelectedOn_BeginStoryboard"/>
-                                </Trigger.EnterActions>
-
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.ExitActions>
-                                    <BeginStoryboard Storyboard="{StaticResource HoverOff}" x:Name="HoverOff_BeginStoryboard"/>
-                                </MultiTrigger.ExitActions>
-                                <MultiTrigger.EnterActions>
-                                    <BeginStoryboard Storyboard="{StaticResource HoverOn}"/>
-                                </MultiTrigger.EnterActions>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True" />
-                                    <Condition Property="Selector.IsSelected" Value="False" />
-                                </MultiTrigger.Conditions>
-
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelected" Value="True" />
-                                    <Condition Property="IsMouseOver" Value="True" />
-                                </MultiTrigger.Conditions>
-
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{DynamicResource DisabledForegroundBrush}" />
-                                <Setter Property="Fill" TargetName="Background" Value="{DynamicResource DisabledBackgroundBrush}"/>
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsSelected" Value="true" />
-                                    <Condition Property="Selector.IsSelectionActive" Value="false" />
-                                </MultiTrigger.Conditions>
-
-
-                            </MultiTrigger>
-
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="Selector.IsSelected" Value="True">
-                    <Setter Property="Foreground">
-                        <Setter.Value>
-                            <SolidColorBrush Color="{DynamicResource BlackColor}" />
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-
         <ControlTemplate x:Key="tmpForThumb" TargetType="{x:Type Thumb}">
-
             <Border>
-
                 <Rectangle Width="1" Name="rec">
-
                     <Rectangle.Fill>
-
                         <LinearGradientBrush StartPoint="0.5,0.3" EndPoint="1,1" Opacity="0.2">
-
                             <GradientStop Color="#FF939BCB"/>
-
                             <GradientStop Color="Transparent" Offset="1"/>
-
                         </LinearGradientBrush>
-
                     </Rectangle.Fill>
-
                 </Rectangle>
-
             </Border>
-
             <ControlTemplate.Triggers>
-
                 <Trigger Property="IsMouseOver" Value="True">
-
                     <Setter TargetName="rec" Property="Fill" Value="#FF767EA8"/>
-
                 </Trigger>
-
             </ControlTemplate.Triggers>
-
         </ControlTemplate>
+
 
         <Style  TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="#FF6C6362"/>
+            <Setter Property="Foreground" Value="#FF76768B"/>
             <Setter Property="BorderThickness" Value="0"/>
 
             <Setter Property="Template">
@@ -719,9 +807,9 @@
                                 </LinearGradientBrush>
                             </Grid.Background>
                             <Border Name="bd" Padding="{TemplateBinding Padding}">
-                                <ContentPresenter Margin="5,4,1,3"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                                <ContentPresenter Margin="0,5"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <Thumb Name="PART_HeaderGripper" Template="{StaticResource tmpForThumb}" HorizontalAlignment="Right" Margin="0,0,-1,0"/>
+                            <Thumb Name="PART_HeaderGripper" Template="{StaticResource tmpForThumb}" HorizontalAlignment="Right" Margin="0"/>
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
@@ -744,26 +832,32 @@
         <!--数据源-->
 
         <!--ListViewItem的样式-->
-
         <Style TargetType="{x:Type ListViewItem}">
             <Style.Setters>
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="Height" Value="35"/>
+                <Setter Property="HorizontalAlignment" Value="Left" />
+                <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type ListViewItem}">
                             <Border x:Name="bd"  
-                               BorderThickness="0,0,0,1"  
+                               BorderThickness="0,0,0,0.5"  
                                 Padding="{TemplateBinding Padding}"  
                                SnapsToDevicePixels="True" BorderBrush="#FF414559">
-                                <GridViewRowPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
-                                                  Margin="3"/>
+                                <GridViewRowPresenter HorizontalAlignment="Center"  
+                                                  Margin="0,5"/>
                             </Border>
                             <ControlTemplate.Triggers>
+
                                 <Trigger Property="IsSelected" Value="True">
                                     <Trigger.Setters>
+
                                         <Setter TargetName="bd" Property="Background">
                                             <Setter.Value>
-                                                <SolidColorBrush Color="#FF0A0A0E" Opacity="0.5"/>
+                                                <SolidColorBrush Color="Black" Opacity="0.5"/>
                                             </Setter.Value>
                                         </Setter>
 
@@ -774,7 +868,7 @@
                                     <Trigger.Setters>
                                         <Setter TargetName="bd" Property="Background">
                                             <Setter.Value>
-                                                <SolidColorBrush Color="#FF1F212C" Opacity="0.5"/>
+                                                <SolidColorBrush Color="#FF1B1C21" Opacity="0.5"/>
                                             </Setter.Value>
                                         </Setter>
                                     </Trigger.Setters>
@@ -785,8 +879,7 @@
                 </Setter>
             </Style.Setters>
         </Style>
-
-
+        
         <!--checkbox样式-->
         <!--当控件获得键盘焦点时的样式-->
 

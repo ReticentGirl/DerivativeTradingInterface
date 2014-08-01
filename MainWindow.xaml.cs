@@ -32,13 +32,13 @@ namespace qiquanui
     public partial class MainWindow : Window
     {
         DataManager dm;
-        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper;
+        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper;
 
         TradingManager otm;   //维护交易区的对象
 
-        
 
-        private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard;
+
+        private Storyboard grid1Storyboard, grid1Storyboard_Leave, canvas1Storyboard, canvas1Storyboard_Leave, grid3Storyboard, grid3Storyboard_Leave, canvas2Storyboard_Leave, canvas2Storyboard, optionsMarketTitleGridStoryboard, optionsMarketTitleGridStoryboard_Leave, TopCanvasButtomGridStoryboard_Leave, TopCanvasButtomGridStoryboard, strategyOfOptionsCanvasStoryboard_Leave, strategyOfOptionsCanvasStoryboard, strategyOfFuturesCanvasStoryboard_Leave, strategyOfFuturesCanvasStoryboard, basicInforAndPromptGridStoryboard_Leave, basicInforAndPromptGridStoryboard;
 
 
         void dataStart()
@@ -106,6 +106,8 @@ namespace qiquanui
             titileBorder4w = titileBorder4.Width;
             Grid1w = Grid1.Width;
             Grid1h = Grid1.Height;
+            profitListVieww = profitListView.Width;
+          
 
             //初始化伸缩面板动画
             grid1Storyboard = (Storyboard)this.FindResource("grid1Animate");
@@ -130,6 +132,9 @@ namespace qiquanui
 
             strategyOfFuturesCanvasStoryboard = (Storyboard)this.FindResource("strategyOfFuturesCanvasAnimate");
             strategyOfFuturesCanvasStoryboard_Leave = (Storyboard)this.FindResource("strategyOfFuturesCanvasAnimate_Leave");
+
+            basicInforAndPromptGridStoryboard = (Storyboard)this.FindResource("basicInforAndPromptGridAnimate");
+            basicInforAndPromptGridStoryboard_Leave = (Storyboard)this.FindResource("basicInforAndPromptGridAnimate_Leave");
 
             typeComboBox.SelectedIndex = 0;
             typeInStrategyPanelComboBox.SelectedIndex = 1;            
@@ -223,8 +228,9 @@ namespace qiquanui
          
         private bool ResizeControl()
         {
+           
             optionsMarketTitleGridwper = TopCanvasButtomGridwper = TopCanvas1wper = Grid1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w));
-            userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = tradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
+            profitListViewwper=userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = tradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
             list1hper = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
             optionsMarketListViewhper = (this.Height - (originalHeight - optionsMarketListViewh)) / (originalHeight - (originalHeight - optionsMarketListViewh));
             TopCanvas1hper=Grid1hper = grid3hper =  (this.Height - (originalHeight - Grid1h)) / (originalHeight - (originalHeight - Grid1h));
@@ -240,7 +246,7 @@ namespace qiquanui
             historyListView.Width = historyListVieww * historyListViewwper;
             userManageListView.Width = userManageListVieww * userManageListViewwper;
 
-
+         
             Grid3.Width = grid3w * grid3wper;
             Top1.Width = top1w * top1wper;
             Canvas1.Height = canvas1h * canvas1hper;
@@ -248,6 +254,7 @@ namespace qiquanui
             tradingListView.Width = tradingListVieww * tradingListViewwper;
             multipleTabControl.Width = multipleTabControlw * multipleTabControlwper;
             holdDetailListView.Width = optionsHoldDetailListVieww * optionsHoldDetailListViewwper;
+            profitListView.Width = profitListViewwper * profitListVieww;
             statusBar1.Width = statusBar1w * statusBar1wper;
             optionsMarketListView.Width = optionsMarketListVieww * optionsMarketListViewwper;
             optionsMarketListView.Height = optionsMarketListViewh * optionsMarketListViewhper;
@@ -293,6 +300,16 @@ namespace qiquanui
         {
             optionsMarketTitleGridStoryboard_Leave.Begin(this);
         } //鼠标离开期权对应标的物行情区，区域亮度还原
+
+        private void basicInforAndPromptGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            basicInforAndPromptGridStoryboard.Begin(this);
+        }
+
+        private void basicInforAndPromptGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            basicInforAndPromptGridStoryboard_Leave.Begin(this);
+        }
 
         private void futuresComboBoxItem_Selected(object sender, RoutedEventArgs e)
         {
@@ -347,11 +364,10 @@ namespace qiquanui
             strategyOfFuturesCanvasStoryboard_Leave.Begin(this);
         }
 
-         
 
-         private void Canvas1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-         {
-             if (Canvas1.Width == 29.0)
+        private void StategyCanvasButtom_Click(object sender, RoutedEventArgs e)
+        {
+            if (Canvas1.Width == 29.0)
              {
                  DoubleAnimation animate = new DoubleAnimation();
                  animate.To = 292;
@@ -359,21 +375,32 @@ namespace qiquanui
                  animate.DecelerationRatio = 1;
                  //   animate.AccelerationRatio = 0.33;
                  Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
-                 canvas1Storyboard.Begin(this);
+                 LeftImage.Source = new BitmapImage(new Uri("Resources/left.png", UriKind.Relative)); 
              }
+            else if (Canvas1.Width == 292.0)
+            {
+                DoubleAnimation animate = new DoubleAnimation();
+                animate.To = 29.0;
+                animate.Duration = new Duration(TimeSpan.FromSeconds(0.4));
+                //   animate.DecelerationRatio = 0.33;
+                animate.AccelerationRatio = 1;
+                Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
+                LeftImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative)); 
+            }
+        }
+         private void Canvas1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+         {
+             
+                 canvas1Storyboard.Begin(this);
+             
          } //当鼠标进入策略实验室面板时，展开面板动画
 
          private void Canvas1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
          {
-             DoubleAnimation animate = new DoubleAnimation();
-             animate.To = 29.0;
-             animate.Duration = new Duration(TimeSpan.FromSeconds(0.4));
-             //   animate.DecelerationRatio = 0.33;
-             animate.AccelerationRatio = 1;
-             Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
+             
              canvas1Storyboard_Leave.Begin(this);
          } //当鼠标离开策略实验室面板时，缩回面板动画
-         private void Canvas2_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+         private void RiskCanvasButtom_Click(object sender, RoutedEventArgs e)
          {
              if (Canvas2.Width == 29.0)
              {
@@ -384,17 +411,29 @@ namespace qiquanui
                  //   animate.AccelerationRatio = 0.33;
                  Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
                  canvas2Storyboard.Begin(this);
+                 RightImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative)); 
              }
-         } //当鼠标进入风险实验室面板时，展开面板动画
-
-         private void Canvas2_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-         {
-             DoubleAnimation animate1 = new DoubleAnimation();
+             else if (Canvas2.Width == 120.0)
+             {
+                 DoubleAnimation animate1 = new DoubleAnimation();
              animate1.To = 29.0;
              animate1.Duration = new Duration(TimeSpan.FromSeconds(0.4));
              //   animate.DecelerationRatio = 0.33;
              animate1.AccelerationRatio = 1;
              Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
+             RightImage.Source = new BitmapImage(new Uri("Resources/left.png", UriKind.Relative)); 
+             }
+         }
+         private void Canvas2_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+         {
+             
+                 canvas2Storyboard.Begin(this);
+             
+         } //当鼠标进入风险实验室面板时，展开面板动画
+
+         private void Canvas2_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+         {
+             
              canvas2Storyboard_Leave.Begin(this);
          } //当鼠标离开风险实验室面板时，缩回面板动画
 
@@ -667,12 +706,11 @@ namespace qiquanui
 
         #endregion
 
+       
 
+      
 
-
-
-
-
+        
 
     }
 }

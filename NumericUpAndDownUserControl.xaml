@@ -7,6 +7,99 @@
              xmlns:local="clr-namespace:qiquanui"
              mc:Ignorable="d"             
              Height="25" d:DesignWidth="80">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="#FF9198AC"/>
+            <Setter Property="BorderBrush" Value="#FF2E3143"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="SelectionBrush" Value="#FF3E414D"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                        <Border 
+          Name="Border"
+          CornerRadius="0" 
+          Padding="2"
+          BorderBrush="#FF2E3143"
+          BorderThickness="1" >
+                            <Border.Background>
+                                <SolidColorBrush Color="Transparent" Opacity="0"/>
+                            </Border.Background>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="Transparent"/>
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FF2E3143" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FF8A92A9" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF2E3143"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF007ACC"/>
+                                <Setter Property="Foreground" Value="#FF8A92A9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        <!--定义按钮样式-->
+        <Style  TargetType="Button" >
+            <!--修改模板属性-->
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--只有Grid才能装下这么多Child-->
+                        <Grid>
+                            <!--带特效的底层背景-->
+                            <Border x:Name="back" Opacity="1" CornerRadius="0" BorderBrush="#FF2E3143" BorderThickness="1">
+                                <Border.BitmapEffect>
+                                    <OuterGlowBitmapEffect Opacity="1" GlowSize="0" GlowColor="#FF090A0F" />
+                                </Border.BitmapEffect>
+                                <Rectangle x:Name="buttonRect" Width="Auto" Height="Auto" Fill="Transparent"/>
+
+                            </Border>
+
+                            <!--按钮内容-->
+                            <ContentPresenter 
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            RecognizesAccessKey="True"
+                                />
+
+                        </Grid>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="back" Property="Background" Value="#FF2E3143"/>
+                                <Setter TargetName="back" Property="BorderBrush" Value="#FF007ACC"/>
+                          
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Setter TargetName="back" Property="Background" Value="#FF171821"/>
+                                <Setter TargetName="back" Property="BorderBrush" Value="#FF2E3143"/>
+                              
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
     <Border BorderBrush="#60000000" BorderThickness="0.5">
         <Grid Margin="1">
             <Grid.ColumnDefinitions>
@@ -16,24 +109,22 @@
             <TextBox Name="Textvalue"
 					 PreviewTextInput="value_PreviewTextInput" TextChanged="value_TextChanged"
 					 TextAlignment="Right"
-					 Grid.Column="0"/>
-            <StackPanel Orientation="Vertical"
+					 Grid.Column="0" Height="20" Margin="0,0,0,2"/>
+            <Canvas
 						Grid.Column="1"
 						Height="21"
 						VerticalAlignment="Center">
                 <Button x:Name="Increase"
 					Click="Increase_Click"
-					Height="10"
-					Margin="0,0,0,0.5">                  
+					Height="10" Width="20" BorderThickness="0">
                     <Image Source="Resources/up.png" Height="3" Width="5" />
                 </Button>
                 <Button x:Name="Decrease"
 					Click="Decrease_Click"
-					Height="10"
-					Margin="0,0.5,0,0">
+					Height="10" Canvas.Top="10" Width="20" BorderThickness="0">
                     <Image Source="Resources/down.png" Height="3" Width="5" />
                 </Button>
-            </StackPanel>
+            </Canvas>
         </Grid>
     </Border>
 </UserControl>

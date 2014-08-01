@@ -29,11 +29,15 @@ namespace qiquanui
     /// </summary>
     public partial class placeOrder : Window
     {
+        private Storyboard tradingCanvasStoryboard, tradingCanvasStoryboard_Leave;
         public placeOrder()
         {
             InitializeComponent();
             Border1.Height = this.Height-14;
             Border1.Width = this.Width-14;
+
+            tradingCanvasStoryboard = (Storyboard)this.FindResource("tradingCanvasAnimate");
+            tradingCanvasStoryboard_Leave = (Storyboard)this.FindResource("tradingCanvasAnimate_Leave");
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -80,6 +84,16 @@ namespace qiquanui
         {
             closeStoryBoardCompleted = true;
             this.Close();
+        }
+
+        private void tradingCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            tradingCanvasStoryboard.Begin(this);
+        }
+
+        private void tradingCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            tradingCanvasStoryboard_Leave.Begin(this);
         }
     }
 }

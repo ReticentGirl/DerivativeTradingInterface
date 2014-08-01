@@ -11,7 +11,7 @@
     
         Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF627095" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="974" MinHeight="650" Width="1200" Height="700.5" Opacity="0.95">
     <Window.Resources>
-        
+
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
 
         <!--实现鼠标经过渐变-->
@@ -121,16 +121,32 @@
         <Storyboard x:Key="strategyOfFuturesCanvasAnimate">
             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Background).(SolidColorBrush.Color)" Storyboard.TargetName="strategyOfFuturesCanvas">
                 <EasingColorKeyFrame KeyTime="0" Value="#FF151519"/>
-                <EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FF1F1F25"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FF343640"/>
             </ColorAnimationUsingKeyFrames>
 
         </Storyboard>
         <Storyboard x:Key="strategyOfFuturesCanvasAnimate_Leave">
             <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)" Storyboard.TargetName="strategyOfFuturesCanvas">
-                <EasingColorKeyFrame KeyTime="0" Value="#FF1F1F25"/>
+                <EasingColorKeyFrame KeyTime="0" Value="#FF343640"/>
                 <EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FF151519"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
+
+        <!--basicInforAndPromptGrid-->
+        <Storyboard x:Key="basicInforAndPromptGridAnimate">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)" Storyboard.TargetName="basicInforAndPromptGrid">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF22242B"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FF2D3038"/>
+            </ColorAnimationUsingKeyFrames>
+
+        </Storyboard>
+        <Storyboard x:Key="basicInforAndPromptGridAnimate_Leave">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Grid.Background).(SolidColorBrush.Color)" Storyboard.TargetName="basicInforAndPromptGrid">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF2D3038"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FF22242B"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+
 
         <!--实现鼠标经过渐变-->
 
@@ -230,7 +246,7 @@
         </Style>
 
         <Style x:Key="darkButton" TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
             <!--修改模板属性-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -259,7 +275,7 @@
                                         <GradientBrush.GradientStops>
                                             <GradientStopCollection>
                                                 <GradientStop Color="#6FFF" Offset="0.5"/>
-                                                <GradientStop Color="#1111" Offset="0.51"/>
+                                                <GradientStop Color="#118B8484" Offset="0.51"/>
                                             </GradientStopCollection>
                                         </GradientBrush.GradientStops>
                                     </LinearGradientBrush>
@@ -1015,7 +1031,7 @@
                 <Setter Property="SnapsToDevicePixels" Value="True"/>
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="Margin" Value="0"/>
-                <Setter Property="Height" Value="30"/>
+                <Setter Property="Height" Value="35"/>
                 <Setter Property="HorizontalAlignment" Value="Left" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
                 <Setter Property="Template">
@@ -1568,6 +1584,214 @@
             </Setter>
         </Style>
 
+        <!--定义变红的样式-->
+        <Style x:Key="marketListViewButtom_red" TargetType="Button" >
+            <!--修改模板属性-->
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--只有Grid才能装下这么多Child-->
+                        <Grid>
+                            <!--带特效的底层背景-->
+                            <Border x:Name="back" Opacity="0.8" CornerRadius="0">
+                                <Border.BitmapEffect>
+                                    <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="Red" />
+                                </Border.BitmapEffect>
+                                <Rectangle x:Name="buttonRect" Width="49" Height="30">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="Red"/>
+                                            <GradientStop Offset="1" Color="#FF272935"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                            </Border>
+
+                            <!--按钮内容-->
+                            <ContentPresenter 
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            RecognizesAccessKey="True"
+                                />
+
+                        </Grid>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="#FFFFA0A0" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF272935" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="Transparent" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF8A92A9" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX=".98" ScaleY=".98"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value=".55,.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--定义变红的样式-->
+        <Style x:Key="marketListViewButtom_green" TargetType="Button" >
+            <!--修改模板属性-->
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--只有Grid才能装下这么多Child-->
+                        <Grid>
+                            <!--带特效的底层背景-->
+                            <Border x:Name="back" Opacity="0.8" CornerRadius="0">
+                                <Border.BitmapEffect>
+                                    <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="Green" />
+                                </Border.BitmapEffect>
+                                <Rectangle x:Name="buttonRect" Width="49" Height="30">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="Green"/>
+                                            <GradientStop Offset="1" Color="#FF272935"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                            </Border>
+
+                            <!--按钮内容-->
+                            <ContentPresenter 
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            RecognizesAccessKey="True"
+                                />
+
+                        </Grid>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="#FF70FF70" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF272935" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="Transparent" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF8A92A9" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX=".98" ScaleY=".98"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value=".55,.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--侧边按钮-->
+        <Style x:Key="leftAndRightButtom" TargetType="Button" >
+            <!--修改模板属性-->
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--只有Grid才能装下这么多Child-->
+                        <Grid>
+                            <!--带特效的底层背景-->
+                            <Border x:Name="back" Opacity="0.8" CornerRadius="0" Background="Black" >
+
+
+                            </Border>
+
+                            <!--按钮内容-->
+                            <ContentPresenter 
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            RecognizesAccessKey="True"
+                                />
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
     </Window.Resources>
 
     <Window.Effect>
@@ -1729,14 +1953,14 @@
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidROMBtn" Content="{Binding BidPrice1}" Width=" 80" Tag="{Binding ExercisePrice}" Style="{StaticResource marketListViewButtom}" Click="bidROMBtn_Click" />
+                                        <Button x:Name="bidROMBtn" Content="{Binding BidPrice1}" Width=" 80" Tag="{Binding ExercisePrice}" Style="{StaticResource marketListViewButtom}" Click="bidROMBtn_Click" Foreground="White" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="askPriceROMGVCH" Header=" 卖价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="askROMBtn" Content="{Binding AskPrice1}" Width="80" Style="{StaticResource marketListViewButtom}"/>
+                                        <Button x:Name="askROMBtn" Content="{Binding AskPrice1}" Width="80" Style="{StaticResource marketListViewButtom}" Background="#FFE6E6E6" BorderBrush="White" Foreground="White"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1750,14 +1974,14 @@
                             <GridViewColumn x:Name="askPriceDOMGVCH" Header=" 卖价" Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="askDOMBtn" Content="{Binding AskPrice2}" Width="80" Style="{StaticResource marketListViewButtom}"/>
+                                        <Button x:Name="askDOMBtn" Content="{Binding AskPrice2}" Width="80" Style="{StaticResource marketListViewButtom}" Foreground="White"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="bidPriceDOMGVCH" Header=" 买价" Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidDOMBtn" Content="{Binding BidPrice2}" Width="80" Style="{StaticResource marketListViewButtom}"/>
+                                        <Button x:Name="bidDOMBtn" Content="{Binding BidPrice2}" Width="80" Style="{StaticResource marketListViewButtom}" Foreground="White"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1786,14 +2010,16 @@
                                     <GridViewColumn x:Name="ifChooseTGVCH" Header="勾选" Width="50" >
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ifChooseTCheckBox" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IfChooseOTGVCH, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                                                <CheckBox x:Name="ifChooseTCheckBox" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IfChooseOTGVCH, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Height="23"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="userTGVCH" Header="投资账户" Width="100">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox x:Name="userTComboBox"  Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <ComboBox x:Name="userTComboBox"  Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
+
+                                                </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -1803,7 +2029,7 @@
                                     <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="60" >
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
                                                     <ComboBoxItem Content="买开" HorizontalAlignment="Left" Width="60"/>
                                                     <ComboBoxItem Content="卖开" HorizontalAlignment="Left" Width="60"/>
                                                     <ComboBoxItem Content="买平" HorizontalAlignment="Left" Width="60"/>
@@ -1822,7 +2048,7 @@
                                     <GridViewColumn x:Name="formOfClientageTGVCH" Header=" 委托方式" Width="80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="formOfClientageTComboBox" SelectedIndex="{Binding ClientageType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                <ComboBox x:Name="formOfClientageTComboBox" SelectedIndex="{Binding ClientageType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
                                                     <ComboBoxItem x:Name="marketPriceTCBI" Content=" 市价" HorizontalAlignment="Left" Width=" 80" />
                                                     <ComboBoxItem x:Name="limitPriceTCBI" Content=" 限价" HorizontalAlignment="Left" Width=" 80"/>
                                                 </ComboBox>
@@ -1832,7 +2058,7 @@
                                     <GridViewColumn x:Name="priceOfClientageTGVCH" Header=" 委托价格" Width=" 80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="priceOfClientageTTextBox" Text="{Binding ClientagePrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto"/>
+                                                <TextBox x:Name="priceOfClientageTTextBox" Text="{Binding ClientagePrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="Auto" Style="{StaticResource textboxStyle}" Height="23" Foreground="#FF9198AC"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -1840,7 +2066,7 @@
                                     <GridViewColumn x:Name="conditionTGVCH" Header=" 托单条件" Width=" 80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="conditionTComboBox" SelectedIndex="{Binding ClientageCondition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                                <ComboBox x:Name="conditionTComboBox" SelectedIndex="{Binding ClientageCondition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
                                                     <ComboBoxItem x:Name="comboBoxItem1" Content=" ROD" HorizontalAlignment="Left" Width=" 80"/>
                                                     <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 80"/>
                                                     <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 80"/>
@@ -1858,21 +2084,21 @@
                                     <GridViewColumn x:Name="accuracyTGVCH" Header=" 精确度" Width=" 50">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="accuracyTTextBox" Text="{Binding Accuracy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsSetGradient,Mode=OneWay}" Width=" 50"/>
+                                                <TextBox x:Name="accuracyTTextBox" Text="{Binding Accuracy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsSetGradient,Mode=OneWay}" Width=" 50" Style="{StaticResource textboxStyle}" Height="23"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="arithmeticProgressionTGVCH" Header="手数等差 " Width=" 50">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="arithmeticProgressionTTextBox" IsEnabled="{Binding IsSetGradient,Mode=OneWay}"  Text="{Binding ArithmeticProgression,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width=" 50"/>
+                                                <TextBox x:Name="arithmeticProgressionTTextBox" IsEnabled="{Binding IsSetGradient,Mode=OneWay}"  Text="{Binding ArithmeticProgression,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width=" 50" Style="{StaticResource textboxStyle}" Height="23"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        
+
                         <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
                         <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
@@ -2020,7 +2246,7 @@
             </TabControl>
         </Grid>
         <!--基本信息及动态提示区-->
-        <Grid x:Name="basicInforAndPromptGrid" HorizontalAlignment="Right" Height="242" Margin="0,0,30,21" VerticalAlignment="Bottom" Width="212" Background="#FF22242B">
+        <Grid x:Name="basicInforAndPromptGrid" HorizontalAlignment="Right" Height="242" Margin="0,0,30,21" VerticalAlignment="Bottom" Width="212" Background="#FF22242B" MouseEnter="basicInforAndPromptGrid_MouseEnter" MouseLeave="basicInforAndPromptGrid_MouseLeave">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -2030,34 +2256,34 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Name="userBIPTextBlock" Text="当前账户：" Grid.Column="0" Grid.Row="0" Margin="0,3,0,0" HorizontalAlignment="Right" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showUserBIPTextBlock" Text="超级大棒骨" Grid.Column="1" Grid.Row="0" Margin="20,3,0,0" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="totalCapitalBIPTextBlock" Text="总资本：" Grid.Column="0" Grid.Row="0" Margin="0,18,0,0" HorizontalAlignment="Right" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showTotalCapitalBIPTextBlock" Text="100,000,000" Grid.Column="1" Grid.Row="0" Margin="20,18,0,0" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="availableCapitalBIPTextBlock" Text="可用资金：" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Height="88" VerticalAlignment="Bottom" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showAvailableCapitalBIPTextBlock" Text="99,000,000" Grid.Column="1" Grid.Row="0" Margin="20,33,0,0" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="occupyCapitalBIPTextBlock" Text="占用资金：" Grid.Column="0" Grid.Row="0" Margin="0,48,0,0" HorizontalAlignment="Right" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showOccupyCapitalBIPTextBlock" Text="1,000,000" Grid.Column="1" Grid.Row="0" Margin="20,48,0,0" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="maxLotBIPTextBlock" Text="最大可交易手数：" Grid.ColumnSpan="2" Grid.Row="1" Margin="10,63,-10,0" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showMaxLotBIPTextBlock" Text="800" Grid.Column="1" Grid.Row="1" Margin="20,63,0,0" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="instruIDBIPTextBlock" Text="当前交易代码：" Grid.Column="0" Grid.Row="1" Margin="0,3,0,0" HorizontalAlignment="Right" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showInstruIDBIPTextBlock" Text="IF1007" Grid.Column="1" Grid.Row="1" Margin="20,3,0,0" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="timeLimitBIPTextBlock" Text="到期天数：" Grid.Column="0" Grid.Row="1" Margin="0,18,0,0" HorizontalAlignment="Right" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showTimeLimitBIPTextBlock" Text="30" Grid.Column="1" Grid.Row="1" Margin="20,18,0,0" Foreground="#FF888AA4" />
-            <TextBlock x:Name="dueDateBIPTextBlock" Text="到期日：" Grid.Column="0" Grid.Row="1" Margin="0,33,0,0" HorizontalAlignment="Right" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showDueDateBIPTextBlock" Text="2014/07/08" Grid.Column="1" Grid.Row="1" Margin="20,33,0,0" Foreground="#FF888AA4" />
-            <TextBlock x:Name="tickSizeBIPTextBlock" Text="最小变动价位：" Grid.Column="0" Grid.Row="1" Margin="0,48,0,0" HorizontalAlignment="Right" Foreground="#FF888AA4"/>
-            <TextBlock x:Name="showTickSizeBIPTextBlock" Text="1元/吨" Grid.Column="1" Grid.Row="1" Margin="20,48,0,0" Foreground="#FF888AA4"/>
+            <TextBlock x:Name="userBIPTextBlock" Text="当前账户：" Grid.Column="0" Grid.Row="0" Margin="0,14,5,110" HorizontalAlignment="Right" Foreground="#FF8185A2" Grid.RowSpan="2"/>
+            <TextBlock x:Name="showUserBIPTextBlock" Text="超级大棒骨" Grid.Row="0" Foreground="White" FontSize="15" Margin="5,11,-1,110" Grid.Column="1" Grid.RowSpan="2"/>
+            <TextBlock x:Name="totalCapitalBIPTextBlock" Text="总资本：" Grid.Column="0" Grid.Row="0" Margin="0,67,5,72" HorizontalAlignment="Right" Foreground="#FF8185A2" Grid.RowSpan="2"/>
+            <TextBlock x:Name="showTotalCapitalBIPTextBlock" Text="100,000,000" Grid.Row="0" Margin="5,67,-1,72" Foreground="#FFBCBDCB" Grid.RowSpan="2" Grid.Column="1"/>
+            <TextBlock x:Name="availableCapitalBIPTextBlock" Text="可用资金：" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" Height="88" VerticalAlignment="Bottom" Foreground="#FF8185A2" Margin="0,0,5,72" Grid.RowSpan="2"/>
+            <TextBlock x:Name="showAvailableCapitalBIPTextBlock" Text="99,000,000" Grid.Row="0" Margin="5,82,-1,72" Foreground="#FFBCBDCB" Grid.RowSpan="2" Grid.Column="1"/>
+            <TextBlock x:Name="occupyCapitalBIPTextBlock" Text="占用资金：" Grid.Column="0" Grid.Row="0" Margin="0,97,5,72" HorizontalAlignment="Right" Foreground="#FF8185A2" Grid.RowSpan="2"/>
+            <TextBlock x:Name="showOccupyCapitalBIPTextBlock" Text="1,000,000" Grid.Row="0" Margin="5,97,-1,72" Foreground="#FFBCBDCB" Grid.RowSpan="2" Grid.Column="1"/>
+            <TextBlock x:Name="instruIDBIPTextBlock" Text="当前交易代码：" Grid.Column="0" Grid.Row="1" Margin="0,16,5,-13" HorizontalAlignment="Right" Foreground="#FF8185A2"/>
+            <TextBlock x:Name="showInstruIDBIPTextBlock" Text="IF1007" Grid.Row="1" Margin="5,16,-1,-13" Foreground="#FFBCBDCB" Grid.Column="1"/>
+            <TextBlock x:Name="timeLimitBIPTextBlock" Text="到期天数：" Grid.Column="0" Grid.Row="1" Margin="0,31,5,-13" HorizontalAlignment="Right" Foreground="#FF8185A2"/>
+            <TextBlock x:Name="showTimeLimitBIPTextBlock" Text="30" Grid.Row="1" Margin="5,31,-1,-13" Foreground="#FFBCBDCB" Grid.Column="1" />
+            <TextBlock x:Name="dueDateBIPTextBlock" Text="到期日：" Grid.Column="0" Grid.Row="1" Margin="0,46,5,-13" HorizontalAlignment="Right" Foreground="#FF8185A2"/>
+            <TextBlock x:Name="showDueDateBIPTextBlock" Text="2014/07/08" Grid.Row="1" Margin="5,46,-1,-13" Foreground="#FFBCBDCB" Grid.Column="1" />
+            <TextBlock x:Name="tickSizeBIPTextBlock" Text="最小变动价位：" Grid.Column="0" Grid.Row="1" Margin="0,61,5,-13" HorizontalAlignment="Right" Foreground="#FF8185A2"/>
+            <TextBlock x:Name="showTickSizeBIPTextBlock" Text="1元/吨" Grid.Row="1" Margin="5,61,-1,-13" Foreground="#FFBCBDCB" Grid.Column="1"/>
+            <TextBlock x:Name="maxLotBIPTextBlock" Text="最大可交易手数：" Grid.ColumnSpan="2" Grid.Row="1" Margin="5,76,-5,-13" Foreground="#FF8185A2"/>
+            <TextBlock x:Name="showMaxLotBIPTextBlock" Text="800" Grid.Column="1" Grid.Row="1" Margin="5,76,-1,-13" Foreground="#FFBCBDCB"/>
         </Grid>
 
         <!--策略实验室伸缩面板-->
         <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519" MouseEnter="Canvas1_MouseEnter" MouseLeave="Canvas1_MouseLeave" ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft">
-            <Label x:Name="type" Content="衍生品种类：" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Canvas.Left="177" Canvas.Top="40"/>
-            <ComboBox x:Name="typeInStrategyPanelComboBox" VerticalAlignment="Top" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" HorizontalAlignment="Left" Height="23" Width="70" Canvas.Left="79" Canvas.Top="40" >
+            <Label x:Name="type" Content="衍生品种类：" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Canvas.Left="185" Canvas.Top="40"/>
+            <ComboBox x:Name="typeInStrategyPanelComboBox" VerticalAlignment="Top" IsReadOnly="True" Style="{StaticResource CboCommomStyle}" BorderBrush="#FF414551" Foreground="#FF9198AC" FlowDirection="LeftToRight" HorizontalAlignment="Left" Height="23" Width="70" Canvas.Left="87" Canvas.Top="40" >
                 <ComboBoxItem x:Name="futuresInStrategyPanelComboBoxItem" Content="期货" HorizontalAlignment="Left" Width="65" Selected="futuresInStrategyPanelComboBoxItem_Selected" />
                 <ComboBoxItem x:Name="optionsInStrategyPanelComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsInStrategyPanelComboBoxItem_Selected" />
             </ComboBox>
-            <Canvas x:Name="strategyOfOptionsCanvas" HorizontalAlignment="Left" Height="122" Background="#FF151519" Width="234" Canvas.Left="23" Canvas.Top="79" MouseEnter="strategyOfOptionsCanvas_MouseEnter" MouseLeave="strategyOfOptionsCanvas_MouseLeave">
+            <Canvas x:Name="strategyOfOptionsCanvas" HorizontalAlignment="Left" Height="122" Background="#FF151519" Width="234" Canvas.Left="31" Canvas.Top="79" MouseEnter="strategyOfOptionsCanvas_MouseEnter" MouseLeave="strategyOfOptionsCanvas_MouseLeave">
                 <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="175" FlowDirection="LeftToRight" />
                 <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Canvas.Left="44" >
                     <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
@@ -2081,17 +2307,44 @@
                 </ComboBox>
             </Canvas>
 
-            <Canvas x:Name="strategyOfFuturesCanvas" HorizontalAlignment="Left" Height="29" Background="#FF151519" Width="234" Canvas.Left="26" Canvas.Top="79" Visibility="Hidden" MouseEnter="strategyOfFuturesCanvas_MouseEnter" MouseLeave="strategyOfFuturesCanvas_MouseLeave">
+            <Canvas x:Name="strategyOfFuturesCanvas" HorizontalAlignment="Left" Height="29" Background="#FF151519" Width="234" Canvas.Left="31" Canvas.Top="79" Visibility="Hidden" MouseEnter="strategyOfFuturesCanvas_MouseEnter" MouseLeave="strategyOfFuturesCanvas_MouseLeave">
                 <Label x:Name="typeOfArbitrageLabel" Content=" 套利类型：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="160" FlowDirection="LeftToRight" />
                 <ComboBox x:Name="typeOfArbitrageComoBox" Width="100" FlowDirection="LeftToRight"  Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" Canvas.Left="22" Canvas.Top="2">
                     <ComboBoxItem x:Name="typeOfArbitrageComoBox1" Content=" 期权与期货" HorizontalAlignment="Left" />
                     <ComboBoxItem x:Name="typeOfArbitrageComoBox2" Content=" 期货与期货" HorizontalAlignment="Left" />
                 </ComboBox>
             </Canvas>
-            <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="102" Canvas.Top="216" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Click="startStrategyBtn_Click"/>
+            <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="110" Canvas.Top="216" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Click="startStrategyBtn_Click"/>
+            
+            <Button x:Name="StategyCanvasButtom" Content="    策略实验室   STRATEGY LAB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Canvas.Left="-79" Canvas.Top="109" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="30" Click="StategyCanvasButtom_Click">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+
+                </Button.RenderTransform>
+            </Button>
+            <Image x:Name="LeftImage" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="20" Source="Resources/right.png" Canvas.Top="34" Canvas.Left="5" Stretch="Fill"/>
         </Canvas>
         <!--风险实验室伸缩面板-->
-        <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="30" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave" FlowDirection="RightToLeft"/>
+        <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave">
+            
+            <Button x:Name="RiskCanvasButtom" Content="   RISK LAB   风险实验室" HorizontalAlignment="Left" VerticalAlignment="Top" Width="152" Canvas.Left="-62" Canvas.Top="94" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="29" Click="RiskCanvasButtom_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="90"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <Image x:Name="RightImage" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="20" Source="Resources/left.png" Canvas.Top="35" Canvas.Left="4" Stretch="Fill"/>
+
+        </Canvas>
 
 
         <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1186" Background="#FF007ACC" Margin="0,0,0,1"/>
@@ -2105,6 +2358,7 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
+
 
     </Grid>
 </Window>

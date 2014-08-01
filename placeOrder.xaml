@@ -4,8 +4,147 @@
         xmlns:local="clr-namespace:qiquanui"
        
         Closing="Window_Closing"
-        Title="placeOrder" Height="316" Width="697" WindowStyle="None" ResizeMode="CanMinimize" BorderThickness="7" AllowsTransparency="True">
+        Title="placeOrder" Height="316" Width="697" WindowStyle="None" ResizeMode="CanMinimize" BorderThickness="7" AllowsTransparency="True" Opacity="0.95">
     <Window.Resources>
+
+        <!--grid1-->
+
+        <Storyboard x:Key="tradingCanvasAnimate">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Background).(SolidColorBrush.Color)" Storyboard.TargetName="tradingCanvas">
+                <EasingColorKeyFrame KeyTime="0" Value="#FF23232C"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.3" Value=" #FF2C2C36"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="tradingCanvasAnimate_Leave">
+            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Canvas.Background).(SolidColorBrush.Color)" Storyboard.TargetName="tradingCanvas">
+                <EasingColorKeyFrame KeyTime="0" Value=" #FF2C2C36"/>
+                <EasingColorKeyFrame KeyTime="0:0:0.3" Value="#FF23232C"/>
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+
+        <Style x:Key="darkButton" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <!--修改模板属性-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--背景色-->
+                        <Border x:Name="back" Opacity="0.8" CornerRadius="3">
+                            <Border.BitmapEffect>
+                                <OuterGlowBitmapEffect Opacity="0.7" GlowSize="0" GlowColor="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" />
+                            </Border.BitmapEffect>
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1.5">
+                                    <GradientBrush.GradientStops>
+                                        <GradientStopCollection>
+                                            <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" Offset="0"/>
+                                            <GradientStop Color="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Button.Background).(SolidColorBrush.Color)}" Offset="0.4"/>
+                                            <GradientStop Color="#FFF" Offset="1"/>
+                                        </GradientStopCollection>
+                                    </GradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <!--前景色及边框-->
+                            <Border x:Name="fore" BorderThickness="1" CornerRadius="3" BorderBrush="#5555">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientBrush.GradientStops>
+                                            <GradientStopCollection>
+                                                <GradientStop Color="#6FFF" Offset="0.5"/>
+                                                <GradientStop Color="#118B8484" Offset="0.51"/>
+                                            </GradientStopCollection>
+                                        </GradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                                <!--按钮内容-->
+                                <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{TemplateBinding  Content}">
+                                    <ContentPresenter.BitmapEffect>
+                                        <DropShadowBitmapEffect Color="#000" Direction="-90" ShadowDepth="2" Softness="0.1" Opacity="0.3" />
+                                    </ContentPresenter.BitmapEffect>
+                                </ContentPresenter>
+                            </Border>
+                        </Border>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+                            <!--鼠标移入移出-->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="6" Duration="0:0:0.2" Storyboard.TargetName="back" Storyboard.TargetProperty="(Border.BitmapEffect).(OuterGlowBitmapEffect.GlowSize)" />
+                                            <ColorAnimation To="#AFFF" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#3FFF" BeginTime="0:0:0.2" Duration="0:0:0.2" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.2" Storyboard.TargetName="back" Storyboard.TargetProperty="(Border.BitmapEffect).(OuterGlowBitmapEffect.GlowSize)" />
+                                            <ColorAnimation Duration="0:0:0.2" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.2" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <!--按钮按下弹起-->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="3" Duration="0:0:0.1" Storyboard.TargetName="back" Storyboard.TargetProperty="(Border.BitmapEffect).(OuterGlowBitmapEffect.GlowSize)" />
+                                            <ColorAnimation To="#3AAA" Duration="0:0:0.1" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#2111" Duration="0:0:0.1" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetName="back" Storyboard.TargetProperty="(Border.BitmapEffect).(OuterGlowBitmapEffect.GlowSize)" />
+                                            <ColorAnimation Duration="0:0:0.1" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.1" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <!--按钮失效-->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="#B444"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation To="0" Duration="0:0:0.3" Storyboard.TargetName="back" Storyboard.TargetProperty="(Border.BitmapEffect).(OuterGlowBitmapEffect.GlowSize)" />
+                                            <DoubleAnimation To="1" Duration="0:0:0.1" Storyboard.TargetName="content" Storyboard.TargetProperty="(ContentPresenter.BitmapEffect).(DropShadowBitmapEffect.Opacity)" />
+                                            <DoubleAnimation To="-135" Duration="0:0:0.1" Storyboard.TargetName="content" Storyboard.TargetProperty="(ContentPresenter.BitmapEffect).(DropShadowBitmapEffect.Direction)" />
+                                            <ColorAnimation To="#FFF" Duration="0:0:0.3" Storyboard.TargetName="content" Storyboard.TargetProperty="(ContentPresenter.BitmapEffect).(DropShadowBitmapEffect.Color)" />
+                                            <ColorAnimation To="#D555" Duration="0:0:0.3" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" />
+                                            <ColorAnimation To="#CEEE" Duration="0:0:0.3" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#CDDD" Duration="0:0:0.3" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetName="back" Storyboard.TargetProperty="(Border.BitmapEffect).(OuterGlowBitmapEffect.GlowSize)" />
+                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetName="content" Storyboard.TargetProperty="(ContentPresenter.BitmapEffect).(DropShadowBitmapEffect.Opacity)" />
+                                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetName="content" Storyboard.TargetProperty="(ContentPresenter.BitmapEffect).(DropShadowBitmapEffect.Direction)" />
+                                            <ColorAnimation Duration="0:0:0.1" Storyboard.TargetName="content" Storyboard.TargetProperty="(ContentPresenter.BitmapEffect).(DropShadowBitmapEffect.Color)" />
+                                            <ColorAnimation Duration="0:0:0.1" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" />
+                                            <ColorAnimation Duration="0:0:0.1" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.1" Storyboard.TargetName="fore" Storyboard.TargetProperty="(Border.Background).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
         <!-- MouseDown="Window_MouseDown"-->
         <Style x:Key="scrollTop" TargetType="{x:Type RepeatButton}">
             <Setter Property="Template">
@@ -461,6 +600,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        
+        
+        
 
     </Window.Resources>
     <Window.Effect>
@@ -472,13 +615,13 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Frame x:Name="Top1_placeOrder" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="626" MouseDown="Top1_MouseDown" Background="Transparent" Foreground="#FFD5D5D8" />
-        <TextBlock x:Name="nameOfWindowTextBlock" Text="确认交易信息" Foreground="#FFD5D5D8" Margin="31,10,578,270" />
+        <TextBlock x:Name="nameOfWindowTextBlock" Text="确认交易信息" Foreground="#FF7B7B7D" Margin="31,11,578,269" />
 
         <Button x:Name="minButton" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}" RenderTransformOrigin="-1.267,1.75" Margin="0,10,30,0"/>
         <Button x:Name="closeButton" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}" Margin="0,10,10,0"/>
         <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="2" Width="2"/>
 
-        <Canvas HorizontalAlignment="Left" Height="232" Margin="10,37,0,0" VerticalAlignment="Top" Width="662" Background="#FF23232C">
+        <Canvas x:Name="tradingCanvas" HorizontalAlignment="Left" Height="232" Margin="10,37,0,0" VerticalAlignment="Top" Width="662" Background="#FF23232C" MouseEnter="tradingCanvas_MouseEnter" MouseLeave="tradingCanvas_MouseLeave">
             <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="202" VerticalAlignment="Top" Width="661" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" Style="{StaticResource ListViewStyle}">
                 <ListView.View>
                     <GridView>
@@ -503,8 +646,8 @@
 
         </Canvas>
 
-        <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click" ToolTip="cancel"/>
-        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
+        <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,21,7" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel" Style="{StaticResource darkButton}"/>
+        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,110,7" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Style="{StaticResource darkButton}" />
 
     </Grid>
 
