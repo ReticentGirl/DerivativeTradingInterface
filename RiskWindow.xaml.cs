@@ -29,12 +29,45 @@ namespace qiquanui
     /// </summary>
     public partial class RiskWindow : Window
     {
-        private double originalHeight, originalWidth;
+        private double originalHeight, originalWidth, Grid1w, Grid1h, Grid1wper, Grid1hper, Grid2w, Grid2h, Grid2wper, Grid2hper, Grid1Label1h, Grid1Label1hper, Grid2Label1h, Grid2Label1hper, DeltaTabGridh, DeltaTabGridhper, GammaTabGridh, GammaTabGridhper, optionsRiskLVw, optionsRiskLVwper, optionsRiskLVh, optionsRiskLVhper, recomLVw, recomLVwper, recomLVh, recomLVhper, DeltaAndGammaTabControlh, DeltaAndGammaTabControlhper;
+        private Storyboard Grid1Storyboard, Grid1Storyboard_Leave, Grid2Storyboard, Grid2Storyboard_Leave, Grid1Label1Storyboard, Grid1Label1Storyboard_Leave, Grid2Label1Storyboard, Grid2Label1Storyboard_Leave, compoGridStoryboard, compoGridStoryboard_Leave, DeltaTabGridStoryboard, DeltaTabGridStoryboard_Leave, GammaTabGridStoryboard, GammaTabGridStoryboard_Leave;
         public RiskWindow()
         {
             InitializeComponent();
             originalHeight = this.Height;
             originalWidth = this.Width;
+
+            
+            Grid1w=Grid1.Width;
+            Grid1h=Grid1.Height;
+            Grid2w=Grid2.Width;
+            Grid2h=Grid2.Height;
+            Grid1Label1h=Grid1Label1.Height;
+            Grid2Label1h=Grid2Label1.Height;
+            DeltaTabGridh=DeltaTabGrid.Height;
+            GammaTabGridh=GammaTabGrid.Height;
+            optionsRiskLVw=optionsRiskLV.Width;
+            optionsRiskLVh=optionsRiskLV.Height;
+            recomLVw=recomLV.Width;
+            recomLVh = recomLV.Height;
+            DeltaAndGammaTabControlh = DeltaAndGammaTabControl.Height;
+
+
+            Grid1Storyboard = (Storyboard)this.FindResource("Grid1Animate");
+            Grid1Storyboard_Leave = (Storyboard)this.FindResource("Grid1Animate_Leave");
+            Grid2Storyboard = (Storyboard)this.FindResource("Grid2Animate");
+            Grid2Storyboard_Leave = (Storyboard)this.FindResource("Grid2Animate_Leave");
+            Grid1Label1Storyboard = (Storyboard)this.FindResource("Grid1Label1Animate");
+            Grid1Label1Storyboard_Leave = (Storyboard)this.FindResource("Grid1Label1Animate_Leave");
+            Grid2Label1Storyboard = (Storyboard)this.FindResource("Grid2Label1Animate");
+            Grid2Label1Storyboard_Leave = (Storyboard)this.FindResource("Grid2Label1Animate_Leave");
+            compoGridStoryboard = (Storyboard)this.FindResource("compoGridAnimate");
+            compoGridStoryboard_Leave = (Storyboard)this.FindResource("compoGridAnimate_Leave");
+            DeltaTabGridStoryboard = (Storyboard)this.FindResource("DeltaTabGridAnimate"); 
+            DeltaTabGridStoryboard_Leave = (Storyboard)this.FindResource("DeltaTabGridAnimate_Leave"); 
+            GammaTabGridStoryboard = (Storyboard)this.FindResource("GammaTabGridAnimate");
+            GammaTabGridStoryboard_Leave = (Storyboard)this.FindResource("GammaTabGridAnimate_Leave"); 
+
 
             Border1.Width = this.Width - 14;
             Border1.Height = this.Height - 14;
@@ -47,20 +80,25 @@ namespace qiquanui
         {
             if (this.WindowState == WindowState.Normal)
             {
+                Border1.Visibility = Visibility.Hidden;
                 this.WindowState = WindowState.Maximized;
+                
                 maxButton.Style = Resources["normalSty"] as Style;
                 this.Opacity = 1;
-                Border1.Visibility = Visibility.Hidden;
+                
+                
             }
             else if (this.WindowState == WindowState.Maximized)
             {
+                Border1.Visibility = Visibility.Visible;
                 this.WindowState = WindowState.Normal;
+                
                 maxButton.Style = Resources["maxSty"] as Style;
                 this.Opacity = 0.95;
                 this.Left = 50;
                 this.Top = 50;
-                Border1.Visibility = Visibility.Visible;
-
+                
+               
             }
         } //双击标题栏最大化、还原
         private void MinButton_Click_1(object sender, RoutedEventArgs e)
@@ -73,19 +111,23 @@ namespace qiquanui
 
             if (this.WindowState == WindowState.Normal)
             {
+                Border1.Visibility = Visibility.Collapsed;
                 this.WindowState = WindowState.Maximized;
                 maxButton.Style = Resources["normalSty"] as Style;
                 this.Opacity = 1;
-                Border1.Visibility = Visibility.Collapsed;
+               
+               
             }
             else if (this.WindowState == WindowState.Maximized)
             {
+                Border1.Visibility = Visibility.Visible;
                 this.WindowState = WindowState.Normal;
                 maxButton.Style = Resources["maxSty"] as Style;
                 this.Left = 50;
                 this.Top = 50;
                 this.Opacity = 0.95;
-                Border1.Visibility = Visibility.Visible;
+                
+                
             }
 
         } //最大化窗口按钮
@@ -120,5 +162,114 @@ namespace qiquanui
             closeStoryBoardCompleted = true;
             this.Close();
         }
+        private void ResizeControl()
+        {
+            
+            Top1_StrategyLab.Width= this.Width;
+            Border1.Height = this.Height - 14.0;
+            Border1.Width = this.Width - 14.0;
+
+            Grid1wper= (this.Width - (originalWidth - Grid1w)) / (originalWidth - (originalWidth - Grid1w));
+            Grid2wper= (this.Width - (originalWidth - Grid2w)) / (originalWidth - (originalWidth - Grid2w));
+            Grid2Label1hper=Grid1Label1hper=Grid2hper=Grid1hper = (this.Height - (originalHeight - Grid1h-Grid2h)) / (originalHeight - (originalHeight - Grid1h-Grid2h));
+            GammaTabGridhper=DeltaTabGridhper=(this.Height - (originalHeight - DeltaTabGridh)) / (originalHeight - (originalHeight - DeltaTabGridh));
+            optionsRiskLVwper=(this.Width - (originalWidth - optionsRiskLVw)) / (originalWidth - (originalWidth - optionsRiskLVw));
+            recomLVwper=(this.Width - (originalWidth - recomLVw)) / (originalWidth - (originalWidth - recomLVw));
+            optionsRiskLVhper = (this.Height - (originalHeight - optionsRiskLVh - Grid2h)) / (originalHeight - (originalHeight - optionsRiskLVh - Grid2h));
+            recomLVhper = (this.Height - (originalHeight - recomLVh - Grid1h)) / (originalHeight - (originalHeight - recomLVh - Grid1h));
+            DeltaAndGammaTabControlhper = (this.Height - (originalHeight - DeltaAndGammaTabControlh)) / (originalHeight - (originalHeight - DeltaAndGammaTabControlh));
+
+           
+            Grid1.Width=Grid1w*Grid1wper;
+            Grid1.Height=Grid1h*Grid1hper;
+            Grid2.Width=Grid2w*Grid2wper;
+            Grid2.Height=Grid2h*Grid2hper;
+            Grid1Label1.Height=Grid1Label1h*Grid1Label1hper;
+            Grid2Label1.Height=Grid2Label1h*Grid2Label1hper;
+            DeltaTabGrid.Height=DeltaTabGridh*DeltaTabGridhper;
+            GammaTabGrid.Height=GammaTabGridh*GammaTabGridhper;
+            optionsRiskLV.Width=optionsRiskLVw*optionsRiskLVwper;
+            optionsRiskLV.Height=optionsRiskLVh*optionsRiskLVhper;
+            recomLV.Width=recomLVw*recomLVwper;
+            recomLV.Height=recomLVh*recomLVhper;
+            DeltaAndGammaTabControl.Height = DeltaAndGammaTabControlh * DeltaAndGammaTabControlhper;
+
+        }//拉伸窗口调用ResizeControl()
+        private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
+        {
+            ResizeControl();
+        }
+
+        private void Grid1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid1Storyboard.Begin(this);
+        }
+
+        private void Grid1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid1Storyboard_Leave.Begin(this);
+        }
+
+        private void Grid2_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid2Storyboard.Begin(this);
+        }
+
+        private void Grid2_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid2Storyboard_Leave.Begin(this);
+        }
+
+        private void Grid1Label1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid1Label1Storyboard.Begin(this);
+        }
+
+        private void Grid1Label1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid1Label1Storyboard_Leave.Begin(this);
+        }
+
+        private void Grid2Label1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid2Label1Storyboard.Begin(this);
+        }
+
+        private void Grid2Label1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid2Label1Storyboard_Leave.Begin(this);
+        }
+
+        private void compoGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            compoGridStoryboard.Begin(this);
+        }
+
+        private void compoGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            compoGridStoryboard_Leave.Begin(this);
+        }
+
+        private void GammaTabGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            GammaTabGridStoryboard.Begin(this);
+        }
+
+        private void GammaTabGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            GammaTabGridStoryboard_Leave.Begin(this);
+        }
+
+        private void DeltaTabGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            DeltaTabGridStoryboard.Begin(this);
+        }
+
+        private void DeltaTabGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            DeltaTabGridStoryboard_Leave.Begin(this);
+        }
+
+       
     }
 }

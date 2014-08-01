@@ -9,7 +9,7 @@
         Closing="Window_Closing"
     
     
-        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF627095" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="974" MinHeight="650" Width="1200" Height="700.5" Opacity="0.95">
+        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="974" MinHeight="650" Width="1198.75" Height="700.5" Opacity="0.95">
     <Window.Resources>
 
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
@@ -1513,8 +1513,8 @@
                                 <Rectangle x:Name="buttonRect" Width="49" Height="49">
                                     <Rectangle.Fill>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                            <GradientStop Offset="0" Color="#FF8A92A9"/>
-                                            <GradientStop Offset="1" Color="#FF272935"/>
+                                            <GradientStop Offset="0" Color="#FF737A8D"/>
+                                            <GradientStop Offset="1" Color="#FF343644"/>
                                         </LinearGradientBrush>
                                     </Rectangle.Fill>
                                 </Rectangle>
@@ -1538,8 +1538,8 @@
                                     <BeginStoryboard>
                                         <Storyboard>
 
-                                            <ColorAnimation To="White" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
-                                            <ColorAnimation To="#FF272935" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF959EB6" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF343644" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.EnterActions>
@@ -1552,6 +1552,7 @@
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </Trigger.ExitActions>
+
                             </Trigger>
                             <Trigger Property="Button.IsPressed" Value="True">
                                 <Trigger.EnterActions>
@@ -1584,7 +1585,7 @@
             </Setter>
         </Style>
 
-        <!--定义变红的样式-->
+        <!--定义背景变红的样式-->
         <Style x:Key="marketListViewButtom_red" TargetType="Button" >
             <!--修改模板属性-->
 
@@ -1672,8 +1673,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!--定义变红的样式-->
+        <!--定义背景变红的样式-->
         <Style x:Key="marketListViewButtom_green" TargetType="Button" >
             <!--修改模板属性-->
 
@@ -1686,7 +1686,7 @@
                             <!--带特效的底层背景-->
                             <Border x:Name="back" Opacity="0.8" CornerRadius="0">
                                 <Border.BitmapEffect>
-                                    <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="Green" />
+                                    <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="Red" />
                                 </Border.BitmapEffect>
                                 <Rectangle x:Name="buttonRect" Width="49" Height="30">
                                     <Rectangle.Fill>
@@ -1716,7 +1716,7 @@
                                     <BeginStoryboard>
                                         <Storyboard>
 
-                                            <ColorAnimation To="#FF70FF70" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF07C307" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
                                             <ColorAnimation To="#FF272935" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
                                         </Storyboard>
                                     </BeginStoryboard>
@@ -1761,6 +1761,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+
         <!--侧边按钮-->
         <Style x:Key="leftAndRightButtom" TargetType="Button" >
             <!--修改模板属性-->
@@ -1773,8 +1775,6 @@
                         <Grid>
                             <!--带特效的底层背景-->
                             <Border x:Name="back" Opacity="0.8" CornerRadius="0" Background="Black" >
-
-
                             </Border>
 
                             <!--按钮内容-->
@@ -1786,6 +1786,15 @@
                                 />
 
                         </Grid>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter TargetName="back" Property="BorderBrush" Value="#FF0076C8"/>
+                                <Setter TargetName="back" Property="BorderThickness" Value="0,5,0,0"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -1806,7 +1815,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseDoubleClick="Top1_MouseDoubleClick"/>
+        <Frame x:Name="Top1" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1185" Background="#FF1B1B1F" MouseDown="Top1_MouseDown" MouseDoubleClick="Top1_MouseDoubleClick"/>
 
         <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}"/>
         <Button x:Name="maxButton" Margin="0,12,31,0" Click="MaxButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource maxSty}"/>
@@ -1970,7 +1979,7 @@
                             <GridViewColumn x:Name="lastPriceROMGVCH" Header=" 最新价"  Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="lastPriceROMBox"  Content="{Binding LastPrice1}" Width=" 80"    />
+                                        <Label x:Name="lastPriceROMBox"  Content="{Binding LastPrice1}" Width=" 80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"    />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1982,7 +1991,7 @@
                             <GridViewColumn x:Name="lastPriceDOMGVCH" Header=" 最新价"  Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="lastPriceDOMBox" Content="{Binding LastPrice2}" Width=" 80"    />
+                                        <Label x:Name="lastPriceDOMBox" Content="{Binding LastPrice2}" Width=" 80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"    />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2262,7 +2271,7 @@
             </TabControl>
         </Grid>
         <!--基本信息及动态提示区-->
-        <Grid x:Name="basicInforAndPromptGrid" HorizontalAlignment="Right" Height="242" Margin="0,0,30,21" VerticalAlignment="Bottom" Width="212" Background="#FF22242B" MouseEnter="basicInforAndPromptGrid_MouseEnter" MouseLeave="basicInforAndPromptGrid_MouseLeave">
+        <Grid x:Name="basicInforAndPromptGrid" HorizontalAlignment="Right" Height="242" Margin="0,0,29,21" VerticalAlignment="Bottom" Width="213" Background="#FF22242B" MouseEnter="basicInforAndPromptGrid_MouseEnter" MouseLeave="basicInforAndPromptGrid_MouseLeave">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -2331,8 +2340,8 @@
                 </ComboBox>
             </Canvas>
             <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="110" Canvas.Top="216" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Click="startStrategyBtn_Click"/>
-            
-            <Button x:Name="StategyCanvasButtom" Content="    策略实验室   STRATEGY LAB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Canvas.Left="-79" Canvas.Top="109" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="30" Click="StategyCanvasButtom_Click">
+
+            <Button x:Name="StategyCanvasButtom" Content="    策略实验室   STRATEGY LAB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Canvas.Left="-80" Canvas.Top="110" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="28" Click="StategyCanvasButtom_Click">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -2347,8 +2356,8 @@
         </Canvas>
         <!--风险实验室伸缩面板-->
         <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" MouseEnter="Canvas2_MouseEnter" MouseLeave="Canvas2_MouseLeave">
-            
-            <Button x:Name="RiskCanvasButtom" Content="   RISK LAB   风险实验室" HorizontalAlignment="Left" VerticalAlignment="Top" Width="152" Canvas.Left="-62" Canvas.Top="94" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="29" Click="RiskCanvasButtom_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+
+            <Button x:Name="RiskCanvasButtom" Content="   RISK LAB   风险实验室" HorizontalAlignment="Left" VerticalAlignment="Top" Width="152" Canvas.Left="-62" Canvas.Top="92" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="29" Click="RiskCanvasButtom_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -2358,12 +2367,12 @@
                     </TransformGroup>
                 </Button.RenderTransform>
             </Button>
-            <Image x:Name="RightImage" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="20" Source="Resources/left.png" Canvas.Top="35" Canvas.Left="4" Stretch="Fill"/>
+            <Image x:Name="RightImage" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="20" Source="Resources/left.png" Canvas.Top="33" Canvas.Left="4" Stretch="Fill"/>
 
         </Canvas>
 
 
-        <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1186" Background="#FF007ACC" Margin="0,0,0,1"/>
+        <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1185" Background="#FF007ACC" Margin="0,0,0,1"/>
         <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10">
             <Border.RenderTransform>
                 <TransformGroup>

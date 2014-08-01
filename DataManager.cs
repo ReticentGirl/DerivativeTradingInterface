@@ -764,22 +764,27 @@ namespace qiquanui
                                 switch (ob_no2[i, j])
                                 {
                                     case 2:
-                                        b.Background = System.Windows.Media.Brushes.Red;
-                                        b.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        ///此处用红色背景样式
+                                        b.Foreground = System.Windows.Media.Brushes.White;
+                                        b.Style = pwindow.Resources["marketListViewButtom_red"] as Style;
                                         break;
                                     case 3:
-                                        b.Background = System.Windows.Media.Brushes.Green;
-                                        b.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        ///此处用绿色背景样式
+                                        b.Foreground = System.Windows.Media.Brushes.White;
+                                        b.Style = pwindow.Resources["marketListViewButtom_green"] as Style;
                                         break;
                                     case 4:
-                                        ///此处用红色背景样式
-                                        b.Background = System.Windows.Media.Brushes.Transparent;
+                                        //正常的红字
                                         b.Foreground = System.Windows.Media.Brushes.Red;
+
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style;
                                         break;
                                     case 5:
-                                        ///此处用绿色背景样式
-                                        b.Background = System.Windows.Media.Brushes.Transparent;
-                                        b.Foreground = System.Windows.Media.Brushes.Green;
+                                        //正常的绿字
+                                        b.Foreground = System.Windows.Media.Brushes.LightGreen;
+
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style;
+                                        
                                         break;
                                 }
 
@@ -798,11 +803,11 @@ namespace qiquanui
                                         break;
                                     case 4:
                                         t.Background = System.Windows.Media.Brushes.Transparent;
-                                        t.Foreground = System.Windows.Media.Brushes.Red;
+                                        t.Foreground = System.Windows.Media.Brushes.Tomato;
                                         break;
                                     case 5:
                                         t.Background = System.Windows.Media.Brushes.Transparent;
-                                        t.Foreground = System.Windows.Media.Brushes.Green;
+                                        t.Foreground = System.Windows.Media.Brushes.LightGreen;
                                         break;
                                 }
                             }

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:qiquanui"       
         Closing="Window_Closing"
-        Title="placeOrder" Height="241" Width="451.65" WindowStyle="None" ResizeMode="CanMinimize" BorderThickness="7" AllowsTransparency="True" Opacity="0.95">
+        Title="placeOrder" Height="245" Width="454" WindowStyle="None" ResizeMode="CanMinimize" BorderThickness="7" AllowsTransparency="True" Opacity="0.95">
     <Window.Resources>
 
         <!--grid1-->
@@ -599,17 +599,17 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
-        
-        
-        
+
+
+
+
 
     </Window.Resources>
     <Window.Effect>
         <DropShadowEffect Color="#FF007ACC" BlurRadius="7" Direction="270" Opacity="0.75" ShadowDepth="3"/>
     </Window.Effect>
 
-    <Grid Background="#FF1A1A21" Height="231" VerticalAlignment="Top" Margin="0,0,-4,-4">
+    <Grid Background="#FF1A1A21" Height="231" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -619,8 +619,8 @@
         <Button x:Name="minButton" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}" RenderTransformOrigin="-1.267,1.75" Margin="0,10,30,0"/>
         <Button x:Name="closeButton" Click="CloseButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource closeSty}" Margin="0,10,10,0"/>
         <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="2" Width="2"/>
-        
-        <Canvas HorizontalAlignment="Left" Height="125" Margin="10,37,0,0" VerticalAlignment="Top" Width="422" Background="#FF23232C">
+
+        <Canvas x:Name="tradingCanvas" HorizontalAlignment="Left" Height="125" Margin="10,37,0,0" VerticalAlignment="Top" Width="422" Background="#FF23232C" MouseEnter="tradingCanvas_MouseEnter" MouseLeave="tradingCanvas_MouseLeave">
             <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="125" VerticalAlignment="Top" Width="421" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" Style="{StaticResource ListViewStyle}" Canvas.Left="1">
                 <ListView.View>
                     <GridView>
@@ -633,12 +633,12 @@
                 </ListView.View>
             </ListView>
 
-            <Label x:Name="costLabel" Content="估计交易成本：" Canvas.Top="134" Width="139" Height="23" Foreground="White" Background="#FF007ACC" Canvas.Left="1"/>
-            <TextBlock x:Name="priceTB" Text="1,000,000" Width="96" Height="18" Canvas.Top="139" Foreground="White" Canvas.Left="154"/>
-            <TextBlock x:Name="addOrMinusTB" Text="+" Height="18" Width="11" Canvas.Left="255" Canvas.Top="139" Foreground="White"/>
-            <TextBlock x:Name="serviceChargeTB" Text="手续费" Height="18" Width="88" Canvas.Left="301" Canvas.Top="139" Foreground="White"/>
+           
         </Canvas>
-
+        <Label x:Name="costLabel" Content="估计交易成本：" Canvas.Top="134" Width="139" Height="23" Foreground="White" Background="#FF007ACC" Canvas.Left="1" Margin="10,167,291,41"/>
+        <TextBlock x:Name="priceTB" Text="1,000,000" Width="96" Height="18" Canvas.Top="139" Foreground="White" Canvas.Left="154" Margin="167,172,177,41"/>
+        <TextBlock x:Name="addOrMinusTB" Text="+" Height="18" Width="11" Canvas.Left="255" Canvas.Top="139" Foreground="White" Margin="268,172,162,41"/>
+        <TextBlock x:Name="serviceChargeTB" Text="手续费" Height="18" Width="88" Canvas.Left="301" Canvas.Top="139" Foreground="White" Margin="342,172,10,41"/>
         <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel" Style="{StaticResource darkButton}"/>
         <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,99,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Style="{StaticResource darkButton}"/>
 

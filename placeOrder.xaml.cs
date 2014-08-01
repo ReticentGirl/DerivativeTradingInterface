@@ -96,5 +96,9 @@ namespace qiquanui
         {
             tradingCanvasStoryboard_Leave.Begin(this);
         }
+
+     
+
+      
     }
 }

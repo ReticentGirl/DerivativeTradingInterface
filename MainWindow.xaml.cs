@@ -368,19 +368,19 @@ namespace qiquanui
             strategyOfFuturesCanvasStoryboard_Leave.Begin(this);
         }
 
-
-        private void StategyCanvasButtom_Click(object sender, RoutedEventArgs e)
+        //左伸缩板的展开和收缩
+        private void openOrCloseLeftCanvas()
         {
             if (Canvas1.Width == 29.0)
-             {
-                 DoubleAnimation animate = new DoubleAnimation();
-                 animate.To = 292;
-                 animate.Duration = new Duration(TimeSpan.FromSeconds(0.4));
-                 animate.DecelerationRatio = 1;
-                 //   animate.AccelerationRatio = 0.33;
-                 Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
-                 LeftImage.Source = new BitmapImage(new Uri("Resources/left.png", UriKind.Relative)); 
-             }
+            {
+                DoubleAnimation animate = new DoubleAnimation();
+                animate.To = 292;
+                animate.Duration = new Duration(TimeSpan.FromSeconds(0.4));
+                animate.DecelerationRatio = 1;
+                //   animate.AccelerationRatio = 0.33;
+                Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
+                LeftImage.Source = new BitmapImage(new Uri("Resources/left.png", UriKind.Relative));
+            }
             else if (Canvas1.Width == 292.0)
             {
                 DoubleAnimation animate = new DoubleAnimation();
@@ -389,8 +389,12 @@ namespace qiquanui
                 //   animate.DecelerationRatio = 0.33;
                 animate.AccelerationRatio = 1;
                 Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
-                LeftImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative)); 
+                LeftImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative));
             }
+        }
+        private void StategyCanvasButtom_Click(object sender, RoutedEventArgs e)
+        {
+            openOrCloseLeftCanvas();
         }
          private void Canvas1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
          {
@@ -406,26 +410,33 @@ namespace qiquanui
          } //当鼠标离开策略实验室面板时，缩回面板动画
          private void RiskCanvasButtom_Click(object sender, RoutedEventArgs e)
          {
+             openOrCloseRightCanvas();
+         }
+        //右伸缩板的展开和收缩
+         private void openOrCloseRightCanvas()
+         {
              if (Canvas2.Width == 29.0)
              {
                  DoubleAnimation animate1 = new DoubleAnimation();
-                 animate1.To = 120;
+                 animate1.To = 60.0;
                  animate1.Duration = new Duration(TimeSpan.FromSeconds(0.4));
                  animate1.DecelerationRatio = 1;
                  //   animate.AccelerationRatio = 0.33;
                  Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
                  canvas2Storyboard.Begin(this);
-                 RightImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative)); 
+                 RightImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative));
+                 RiskWindow riskWindow = new RiskWindow();
+                 riskWindow.Show();
              }
-             else if (Canvas2.Width == 120.0)
+             else if (Canvas2.Width == 60.0)
              {
                  DoubleAnimation animate1 = new DoubleAnimation();
-             animate1.To = 29.0;
-             animate1.Duration = new Duration(TimeSpan.FromSeconds(0.4));
-             //   animate.DecelerationRatio = 0.33;
-             animate1.AccelerationRatio = 1;
-             Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
-             RightImage.Source = new BitmapImage(new Uri("Resources/left.png", UriKind.Relative)); 
+                 animate1.To = 29.0;
+                 animate1.Duration = new Duration(TimeSpan.FromSeconds(0.4));
+                 //   animate.DecelerationRatio = 0.33;
+                 animate1.AccelerationRatio = 1;
+                 Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
+                 RightImage.Source = new BitmapImage(new Uri("Resources/left.png", UriKind.Relative));
              }
          }
          private void Canvas2_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -494,6 +505,7 @@ namespace qiquanui
         private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
         {
             StrategyWindow strategyWindow = new StrategyWindow();
+            openOrCloseLeftCanvas();
             strategyWindow.Show();
            
         } //策略实验室，点击“开始分析”
