@@ -24,23 +24,24 @@ using qiquanui.Properties;
 
 namespace qiquanui
 {
+    #region class option
     public class option : INotifyPropertyChanged
     {
-        private double bidPrice1;
-        private double askPrice1;
-        private double lastPrice1;
-        private int volume1;
-        private int openInterest1;
-        private int exercisePrice;
-        private int openInterest2;
-        private int volume2;
-        private double bidPrice2;
-        private double askPrice2;
-        private double lastPrice2;
+        private string bidPrice1;
+        private string askPrice1;
+        private string lastPrice1;
+        private string volume1;
+        private string openInterest1;
+        private string exercisePrice;
+        private string openInterest2;
+        private string volume2;
+        private string bidPrice2;
+        private string askPrice2;
+        private string lastPrice2;
         public string instrumentid1;
         public string instrumentid2;
 
-        public double BidPrice1
+        public string BidPrice1
         {
             get { return bidPrice1; }
             set
@@ -49,7 +50,7 @@ namespace qiquanui
                 OnPropertyChanged(new PropertyChangedEventArgs("BidPrice1"));
             }
         }
-        public double AskPrice1
+        public string AskPrice1
         {
             get { return askPrice1; }
             set
@@ -58,7 +59,7 @@ namespace qiquanui
                 OnPropertyChanged(new PropertyChangedEventArgs("AskPrice1"));
             }
         }
-        public double LastPrice1
+        public string LastPrice1
         {
             get { return lastPrice1; }
             set
@@ -67,27 +68,27 @@ namespace qiquanui
                 OnPropertyChanged(new PropertyChangedEventArgs("lastPrice1"));
             }
         }
-        public int Volume1
+        public string Volume1
         {
             get { return volume1; }
             set { volume1 = value; OnPropertyChanged(new PropertyChangedEventArgs("Volume1")); }
         }
-        public int OpenInterest1
+        public string OpenInterest1
         {
             get { return openInterest1; }
             set { openInterest1 = value; OnPropertyChanged(new PropertyChangedEventArgs("OpenInterest1")); }
         }
-        public int ExercisePrice
+        public string ExercisePrice
         {
             get { return exercisePrice; }
             set
             {
                 exercisePrice = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("ExercisePrice")); 
+                OnPropertyChanged(new PropertyChangedEventArgs("ExercisePrice"));
             }
         }
 
-        public double BidPrice2
+        public string BidPrice2
         {
             get { return bidPrice2; }
             set
@@ -96,12 +97,12 @@ namespace qiquanui
                 OnPropertyChanged(new PropertyChangedEventArgs("BidPrice2"));
             }
         }
-        public double AskPrice2
+        public string AskPrice2
         {
             get { return askPrice2; }
             set { askPrice2 = value; OnPropertyChanged(new PropertyChangedEventArgs("AskPrice2")); }
         }
-        public double LastPrice2
+        public string LastPrice2
         {
             get { return lastPrice2; }
             set
@@ -110,7 +111,7 @@ namespace qiquanui
                 OnPropertyChanged(new PropertyChangedEventArgs("LastPrice2"));
             }
         }
-        public int Volume2
+        public string Volume2
         {
             get { return volume2; }
             set
@@ -119,13 +120,13 @@ namespace qiquanui
                 OnPropertyChanged(new PropertyChangedEventArgs("Volume2"));
             }
         }
-        public int OpenInterest2
+        public string OpenInterest2
         {
             get { return openInterest2; }
             set
             {
                 openInterest2 = value;
-                OnPropertyChanged(new PropertyChangedEventArgs("OpenInterest2")); 
+                OnPropertyChanged(new PropertyChangedEventArgs("OpenInterest2"));
             }
         }
 
@@ -142,7 +143,205 @@ namespace qiquanui
         }
         #endregion
     }
+    #endregion
 
+    #region class future
+    public class future : INotifyPropertyChanged
+    {
+        #region INotifyPropertyChanged 成员
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, e);
+            }
+        }
+        #endregion
+        private string instrumentname;
+        private string lastprice;
+        private string askprice1;
+        private string bidprice1;
+        private string bidvolume1;
+        private string askvolume1;
+        private string openinterest;
+        private string openprice;
+        private string riseandfall;
+        private string riseandfallrate;
+        private string highestprice;
+        private string lowestprice;
+        private string upperlimitprice;
+        private string lowerlimitprice;
+        private string presettlementprice;
+        private string precloseprice;
+        private string preopeninterest;
+        public string instrumentid;
+        public string InstrumentName
+        {
+            get { return instrumentname; }
+            set
+            {
+                instrumentname = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("InstrumentName"));
+            }
+        }
+        public string LastPrice
+        {
+            get { return lastprice; }
+            set
+            {
+                lastprice = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("LastPrice"));
+            }
+        }
+        public string AskPrice1
+        {
+            get { return askprice1; }
+            set
+            {
+                askprice1 = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("AskPrice1"));
+            }
+        }
+        public string BidPrice1
+        {
+            get { return bidprice1; }
+            set
+            {
+                bidprice1 = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("BidPrice1"));
+            }
+        }
+        public string BidVolume1
+        {
+            get { return bidvolume1; }
+            set
+            {
+                bidvolume1 = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("BidVolume1"));
+            }
+        }
+        public string AskVolume1
+        {
+            get { return askvolume1; }
+            set
+            {
+                askvolume1 = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("AskVolume1"));
+            }
+        }
+        public string OpenInterest
+        {
+            get { return openinterest; }
+            set
+            {
+                openinterest = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("OpenInterest"));
+            }
+        }
+        public string OpenPrice
+        {
+            get { return openprice; }
+            set
+            {
+                openprice = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("OpenPrice"));
+            }
+        }
+        public string RiseAndFall
+        {
+            get { return riseandfall; }
+            set
+            {
+                riseandfall = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("RiseAndFall"));
+            }
+        }
+        public string RiseAndFallRate
+        {
+            get { return riseandfallrate; }
+            set
+            {
+                riseandfallrate = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("RiseAndFallRate"));
+            }
+        }
+        public string HighestPrice
+        {
+            get { return highestprice; }
+            set
+            {
+                highestprice = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("HighestPrice"));
+            }
+        }
+        public string LowestPrice
+        {
+            get { return lowestprice; }
+            set
+            {
+                lowestprice = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("LowestPrice"));
+            }
+        }
+        public string UpperLimitPrice
+        {
+            get { return upperlimitprice; }
+            set
+            {
+                upperlimitprice = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("UpperLimitPrice"));
+            }
+        }
+        public string LowerLimitPrice
+        {
+            get { return lowerlimitprice; }
+            set
+            {
+                lowerlimitprice = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("LowerLimitPrice"));
+            }
+        }
+        public string PreSettlementPrice
+        {
+            get { return presettlementprice; }
+            set
+            {
+                presettlementprice = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("PreSettlementPrice"));
+            }
+        }
+        public string PreClosePrice
+        {
+            get { return precloseprice; }
+            set
+            {
+                precloseprice = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("PreClosePrice"));
+            }
+        }
+        public string PreOpenInterest
+        {
+            get { return preopeninterest; }
+            set
+            {
+                preopeninterest = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("PreOpenInterest"));
+            }
+        }
+        public string InstrumentID
+        {
+            get { return instrumentid; }
+            set
+            {
+                instrumentid = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("InstrumentID"));
+            }
+        }
+
+    }
+    #endregion
 
     class DataManager
     {
@@ -151,6 +350,8 @@ namespace qiquanui
         DateTime now;
         public ObservableCollection<option> ObservableObj = new ObservableCollection<option>();
         private ObservableCollection<option> ObservableObj2 = new ObservableCollection<option>();
+        public ObservableCollection<future> ObservableOb = new ObservableCollection<future>();
+        private ObservableCollection<future> ObservableOb2 = new ObservableCollection<future>();
         public static Hashtable All = new Hashtable(2000);
         static string updatesql, exercisesql, dynamicsql, box_type, box_exchange, box_future, box_time, duedate = "", instrumentname = "";
 
@@ -171,12 +372,18 @@ namespace qiquanui
         {
             if (locked) return;
             locked = true;
-            mytimer+=TIMER_UNIT;
-            now=now.AddMilliseconds(TIMER_UNIT);
-            
-            if (mytimer % timer_milli[0]==0)
+            mytimer += TIMER_UNIT;
+            now = now.AddMilliseconds(TIMER_UNIT);
+
+            if (mytimer % timer_milli[0] == 0)
             {
-                OnTimedEvent(false);
+                if (box_type != null)
+                {
+                    if (box_type.Equals("期权"))
+                        OnTimedEvent(false);
+                    else if (box_type.Equals("期货"))
+                        OnTimedEvent3(false);
+                }
             }
             if (mytimer % timer_milli[1] == 0)
             {
@@ -189,20 +396,20 @@ namespace qiquanui
 
         public void initial()
         {
-            DateTime preday=now.AddDays(-1);
+            DateTime preday = now.AddDays(-1);
             if (preday.DayOfWeek == DayOfWeek.Sunday) preday.AddDays(-2);
             if (preday.DayOfWeek == DayOfWeek.Saturday) preday.AddDays(-1);
-            string _month,_day;
-            if (preday.Month<10) _month="0"+preday.Month;
-            else _month=""+preday.Month;
-            if (preday.Day<10) _day="0"+preday.Day;
-            else _day=Convert.ToString(preday.Day);
-            string _date="2014"+_month+_day;
+            string _month, _day;
+            if (preday.Month < 10) _month = "0" + preday.Month;
+            else _month = "" + preday.Month;
+            if (preday.Day < 10) _day = "0" + preday.Day;
+            else _day = Convert.ToString(preday.Day);
+            string _date = "2014" + _month + _day;
             string initialsql = String.Format("select * from daydata d,staticdata s where tradingday='{0}' and d.instrumentid=s.instrumentid", _date);
             DataTable _dt = DataControl.QueryTable(initialsql);
             for (int i = 0; i < _dt.Rows.Count; i++)
-            { 
-                string _id=(string) _dt.Rows[i]["InstrumentID"];
+            {
+                string _id = (string)_dt.Rows[i]["InstrumentID"];
                 All[_id] = _dt.Rows[i];
             }
         }
@@ -294,6 +501,7 @@ namespace qiquanui
 
 
 
+
         delegate void ClearObCallBack();
         public void ClearOb()
         {
@@ -322,148 +530,347 @@ namespace qiquanui
         public void Update()
         {
             //ClearOb();
-            ObservableObj2 = new ObservableCollection<option>();
 
             ///将界面中所选的东西保存在全局变量中
             GetChoice();
 
-            ///根据行权价的列表list，将所有行权价对应的行数保存在ep_no中
-            DataTable list = DataControl.QueryTable(exercisesql);
-            Hashtable epcp_row = new Hashtable(50);
-            tot_line = list.Rows.Count;
-           
-            for (int j = 0; j < tot_line; j++)
+            if (box_type.Equals("期权"))
             {
-                double x = (double)list.Rows[j][0];              
-                ep_no[(int)x] = j;
-            }
 
-            /*
-            /////主体
-            ///扫描dt，计算出epcp_row
-            DataTable dt = DataControl.QueryTable(updatesql);
-            int i = 0;
-            string uptime;
-            int uptimemill;
-            int datatime;
-            int nowtime = TimeToInt(now);
-            while (i < dt.Rows.Count)
-            {
-                uptime = (string)dt.Rows[i]["UpdateTime"];
-                uptimemill = (int)(Int64)dt.Rows[i]["UpdateMillisec"];
-                datatime = TimeToInt(uptime, 0);
-                if (datatime < nowtime)
+                ///根据行权价的列表list，将所有行权价对应的行数保存在ep_no中
+                DataTable list = DataControl.QueryTable(exercisesql);
+                Hashtable epcp_row = new Hashtable(50);
+                tot_line = list.Rows.Count;
+
+                for (int j = 0; j < tot_line; j++)
                 {
-                    int _ep = (int)(double)dt.Rows[i]["ExercisePrice"];
-                    bool _callOrPut = (bool)dt.Rows[i]["CallOrPut"];
+                    double x = (double)list.Rows[j][0];
+                    ep_no[(int)x] = j;
+                }
 
-                    if (!_callOrPut)
+                /*
+                /////主体
+                ///扫描dt，计算出epcp_row
+                DataTable dt = DataControl.QueryTable(updatesql);
+                int i = 0;
+                string uptime;
+                int uptimemill;
+                int datatime;
+                int nowtime = TimeToInt(now);
+                while (i < dt.Rows.Count)
+                {
+                    uptime = (string)dt.Rows[i]["UpdateTime"];
+                    uptimemill = (int)(Int64)dt.Rows[i]["UpdateMillisec"];
+                    datatime = TimeToInt(uptime, 0);
+                    if (datatime < nowtime)
+                    {
+                        int _ep = (int)(double)dt.Rows[i]["ExercisePrice"];
+                        bool _callOrPut = (bool)dt.Rows[i]["CallOrPut"];
 
-                        epcp_row["" + _ep + "C"] = i;
+                        if (!_callOrPut)
+
+                            epcp_row["" + _ep + "C"] = i;
 
 
+                        else
+                            epcp_row["" + _ep + "P"] = i;
+                    }
+                    else break;
+                    i++;
+                }
+
+                ///通过list穷举界面上每支期权，根据epcp_row，加入相应数据至集合
+                for (int j = 0; j < list.Rows.Count; j++)
+                {
+
+                    option _op = new option();
+                    if (epcp_row["" + list.Rows[j][0] + "C"] == null)
+                    {
+                        Console.WriteLine("can't find epcp_row in " + list.Rows[j][0] + "C");
+                        continue;
+                    }
+                    int rowid = (int)epcp_row["" + list.Rows[j][0] + "C"];
+                    if (rowid < 0)
+                    {
+                        Console.WriteLine("ROWID < 0!");
+                    }
                     else
-                        epcp_row["" + _ep + "P"] = i;
-                }
-                else break;
-                i++;
-            }
+                    {
 
-            ///通过list穷举界面上每支期权，根据epcp_row，加入相应数据至集合
-            for (int j = 0; j < list.Rows.Count; j++)
+                        _op.AskPrice1 = Math.Round((double)dt.Rows[rowid]["AskPrice1"], 1);
+                        _op.BidPrice1 = Math.Round((double)dt.Rows[rowid]["BidPrice1"], 1);
+                        _op.ExercisePrice = (int)(double)dt.Rows[rowid]["ExercisePrice"];
+                        _op.OpenInterest1 = (int)(double)dt.Rows[rowid]["OpenInterest"];
+                        _op.LastPrice1 = Math.Round((double)dt.Rows[rowid]["LastPrice"], 1);
+                        _op.Volume1 = (int)(Int64)dt.Rows[rowid]["Volume"];
+                        _op.instrumentid1 = (string)dt.Rows[rowid]["InstrumentID"];
+
+                        All[_op.instrumentid1] = dt.Rows[rowid];
+
+                    }
+
+                    if (epcp_row["" + list.Rows[j][0] + "P"] == null)
+                    {
+                        Console.WriteLine("can't find epcp_row in " + list.Rows[j][0] + "P");
+                        continue;
+                    }
+                    rowid = (int)epcp_row["" + list.Rows[j][0] + "P"];
+
+                    if (rowid < 0)
+                    {
+                        Console.WriteLine("ROWID < 0!");
+                    }
+                    else
+                    {
+                        _op.AskPrice2 = Math.Round((double)dt.Rows[rowid]["AskPrice1"], 1);
+                        _op.BidPrice2 = Math.Round((double)dt.Rows[rowid]["BidPrice1"], 1);
+                        _op.OpenInterest2 = (int)(double)dt.Rows[rowid]["OpenInterest"];
+                        _op.LastPrice2 = Math.Round((double)dt.Rows[rowid]["LastPrice"], 1);
+                        _op.Volume2 = (int)(Int64)dt.Rows[rowid]["Volume"];
+                        _op.instrumentid2 = (string)dt.Rows[rowid]["InstrumentID"];
+
+
+                        All[_op.instrumentid2] = dt.Rows[rowid];
+
+
+                    }
+
+                    ObservableObj2.Add(_op);
+                    //Adding(_op);
+
+                }
+                */
+
+                while (locked) { }
+                locked = true;
+                ObservableObj2 = new ObservableCollection<option>();
+                updatesql = "SELECT instrumentID FROM staticdata where instrumentname='" + instrumentname + "' and duedate='" + duedate + "' order by exerciseprice,callorput";
+                DataTable dt = DataControl.QueryTable(updatesql);
+                for (int i = 0; i < tot_line; i++)
+                {
+                    string _id = (string)dt.Rows[i * 2]["InstrumentID"];
+                    option _op = new option();
+                    _op.instrumentid1 = _id;
+                    _id = (string)dt.Rows[i * 2 + 1]["InstrumentID"];
+                    _op.instrumentid2 = _id;
+                    ObservableObj2.Add(_op);
+                    for (int j = 0; j < 11; j++)
+                    {
+                        ob_timer[i, j] = 0;
+                        ob_no2[i, j] = 0;
+                    }
+                }
+
+                Binding();
+                OnTimedEvent(true);
+                //Bind与Show分开是为了防止这期间显示黑色字体
+                Show();
+                locked = false;
+            }
+            else
             {
-
-                option _op = new option();
-                if (epcp_row["" + list.Rows[j][0] + "C"] == null)
+                while (locked) { }
+                locked = true;
+                ObservableOb2 = new ObservableCollection<future>();
+                updatesql = "SELECT * from staticdata where optionorfuture=1 and duedate='"+box_time+"' and exchangename='"+box_exchange+"'";
+                DataTable dt = DataControl.QueryTable(updatesql);
+                tot_line = dt.Rows.Count;
+                for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    Console.WriteLine("can't find epcp_row in " + list.Rows[j][0] + "C");
-                    continue;
+                    string _id = (string)dt.Rows[i]["InstrumentID"];
+                    future _fu = new future();
+                    _fu.instrumentid = _id;
+                    ObservableOb2.Add(_fu);
+                    for (int j = 0; j < 17; j++)
+                    {
+                        ob_timer[i, j] = 0;
+                        ob_no2[i, j] = 0;
+                    }
+                  
                 }
-                int rowid = (int)epcp_row["" + list.Rows[j][0] + "C"];
-                if (rowid < 0)
-                {
-                    Console.WriteLine("ROWID < 0!");
-                }
-                else
-                {
+                Binding2();
+                OnTimedEvent3(true);
+                Show2();
 
-                    _op.AskPrice1 = Math.Round((double)dt.Rows[rowid]["AskPrice1"], 1);
-                    _op.BidPrice1 = Math.Round((double)dt.Rows[rowid]["BidPrice1"], 1);
-                    _op.ExercisePrice = (int)(double)dt.Rows[rowid]["ExercisePrice"];
-                    _op.OpenInterest1 = (int)(double)dt.Rows[rowid]["OpenInterest"];
-                    _op.LastPrice1 = Math.Round((double)dt.Rows[rowid]["LastPrice"], 1);
-                    _op.Volume1 = (int)(Int64)dt.Rows[rowid]["Volume"];
-                    _op.instrumentid1 = (string)dt.Rows[rowid]["InstrumentID"];
-
-                    All[_op.instrumentid1] = dt.Rows[rowid];
-
-                }
-
-                if (epcp_row["" + list.Rows[j][0] + "P"] == null)
-                {
-                    Console.WriteLine("can't find epcp_row in " + list.Rows[j][0] + "P");
-                    continue;
-                }
-                rowid = (int)epcp_row["" + list.Rows[j][0] + "P"];
-
-                if (rowid < 0)
-                {
-                    Console.WriteLine("ROWID < 0!");
-                }
-                else
-                {
-                    _op.AskPrice2 = Math.Round((double)dt.Rows[rowid]["AskPrice1"], 1);
-                    _op.BidPrice2 = Math.Round((double)dt.Rows[rowid]["BidPrice1"], 1);
-                    _op.OpenInterest2 = (int)(double)dt.Rows[rowid]["OpenInterest"];
-                    _op.LastPrice2 = Math.Round((double)dt.Rows[rowid]["LastPrice"], 1);
-                    _op.Volume2 = (int)(Int64)dt.Rows[rowid]["Volume"];
-                    _op.instrumentid2 = (string)dt.Rows[rowid]["InstrumentID"];
-
-
-                    All[_op.instrumentid2] = dt.Rows[rowid];
-
-
-                }
-
-                ObservableObj2.Add(_op);
-                //Adding(_op);
-
+                locked = false;
             }
-            */
+        }
 
-            while (locked) { }
-            locked = true;
-            ObservableObj2 = new ObservableCollection<option>();
-            updatesql = "SELECT instrumentID FROM staticdata where instrumentname='"+instrumentname+"' and duedate='"+duedate+"' order by exerciseprice,callorput";
-            DataTable dt = DataControl.QueryTable(updatesql);
+
+        string SetTextAndColor(int i, int j, string news, string olds, double preClose)
+        {
+            if (news.Length > MaxLength || news.Equals("正无穷大"))
+                return "-";
+
+
+            if (!(olds == null)&& !news.Equals(olds)  )
+            {
+                if (Convert.ToDouble(news) > preClose)
+                    ob_no2[i, j] = 2;
+                else if (Convert.ToDouble(news) < preClose)
+                    ob_no2[i, j] = 3;
+                else ob_no2[i, j] = 1;
+                ob_timer[i, j] = TIMES;
+            }
+
+            else
+            {
+                if (ob_timer[i, j] > 0) ob_timer[i, j]--;
+                else
+                {
+                    int _temp = ob_no2[i, j];
+                    if (Convert.ToDouble(news) > preClose)
+                        ob_no2[i, j] = 4;
+                    else if (Convert.ToDouble(news) < preClose)
+                        ob_no2[i, j] = 5;
+                    else ob_no2[i, j] = 6;
+                    if (_temp == ob_no2[i, j])
+                        ob_no2[i, j] = 0;
+                }
+            }
+            return news;
+        }
+
+        /// <summary>
+        /// 刷新期货面板中的数据
+        /// </summary>
+        /// <param name="first"></param>
+        const int TIMES = 5, MaxLength = 10;
+        public void OnTimedEvent3(bool first)
+        {
+            if (ObservableOb.Count < tot_line && !first)
+            {
+                return;
+            }
+
+
             for (int i = 0; i < tot_line; i++)
             {
-                string _id=(string)dt.Rows[i * 2]["InstrumentID"];
-                option _op = new option();
-                _op.instrumentid1 = _id;
-                _id = (string)dt.Rows[i * 2 + 1]["InstrumentID"];
-                _op.instrumentid2 = _id;
-                ObservableObj2.Add(_op);
-                for (int j = 0; j < 11; j++)
+                future _fu;
+                if (first)
+                    _fu = ObservableOb2.ElementAt<future>(i);
+                else
+                    _fu = ObservableOb.ElementAt<future>(i);
+
+                DataRow _dr = (DataRow)All[_fu.instrumentid];
+
+                string _new_string;
+
+                double _preClose = (double)_dr["PreClosePrice"];
+
+                //0
+                _new_string = (string)_dr["InstrumentName"];
+                _fu.InstrumentName = _new_string;
+
+                //1
+                _new_string = Math.Round((double)_dr["LastPrice"], 1).ToString();
+                _fu.LastPrice = SetTextAndColor(i, 1, _new_string, _fu.LastPrice, _preClose);
+
+                //2
+                _new_string = Math.Round((double)_dr["AskPrice1"], 1).ToString();
+                _fu.AskPrice1 = SetTextAndColor(i, 2, _new_string, _fu.AskPrice1, _preClose);
+
+                //3
+                _new_string = Math.Round((double)_dr["BidPrice1"], 1).ToString();
+                _fu.BidPrice1 = SetTextAndColor(i, 3, _new_string, _fu.BidPrice1, _preClose);
+
+                //4
+                _new_string = ((Int64)_dr["BidVolume1"]).ToString();
+                _fu.BidVolume1 = _new_string;
+                if (first) 
+                    ob_no2[i, 4] = 7;
+
+                //5
+                _new_string = ((Int64)_dr["AskVolume1"]).ToString();
+                _fu.AskVolume1 = _new_string;
+                if (first) ob_no2[i, 5] = 7;
+
+                //6
+                _new_string = Math.Round(((double)_dr["OpenInterest"]), 1).ToString();
+                _fu.OpenInterest = _new_string;
+                if (first) ob_no2[i,  6] = 7;
+
+                //7
+                _new_string = Math.Round(((double)_dr["OpenPrice"]), 1).ToString();
+                _fu.OpenPrice = SetTextAndColor(i, 7, _new_string, _fu.OpenPrice, _preClose);
+
+                //8
+                double x=Math.Round(((double)_dr["RiseAndFall"]), 1);
+                _new_string=x.ToString();
+                bool negative = false;
+                if (!(_new_string.Length > MaxLength || _new_string.Equals("正无穷大")))
                 {
-                    ob_timer[i, j] = 0;
-                    ob_no2[i, j] = 0;
+                    if (x < 0)
+                    {
+                        x = -x;
+                        negative = true;
+                    }
                 }
+                if (_fu.RiseAndFall!=null)
+                _new_string = SetTextAndColor(i, 8, _new_string, _fu.RiseAndFall.Substring(1), 0);
+                else
+                    _new_string = SetTextAndColor(i, 8, _new_string, _fu.RiseAndFall, 0);
+                //▲▼
+                if (!_new_string.Equals("-"))
+                {
+                    if (!x.Equals(0))
+                    {
+                        if (negative)
+                            _new_string = "▼" + _new_string;
+                        else
+                            _new_string = "▲" + _new_string;
+                    }
+                }
+                _fu.RiseAndFall = _new_string;
+
+                //9
+                _new_string = Math.Round(((double)_dr["RiseAndFallRate"]) * 100.0, 2).ToString();
+                _fu.RiseAndFallRate = SetTextAndColor(i, 9, _new_string, _fu.RiseAndFallRate, 0);
+
+                //10
+                _new_string = Math.Round((double)_dr["HighestPrice"], 1).ToString();
+                _fu.HighestPrice = SetTextAndColor(i, 10, _new_string, _fu.HighestPrice, _preClose);
+
+                //11
+                _new_string = Math.Round((double)_dr["LowestPrice"], 1).ToString();
+                _fu.LowestPrice = SetTextAndColor(i, 11, _new_string, _fu.LowestPrice, _preClose);
+
+                //12
+                _new_string = Math.Round((double)_dr["UpperLimitPrice"], 1).ToString();
+                _fu.UpperLimitPrice = SetTextAndColor(i, 12, _new_string, _fu.UpperLimitPrice, _preClose);
+
+                //13
+                _new_string = Math.Round((double)_dr["LowerLimitPrice"], 1).ToString();
+                _fu.LowerLimitPrice = SetTextAndColor(i, 13, _new_string, _fu.LowerLimitPrice, _preClose);
+
+                //14
+                _new_string = Math.Round((double)_dr["PreSettlementPrice"], 1).ToString();
+                _fu.PreSettlementPrice = SetTextAndColor(i, 14, _new_string, _fu.PreSettlementPrice, _preClose);
+
+                //15
+                _new_string = Math.Round((double)_dr["PreClosePrice"], 1).ToString();
+                _fu.PreClosePrice = SetTextAndColor(i, 15, _new_string, _fu.PreClosePrice, _preClose);
+
+                //16
+                _new_string = Math.Round((double)_dr["PreOpenInterest"], 1).ToString();
+                _fu.PreOpenInterest = _new_string;
+                if (first) ob_no2[i, 16] = 7;
+
+
             }
 
-            Binding();
-            OnTimedEvent(true);
-            Show();
-            locked = false;
 
+            Refresh2();
+            //timer.Start();
+            //timer_z.Start();
+         
         }
 
 
 
 
-
         /// <summary>
-        /// 刷新面板中的数据
+        /// 刷新期权面板中的数据
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -475,242 +882,70 @@ namespace qiquanui
                 return;
             }
 
-            bool changed = false;
-            int TIMES = 5;
             for (int i = 0; i < tot_line; i++)
             {
                 option _op;
                 if (first)
                     _op = ObservableObj2.ElementAt<option>(i);
-                else 
-                 _op=ObservableObj.ElementAt<option>(i);
+                else
+                    _op = ObservableObj.ElementAt<option>(i);
 
                 DataRow _dr = (DataRow)All[_op.instrumentid1];
-                double _new_double;
-                int _new_int;
 
-                double _openPrice = (double)_dr["OpenPrice"];
-                _new_double = Math.Round((double)_dr["BidPrice1"], 1);
-                if (!_new_double.Equals(_op.BidPrice1) && !_op.BidPrice1.Equals(0))
-                {
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 0] = 2;
-                    }
-                    else ob_no2[i, 0] = 3;
-                    ob_timer[i, 0] = TIMES;
-                    changed = true;
-                }
-                else
-                {
-                    if (ob_timer[i, 0] > 0) ob_timer[i, 0]--;
-                    else {
-                        int _temp = ob_no2[i, 0];
-                        if (_new_double > _openPrice)
-                        {
-                            ob_no2[i, 0] = 4;
-                        }
-                        else ob_no2[i, 0] = 5;
-                        if (_temp == ob_no2[i, 0])
-                            ob_no2[i, 0] = 0;
-                    }
-                }
-                _op.BidPrice1 = _new_double;
+                string _new_string;
 
-                _new_double=Math.Round((double)_dr["AskPrice1"], 1);
-                if (!_new_double.Equals(_op.AskPrice1) && !_op.AskPrice1.Equals(0))
-                {
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 1] = 2;
-                    }
-                    else ob_no2[i, 1] = 3;
-                    ob_timer[i, 1] = TIMES;
+                double _preClose = (double)_dr["PreClosePrice"];
+                _new_string = Math.Round((double)_dr["BidPrice1"], 1).ToString();
+                _op.BidPrice1 = SetTextAndColor(i,0,_new_string,_op.BidPrice1,_preClose);
 
-                    changed = true;
-                }else
-                if (ob_timer[i, 1] > 0) ob_timer[i, 1]--;
-                else
-                {
-                    int _temp = ob_no2[i, 1];
+                _new_string = Math.Round((double)_dr["AskPrice1"], 1).ToString();
+                _op.AskPrice1 = SetTextAndColor(i, 1, _new_string, _op.AskPrice1, _preClose);
 
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 1] = 4;
-                    }
-                    else ob_no2[i, 1] = 5;
-                    if (_temp == ob_no2[i, 1])
-                        ob_no2[i, 1] = 0;
+                _new_string = Math.Round((double)_dr["LastPrice"], 1).ToString();
+                _op.LastPrice1 = SetTextAndColor(i, 2, _new_string, _op.LastPrice1, _preClose);
 
-                }
+                _new_string = Convert.ToString((int)(Int64)_dr["Volume"]);
+                if (first)
+                    ob_no2[i, 3] = 7;
+                
+                _op.Volume1 = _new_string;
 
-                _op.AskPrice1 = _new_double;
+                _new_string = Convert.ToString((int)(double)_dr["OpenInterest"]);
+                if (first)
+                    ob_no2[i, 4] = 7;
+                _op.OpenInterest1 = _new_string;
 
-                _new_double = Math.Round((double)_dr["LastPrice"], 1);
-                if (!_new_double.Equals(_op.LastPrice1) && !_op.LastPrice1.Equals(0))
-                {
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 2] = 2;
-                    }
-                    else ob_no2[i, 2] = 3;
-                    ob_timer[i, 2] = TIMES;
-
-                    changed = true;
-                }else
-                if (ob_timer[i, 2] > 0) ob_timer[i, 2]--;
-                else
-                {
-                    int _temp = ob_no2[i, 2];
-
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 2] = 4;
-                    }
-                    else ob_no2[i, 2] = 5;
-                    if (_temp == ob_no2[i, 2])
-                        ob_no2[i, 2] = 0;
-
-                }
-
-                _op.LastPrice1 = _new_double;
-
-                _new_int = (int)(Int64)_dr["Volume"];
-                if (!_new_int.Equals(_op.Volume1)) 
-                {
-                    ob_no2[i, 3] = 1;
-                    changed = true;
-                }
-                _op.Volume1 = _new_int;
-
-                _new_int = (int)(double)_dr["OpenInterest"];
-                if (!_new_int.Equals(_op.OpenInterest1)) 
-                {
-                    ob_no2[i, 4] = 1;
-                    changed = true;
-                }
-                 _op.OpenInterest1 = _new_int;
-
-                _new_int=(int)(double)_dr["ExercisePrice"];
-                if (!_new_int.Equals(_op.ExercisePrice)) 
-                {
-                    ob_no2[i, 5] = 1;
-                    changed = true;
-                }
-                _op.ExercisePrice = _new_int;
+                _new_string = Convert.ToString((int)(double)_dr["ExercisePrice"]);
+                _op.ExercisePrice = _new_string;
 
 
 
 
                 _dr = (DataRow)All[_op.instrumentid2];
 
-                _new_int = (int)(double)_dr["OpenInterest"];
-                if (!_new_int.Equals(_op.OpenInterest2))
-                {
-                    ob_no2[i, 6] = 1;
-                    changed = true;
-                }
-                _op.OpenInterest2 = _new_int;
+                _new_string = Convert.ToString((int)(double)_dr["OpenInterest"]);
+                if (first)
+                    ob_no2[i, 6] = 7;
+                _op.OpenInterest2 = _new_string;
 
-                _new_int = (int)(Int64)_dr["Volume"];
-                if (!_new_int.Equals(_op.Volume2))
-                {
-                    ob_no2[i, 7] = 1;
-                    changed = true;
-                }
-                _op.Volume2 = _new_int;
+                _new_string = Convert.ToString((int)(Int64)_dr["Volume"]);
+                if (first)
+                    ob_no2[i, 7] = 7;
+                _op.Volume2 = _new_string;
 
-                _new_double = Math.Round((double)_dr["LastPrice"], 1);
-                if (!_new_double.Equals(_op.LastPrice2) && !_op.LastPrice2.Equals(0))
-                {
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 8] = 2;
-                    }
-                    else ob_no2[i, 8] = 3;
-                    ob_timer[i, 8] = TIMES;
+                _new_string = Math.Round((double)_dr["LastPrice"], 1).ToString();
+                _op.LastPrice2 = SetTextAndColor(i, 8, _new_string, _op.LastPrice2, _preClose);
 
-                    changed = true;
-                }else
-                if (ob_timer[i, 8] > 0) ob_timer[i, 8]--;
-                else
-                {
-                    int _temp = ob_no2[i, 8];
+                _new_string = Math.Round((double)_dr["AskPrice1"], 1).ToString();
+                _op.AskPrice2 = SetTextAndColor(i, 9, _new_string, _op.AskPrice2, _preClose);
 
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 8] = 4;
-                    }
-                    else ob_no2[i, 8] = 5;
-                    if (_temp == ob_no2[i, 8])
-                        ob_no2[i, 8] = 0;
-
-                }
-
-                _op.LastPrice2 = _new_double;
-
-                _new_double = Math.Round((double)_dr["AskPrice1"], 1);
-                if (!_new_double.Equals(_op.AskPrice2) && !_op.AskPrice2.Equals(0))
-                {
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 9] = 2;
-                    }
-                    else ob_no2[i, 9] = 3;
-                    ob_timer[i, 9] = TIMES;
-
-                    changed = true;
-                }else
-                if (ob_timer[i, 9] > 0) ob_timer[i, 9]--;
-                else
-                {
-                    int _temp = ob_no2[i, 9];
-
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 9] = 4;
-                    }
-                    else ob_no2[i, 9] = 5;
-                    if (_temp == ob_no2[i, 9])
-                        ob_no2[i, 9] = 0;
-
-                }
-
-                _op.AskPrice2 = _new_double;
-
-                _new_double = Math.Round((double)_dr["BidPrice1"], 1);
-                if (!_new_double.Equals(_op.BidPrice2) && !_op.BidPrice2.Equals(0))
-                {
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 10] = 2;
-                    }
-                    else ob_no2[i, 10] = 3;
-                    ob_timer[i, 10] = TIMES;
-
-                    changed = true;
-                }else
-                if (ob_timer[i, 10] > 0) ob_timer[i, 10]--;
-                else
-                {
-                    int _temp = ob_no2[i, 10];
-
-                    if (_new_double > _openPrice)
-                    {
-                        ob_no2[i, 10] = 4;
-                    }
-                    else ob_no2[i, 10] = 5;
-                    if (_temp == ob_no2[i, 10])
-                        ob_no2[i, 10] = 0;
-
-                }
-
-                _op.BidPrice2 = _new_double;
+                _new_string = Math.Round((double)_dr["BidPrice1"], 1).ToString();
+                _op.BidPrice2 = SetTextAndColor(i, 10, _new_string, _op.BidPrice2, _preClose);
 
 
                 //ob_op[i] = _op;
             }
-            
+
 
             Refresh();
             //timer.Start();
@@ -737,7 +972,7 @@ namespace qiquanui
                 {
                     ////option _op = ObservableObj[i] as option;
                     for (int j = 0; j < 11; j++)
-                        if (ob_no2[i, j]>0 && (j<=2 || j>=8))
+                        if (ob_no2[i, j] > 0 && (j <= 4 || j >= 6))
                         {
                             UIElement u = pwindow.optionsMarketListView.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
                             if (u == null) return;
@@ -763,97 +998,216 @@ namespace qiquanui
                                 //红底
                                 switch (ob_no2[i, j])
                                 {
+                                    case 1:
+                                    case 6:
+                                        ///此处为平价时，无背景
+                                        b.Background = System.Windows.Media.Brushes.Transparent;
+                                        b.Foreground = System.Windows.Media.Brushes.White;
+                                        break;
                                     case 2:
-                                        ///此处用红色背景样式
+                                        ///此处为价格变动，且为涨价时，有背景
                                         b.Foreground = System.Windows.Media.Brushes.White;
                                         b.Style = pwindow.Resources["marketListViewButtom_red"] as Style;
                                         break;
                                     case 3:
-                                        ///此处用绿色背景样式
+                                        ///此处为价格变动，且为跌价时，有背景
                                         b.Foreground = System.Windows.Media.Brushes.White;
                                         b.Style = pwindow.Resources["marketListViewButtom_green"] as Style;
                                         break;
                                     case 4:
-                                        //正常的红字
+                                        ///此处为价格不变，且为涨价时，无背景
                                         b.Foreground = System.Windows.Media.Brushes.Red;
-
                                         b.Style = pwindow.Resources["marketListViewButtom"] as Style;
                                         break;
                                     case 5:
-                                        //正常的绿字
+                                        ///此处为价格不变，且为跌价时，无背景
                                         b.Foreground = System.Windows.Media.Brushes.LightGreen;
-
-                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style;
-                                        
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style;                                       
+                                        break;
+                                    case 7:
+                                        ///此处为中性数值，无背景
+                                        b.Foreground = System.Windows.Media.Brushes.Yellow;
                                         break;
                                 }
 
                             }
-                            else {
+                            else
+                            {
                                 System.Windows.Controls.Label t = x as System.Windows.Controls.Label;
                                 switch (ob_no2[i, j])
                                 {
+                                    case 1:
+                                    case 6:
+                                        ///此处为平价时，无背景
+                                        t.Background = System.Windows.Media.Brushes.Transparent;
+                                        t.Foreground = System.Windows.Media.Brushes.White;
+                                        break;
                                     case 2:
+                                        ///此处为价格变动，且为涨价时，有背景
                                         t.Background = System.Windows.Media.Brushes.Red;
-                                        t.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        t.Foreground = System.Windows.Media.Brushes.Blue;
                                         break;
                                     case 3:
+                                        ///此处为价格变动，且为跌价时，有背景
                                         t.Background = System.Windows.Media.Brushes.Green;
-                                        t.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        t.Foreground = System.Windows.Media.Brushes.Blue;
                                         break;
                                     case 4:
+                                        ///此处为价格不变，且为涨价时，无背景
                                         t.Background = System.Windows.Media.Brushes.Transparent;
                                         t.Foreground = System.Windows.Media.Brushes.Tomato;
                                         break;
                                     case 5:
+                                        ///此处为价格不变，且为跌价时，无背景
                                         t.Background = System.Windows.Media.Brushes.Transparent;
                                         t.Foreground = System.Windows.Media.Brushes.LightGreen;
+                                        break;
+                                    case 7:
+                                        ///此处为中性数值，无背景
+                                        t.Foreground = System.Windows.Media.Brushes.Yellow;
                                         break;
                                 }
                             }
                             //UIElement u = pwindow.optionsMarketListView
                             //((ListViewItem)pwindow.optionsMarketListView.Items[i]).SubItems[j].BackColor = Color.Red;
 
-
-                            //switch (j)
-                            //{
-                            //    case 0: _op.BidPrice1 = ob_op[i].BidPrice1; break;
-                            //    case 1: _op.AskPrice1 = ob_op[i].AskPrice1; break;
-                            //    case 2: _op.LastPrice1 = ob_op[i].LastPrice1; break;
-                            //    case 3: _op.Volume1 = ob_op[i].Volume1; break;
-                            //    case 4: _op.OpenInterest1 = ob_op[i].OpenInterest1; break;
-                            //    case 6: _op.OpenInterest2 = ob_op[i].OpenInterest2; break;
-                            //    case 7: _op.Volume2 = ob_op[i].Volume2; break;
-                            //    case 8: _op.LastPrice2 = ob_op[i].LastPrice2; break;
-                            //    case 9: _op.AskPrice2 = ob_op[i].AskPrice2; break;
-                            //    case 10: _op.BidPrice2 = ob_op[i].BidPrice2; break;
-                            //}
                         }
-                    
+
 
                 }
-
                 //pwindow.optionsMarketListView.Items.Refresh();
             }
         }
 
-        delegate void AddingCallBack(option _op);
-        public void Adding(option _op)
+        /// <summary>
+        /// 期货
+        /// </summary>
+        public void Refresh2()
         {
 
-            AddingCallBack d;
+            RefreshCallBack d;
             if (System.Threading.Thread.CurrentThread != pwindow.Dispatcher.Thread)
             {
-                d = new AddingCallBack(Adding);
-                pwindow.Dispatcher.Invoke(d, new object[] { _op });
+                d = new RefreshCallBack(Refresh2);
+                pwindow.Dispatcher.Invoke(d, new object[] { });
             }
             else
             {
-                ObservableObj.Add(_op);
-            }
+                for (int i = 0; i < tot_line; i++)
+                {
+                    ////option _op = ObservableObj[i] as option;
+                    for (int j = 0; j < 17; j++)
+                        if (ob_no2[i, j] > 0 && !(j == 0))
+                        {
+                            UIElement u = pwindow.futuresMarketListView.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
+                            if (u == null) continue;
 
+                            UIElement x = null;
+                            while ((u = (VisualTreeHelper.GetChild(u, 0) as UIElement)) != null)
+                            {
+                                if (u is GridViewRowPresenter)
+                                {
+                                    x = VisualTreeHelper.GetChild(VisualTreeHelper.GetChild(u, j), 0) as UIElement;
+                                    break;
+                                }
+                            }
+                            //option dr = (pwindow.optionsMarketListView.Items[0]) as option;
+
+                            if (j == 2 || j == 3)
+                            {
+
+                                System.Windows.Controls.Button b = x as System.Windows.Controls.Button;
+                                //b.Style = pwindow.Resources["normalSty"] as Style;
+
+                                //System.Windows.Controls.ListViewItem lvi = pwindow.optionsMarketListView.Items[i] as System.Windows.Controls.ListViewItem;
+                                switch (ob_no2[i, j])
+                                {
+                                    case 1:
+                                    case 6:
+                                        ///此处为平价时，无背景
+                                        b.Background = System.Windows.Media.Brushes.White;
+                                        b.Foreground = System.Windows.Media.Brushes.Black;
+                                        break;
+                                    case 2:
+                                        ///此处为价格变动，且为涨价时，有背景
+                                        b.Background = System.Windows.Media.Brushes.Red;
+                                        b.Foreground = System.Windows.Media.Brushes.Blue;
+                                        break;
+                                    case 3:
+                                        ///此处为价格变动，且为跌价时，有背景
+                                        b.Background = System.Windows.Media.Brushes.Green;
+                                        b.Foreground = System.Windows.Media.Brushes.Blue;
+                                        break;
+                                    case 4:
+                                        ///此处为价格不变，且为涨价时，无背景
+                                        b.Background = System.Windows.Media.Brushes.White;
+                                        b.Foreground = System.Windows.Media.Brushes.Red;
+                                        break;
+                                    case 5:
+                                        ///此处为价格不变，且为跌价时，无背景
+                                        b.Background = System.Windows.Media.Brushes.White;
+                                        b.Foreground = System.Windows.Media.Brushes.Green;
+                                        break;
+                                    case 7:
+                                        ///此处为中性数值，无背景
+                                        b.Foreground = System.Windows.Media.Brushes.Yellow;
+                                        break;
+                                }
+
+                            }
+                            else
+                            {
+                                System.Windows.Controls.Label t = x as System.Windows.Controls.Label;
+                                switch (ob_no2[i, j])
+                                {
+                                    case 1:
+                                    case 6:
+                                        ///此处为平价时，无背景
+                                        t.Background = System.Windows.Media.Brushes.Transparent;
+                                        t.Foreground = System.Windows.Media.Brushes.White;
+                                        break;
+                                    case 2:
+                                        ///此处为价格变动，且为涨价时，有背景
+                                        t.Background = System.Windows.Media.Brushes.Red;
+                                        t.Foreground = System.Windows.Media.Brushes.Blue;
+                                        break;
+                                    case 3:
+                                        ///此处为价格变动，且为跌价时，有背景
+                                        t.Background = System.Windows.Media.Brushes.Green;
+                                        t.Foreground = System.Windows.Media.Brushes.Blue;
+                                        break;
+                                    case 4:
+                                        ///此处为价格不变，且为涨价时，无背景
+                                        t.Background = System.Windows.Media.Brushes.Transparent;
+                                        t.Foreground = System.Windows.Media.Brushes.Red;
+                                        break;
+                                    case 5:
+                                        ///此处为价格不变，且为跌价时，无背景
+                                        t.Background = System.Windows.Media.Brushes.Transparent;
+                                        t.Foreground = System.Windows.Media.Brushes.Green;
+                                        break;
+                                    case 7:
+                                        ///此处为中性数值，无背景
+                                        t.Foreground = System.Windows.Media.Brushes.Yellow;
+                                        break;
+                                }
+                            }
+                            //UIElement u = pwindow.optionsMarketListView
+                            //((ListViewItem)pwindow.optionsMarketListView.Items[i]).SubItems[j].BackColor = Color.Red;
+
+                        }
+
+
+                }
+                //pwindow.optionsMarketListView.Items.Refresh();
+            }
         }
 
+
+
+        /// <summary>
+        /// 绑定期权并使其不可视
+        /// </summary>
         delegate void BindingCallBack();
         public void Binding()
         {
@@ -867,12 +1221,35 @@ namespace qiquanui
             else
             {
                 ObservableObj = ObservableObj2;
-                pwindow.optionsMarketListView.Visibility=Visibility.Hidden;
+                pwindow.optionsMarketListView.Visibility = Visibility.Hidden;
                 pwindow.optionsMarketListView.DataContext = ObservableObj;
             }
 
         }
+        /// <summary>
+        /// 绑定期货并使其不可视
+        /// </summary>
+        public void Binding2()
+        {
 
+            BindingCallBack d;
+            if (System.Threading.Thread.CurrentThread != pwindow.Dispatcher.Thread)
+            {
+                d = new BindingCallBack(Binding2);
+                pwindow.Dispatcher.Invoke(d, new object[] { });
+            }
+            else
+            {
+                ObservableOb = ObservableOb2;
+                pwindow.futuresMarketListView.Visibility = Visibility.Hidden;
+                pwindow.futuresMarketListView.DataContext = ObservableOb;
+            }
+
+        }
+
+        /// <summary>
+        /// 期权数据可视
+        /// </summary>
         delegate void ShowCallBack();
         public void Show()
         {
@@ -889,7 +1266,24 @@ namespace qiquanui
             }
 
         }
+        /// <summary>
+        /// 期货数据可视
+        /// </summary>
+        public void Show2()
+        {
 
+            ShowCallBack d;
+            if (System.Threading.Thread.CurrentThread != pwindow.Dispatcher.Thread)
+            {
+                d = new ShowCallBack(Show2);
+                pwindow.Dispatcher.Invoke(d, new object[] { });
+            }
+            else
+            {
+                pwindow.futuresMarketListView.Visibility = Visibility.Visible;
+            }
+
+        }
 
 
         delegate void SetTextCallback();
@@ -904,9 +1298,9 @@ namespace qiquanui
             }
             else
             {
-                box_type = pwindow.typeComboBox.Text;
-                box_exchange = pwindow.traderComboBox.Text;
-                box_future = pwindow.subjectMatterComboBox.Text;
+                box_type = pwindow.typeComboBox.Text.Trim();
+                box_exchange = pwindow.traderComboBox.Text.Trim();
+                box_future = pwindow.subjectMatterComboBox.Text.Trim();
                 for (int i = 0; i < MainWindow.NameSubject.Length; i++)
                     if (MainWindow.NameSubject[i].Equals(box_future))
                         instrumentname = MainWindow.NameOption[i];

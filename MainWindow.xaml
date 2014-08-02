@@ -1858,38 +1858,145 @@
 
                 </Grid>
 
-                <ListView x:Name="futuresMarketListView" Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="#FF9198AC">
+                <ListView x:Name="futuresMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"  Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="#FF9198AC">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
-                            <GridViewColumn x:Name="instrumentNameFMGVCH" Header=" 名称" Width=" 100" />
-                            <GridViewColumn x:Name="lastPriceFMGVCH" Header=" 最新价格" Width=" 100"/>
+                            <!--0-->
+                            <GridViewColumn x:Name="instrumentNameFMGVCH" DisplayMemberBinding="{Binding InstrumentName}" Header=" 名称" Width=" 100" />
+                            <GridViewColumn x:Name="lastPriceFMGVCH"   Header=" 最新价格" Width=" 100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label x:Name="lastFMLab" Content="{Binding LastPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
                             <GridViewColumn x:Name="askPriceFMGVCH" Header=" 卖价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="askFMBtn" Content="" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Button x:Name="askFMBtn" Content="{Binding AskPrice1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="bidPriceFMGVCH" Header=" 买价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidFMBtn" Content="" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Button x:Name="bidFMBtn" Content="{Binding BidPrice1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn x:Name="bidVolumeFMGVCH" Header=" 买量" Width=" 100"/>
-                            <GridViewColumn x:Name="askVolumeFMGVCH" Header=" 卖量" Width=" 100"/>
-                            <GridViewColumn x:Name="openInterestFMGVCH" Header=" 成交量" Width=" 100"/>
-                            <GridViewColumn x:Name="openPriceFMGVCH" Header=" 今日开盘价" Width=" 100"/>
-                            <GridViewColumn x:Name="riseAndFallFMGVCH" Header=" 涨跌" Width=" 100"/>
-                            <GridViewColumn x:Name="riseAndFallRateFMGVCH" Header=" 涨跌幅度" Width=" 100"/>
-                            <GridViewColumn x:Name="highestPriceFMGVCH" Header=" 最高价" Width=" 100"/>
-                            <GridViewColumn x:Name="lowestPriceFMGVCH" Header=" 最低价" Width=" 100"/>
-                            <GridViewColumn x:Name="upperLimitPriceFMGVCH" Header=" 涨停板价" Width=" 100"/>
-                            <GridViewColumn x:Name="lowerLimitPriceFMGVCH" Header=" 跌停板价" Width=" 100"/>
-                            <GridViewColumn x:Name="preSettlementPriceFMGVCH" Header=" 昨日结算价" Width=" 100"/>
-                            <GridViewColumn x:Name="preClosePriceFMGVCH" Header=" 昨日收盘价" Width=" 100"/>
-                            <GridViewColumn x:Name="preOpenInterestFMGVCH" Header=" 昨日成交量" Width=" 100"/>
+                            <!--4-->
+                            <GridViewColumn x:Name="bidVolumeFMGVCH"  Header=" 买量" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="bidFMLab" Content="{Binding BidVolume1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
+                            <GridViewColumn x:Name="askVolumeFMGVCH"   Header=" 卖量" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="openFMLab" Content="{Binding AskVolume1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
+                            <GridViewColumn x:Name="openInterestFMGVCH"   Header=" 成交量" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="openFMLab" Content="{Binding OpenInterest}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
+                            <!--7-->
+                            <GridViewColumn x:Name="openPriceFMGVCH"   Header=" 今日开盘价" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="openFMLab" Content="{Binding OpenPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn x:Name="riseAndFallFMGVCH"  Header=" 涨跌" Width=" 100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                        <Label x:Name="riseFMLab" Content="{Binding RiseAndFall}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn x:Name="riseAndFallRateFMGVCH"   Header=" 涨幅%" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="riseRateFMLab" Content="{Binding RiseAndFallRate}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--10-->
+                            <GridViewColumn x:Name="highestPriceFMGVCH"   Header=" 最高价" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="highestFMLab" Content="{Binding HighestPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn x:Name="lowestPriceFMGVCH"   Header=" 最低价" Width=" 100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                        <Label x:Name="lowestFMLab" Content="{Binding LowestPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn x:Name="upperLimitPriceFMGVCH"  Header=" 涨停板价" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="upperFMLab" Content="{Binding UpperLimitPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <!--13-->
+                            <GridViewColumn x:Name="lowerLimitPriceFMGVCH"   Header=" 跌停板价" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="lowerFMLab" Content="{Binding LowerLimitPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn x:Name="preSettlementPriceFMGVCH"  Header=" 昨日结算价" Width=" 100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                        <Label x:Name="preSettleFMLab" Content="{Binding PreSettlementPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                       
+                            <GridViewColumn x:Name="preClosePriceFMGVCH"  Header=" 昨日收盘价" Width=" 100">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                        <Label x:Name="preCloseFMLab" Content="{Binding PreClosePrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                    
+                            <GridViewColumn x:Name="preOpenInterestFMGVCH"  Header=" 昨日成交量" Width=" 100">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="preOpenFMLab" Content="{Binding PreOpenInterest}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -1983,11 +2090,39 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn x:Name="volumeROMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Volume1}" Width="80"/>
-                            <GridViewColumn x:Name="openInterestROMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding OpenInterest1}" Width=" 80"/>
+                            <GridViewColumn x:Name="volumeROMGVCH" Header=" 现量"  Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="volumeROMBox"  Content="{Binding Volume1}" Width=" 80"    />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn x:Name="openInterestROMGVCH" Header=" 成交量"  Width=" 80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="openROMBox"  Content="{Binding OpenInterest1}" Width=" 80"    />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
                             <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价" DisplayMemberBinding="{Binding ExercisePrice}" Width=" 80"/>
-                            <GridViewColumn x:Name="openInterestDOMGVCH" Header=" 成交量" DisplayMemberBinding="{Binding OpenInterest2}" Width=" 80"/>
-                            <GridViewColumn x:Name="volumeDOMGVCH" Header=" 现量" DisplayMemberBinding="{Binding Volume2}" Width=" 80"/>
+                            <GridViewColumn x:Name="openInterestDOMGVCH" Header=" 成交量"  Width=" 80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="openDOMBox"  Content="{Binding OpenInterest2}" Width=" 80"    />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn x:Name="volumeDOMGVCH" Header=" 现量"  Width=" 80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label x:Name="volumeDOMBox"  Content="{Binding Volume2}" Width=" 80"    />
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
                             <GridViewColumn x:Name="lastPriceDOMGVCH" Header=" 最新价"  Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>

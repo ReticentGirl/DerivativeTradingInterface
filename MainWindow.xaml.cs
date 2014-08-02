@@ -735,7 +735,7 @@ namespace qiquanui
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     string _duedate = (string)dt.Rows[i][0];
-                    if (_duedate.Length==4 && _duedate[0].Equals('1'))
+                    if (_duedate.Length==4 && _duedate[0].Equals('1') && !_duedate.Equals("1407"))
                     dueDateComboBox.Items.Add(_duedate);
                 }
                 dueDateComboBox.SelectedIndex = 0;
@@ -769,11 +769,13 @@ namespace qiquanui
         {
             if (e.AddedItems.Count == 0) return;
 
+            string type = typeComboBox.Text.Trim();
             string trader = traderComboBox.Text.Trim();
             string duedata = (string)e.AddedItems[0];
             string subject = subjectMatterComboBox.Text.Trim();
 
-            if (trader.Equals("") || duedata.Equals("") || subject.Equals(""))
+            if ((type.Equals("期权")&&( trader.Equals("") || duedata.Equals("") || subject.Equals(""))) ||
+                (type.Equals("期货")&&( trader.Equals("") || duedata.Equals("")) ))
                 return;
 
             dataThread = new Thread(new ThreadStart(DmUpdate));
@@ -824,9 +826,9 @@ namespace qiquanui
 
         private void bidROMBtn_Click(object sender, RoutedEventArgs e)        //期权看涨 “买”按钮
         {
-           
-           
-            int exercisePrice = (int)((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
+
+
+            int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
             BuyOrSellForButton(exercisePrice, "babdah", "看涨", true);
 
         }
@@ -834,22 +836,24 @@ namespace qiquanui
         private void askROMBtn_Click(object sender, RoutedEventArgs e)      //看涨 “卖” 按钮
         {
             //System.Windows.MessageBox.Show("看涨  卖");
-            int exercisePrice = (int)((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
-            BuyOrSellForButton(exercisePrice, "babdah", "看涨", false);
+            int exercisePrice = Convert.ToInt32(((sender as System.Windows.Controls.Button).Tag));  //获取按钮Tag
+            //System.Windows.MessageBox.Show(((sender as System.Windows.Controls.Button).Tag).GetType().ToString());
+
+           BuyOrSellForButton(exercisePrice, "babdah", "看涨", false);
 
         }
 
         private void bidDOMBtn_Click(object sender, RoutedEventArgs e)    //看跌 “买”   按钮
         {
             //System.Windows.MessageBox.Show("看跌  买");
-            int exercisePrice = (int)((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
+            int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
             BuyOrSellForButton(exercisePrice, "babdah", "看跌", true);
         }
 
         private void askDOMBtn_Click(object sender, RoutedEventArgs e)     //看跌 “卖"  按钮
         {
             //System.Windows.MessageBox.Show("看跌  卖");
-            int exercisePrice = (int)((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
+            int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
             BuyOrSellForButton(exercisePrice, "babdah", "看跌", false);
         }
 
@@ -880,26 +884,26 @@ namespace qiquanui
 
             string selectedCallOrPut = _selectedCallOrPut;
 
-            double selectedExercisePrice = selectedOption.ExercisePrice;
+            double selectedExercisePrice = Convert.ToDouble(selectedOption.ExercisePrice);
 
             double selectedMarketPrice=0;
 
             if (_isBuy == true && _selectedCallOrPut.Equals("看涨"))
             {
-                selectedMarketPrice = selectedOption.BidPrice1;
+                selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice1);
             }
             else if (_isBuy == false && _selectedCallOrPut.Equals("看涨"))
             {
-                selectedMarketPrice = selectedOption.AskPrice1;
+                selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice1);
 
             }
             else if (_isBuy == true && _selectedCallOrPut.Equals("看跌"))
             {
-                selectedMarketPrice = selectedOption.BidPrice2;
+                selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice2);
             }
             else if(_isBuy == false && _selectedCallOrPut.Equals("看跌"))
             {
-                selectedMarketPrice = selectedOption.AskPrice2;
+                selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice2);
             }
 
             
