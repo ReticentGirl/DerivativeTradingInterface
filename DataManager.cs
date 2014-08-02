@@ -1001,7 +1001,7 @@ namespace qiquanui
                                     case 1:
                                     case 6:
                                         ///此处为平价时，无背景
-                                        b.Background = System.Windows.Media.Brushes.Transparent;
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style;
                                         b.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 2:
@@ -1016,7 +1016,7 @@ namespace qiquanui
                                         break;
                                     case 4:
                                         ///此处为价格不变，且为涨价时，无背景
-                                        b.Foreground = System.Windows.Media.Brushes.Red;
+                                        b.Foreground = System.Windows.Media.Brushes.Tomato;
                                         b.Style = pwindow.Resources["marketListViewButtom"] as Style;
                                         break;
                                     case 5:
@@ -1026,7 +1026,8 @@ namespace qiquanui
                                         break;
                                     case 7:
                                         ///此处为中性数值，无背景
-                                        b.Foreground = System.Windows.Media.Brushes.Yellow;
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style;
+                                        b.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                 }
 
@@ -1040,17 +1041,17 @@ namespace qiquanui
                                     case 6:
                                         ///此处为平价时，无背景
                                         t.Background = System.Windows.Media.Brushes.Transparent;
-                                        t.Foreground = System.Windows.Media.Brushes.White;
+                                        t.Foreground = System.Windows.Media.Brushes.AliceBlue;
                                         break;
                                     case 2:
                                         ///此处为价格变动，且为涨价时，有背景
                                         t.Background = System.Windows.Media.Brushes.Red;
-                                        t.Foreground = System.Windows.Media.Brushes.Blue;
+                                        t.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 3:
                                         ///此处为价格变动，且为跌价时，有背景
                                         t.Background = System.Windows.Media.Brushes.Green;
-                                        t.Foreground = System.Windows.Media.Brushes.Blue;
+                                        t.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 4:
                                         ///此处为价格不变，且为涨价时，无背景
@@ -1064,7 +1065,7 @@ namespace qiquanui
                                         break;
                                     case 7:
                                         ///此处为中性数值，无背景
-                                        t.Foreground = System.Windows.Media.Brushes.Yellow;
+                                        t.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                 }
                             }
@@ -1125,31 +1126,32 @@ namespace qiquanui
                                     case 1:
                                     case 6:
                                         ///此处为平价时，无背景
-                                        b.Background = System.Windows.Media.Brushes.White;
-                                        b.Foreground = System.Windows.Media.Brushes.Black;
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style; 
+                                        b.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 2:
                                         ///此处为价格变动，且为涨价时，有背景
-                                        b.Background = System.Windows.Media.Brushes.Red;
-                                        b.Foreground = System.Windows.Media.Brushes.Blue;
+                                        b.Style = pwindow.Resources["marketListViewButtom_red"] as Style; 
+                                        b.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 3:
                                         ///此处为价格变动，且为跌价时，有背景
-                                        b.Background = System.Windows.Media.Brushes.Green;
-                                        b.Foreground = System.Windows.Media.Brushes.Blue;
+                                        b.Style = pwindow.Resources["marketListViewButtom_green"] as Style; 
+                                        b.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 4:
                                         ///此处为价格不变，且为涨价时，无背景
-                                        b.Background = System.Windows.Media.Brushes.White;
-                                        b.Foreground = System.Windows.Media.Brushes.Red;
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style; 
+                                        b.Foreground = System.Windows.Media.Brushes.Tomato;
                                         break;
                                     case 5:
                                         ///此处为价格不变，且为跌价时，无背景
-                                        b.Background = System.Windows.Media.Brushes.White;
-                                        b.Foreground = System.Windows.Media.Brushes.Green;
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style; 
+                                        b.Foreground = System.Windows.Media.Brushes.LightGreen;
                                         break;
                                     case 7:
                                         ///此处为中性数值，无背景
+                                        b.Style = pwindow.Resources["marketListViewButtom"] as Style; 
                                         b.Foreground = System.Windows.Media.Brushes.Yellow;
                                         break;
                                 }
@@ -1169,26 +1171,26 @@ namespace qiquanui
                                     case 2:
                                         ///此处为价格变动，且为涨价时，有背景
                                         t.Background = System.Windows.Media.Brushes.Red;
-                                        t.Foreground = System.Windows.Media.Brushes.Blue;
+                                        t.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 3:
                                         ///此处为价格变动，且为跌价时，有背景
                                         t.Background = System.Windows.Media.Brushes.Green;
-                                        t.Foreground = System.Windows.Media.Brushes.Blue;
+                                        t.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 4:
                                         ///此处为价格不变，且为涨价时，无背景
                                         t.Background = System.Windows.Media.Brushes.Transparent;
-                                        t.Foreground = System.Windows.Media.Brushes.Red;
+                                        t.Foreground = System.Windows.Media.Brushes.Tomato;
                                         break;
                                     case 5:
                                         ///此处为价格不变，且为跌价时，无背景
                                         t.Background = System.Windows.Media.Brushes.Transparent;
-                                        t.Foreground = System.Windows.Media.Brushes.Green;
+                                        t.Foreground = System.Windows.Media.Brushes.LightGreen;
                                         break;
                                     case 7:
                                         ///此处为中性数值，无背景
-                                        t.Foreground = System.Windows.Media.Brushes.Yellow;
+                                        t.Foreground = System.Windows.Media.Brushes.AliceBlue;
                                         break;
                                 }
                             }
