@@ -22,6 +22,7 @@ using System.Data.SQLite;
 using System.Data.Common;
 using System.ComponentModel;
 using System.Threading;
+using System.Windows.Threading;
 
 namespace qiquanui
 {
@@ -33,7 +34,7 @@ namespace qiquanui
     public partial class MainWindow : Window
     {
         DataManager dm;
-        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper;
+        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper;
 
         TradingManager otm;   //维护交易区的指针
 
@@ -112,6 +113,9 @@ namespace qiquanui
             Grid1w = Grid1.Width;
             Grid1h = Grid1.Height;
             profitListVieww = profitListView.Width;
+
+            darkRectanglew = darkRectangle.Width;
+            darkRectangleh = darkRectangle.Height;
 
 
             //初始化伸缩面板动画
@@ -241,6 +245,9 @@ namespace qiquanui
             TopCanvas1hper = Grid1hper = grid3hper = (this.Height - (originalHeight - Grid1h)) / (originalHeight - (originalHeight - Grid1h));
             titileBorder4wper = (this.Width - (originalWidth - titileBorder4w)) / (originalWidth - (originalWidth - titileBorder4w));
 
+            darkRectanglewper = (this.Width - (originalWidth - darkRectanglew)) / (originalWidth - (originalWidth - darkRectanglew));
+            darkRectanglehper = (this.Height - (originalHeight - darkRectangleh)) / (originalHeight - (originalHeight - darkRectangleh));
+
             statusBar1wper = this.Width / originalWidth;
             canvas2hper = canvas1hper = (this.Height - (originalHeight - canvas1h)) / (originalHeight - (originalHeight - canvas1h));
             Border1.Height = this.Height - 14.0;
@@ -268,6 +275,13 @@ namespace qiquanui
             TopCanvasButtomGrid.Width = TopCanvasButtomGridw * TopCanvasButtomGridwper;
             optionsMarketTitleGrid.Width = optionsMarketTitleGridwper * optionsMarketTitleGridw;
             titileBorder4.Width = titileBorder4wper * titileBorder4w;
+
+            darkRectangle.Width = darkRectanglew * darkRectanglewper;
+            darkRectangle.Height = darkRectangleh * darkRectanglehper;
+            
+            Canvas1Border1.Height = Canvas1.Height;
+       
+            Canvas2Border1.Height = Canvas2.Height;
             return true;
         } //拉伸窗口时改变各个控件大小
         private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
@@ -372,22 +386,126 @@ namespace qiquanui
         {
             strategyOfFuturesCanvasStoryboard_Leave.Begin(this);
         }
+        
+        
+        //WPF的定时器使用DispatcherTimer类对象，用来为darkrectangle的逐渐消失计时
+        private System.Windows.Threading.DispatcherTimer dTimer = new DispatcherTimer();
+        //WPF的定时器使用DispatcherTimer类对象，用来为leftCanvas的逐渐展开计时
+        private System.Windows.Threading.DispatcherTimer lcTimer_show = new DispatcherTimer();
+        //WPF的定时器使用DispatcherTimer类对象，用来为leftCanvas的逐渐收缩计时
+        private System.Windows.Threading.DispatcherTimer lcTimer = new DispatcherTimer();
+        //WPF的定时器使用DispatcherTimer类对象，用来为rightCanvas的逐渐展开计时
+        private System.Windows.Threading.DispatcherTimer rcTimer_show = new DispatcherTimer();
+        //WPF的定时器使用DispatcherTimer类对象，用来为rightCanvas的逐渐收缩计时
+        private System.Windows.Threading.DispatcherTimer rcTimer = new DispatcherTimer();
 
-        //左伸缩板的展开和收缩
-        private void openOrCloseLeftCanvas()
+        private bool isLeftCanvasExpanding = false;
+        private bool isRightCanvasExpanding = false;
+        private bool isLeftCanvasHiding = false;
+        private bool isRightCanvasHiding = false;
+        private void dTimer_Tick(object sender, EventArgs e)//darkrectangle消失定时器
         {
-            if (Canvas1.Width == 29.0)
+            darkRectangle.Visibility = Visibility.Hidden;
+            dTimer.Stop();
+        }
+        private void lcTimer_show_Tick(object sender, EventArgs e)//左版面扩展定时器
+        {
+            isLeftCanvasExpanding = false;
+            lcTimer_show.Stop();
+        }
+        private void lcTimer_Tick(object sender, EventArgs e)//左版面收缩定时器
+        {
+            isLeftCanvasHiding = false;
+            lcTimer.Stop();
+        }
+        private void rcTimer_show_Tick(object sender, EventArgs e)//右版面扩展定时器
+        {
+            isRightCanvasExpanding = false;
+            rcTimer_show.Stop();
+        }
+        private void rcTimer_Tick(object sender, EventArgs e)//右版面收缩定时器
+        {
+            isRightCanvasHiding = false;
+            rcTimer.Stop();
+        }
+
+        private void darkRectangleHidden()//黑幕隐藏
+        {
+
+            if (((Canvas1.Width == 29.0 || Canvas2.Width == 29.0) && ((isLeftCanvasHiding == true || isRightCanvasHiding == true) && !(isLeftCanvasHiding == true && isRightCanvasHiding == true))) || ((isLeftCanvasHiding == false && isRightCanvasHiding == false) && (((Canvas2.Width > 29.0) && (Canvas2.Width <= 60.0)) || ((Canvas1.Width > 29.0) && (Canvas1.Width <= 292.0))))||((isLeftCanvasHiding==true&&isRightCanvasHiding==true)&&(Canvas1.Width==292.0&&Canvas2.Width==60.0)))
             {
+                Storyboard s = new Storyboard();
+                this.Resources.Add(Guid.NewGuid().ToString(), s);
+                DoubleAnimation da = new DoubleAnimation();
+                Storyboard.SetTarget(da, darkRectangle);
+                Storyboard.SetTargetProperty(da, new PropertyPath("Opacity", new object[] { }));
+                da.From = 1;
+                da.To = 0;
+                s.Duration = new Duration(TimeSpan.FromSeconds(1));
+                s.Children.Add(da);
+                s.Begin();
+
+                dTimer.Tick += new EventHandler(dTimer_Tick);
+                dTimer.Interval = new TimeSpan(0, 0, 1);
+                dTimer.Start();
+             }
+        }
+        private void darkRectangleShow()//黑幕显现
+        {
+            if ((Canvas1.Width == 29.0 && Canvas2.Width == 29.0 && ((isLeftCanvasExpanding == true || isRightCanvasExpanding == true) && !(isLeftCanvasExpanding == true && isRightCanvasExpanding == true))) || ((isLeftCanvasHiding == false && isRightCanvasHiding == false) && (isLeftCanvasExpanding == true && isRightCanvasExpanding == true) && (((Canvas2.Width >= 29.0) && (Canvas2.Width < 60.0)) || ((Canvas1.Width >= 29.0) && (Canvas1.Width < 292.0)))))
+            {
+                darkRectangle.Visibility = Visibility.Visible;
+
+                Storyboard s = new Storyboard();
+                this.Resources.Add(Guid.NewGuid().ToString(), s);
+                DoubleAnimation da = new DoubleAnimation();
+                Storyboard.SetTarget(da, darkRectangle);
+                Storyboard.SetTargetProperty(da, new PropertyPath("Opacity", new object[] { }));
+                da.From = 0;
+                da.To = 1;
+                s.Duration = new Duration(TimeSpan.FromSeconds(1));
+                s.Children.Add(da);
+                s.Begin();
+            }
+        }
+
+        private void darkRectangle_Click(object sender, RoutedEventArgs e)//点击黑幕后两侧伸缩面板缩回，黑幕消失
+        {
+            darkRectangleHidden();
+            
+            CloseLeftCanvas();
+            CloseRightCanvas();
+        }
+        //左伸缩板的展开和收缩
+        private void openLeftCanvas()
+        {
+            if (Canvas1.Width == 29.0 || (isLeftCanvasHiding == true && Canvas1.Width <= 292.0 && Canvas1.Width >= 29.0))
+            {
+                lcTimer_show.Tick += new EventHandler(lcTimer_show_Tick);
+                lcTimer_show.Interval = TimeSpan.FromSeconds(0.4);
+                lcTimer_show.Start();
+                isLeftCanvasExpanding = true;
                 DoubleAnimation animate = new DoubleAnimation();
-                animate.To = 292;
+                animate.To = 292.0;
                 animate.Duration = new Duration(TimeSpan.FromSeconds(0.4));
                 animate.DecelerationRatio = 1;
                 //   animate.AccelerationRatio = 0.33;
                 Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
                 LeftImage.Source = new BitmapImage(new Uri("Resources/left.png", UriKind.Relative));
+                darkRectangleShow();
+                Canvas1Border1.Visibility = Visibility.Visible;
+                canvas1Storyboard.Begin(this);
             }
-            else if (Canvas1.Width == 292.0)
+                
+        }
+        private void CloseLeftCanvas()
+        {
+            if (Canvas1.Width == 292.0||(isLeftCanvasExpanding==true&&Canvas1.Width<=292.0&&Canvas1.Width>=29.0))
             {
+                lcTimer.Tick += new EventHandler(lcTimer_Tick);
+                lcTimer.Interval = TimeSpan.FromSeconds(0.4);
+                lcTimer.Start();
+                isLeftCanvasHiding= true;
                 DoubleAnimation animate = new DoubleAnimation();
                 animate.To = 29.0;
                 animate.Duration = new Duration(TimeSpan.FromSeconds(0.4));
@@ -395,33 +513,45 @@ namespace qiquanui
                 animate.AccelerationRatio = 1;
                 Canvas1.BeginAnimation(Canvas.WidthProperty, animate);
                 LeftImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative));
+                darkRectangleHidden();
+                Canvas1Border1.Visibility = Visibility.Hidden;
+                canvas1Storyboard_Leave.Begin(this);
             }
         }
+
         private void StategyCanvasButtom_Click(object sender, RoutedEventArgs e)
         {
-            openOrCloseLeftCanvas();
+            if (Canvas1.Width == 29.0)
+            {
+                openLeftCanvas();
+            }
+            else if (Canvas1.Width == 292.0)
+            {
+                CloseLeftCanvas();
+            }
         }
-        private void Canvas1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
+       
 
-            canvas1Storyboard.Begin(this);
-
-        } //当鼠标进入策略实验室面板时，展开面板动画
-
-        private void Canvas1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
-            canvas1Storyboard_Leave.Begin(this);
-        } //当鼠标离开策略实验室面板时，缩回面板动画
         private void RiskCanvasButtom_Click(object sender, RoutedEventArgs e)
-        {
-            openOrCloseRightCanvas();
-        }
-        //右伸缩板的展开和收缩
-        private void openOrCloseRightCanvas()
         {
             if (Canvas2.Width == 29.0)
             {
+                openRightCanvas();
+            }
+            else if (Canvas2.Width == 60.0)
+            {
+                CloseRightCanvas();
+            }
+        }
+        //右伸缩板的展开和收缩
+        private void openRightCanvas()
+        {
+            if (Canvas2.Width == 29.0||(isRightCanvasHiding == true && Canvas2.Width <= 60.0 && Canvas2.Width >= 29.0))
+            {
+                rcTimer_show.Tick += new EventHandler(rcTimer_show_Tick);
+                rcTimer_show.Interval = TimeSpan.FromSeconds(0.4);
+                rcTimer_show.Start();
+                isRightCanvasExpanding = true;
                 DoubleAnimation animate1 = new DoubleAnimation();
                 animate1.To = 60.0;
                 animate1.Duration = new Duration(TimeSpan.FromSeconds(0.4));
@@ -431,10 +561,21 @@ namespace qiquanui
                 canvas2Storyboard.Begin(this);
                 RightImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative));
                 RiskWindow riskWindow = new RiskWindow();
+                darkRectangleShow();
                 riskWindow.Show();
+                
+                Canvas2Border1.Visibility = Visibility.Visible;
+                canvas2Storyboard.Begin(this);
             }
-            else if (Canvas2.Width == 60.0)
+        }
+        private void CloseRightCanvas()
+        {
+            if (Canvas2.Width == 60.0 || (isRightCanvasExpanding == true && Canvas2.Width <= 60.0 && Canvas2.Width >= 29.0))
             {
+                rcTimer.Tick += new EventHandler(rcTimer_Tick);
+                rcTimer.Interval = TimeSpan.FromSeconds(0.4);
+                rcTimer.Start();
+                isRightCanvasHiding = true;
                 DoubleAnimation animate1 = new DoubleAnimation();
                 animate1.To = 29.0;
                 animate1.Duration = new Duration(TimeSpan.FromSeconds(0.4));
@@ -442,20 +583,12 @@ namespace qiquanui
                 animate1.AccelerationRatio = 1;
                 Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
                 RightImage.Source = new BitmapImage(new Uri("Resources/left.png", UriKind.Relative));
+                darkRectangleHidden();
+                Canvas2Border1.Visibility = Visibility.Hidden;
+                canvas2Storyboard_Leave.Begin(this);
             }
         }
-        private void Canvas2_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
-            canvas2Storyboard.Begin(this);
-
-        } //当鼠标进入风险实验室面板时，展开面板动画
-
-        private void Canvas2_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-
-            canvas2Storyboard_Leave.Begin(this);
-        } //当鼠标离开风险实验室面板时，缩回面板动画
+     
 
 
         private void predictComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -510,7 +643,7 @@ namespace qiquanui
         private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
         {
             StrategyWindow strategyWindow = new StrategyWindow();
-            openOrCloseLeftCanvas();
+            CloseLeftCanvas();
             strategyWindow.Show();
 
         } //策略实验室，点击“开始分析”
@@ -942,14 +1075,8 @@ namespace qiquanui
 
 
         }
+
         ////////////////////////////////////////////////////////////////////////以上是期权处理
-
-
-
-
-
-
-
 
 
     }

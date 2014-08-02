@@ -981,7 +981,7 @@ namespace qiquanui
                         if (ob_no2[i, j] > 0 && (j <= 4 || j >= 6))
                         {
                             UIElement u = pwindow.optionsMarketListView.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
-                            if (u == null) return;
+                            if (u == null) continue;
 
                             UIElement x = null;
                             while ((u = (VisualTreeHelper.GetChild(u, 0) as UIElement)) != null)
