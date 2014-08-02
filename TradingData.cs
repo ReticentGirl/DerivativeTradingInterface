@@ -15,7 +15,7 @@ namespace qiquanui
         private string userID;   //投资账户
         private string instrumentID;   //合约代码
         private string callOrPut;    //看涨（0/false）看跌（1/true）
-        private double exercisePrice;  //行权价
+        private string exercisePrice;  //行权价
 
         private int tradingType;  //交易类型   0 买开  1 卖开  2买平 3卖平
 
@@ -32,7 +32,7 @@ namespace qiquanui
 
         private bool isBuy;  //用来确定是买还是卖 
 
-        
+        private bool optionOrFuture;   //期权(false)或者期货(true)
 
 
 
@@ -76,7 +76,7 @@ namespace qiquanui
                 }
         }
 
-        public double ExercisePrice
+        public string ExercisePrice
         {
             get { return exercisePrice; }
             set { exercisePrice = value;
@@ -173,6 +173,17 @@ namespace qiquanui
         }
 
 
+        public bool OptionOrFuture
+        {
+            get { return optionOrFuture; }
+            set
+            {
+                optionOrFuture = value;
+                OnPropertyChanged("OptionOrFuture");
+            }
+        }
+
+
        
          public TradingData()
         { }
@@ -180,10 +191,11 @@ namespace qiquanui
          public TradingData(
                                   string _userID,
                                   string _instrumentID,   
-                                  string _callOrPut,    
-                                  double _exercisePrice,   
+                                  string _callOrPut,
+                                  string _exercisePrice,   
                                   double _marketPrice,   
-                                  bool _isBuy 
+                                  bool _isBuy, 
+                                  bool _optionOrFuture
                                )
          {
               userID = _userID;
@@ -195,6 +207,8 @@ namespace qiquanui
               clientagePrice = _marketPrice;   //将委托价默认为市场价
 
               isBuy = _isBuy;
+
+              optionOrFuture = _optionOrFuture;
 
              ///不用到的在这里初始化
 
@@ -221,7 +235,7 @@ namespace qiquanui
                                  string _userID,
                                  string _instrumentID,
                                  string _callOrPut,
-                                 double _exercisePrice,
+                                 string _exercisePrice,
                                  int _tradingType,
                                  int _tradingNum,
                                  int _clientageType,
@@ -231,7 +245,8 @@ namespace qiquanui
                                  bool _isSetGradient,
                                  double _accuracy,
                                  int _arithmeticProgression, 
-                                 bool _isBuy
+                                 bool _isBuy,
+                                 bool _optionOrFuture
                               )
          {
              userID = _userID;
@@ -249,6 +264,8 @@ namespace qiquanui
              arithmeticProgression = _arithmeticProgression;
 
              isBuy = _isBuy;
+
+             optionOrFuture = _optionOrFuture;
 
              //////不用到的在这里初始化
             

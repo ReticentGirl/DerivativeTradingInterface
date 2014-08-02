@@ -10,7 +10,7 @@ using System.Timers;
 
 namespace qiquanui
 {
-    class TradingManager 
+    class TradingManager
     {
 
         public ObservableCollection<TradingData> TradingOC = new ObservableCollection<TradingData>();
@@ -39,7 +39,7 @@ namespace qiquanui
 
 
             //TradingOC.Add(new TradingData("dsfsfsdf", "au1409", "看涨", 220, 220));
-            
+
         }
 
         public void OnTimedEvent(object sender, ElapsedEventArgs e)
@@ -48,10 +48,10 @@ namespace qiquanui
         }
 
 
-        public void OnAdd(string _userID,string instrumentID,string _callOrPut,double _exercisePrice,double _marketPrice,bool _isBuy)
-       {
-           TradingOC.Add(new TradingData(_userID, instrumentID, _callOrPut, _exercisePrice, _marketPrice,_isBuy));
-       }
+        public void OnAdd(string _userID, string instrumentID, string _callOrPut, string _exercisePrice, double _marketPrice, bool _isBuy, bool _optionOrFuture)
+        {
+            TradingOC.Add(new TradingData(_userID, instrumentID, _callOrPut, _exercisePrice, _marketPrice, _isBuy, _optionOrFuture));
+        }
 
 
         public void Refresh()
@@ -67,37 +67,37 @@ namespace qiquanui
 
                     double nMarketPrice = 0;
 
-                    
-                        if (TradingOC[i].IsBuy == true )     //选择买价刷新
-                        {
 
-                            nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
-                      
-                        }
-                        else if (TradingOC[i].IsBuy == false )
-                        {
-                            nMarketPrice = Math.Round((double)nDr["AskPrice1"], 1);
-                       
-                        }
-                       
+                    if (TradingOC[i].IsBuy == true)     //选择买价刷新
+                    {
 
-                        TradingOC[i].MarketPrice = nMarketPrice;
+                        nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
+
+                    }
+                    else if (TradingOC[i].IsBuy == false)
+                    {
+                        nMarketPrice = Math.Round((double)nDr["AskPrice1"], 1);
+
+                    }
+
+
+                    TradingOC[i].MarketPrice = nMarketPrice;
 
                     //double jj = nMarketPrice;
 
-                    
 
-                   // int iiii = 1;
-                   
+
+                    // int iiii = 1;
+
                 }
             }
         }
-     
-    
+
+
     }
 
-     
 
-    
+
+
 
 }
