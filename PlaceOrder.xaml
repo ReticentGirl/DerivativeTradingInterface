@@ -640,7 +640,7 @@
         <TextBlock x:Name="addOrMinusTB" Text="+" Height="18" Width="11" Canvas.Left="255" Canvas.Top="139" Foreground="White" Margin="268,172,162,41"/>
         <TextBlock x:Name="serviceChargeTB" Text="手续费" Height="18" Width="88" Canvas.Left="301" Canvas.Top="139" Foreground="White" Margin="342,172,10,41"/>
         <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel" Style="{StaticResource darkButton}"/>
-        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,99,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Style="{StaticResource darkButton}"/>
+        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,99,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Style="{StaticResource darkButton}" Click="OKBtn_Click"/>
 
     </Grid>
 

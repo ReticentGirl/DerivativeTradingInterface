@@ -31,6 +31,9 @@ namespace qiquanui
     {
         private Storyboard tradingCanvasStoryboard, tradingCanvasStoryboard_Leave;
 
+        HistoryManager porder_hm;  //下单盒子中维护历史记录区的指针
+        PlaceOrderManager porder_pom; //下单盒子中维护盒子数据的指针
+
         public PlaceOrder()
         {
             InitializeComponent();
@@ -102,6 +105,27 @@ namespace qiquanui
         {
             this.Close();
         }
+
+        private void OKBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+
+        //public void OrderToHistory(HistoryManager _hm,PlaceOrderManager _pom)      //处理从下单盒子到历史区的数据
+        //{
+        //    porder_hm = _hm;
+        //    porder_pom = _pom;
+
+        //    for (int i = 0; i < _pom.OrderOC.Count(); i++)
+        //    {
+                 
+        //        PlaceOrderData pOrder = _pom.OrderOC[i];
+
+        //    }
+
+
+        //}
       
     }
 }

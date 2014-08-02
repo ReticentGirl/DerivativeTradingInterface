@@ -10,6 +10,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
+
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -34,7 +35,9 @@ namespace qiquanui
         DataManager dm;
         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper;
 
-        TradingManager otm;   //维护交易区的对象
+        TradingManager otm;   //维护交易区的指针
+
+        HistoryManager hm;  //维护历史记录区的指针
 
 
 
@@ -74,6 +77,8 @@ namespace qiquanui
             InitializeComponent();
 
             otm = new TradingManager(this);
+
+            hm = new HistoryManager(this);
 
             //otm.OnAdd();
            
@@ -521,10 +526,14 @@ namespace qiquanui
 
         private void placeOrderTBtn_Click(object sender, RoutedEventArgs e)         //交易区下单按钮
         {
+
+           
+
             PlaceOrder placeOrder = new PlaceOrder();
             placeOrder.Show();
 
             PlaceOrderManager pom = new PlaceOrderManager(placeOrder);
+
 
 
             if (tradingListView.Items.Count > 0)

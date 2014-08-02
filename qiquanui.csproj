@@ -66,6 +66,7 @@
     <Compile Include="DataControl.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="DynamicData.cs" />
+    <Compile Include="HistoryManager.cs" />
     <Compile Include="NumericUpAndDownUserControl.xaml.cs">
       <DependentUpon>NumericUpAndDownUserControl.xaml</DependentUpon>
     </Compile>

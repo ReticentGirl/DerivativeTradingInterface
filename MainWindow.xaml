@@ -2314,21 +2314,21 @@
                                     <GridViewColumn x:Name="ifChoose" Header="勾选" Width="50">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ifChooseHCheckBox" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                                <CheckBox x:Name="ifChooseHCheckBox" IsChecked="{Binding HIfChoose,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="nameHGVCH" Header="衍生品名称" Width="100"/>
-                                    <GridViewColumn x:Name="timeHGVCH" Header="交易时间" Width="100"/>
-                                    <GridViewColumn x:Name="typeHGVCH" Header="交易类型" Width="60"/>
+                                    <GridViewColumn x:Name="nameHGVCH" Header="衍生品名称" DisplayMemberBinding="{Binding InstrumentID}" Width="100"/>
+                                    <GridViewColumn x:Name="timeHGVCH" Header="交易时间" DisplayMemberBinding="{Binding TradingTime}" Width="100"/>
+                                    <GridViewColumn x:Name="typeHGVCH" Header="交易类型" DisplayMemberBinding="{Binding TradingType}" Width="60"/>
                                     <!-- 卖开卖平买开买平-->
-                                    <GridViewColumn x:Name="lotOfPendingHGVCH" Header=" 挂单手数" Width="60"/>
-                                    <GridViewColumn x:Name="lotOfTransactionHGVCH" Header=" 成交手数" Width=" 60"/>
-                                    <GridViewColumn x:Name="statusOfTransactionHGVCH" Header=" 成交状态" Width="60"/>
-                                    <GridViewColumn x:Name="priceOfPendingHGVCH" Header=" 挂单价格" Width="100"/>
-                                    <GridViewColumn x:Name="priceOfTransactionHGVCH" Header=" 成交价格" Width="100"/>
-                                    <GridViewColumn x:Name="timeLimitHGVCH" Header=" 有效期" Width="100"/>
-                                    <GridViewColumn x:Name="userHGVCH" Header=" 投资账户" Width="100"/>
+                                    <GridViewColumn x:Name="lotOfPendingHGVCH" Header=" 挂单手数" DisplayMemberBinding="{Binding PostNum}" Width="60"/>
+                                    <GridViewColumn x:Name="lotOfTransactionHGVCH" Header=" 成交手数" DisplayMemberBinding="{Binding DoneNum}" Width=" 60"/>
+                                    <GridViewColumn x:Name="statusOfTransactionHGVCH" Header=" 成交状态" DisplayMemberBinding="{Binding TradingState}" Width="60"/>
+                                    <GridViewColumn x:Name="priceOfPendingHGVCH" Header=" 挂单价格" DisplayMemberBinding="{Binding PostPrice}" Width="100"/>
+                                    <GridViewColumn x:Name="priceOfTransactionHGVCH" Header=" 成交价格" DisplayMemberBinding="{Binding DonePrice}" Width="100"/>
+                                    <GridViewColumn x:Name="timeLimitHGVCH" Header=" 有效期" DisplayMemberBinding="{Binding TimeLimit}" Width="100"/>
+                                    <GridViewColumn x:Name="userHGVCH" Header=" 投资账户" DisplayMemberBinding="{Binding UserID}" Width="100"/>
                                     <GridViewColumn x:Name="IDOfTransactionHGVCH" Header=" 交易单号" Width="120"/>
                                 </GridView>
                             </ListView.View>

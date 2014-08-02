@@ -230,7 +230,7 @@ namespace qiquanui
 
  
 
-    class PlaceOrderManager : INotifyPropertyChanged
+    class PlaceOrderManager 
     {
         public ObservableCollection<PlaceOrderData> OrderOC = new ObservableCollection<PlaceOrderData>();
 
@@ -250,30 +250,6 @@ namespace qiquanui
             pOrderWindow = _pOrderWindow;
 
             pOrderWindow.tradingListView.ItemsSource = OrderOC;
-
-
-            //pOrderWindow.placeOrderCanvas.DataContext = orderOccupy;
-
-            //创建一绑定对象  
-            
-            //binding binding = new binding();
-            ////设置数据源对象(此处数据源来至textbox1)  
-            //binding.source = occupycapital;
-            ////设置数据源对象的哪一个属性提供数据  
-            //binding.path = new propertypath("occupycapital");
-            ////将textblock1的依赖属性text和绑定对象关联  
-            //porderwindow.showoccupycapitaltextblock.setbinding(porderwindow.showoccupycapitaltextblock.textproperty, binding);  
-
-            //Binding binding = new Binding();
-            //binding.Source = OccupyOC;
-            //binding.Mode = BindingMode.OneWay;
-            //pOrderWindow.showBalanceTextBlock.SetBinding( pOrderWindow.showBalanceTextBlock, binding);
-
-            //pOrderWindow.showBalanceTextBlock.DataContext = OccupyOC;
-
-           // OccupyOC.Add(new OccupyCapitalData(100));
-
-           // pOrderWindow.showBalanceTextBlock.DataContext = 
 
             placeOrderTimer = new System.Timers.Timer(500);
 
@@ -328,20 +304,7 @@ namespace qiquanui
             }
         }
 
-        #region INotifyPropertyChanged 成员
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        void OnPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(name));
-        }
-
-
-
-
-        #endregion
+        
 
     }
 }
