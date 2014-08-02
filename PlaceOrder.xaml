@@ -624,11 +624,11 @@
             <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="125" VerticalAlignment="Top" Width="421" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" Style="{StaticResource ListViewStyle}" Canvas.Left="1">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn x:Name="userTGVCH" Header="投资账户" Width="80"/>
+                        <GridViewColumn x:Name="userTGVCH" Header="投资账户" DisplayMemberBinding="{Binding UserID}" Width="80"/>
                         <GridViewColumn x:Name="nameOTGVCH" Header="交易代码 "  DisplayMemberBinding="{Binding InstrumentID}" Width="110"/>
-                        <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="60" />
-                        <GridViewColumn x:Name="lotTGVCH" Header=" 交易手数" Width="60"/>
-                        <GridViewColumn x:Name="formOfClientageTGVCH" Header=" 价格" Width=" 85"/>
+                        <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" DisplayMemberBinding="{Binding TradingType}"  Width="60" />
+                        <GridViewColumn x:Name="lotTGVCH" Header=" 交易手数" DisplayMemberBinding="{Binding TradingNum}" Width="60"/>
+                        <GridViewColumn x:Name="formOfClientageTGVCH" Header=" 价格" DisplayMemberBinding="{Binding FinalPrice}" Width=" 85"/>
                     </GridView>
                 </ListView.View>
             </ListView>

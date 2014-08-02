@@ -48,9 +48,9 @@ namespace qiquanui
         }
 
 
-        public void OnAdd(string _userID,string instrumentID,string _callOrPut,double _exercisePrice,double _marketPrice)
+        public void OnAdd(string _userID,string instrumentID,string _callOrPut,double _exercisePrice,double _marketPrice,bool _isBuy)
        {
-           TradingOC.Add(new TradingData(_userID, instrumentID, _callOrPut, _exercisePrice, _marketPrice));
+           TradingOC.Add(new TradingData(_userID, instrumentID, _callOrPut, _exercisePrice, _marketPrice,_isBuy));
        }
 
 
@@ -60,13 +60,34 @@ namespace qiquanui
             {
                 for (int i = 0; i < TradingOC.Count(); i++)
                 {
+
                     string reInstrumentID = TradingOC[i].InstrumentID;
 
                     DataRow nDr = (DataRow)DataManager.All[reInstrumentID];
 
-                    double nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
+                    double nMarketPrice = 0;
 
-                    TradingOC[i].MarketPrice = nMarketPrice;
+                    
+                        if (TradingOC[i].IsBuy == true )     //选择买价刷新
+                        {
+
+                            nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
+                      
+                        }
+                        else if (TradingOC[i].IsBuy == false )
+                        {
+                            nMarketPrice = Math.Round((double)nDr["AskPrice1"], 1);
+                       
+                        }
+                       
+
+                        TradingOC[i].MarketPrice = nMarketPrice;
+
+                    //double jj = nMarketPrice;
+
+                    
+
+                   // int iiii = 1;
                    
                 }
             }

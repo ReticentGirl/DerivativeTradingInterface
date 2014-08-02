@@ -98,7 +98,10 @@ namespace qiquanui
         }
 
      
-
+		private void cancleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
       
     }
 }

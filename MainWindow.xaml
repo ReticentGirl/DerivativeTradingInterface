@@ -1965,14 +1965,14 @@
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidROMBtn" Content="{Binding BidPrice1}" Width=" 80" Tag="{Binding ExercisePrice}" Style="{StaticResource marketListViewButtom}" Click="bidROMBtn_Click" Foreground="White" />
+                                        <Button x:Name="bidROMBtn" Content="{Binding BidPrice1, Mode=OneWay}" Width=" 80" Tag="{Binding ExercisePrice}" Style="{StaticResource marketListViewButtom}" Click="bidROMBtn_Click" Foreground="White" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="askPriceROMGVCH" Header=" 卖价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="askROMBtn" Content="{Binding AskPrice1}" Width="80" Style="{StaticResource marketListViewButtom}" Background="#FFE6E6E6" BorderBrush="White" Foreground="White"/>
+                                        <Button x:Name="askROMBtn" Content="{Binding AskPrice1, Mode=OneWay}" Tag="{Binding ExercisePrice}" Width="80" Style="{StaticResource marketListViewButtom}" Background="#FFE6E6E6" BorderBrush="White" Foreground="White"  Click="askROMBtn_Click"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1999,14 +1999,14 @@
                             <GridViewColumn x:Name="askPriceDOMGVCH" Header=" 卖价" Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="askDOMBtn" Content="{Binding AskPrice2}" Width="80" Style="{StaticResource marketListViewButtom}" Foreground="White"/>
+                                        <Button x:Name="askDOMBtn" Content="{Binding AskPrice2}" Tag="{Binding ExercisePrice}" Width="80" Style="{StaticResource marketListViewButtom}" Foreground="White" Click="askDOMBtn_Click"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="bidPriceDOMGVCH" Header=" 买价" Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidDOMBtn" Content="{Binding BidPrice2}" Width="80" Style="{StaticResource marketListViewButtom}" Foreground="White"/>
+                                        <Button x:Name="bidDOMBtn" Content="{Binding BidPrice2}" Tag="{Binding ExercisePrice}" Width="80" Style="{StaticResource marketListViewButtom}" Foreground="White" Click="bidDOMBtn_Click"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2054,7 +2054,7 @@
                                     <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="70" >
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
+                                                <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC" SelectionChanged="typeOfTradingTComboBox_SelectionChanged">
                                                     <ComboBoxItem Content="买开" HorizontalAlignment="Left" Width="70"/>
                                                     <ComboBoxItem Content="卖开" HorizontalAlignment="Left" Width="70"/>
                                                     <ComboBoxItem Content="买平" HorizontalAlignment="Left" Width="70"/>
@@ -2125,7 +2125,7 @@
                         </ListView>
 
                         <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
-                        <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
+                        <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click"/>
                         <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                     </Grid>
                 </TabItem>

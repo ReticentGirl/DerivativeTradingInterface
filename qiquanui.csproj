@@ -75,6 +75,7 @@
     <Compile Include="RiskWindow.xaml.cs">
       <DependentUpon>RiskWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlaceOrderManager.cs" />
     <Compile Include="TradingData.cs" />
     <Compile Include="TradingManager.cs" />
     <Compile Include="StaticData.cs" />

@@ -30,6 +30,7 @@ namespace qiquanui
         private double accuracy;     //精确度
         private int arithmeticProgression;  //  手数等差
 
+        private bool isBuy;  //用来确定是买还是卖 
 
         
 
@@ -161,6 +162,16 @@ namespace qiquanui
             }
         }
 
+        public bool IsBuy
+        {
+            get { return isBuy; }
+            set
+            {
+                isBuy = value;
+                OnPropertyChanged("IsBuy");
+            }
+        }
+
 
        
          public TradingData()
@@ -171,7 +182,8 @@ namespace qiquanui
                                   string _instrumentID,   
                                   string _callOrPut,    
                                   double _exercisePrice,   
-                                  double _marketPrice   
+                                  double _marketPrice,   
+                                  bool _isBuy 
                                )
          {
               userID = _userID;
@@ -182,15 +194,26 @@ namespace qiquanui
 
               clientagePrice = _marketPrice;   //将委托价默认为市场价
 
+              isBuy = _isBuy;
+
              ///不用到的在这里初始化
 
               
               ifChooseOTGVCH = false;
+              if (_isBuy == true)
+              {
+                  tradingType = 0;  //初始化为买开
+                  tradingNum = 1;
 
-              tradingNum = 1;
-              tradingType = 0;  //初始化为买开
-             
-
+              }
+              else
+              {
+                  tradingNum = -1;
+                  tradingType = 1;
+              }
+                 
+              
+              
 
          }
 
@@ -207,7 +230,8 @@ namespace qiquanui
                                  int _clientageCondition,
                                  bool _isSetGradient,
                                  double _accuracy,
-                                 int _arithmeticProgression 
+                                 int _arithmeticProgression, 
+                                 bool _isBuy
                               )
          {
              userID = _userID;
@@ -223,6 +247,8 @@ namespace qiquanui
              isSetGradient = _isSetGradient;
              accuracy = _accuracy;
              arithmeticProgression = _arithmeticProgression;
+
+             isBuy = _isBuy;
 
              //////不用到的在这里初始化
             
