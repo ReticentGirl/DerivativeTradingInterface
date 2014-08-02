@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Runtime.InteropServices;
 using qiquanui.Properties;
-
+ 
 namespace qiquanui
 {
     #region class option
@@ -355,13 +355,15 @@ namespace qiquanui
         public static Hashtable All = new Hashtable(2000);
         static string updatesql, exercisesql, dynamicsql, box_type, box_exchange, box_future, box_time, duedate = "", instrumentname = "";
 
-        public Hashtable ep_no = new Hashtable(50);//行权价对应的行数
+        public Hashtable ep_no = new Hashtable(50);//行权价对应的行数(期权）
+        public Hashtable name_no = new Hashtable(100);//名字对应的行数（期货）
         int tot_line = 0;
 
         const int Max_line = 30;
         int[,] ob_no2 = new int[Max_line, 20];//表示行index1的第index2列是否被修改（OnTimedEvent更新面板数据时）
         int[,] ob_timer = new int[Max_line, 20];
         bool[] ob_no = new bool[Max_line];//表示行index是否被修改（OnTimedEvent 更新面板数据时）
+        
         option[] ob_op = new option[Max_line];
 
         const int TIMER_UNIT = 100;
@@ -677,6 +679,10 @@ namespace qiquanui
                 tot_line = dt.Rows.Count;
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
+                    string _name = (string)dt.Rows[i]["InstrumentName"];
+                    name_no[_name] = i;
+
+
                     string _id = (string)dt.Rows[i]["InstrumentID"];
                     future _fu = new future();
                     _fu.instrumentid = _id;
