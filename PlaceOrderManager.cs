@@ -17,8 +17,8 @@ namespace qiquanui
 
         private string userID;   //投资账户
         private string instrumentID;   //合约代码
-        private string callOrPut;    //看涨（0/false）看跌（1/true）
-        private double exercisePrice;  //行权价
+        //private string callOrPut;    //看涨（0/false）看跌（1/true）
+        //private string exercisePrice;  //行权价
 
         private string tradingType;  //交易类型   0 买开  1 卖开  2买平 3卖平
 
@@ -27,12 +27,26 @@ namespace qiquanui
         private string clientageType;   //委托方式    0 市价  限价 1
 
         private double clientagePrice; //委托价格
+
         private double marketPrice;   //市场价格
 
         private string clientageCondition;   //托单条件   0  ROD 當日有效單    1 FOK  委託之數量須全部且立即成交，否則取消   2 IOC 立即成交否則取消
 
         private double finalPrice;   //根据市价或者限价 来显示价格
-       
+
+        private bool optionOrFuture;
+
+
+        public bool OptionOrFuture
+        {
+            get { return optionOrFuture; }
+            set
+            {
+                optionOrFuture = value;
+                OnPropertyChanged("OptionOrFuture");
+            }
+        }
+
 
 
         public string UserID
@@ -52,21 +66,21 @@ namespace qiquanui
                  }
         }
 
-        public string CallOrPut
-        {
-            get { return callOrPut; }
-            set { callOrPut = value;
-                  OnPropertyChanged("CallOrPut");        
-                }
-        }
+        //public string CallOrPut
+        //{
+        //    get { return callOrPut; }
+        //    set { callOrPut = value;
+        //          OnPropertyChanged("CallOrPut");        
+        //        }
+        //}
 
-        public double ExercisePrice
-        {
-            get { return exercisePrice; }
-            set { exercisePrice = value;
-                  OnPropertyChanged("ExercisePrice"); 
-                }
-        }
+        //public double ExercisePrice
+        //{
+        //    get { return exercisePrice; }
+        //    set { exercisePrice = value;
+        //          OnPropertyChanged("ExercisePrice"); 
+        //        }
+        //}
 
         public string TradingType
         {
@@ -142,21 +156,18 @@ namespace qiquanui
         public PlaceOrderData(
                                  string _userID,
                                  string _instrumentID,
-                                 string _callOrPut,
-                                 double _exercisePrice,
                                  string _tradingType,
                                  int _tradingNum,
                                  string _clientageType,
                                  double _clientagePrice,
                                  double _marketPrice,
                                  string _clientageCondition,
-                                 double _finalPrice
+                                 double _finalPrice,
+                                 bool _optionOrFuture
                               )
          {
              userID = _userID;
              instrumentID = _instrumentID;
-             callOrPut = _callOrPut;
-             exercisePrice = _exercisePrice;
              tradingType = _tradingType;
              tradingNum = _tradingNum;
              clientageType = _clientageType;
@@ -164,6 +175,7 @@ namespace qiquanui
              marketPrice = _marketPrice;
              clientageCondition = _clientageCondition;
              finalPrice = _finalPrice;
+             optionOrFuture = _optionOrFuture;
          }
 
         #region INotifyPropertyChanged 成员
@@ -265,10 +277,10 @@ namespace qiquanui
         }
 
 
-        public void OnAdd(string _userID,string _instrumentID,string _CallOrPut,double _exercisePrice,string _tradingType,int _tradingNum,string _clientageType,double _clientagePrice,double _marketPrice,string _clientageCondition,double _finalPrice)
+        public void OnAdd(string _userID,string _instrumentID,string _tradingType,int _tradingNum,string _clientageType,double _clientagePrice,double _marketPrice,string _clientageCondition,double _finalPrice,bool _optionOrFuture)
         {
 
-            OrderOC.Add(new PlaceOrderData(_userID, _instrumentID, _CallOrPut, _exercisePrice, _tradingType, _tradingNum, _clientageType, _clientagePrice, _marketPrice, _clientageCondition, _finalPrice));
+            OrderOC.Add(new PlaceOrderData(_userID, _instrumentID, _tradingType, _tradingNum, _clientageType, _clientagePrice, _marketPrice, _clientageCondition, _finalPrice, _optionOrFuture));
         }
 
         public void OnTimedEvent(object sender, ElapsedEventArgs e)

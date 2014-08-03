@@ -1892,14 +1892,14 @@
                             <GridViewColumn x:Name="askPriceFMGVCH" Header=" 卖价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="askFMBtn" Content="{Binding AskPrice1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource marketListViewButtom}" Foreground="White" />
+                                        <Button x:Name="askFMBtn" Content="{Binding AskPrice1}" Tag="{Binding InstrumentName}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource marketListViewButtom}" Click="askFMBtn_Click" Foreground="White"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="bidPriceFMGVCH" Header=" 买价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidFMBtn" Content="{Binding BidPrice1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource marketListViewButtom}" Foreground="White" />
+                                        <Button x:Name="bidFMBtn" Content="{Binding BidPrice1}"  Tag="{Binding InstrumentName}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource marketListViewButtom}" Foreground="White" Click="bidFMBtn_Click" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

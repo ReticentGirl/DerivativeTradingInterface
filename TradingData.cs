@@ -34,9 +34,20 @@ namespace qiquanui
 
         private bool optionOrFuture;   //期权(false)或者期货(true)
 
+        private int typeChangeCount;   //是按下的那一次导致的 买开卖开买平卖平 的变换
 
 
-      
+
+        public int TypeChangeCount
+        {
+            get { return typeChangeCount; }
+            set
+            {
+
+                typeChangeCount = value;
+                OnPropertyChanged("ClickButton");
+            }
+        }
 
 
         public bool IfChooseOTGVCH
@@ -225,9 +236,9 @@ namespace qiquanui
                   tradingNum = -1;
                   tradingType = 1;
               }
-                 
-              
-              
+
+
+              typeChangeCount = 0;
 
          }
 
@@ -270,6 +281,9 @@ namespace qiquanui
              //////不用到的在这里初始化
             
              ifChooseOTGVCH = false;
+
+
+             typeChangeCount = 0;  
          }
 
 

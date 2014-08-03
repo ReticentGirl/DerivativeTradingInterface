@@ -50,7 +50,10 @@ namespace qiquanui
 
         public void OnAdd(string _userID, string instrumentID, string _callOrPut, string _exercisePrice, double _marketPrice, bool _isBuy, bool _optionOrFuture)
         {
-            TradingOC.Add(new TradingData(_userID, instrumentID, _callOrPut, _exercisePrice, _marketPrice, _isBuy, _optionOrFuture));
+            TradingData add_td = new TradingData(_userID, instrumentID, _callOrPut, _exercisePrice, _marketPrice, _isBuy, _optionOrFuture);
+            TradingOC.Add(add_td);
+            //add_td.ClickButton = false;    //点击按钮之后 这个属性改为false
+
         }
 
 
