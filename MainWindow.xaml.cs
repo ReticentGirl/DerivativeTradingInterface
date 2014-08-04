@@ -338,8 +338,6 @@ namespace qiquanui
             subjectMatterLabel.Visibility = Visibility.Hidden;
             subjectMatterComboBox.Visibility = Visibility.Hidden;
             futuresMarketListView.Visibility = Visibility.Visible;
-            cvxLabel.Visibility = Visibility.Hidden;
-            showcvxLabel.Visibility = Visibility.Hidden;
             subjectMatterMarketGrid.Visibility = Visibility.Hidden;
             titileBorder4.Visibility = Visibility.Hidden;
         } //行情区，“衍生品种类”选择“期货”，隐藏“标的期货”、cvx指数、期权行情，显示期货行情
@@ -352,8 +350,6 @@ namespace qiquanui
             optionsMarketTitleGrid.Visibility = Visibility.Visible;
             subjectMatterLabel.Visibility = Visibility.Visible;
             subjectMatterComboBox.Visibility = Visibility.Visible;
-            cvxLabel.Visibility = Visibility.Visible;
-            showcvxLabel.Visibility = Visibility.Visible;
             subjectMatterMarketGrid.Visibility = Visibility.Visible;
             titileBorder4.Visibility = Visibility.Visible;
         } //行情区，“衍生品种类”选择“期权”，显示“标的商品”、cvx指数、期权行情，隐藏期货行情
@@ -830,6 +826,7 @@ namespace qiquanui
 
         public static string[] NameSubject = { "金", "铜", "白糖", "豆粕", "上证50", "沪深300" };
         public static string[] NameOption = { "金期权", "铜期权", "白糖期权", "豆粕期权", "上证50期权", "沪深300期权" };
+        public static string[] NameFuture = { "金", "铜", "白糖", "豆粕", "上证50期货", "沪深300期货" };
         /// <summary>
         /// 标的期货
         /// </summary>
@@ -942,6 +939,9 @@ namespace qiquanui
 
 
         #endregion
+
+
+
 
         private void typeOfTradingTComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)    //对买开 卖开 买平 卖平 ComboBox 写动态 0 买开  1 卖开  2买平 3卖平
         {

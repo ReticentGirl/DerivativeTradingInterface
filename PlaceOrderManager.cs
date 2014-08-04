@@ -252,7 +252,7 @@ namespace qiquanui
 
             System.Timers.Timer placeOrderTimer; //刷新下单盒子的计时器
 
-            OrderCapitalData orderOccupy = new OrderCapitalData(1110);
+            OrderCapitalData orderOccupy = new OrderCapitalData(11100);
             
 
 
@@ -262,6 +262,8 @@ namespace qiquanui
             pOrderWindow = _pOrderWindow;
 
             pOrderWindow.tradingListView.ItemsSource = OrderOC;
+
+            pOrderWindow.costGrid.DataContext = orderOccupy;
 
             placeOrderTimer = new System.Timers.Timer(500);
 
