@@ -1201,7 +1201,6 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
-                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -1218,29 +1217,19 @@
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="3" Grid.Row="0" />
                 <TextBlock x:Name="rhoCompoGTB" Text="Rho" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="4" Grid.Row="0" />
-                <TextBlock x:Name="rateCompoGTB" Text="隐波率" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="5" Grid.Row="0" />
-                <TextBlock x:Name="varCompoGTB" Text="Var" Grid.Column="6" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Border BorderBrush="#FF4F4857" BorderThickness="1,2,2,1" Grid.Column="6" Grid.Row="0" />
+                <Border BorderBrush="#FF4F4857" BorderThickness="1,2,2,1" Grid.Column="5" Grid.Row="0" />
+                <TextBlock x:Name="varCompoGTB" Text="Var" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="2,0,0,2" Grid.Column="0" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="1" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="2" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="3" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="4" Grid.Row="1" />
-                <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="5" Grid.Row="1" />
-                <Border BorderBrush="#FF4F4857" BorderThickness="1,0,2,2" Grid.Column="6" Grid.Row="1" />
+                <Border BorderBrush="#FF4F4857" BorderThickness="1,0,2,2" Grid.Column="5" Grid.Row="1" />
             </Grid>
 
             <ListView x:Name="optionsRiskLV" Grid.Column="1" Grid.Row="1" Margin="0,1,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.View>
-                    <GridView>
-                        <GridViewColumn x:Name="ifChooseORGVCH" Header="勾选" Width="50">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox x:Name="ifChooseORCB" />
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                    <GridView>                       
                         <GridViewColumn x:Name="instrumentIDORGVCH" Header="交易代码" Width="110"/>
                         <GridViewColumn x:Name="deltaORGVCH" Header="Delta" Width="60"/>
                         <GridViewColumn x:Name="gammaORGVCH" Header="Gamma" Width="60"/>

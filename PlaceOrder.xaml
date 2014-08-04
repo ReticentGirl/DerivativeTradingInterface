@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:qiquanui"       
         Closing="Window_Closing"
-        Title="placeOrder" Height="245" Width="454" WindowStyle="None" ResizeMode="CanMinimize" BorderThickness="7" AllowsTransparency="True" Opacity="0.95">
+        Title="placeOrder" Height="342" Width="454" WindowStyle="None" ResizeMode="CanMinimize" BorderThickness="7" AllowsTransparency="True" Opacity="0.95">
     <Window.Resources>
 
         <!--grid1-->
@@ -609,7 +609,7 @@
         <DropShadowEffect Color="#FF007ACC" BlurRadius="7" Direction="270" Opacity="0.75" ShadowDepth="3"/>
     </Window.Effect>
 
-    <Grid Background="#FF1A1A21" Height="231" VerticalAlignment="Top">
+    <Grid Background="#FF1A1A21" Height="313" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -633,13 +633,42 @@
                 </ListView.View>
             </ListView>
 
-           
+
         </Canvas>
         <Grid Name="costGrid">
-            <Label x:Name="costLabel" Content="估计交易成本：" Canvas.Top="134" Width="139" Height="23" Foreground="White" Background="#FF007ACC" Canvas.Left="1" Margin="10,167,291,41"/>
-            <TextBlock x:Name="priceTB" Text="{Binding OccupyCapital,UpdateSourceTrigger=PropertyChanged}" Width="96" Height="18" Canvas.Top="139" Foreground="White" Canvas.Left="154" Margin="167,172,177,41"/>
-            <TextBlock x:Name="addOrMinusTB" Text="+" Height="18" Width="11" Canvas.Left="255" Canvas.Top="139" Foreground="White" Margin="268,172,162,41"/>
-            <TextBlock x:Name="serviceChargeTB" Text="手续费" Height="18" Width="88" Canvas.Left="301" Canvas.Top="139" Foreground="White" Margin="342,172,10,41"/>
+        <Label x:Name="costLabel" Content="估计交易成本：" Canvas.Top="134" Width="139" Height="23" Foreground="White" Background="#FF007ACC" Canvas.Left="1" Margin="10,167,291,123"/>
+        <TextBlock x:Name="priceTB" Text="1,000,000" Width="96" Height="18" Canvas.Top="139" Foreground="White" Canvas.Left="154" Margin="167,172,177,41"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="42*"/>
+                <ColumnDefinition Width="42*"/>
+                <ColumnDefinition Width="11*"/>
+                <ColumnDefinition Width="45*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="royaltyTB" Text="权利金" Foreground="#FF9198AC" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Margin="44,8,46,8" Width="36" />
+            <Border BorderThickness="2,2,1,1" Grid.Column="0" Grid.Row="0" BorderBrush="#FF4E5268"/>
+            <TextBlock x:Name="marginTB" Text="保证金" Foreground="#FF9198AC" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Margin="46,8,44,8" Width="36"/>
+            <Border BorderThickness="0,2,1,1" Grid.Column="1" Grid.Row="0" BorderBrush="#FF4E5268"/>
+            <TextBlock x:Name="addOrMinusTB" Text="+/-" Foreground="#FF9198AC" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Width="23"/>
+            <Border BorderThickness="0,2,1,1" Grid.Column="2" Grid.Row="0" BorderBrush="#FF4E5268"/>
+            <TextBlock x:Name="serviceTB" Text="手续费" Foreground="#FF9198AC" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Margin="46,8,44,8" Width="36"/>
+            <Border BorderThickness="0,2,2,1" Grid.Column="3" Grid.Row="0" BorderBrush="#FF4E5268"/>
+
+            <TextBlock x:Name="showRoyaltyTB" Text="" Foreground="#FF9198AC" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border BorderThickness="2,0,1,2" Grid.Column="0" Grid.Row="1" BorderBrush="#FF4E5268"/>
+            <TextBlock x:Name="showMarginTB" Text="" Foreground="#FF9198AC" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border BorderThickness="0,0,1,2" Grid.Column="1" Grid.Row="1" BorderBrush="#FF4E5268"/>
+            <TextBlock x:Name="showOperaterTB" Text="" Foreground="#FF9198AC" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border BorderThickness="0,0,1,2" Grid.Column="2" Grid.Row="1" BorderBrush="#FF4E5268"/>
+            <TextBlock x:Name="showServiceTB" Text="" Foreground="#FF9198AC" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Border BorderThickness="0,0,2,2" Grid.Column="3" Grid.Row="1" BorderBrush="#FF4E5268"/>
+
+        </Grid>
+
             <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel" Style="{StaticResource darkButton}"/>
             <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,99,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Style="{StaticResource darkButton}" Click="OKBtn_Click"/>
         </Grid>

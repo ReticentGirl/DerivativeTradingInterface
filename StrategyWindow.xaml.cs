@@ -17,15 +17,18 @@ namespace qiquanui
     /// <summary>
     /// StrategyWindow.xaml 的交互逻辑
     /// </summary>
-    
+     
     public partial class StrategyWindow : Window
     {
         private double originalHeight, originalWidth, Top1_StrategyLabw, Top1_StrategyLabwper, groupListVieww, groupListViewwper, groupListViewh, groupListViewhper;
         private Storyboard groupCanvasStoryboard, groupCanvasStoryboard_Leave;
-        public StrategyWindow()
+
+        MainWindow pWindow;
+        public StrategyWindow(MainWindow _pWindow)
         {
             InitializeComponent();
 
+            pWindow = _pWindow;
             originalHeight = this.Height;
             originalWidth = this.Width;
 
@@ -113,6 +116,8 @@ namespace qiquanui
         {
             
             this.Close();
+
+            pWindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
         }
         private void closeWindow_Completed(object sender, EventArgs e)
         {

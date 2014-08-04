@@ -532,7 +532,7 @@ namespace qiquanui
         {
             if (Canvas2.Width == 29.0)
             {
-                openRightCanvas();
+                openRightCanvas();            
             }
             else if (Canvas2.Width == 60.0)
             {
@@ -591,6 +591,7 @@ namespace qiquanui
         {
             maxAmountOfUpAndDownLabel.Visibility = Visibility.Visible;
             maxAmountOfUpAndDownTextBox.Visibility = Visibility.Visible;
+            startStrategyBtn.IsEnabled = true;
             volatilityLabel.Visibility = Visibility.Hidden;
             volatilityComboBox.Visibility = Visibility.Hidden;
         } //策略实验室，“情景选择”选择“上涨”，显示“最高涨跌幅”，隐藏“波动率”
@@ -599,6 +600,7 @@ namespace qiquanui
         {
             maxAmountOfUpAndDownLabel.Visibility = Visibility.Visible;
             maxAmountOfUpAndDownTextBox.Visibility = Visibility.Visible;
+            startStrategyBtn.IsEnabled = true;
             volatilityLabel.Visibility = Visibility.Hidden;
             volatilityComboBox.Visibility = Visibility.Hidden;
         } //策略实验室，“情景选择”选择“下跌”，显示“最高涨跌幅”，隐藏“波动率”
@@ -609,6 +611,7 @@ namespace qiquanui
             maxAmountOfUpAndDownTextBox.Visibility = Visibility.Hidden;
             volatilityLabel.Visibility = Visibility.Visible;
             volatilityComboBox.Visibility = Visibility.Visible;
+            startStrategyBtn.IsEnabled = true;
         } //策略实验室，“情景选择”选择“波动”，隐藏“最高涨跌幅”，显示“波动率”
 
         private void predictComboBoxItem4_Selected(object sender, RoutedEventArgs e)
@@ -617,6 +620,10 @@ namespace qiquanui
             maxAmountOfUpAndDownTextBox.Visibility = Visibility.Hidden;
             volatilityLabel.Visibility = Visibility.Hidden;
             volatilityComboBox.Visibility = Visibility.Hidden;
+            strategyAndProfitTabItem.Visibility = Visibility.Visible;
+            CloseLeftCanvas();
+            strategyAndProfitTabItem.IsSelected = true;
+            startStrategyBtn.IsEnabled = false;
         } //策略实验室，“情景选择”选择“与标的物组合”，隐藏“最高涨跌幅”、“波动率”
 
         private void optionsMarketListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
@@ -638,7 +645,7 @@ namespace qiquanui
 
         private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
         {
-            StrategyWindow strategyWindow = new StrategyWindow();
+            StrategyWindow strategyWindow = new StrategyWindow(this);
             CloseLeftCanvas();
             strategyWindow.Show();
 
