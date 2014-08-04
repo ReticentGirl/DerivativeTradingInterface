@@ -10,7 +10,7 @@ using System.Timers;
 
 namespace qiquanui
 {
-    class TradingManager
+    public class TradingManager
     {
 
         public ObservableCollection<TradingData> TradingOC = new ObservableCollection<TradingData>();
@@ -51,7 +51,9 @@ namespace qiquanui
         public void OnAdd(string _userID, string instrumentID, string _callOrPut, string _exercisePrice, double _marketPrice, bool _isBuy, bool _optionOrFuture)
         {
             TradingData add_td = new TradingData(_userID, instrumentID, _callOrPut, _exercisePrice, _marketPrice, _isBuy, _optionOrFuture);
+            //TurnOver();
             TradingOC.Add(add_td);
+            //TurnOver();
             //add_td.ClickButton = false;    //点击按钮之后 这个属性改为false
 
         }
@@ -74,12 +76,12 @@ namespace qiquanui
                     if (TradingOC[i].IsBuy == true)     //选择买价刷新
                     {
 
-                        nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
+                        nMarketPrice = Math.Round((double)nDr["AskPrice1"], 1);
 
                     }
                     else if (TradingOC[i].IsBuy == false)
                     {
-                        nMarketPrice = Math.Round((double)nDr["AskPrice1"], 1);
+                        nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
 
                     }
 
@@ -95,6 +97,75 @@ namespace qiquanui
                 }
             }
         }
+        
+        /*
+        public void TurnOver()
+        {
+            for (int i = 0; i < TradingOC.Count() / 2; i++)
+            {
+                TradingData head_td = TradingOC[i];
+
+                TradingData tail_td = TradingOC[TradingOC.Count() - 1 - i];
+
+                bool temp_ifChooseOTGVCH = head_td.IfChooseOTGVCH;
+                string temp_userID = head_td.UserID;
+                string temp_instrumentID = head_td.InstrumentID;
+                string temp_callOrPut = head_td.CallOrPut;
+                string temp_exercisePrice = head_td.ExercisePrice;
+                int temp_tradingType = head_td.TradingType;
+                int temp_tradingNum = head_td.TradingNum;
+                int temp_clientageType = head_td.ClientageType;
+                double temp_clientagePrice = head_td.ClientagePrice;
+                double temp_marketPrice = head_td.MarketPrice;
+                int temp_clientageCondition = head_td.ClientageCondition;
+                bool temp_isSetGradient = head_td.IsSetGradient;
+                double temp_accuracy = head_td.Accuracy;
+                int temp_arithmeticProgression = head_td.ArithmeticProgression;
+                bool temp_isBuy = head_td.IsBuy;
+                bool temp_optionOrFuture = head_td.OptionOrFuture;
+                int temp_typeChangeCount = head_td.TypeChangeCount;
+                ///////////////////////////////////////////////////////////////////////////////////////////
+                head_td.IfChooseOTGVCH = tail_td.IfChooseOTGVCH;
+                head_td.UserID = tail_td.UserID;
+                head_td.InstrumentID = tail_td.InstrumentID;
+                head_td.CallOrPut = tail_td.CallOrPut;
+                head_td.ExercisePrice = tail_td.ExercisePrice;
+                head_td.TradingType = tail_td.TradingType;
+                head_td.TradingNum = tail_td.TradingNum;
+                head_td.ClientageType = tail_td.ClientageType;
+                head_td.ClientagePrice = tail_td.ClientagePrice;
+                head_td.MarketPrice = tail_td.MarketPrice;
+                head_td.ClientageCondition = tail_td.ClientageCondition;
+                head_td.IsSetGradient = tail_td.IsSetGradient;
+                head_td.Accuracy = tail_td.Accuracy;
+                head_td.ArithmeticProgression = tail_td.ArithmeticProgression;
+                head_td.IsBuy = tail_td.IsBuy;
+                head_td.OptionOrFuture = tail_td.OptionOrFuture;
+                head_td.TypeChangeCount = tail_td.TypeChangeCount;
+
+                ////////////////////////////////////////////////////////////////////////////////////////
+
+                tail_td.IfChooseOTGVCH = temp_ifChooseOTGVCH;
+                tail_td.UserID = temp_userID;
+                tail_td.InstrumentID = temp_instrumentID;
+                tail_td.CallOrPut = temp_callOrPut;
+                tail_td.ExercisePrice = temp_exercisePrice;
+                tail_td.TradingType = temp_tradingType;
+                tail_td.TradingNum = temp_tradingNum;
+                tail_td.ClientageType = temp_clientageType;
+                tail_td.ClientagePrice = temp_clientagePrice;
+                tail_td.MarketPrice = temp_marketPrice;
+                tail_td.ClientageCondition = temp_clientageCondition;
+                tail_td.IsSetGradient = temp_isSetGradient;
+                tail_td.Accuracy = temp_accuracy;
+                tail_td.ArithmeticProgression = temp_arithmeticProgression;
+                tail_td.IsBuy = temp_isBuy;
+                tail_td.OptionOrFuture = temp_optionOrFuture;
+                tail_td.TypeChangeCount = temp_typeChangeCount;
+
+            }
+        }
+        */
 
 
     }

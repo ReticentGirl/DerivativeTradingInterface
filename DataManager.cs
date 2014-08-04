@@ -380,11 +380,11 @@ namespace qiquanui
 
     }
 
-    class DataManager
+    public class DataManager
     {
         System.Timers.Timer timer;
         MainWindow pwindow;
-        DateTime now;
+        public DateTime now;
         public ObservableCollection<option> ObservableObj = new ObservableCollection<option>();
         private ObservableCollection<option> ObservableObj2 = new ObservableCollection<option>();
         public ObservableCollection<future> ObservableOb = new ObservableCollection<future>();

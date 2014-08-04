@@ -33,31 +33,36 @@ namespace qiquanui
 
         HistoryManager porder_hm;  //下单盒子中维护历史记录区的指针
         PlaceOrderManager porder_pom; //下单盒子中维护盒子数据的指针
+        TradingManager porder_tm;  ///交易区指针
+        DataManager porder_dm;        //dm指针
+        MainWindow pWindow;           //主窗体指针
+
+
 
         public PlaceOrder()
         {
             InitializeComponent();
-            Border1.Height = this.Height-14;
-            Border1.Width = this.Width-14;
-
+            Border1.Height = this.Height - 14;
+            Border1.Width = this.Width - 14;
             tradingCanvasStoryboard = (Storyboard)this.FindResource("tradingCanvasAnimate");
             tradingCanvasStoryboard_Leave = (Storyboard)this.FindResource("tradingCanvasAnimate_Leave");
+
         }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
-              this.DragMove();
+            this.DragMove();
         }
-        
+
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-              this.DragMove();
+            this.DragMove();
         }
         private void MinButton_Click_1(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         } //最小化窗口按钮
 
-   
+
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
@@ -100,32 +105,93 @@ namespace qiquanui
             tradingCanvasStoryboard_Leave.Begin(this);
         }
 
-     
-		private void cancleBtn_Click(object sender, RoutedEventArgs e)
+
+        private void cancleBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
-        private void OKBtn_Click(object sender, RoutedEventArgs e)
+        private void OKBtn_Click(object sender, RoutedEventArgs e)    //下单盒子中“确定”按钮
         {
-            
+            //System.Windows.MessageBox.Show("123");
+            OrderToHistory();
+            cleanTrading();
+            pWindow.historyTabItem.IsSelected = true;
+
+            //porder_hm.HistoryOC.OrderBy(x>x.y);
+
+            this.Close();
         }
 
 
-        //public void OrderToHistory(HistoryManager _hm,PlaceOrderManager _pom)      //处理从下单盒子到历史区的数据
-        //{
-        //    porder_hm = _hm;
-        //    porder_pom = _pom;
+        public void getPoint(HistoryManager _hm, PlaceOrderManager _pom, DataManager _dm,TradingManager _tm,MainWindow _pWindow)     //获得指针用的函数
+        {
+            
+            porder_hm = _hm;
+            porder_pom = _pom;
+            porder_dm = _dm;
+            porder_tm = _tm;
+            pWindow = _pWindow;
+        }
 
-        //    for (int i = 0; i < _pom.OrderOC.Count(); i++)
-        //    {
-                 
-        //        PlaceOrderData pOrder = _pom.OrderOC[i];
+        public void OrderToHistory()      //处理从下单盒子到历史区的数据
+        {
+            //porder_hm = _hm;
+            //porder_pom = _pom;
 
-        //    }
+            for (int i = 0; i < porder_pom.OrderOC.Count(); i++)
+            {
+
+                PlaceOrderData pOrder = porder_pom.OrderOC[i];
+
+                DataRow nDr = (DataRow)DataManager.All[pOrder.InstrumentID];
+
+                string oInstrumentID = pOrder.InstrumentID;
+
+                string oTradingTime = porder_dm.now.ToString();
+
+                string oTradingType = pOrder.TradingType;
+
+                int oPostNum = pOrder.TradingNum;
+
+                int oDoneNum = 0;
+
+                string oTradingState = HistoryManager.POST;   //初始化为挂单状态
+
+                double oPostPrice = pOrder.FinalPrice;
+
+                double oDonePrice = 0;
+
+                string oTimeLimit = nDr["LastDate"].ToString();
+
+                string oUserID = pOrder.UserID;
+
+                string oClientageCondition = pOrder.ClientageCondition;
+
+                bool oOptionOrFuture = pOrder.OptionOrFuture;
 
 
-        //}
-      
+
+                porder_hm.OnAdd(oInstrumentID, oTradingTime, oTradingType, oPostNum, oPostNum, oTradingState, oPostPrice, oDonePrice, oTimeLimit, oUserID, oClientageCondition, oOptionOrFuture);
+
+            }
+
+
+        }
+
+        public void cleanTrading()     //当下单盒子“确定”点击后，清理掉交易区相同的单子
+        {
+            for (int i = porder_tm.TradingOC.Count()-1; i >= 0; i--)
+            {
+                TradingData cTd = porder_tm.TradingOC[i];
+                for (int j = porder_pom.OrderOC.Count()-1; j >=0 ; j--)
+                {
+                    PlaceOrderData cPo = porder_pom.OrderOC[j];
+                    if (cTd.InstrumentID == cPo.InstrumentID && cTd.IsBuy == cPo.IsBuy)
+                        porder_tm.TradingOC.RemoveAt(i);
+                }
+            }
+        }
+
     }
 }

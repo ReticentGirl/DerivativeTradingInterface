@@ -12,7 +12,7 @@ using System.Windows.Data;
 
 namespace qiquanui
 {
-    class PlaceOrderData : INotifyPropertyChanged
+    public class PlaceOrderData : INotifyPropertyChanged
     {
 
         private string userID;   //投资账户
@@ -36,6 +36,18 @@ namespace qiquanui
 
         private bool optionOrFuture;
 
+        private bool isBuy;
+
+
+        public bool IsBuy
+        {
+            get { return isBuy; }
+            set
+            {
+                isBuy = value;
+                OnPropertyChanged("OptionOrFuture");
+            }
+        }
 
         public bool OptionOrFuture
         {
@@ -163,7 +175,8 @@ namespace qiquanui
                                  double _marketPrice,
                                  string _clientageCondition,
                                  double _finalPrice,
-                                 bool _optionOrFuture
+                                 bool _optionOrFuture,
+                                 bool _isBuy
                               )
          {
              userID = _userID;
@@ -176,6 +189,7 @@ namespace qiquanui
              clientageCondition = _clientageCondition;
              finalPrice = _finalPrice;
              optionOrFuture = _optionOrFuture;
+             isBuy = _isBuy;
          }
 
         #region INotifyPropertyChanged 成员
@@ -196,9 +210,11 @@ namespace qiquanui
 
 
 
-    class OrderCapitalData : INotifyPropertyChanged
+    public class OrderCapitalData : INotifyPropertyChanged
     {
         private double occupyCapital;    //占用资金
+        private double fee;              //手续费
+
 
         public double OccupyCapital
         {
@@ -210,6 +226,17 @@ namespace qiquanui
             }
         }
 
+
+        public double Fee
+        {
+            get { return fee; }
+            set
+            {
+                fee = value;
+                OnPropertyChanged("Fee");
+            }
+        }
+
         public OrderCapitalData()
         {
            
@@ -217,9 +244,10 @@ namespace qiquanui
 
 
 
-            public OrderCapitalData(double _occupyCapital)
+            public OrderCapitalData(double _occupyCapital,double _fee)
             {
                 occupyCapital=_occupyCapital;
+                fee = _fee;
             }
         #region INotifyPropertyChanged 成员
 
@@ -242,7 +270,7 @@ namespace qiquanui
 
  
 
-    class PlaceOrderManager 
+    public class PlaceOrderManager 
     {
         public ObservableCollection<PlaceOrderData> OrderOC = new ObservableCollection<PlaceOrderData>();
 
@@ -252,16 +280,16 @@ namespace qiquanui
 
             System.Timers.Timer placeOrderTimer; //刷新下单盒子的计时器
 
-            OrderCapitalData orderOccupy = new OrderCapitalData(11100);
-            
+            OrderCapitalData orderOccupy = new OrderCapitalData(0,0);
 
+            static double eachFee = 5;   //初定每笔手续费5元
 
 
             public PlaceOrderManager(PlaceOrder _pOrderWindow)
         {
             pOrderWindow = _pOrderWindow;
 
-            pOrderWindow.tradingListView.ItemsSource = OrderOC;
+            pOrderWindow.tradingListView.ItemsSource=OrderOC;
 
             pOrderWindow.costGrid.DataContext = orderOccupy;
 
@@ -279,10 +307,10 @@ namespace qiquanui
         }
 
 
-        public void OnAdd(string _userID,string _instrumentID,string _tradingType,int _tradingNum,string _clientageType,double _clientagePrice,double _marketPrice,string _clientageCondition,double _finalPrice,bool _optionOrFuture)
+        public void OnAdd(string _userID,string _instrumentID,string _tradingType,int _tradingNum,string _clientageType,double _clientagePrice,double _marketPrice,string _clientageCondition,double _finalPrice,bool _optionOrFuture,bool _isBuy)
         {
 
-            OrderOC.Add(new PlaceOrderData(_userID, _instrumentID, _tradingType, _tradingNum, _clientageType, _clientagePrice, _marketPrice, _clientageCondition, _finalPrice, _optionOrFuture));
+            OrderOC.Add(new PlaceOrderData(_userID, _instrumentID, _tradingType, _tradingNum, _clientageType, _clientagePrice, _marketPrice, _clientageCondition, _finalPrice, _optionOrFuture, _isBuy));
         }
 
         public void OnTimedEvent(object sender, ElapsedEventArgs e)
@@ -294,9 +322,16 @@ namespace qiquanui
         {
             if (OrderOC.Count() > 0)
             {
+                double[] costArry = new double[OrderOC.Count()];
+                double[] feeArry = new double[OrderOC.Count()];
+
                 for (int i = 0; i < OrderOC.Count(); i++)
                 {
                     string reInstrumentID = OrderOC[i].InstrumentID;
+
+                    orderOccupy.OccupyCapital=0;  //每次清理为零
+                    
+                    orderOccupy.Fee = 0;   //每次清理为零
 
                     DataRow nDr = (DataRow)DataManager.All[reInstrumentID];
 
@@ -305,16 +340,53 @@ namespace qiquanui
                     //string tt = OrderOC[i].CallOrPut;
 
                     if (OrderOC[i].TradingType.Equals("买开") || OrderOC[i].TradingType.Equals("买平"))     //选择买价刷新
-                        nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
-                    else if (OrderOC[i].TradingType.Equals("卖开") || OrderOC[i].TradingType.Equals("卖平"))
                         nMarketPrice = Math.Round((double)nDr["AskPrice1"], 1);
+                    else if (OrderOC[i].TradingType.Equals("卖开") || OrderOC[i].TradingType.Equals("卖平"))
+                        nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
 
                     OrderOC[i].MarketPrice = nMarketPrice;
                     if (OrderOC[i].ClientageType.Equals("市价"))
                         OrderOC[i].FinalPrice = nMarketPrice;
 
-                    orderOccupy.OccupyCapital += 1;
+                    double cost = caculateCost(nDr, reInstrumentID, OrderOC[i].OptionOrFuture, OrderOC[i].IsBuy, OrderOC[i].TradingNum, OrderOC[i].FinalPrice);
+
+                    costArry[i] = cost;
+
+                    feeArry[i] = Math.Abs(OrderOC[i].TradingNum) * eachFee;
+                    //orderOccupy.OccupyCapital += cost;
+
+
+                    
                 }
+
+                for (int j = 0; j < OrderOC.Count(); j++)
+                {
+                    orderOccupy.OccupyCapital += costArry[j];   //将所有权利金加起来
+
+                    orderOccupy.Fee += feeArry[j];     //将所有手续费加起来
+                }
+
+            }
+        }
+
+
+        double caculateCost(DataRow _nDr,string _InstrumentID,bool _optionOrFuture,bool _isBuy,int _tradingNum,double _finalPrice)    //计算花费
+        {
+            //if (_optionOrFuture == false)  //表示是期权
+            {
+                int instrumentMultiplier = Convert.ToInt32(_nDr["InstrumentMultiplier"]);
+
+                double cost = Math.Abs(_tradingNum) * instrumentMultiplier * _finalPrice;
+
+                if (_isBuy==true)   //买返回正，卖饭回负
+                {
+                    return cost;
+                }
+                else
+                {
+                    return -cost;
+                }
+                
             }
         }
 

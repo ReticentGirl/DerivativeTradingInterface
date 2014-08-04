@@ -2224,7 +2224,7 @@
             </Grid.ColumnDefinitions>
 
             <TabControl x:Name="multipleTabControl" HorizontalAlignment="Left" Height="273" VerticalAlignment="Top" Width="915" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,-35,0,0">
-                <TabItem Header="交易区" Foreground="White"  Style="{StaticResource TabItemStyle}" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,6,2,-10">
+                <TabItem x:Name="tradingTabItem" Header="交易区" Foreground="White"  Style="{StaticResource TabItemStyle}" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,6,2,-10">
 
                     <Grid Margin="-4,0,-3,0">
                         <Grid.ColumnDefinitions>
@@ -2326,13 +2326,13 @@
                             </ListView.View>
                         </ListView>
 
-                        <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
+                        <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
                         <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click"/>
                         <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="持仓" Background="White" Style="{StaticResource TabItemStyle}" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,6,2,-10">
+                <TabItem x:Name="holdDetailTabItem" Header="持仓" Background="White" Style="{StaticResource TabItemStyle}" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,6,2,-10">
                     <Grid Margin="-4,0,-3,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -2369,7 +2369,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="历史记录" Foreground="White"  Style="{StaticResource TabItemStyle}" Margin="-2,6,2,-10">
+                <TabItem x:Name="historyTabItem" Header="历史记录" Foreground="White"  Style="{StaticResource TabItemStyle}" Margin="-2,6,2,-10">
                     <Grid Margin="-4,0,-3,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -2385,23 +2385,23 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="nameHGVCH" Header="衍生品名称" DisplayMemberBinding="{Binding InstrumentID}" Width="100"/>
-                                    <GridViewColumn x:Name="timeHGVCH" Header="交易时间" DisplayMemberBinding="{Binding TradingTime}" Width="100"/>
-                                    <GridViewColumn x:Name="typeHGVCH" Header="交易类型" DisplayMemberBinding="{Binding TradingType}" Width="60"/>
+                                    <GridViewColumn x:Name="nameHGVCH" Header="衍生品名称" DisplayMemberBinding="{Binding InstrumentID,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="timeHGVCH" Header="交易时间" DisplayMemberBinding="{Binding TradingTime, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="typeHGVCH" Header="交易类型" DisplayMemberBinding="{Binding TradingType, UpdateSourceTrigger=PropertyChanged}" Width="60"/>
                                     <!-- 卖开卖平买开买平-->
-                                    <GridViewColumn x:Name="lotOfPendingHGVCH" Header=" 挂单手数" DisplayMemberBinding="{Binding PostNum}" Width="60"/>
-                                    <GridViewColumn x:Name="lotOfTransactionHGVCH" Header=" 成交手数" DisplayMemberBinding="{Binding DoneNum}" Width=" 60"/>
-                                    <GridViewColumn x:Name="statusOfTransactionHGVCH" Header=" 成交状态" DisplayMemberBinding="{Binding TradingState}" Width="60"/>
-                                    <GridViewColumn x:Name="priceOfPendingHGVCH" Header=" 挂单价格" DisplayMemberBinding="{Binding PostPrice}" Width="100"/>
-                                    <GridViewColumn x:Name="priceOfTransactionHGVCH" Header=" 成交价格" DisplayMemberBinding="{Binding DonePrice}" Width="100"/>
-                                    <GridViewColumn x:Name="timeLimitHGVCH" Header=" 有效期" DisplayMemberBinding="{Binding TimeLimit}" Width="100"/>
-                                    <GridViewColumn x:Name="userHGVCH" Header=" 投资账户" DisplayMemberBinding="{Binding UserID}" Width="100"/>
+                                    <GridViewColumn x:Name="lotOfPendingHGVCH" Header=" 挂单手数" DisplayMemberBinding="{Binding PostNum, UpdateSourceTrigger=PropertyChanged}" Width="60"/>
+                                    <GridViewColumn x:Name="lotOfTransactionHGVCH" Header=" 成交手数" DisplayMemberBinding="{Binding DoneNum, UpdateSourceTrigger=PropertyChanged}" Width=" 60"/>
+                                    <GridViewColumn x:Name="statusOfTransactionHGVCH" Header=" 成交状态" DisplayMemberBinding="{Binding TradingState, UpdateSourceTrigger=PropertyChanged}" Width="60"/>
+                                    <GridViewColumn x:Name="priceOfPendingHGVCH" Header=" 挂单价格" DisplayMemberBinding="{Binding PostPrice, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="priceOfTransactionHGVCH" Header=" 成交价格" DisplayMemberBinding="{Binding DonePrice, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="timeLimitHGVCH" Header=" 有效期" DisplayMemberBinding="{Binding TimeLimit, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="userHGVCH" Header=" 投资账户" DisplayMemberBinding="{Binding UserID, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="IDOfTransactionHGVCH" Header=" 交易单号" Width="120"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
 
-                        <Button x:Name="cancelOrderBtn" Content="撤单" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,21,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
+                        <Button x:Name="cancelOrderBtn" Content="撤单" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,21,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="cancelOrderBtn_Click" />
                         <CheckBox x:Name="optionsCheckBox" Content="仅显示期权交易明细" HorizontalAlignment="Left" Margin="159,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
                         <CheckBox x:Name="futuresCheckBox" Content="仅显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
                         <Button x:Name="pickUserBtn" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,110,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
@@ -2409,7 +2409,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem Header="账户管理"  Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,6,2,-10">
+                <TabItem x:Name="userManageTabItem" Header="账户管理" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,6,2,-10">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>

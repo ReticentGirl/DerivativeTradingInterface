@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 
 namespace qiquanui
 {
-    class TradingData : INotifyPropertyChanged
+    public class TradingData : INotifyPropertyChanged
     {
         
         private bool ifChooseOTGVCH;  //是否选择了
@@ -36,8 +36,7 @@ namespace qiquanui
 
         private int typeChangeCount;   //是按下的那一次导致的 买开卖开买平卖平 的变换
 
-
-
+     
         public int TypeChangeCount
         {
             get { return typeChangeCount; }
@@ -206,7 +205,7 @@ namespace qiquanui
                                   string _exercisePrice,   
                                   double _marketPrice,   
                                   bool _isBuy, 
-                                  bool _optionOrFuture
+                                  bool _optionOrFuture                             
                                )
          {
               userID = _userID;
@@ -222,6 +221,9 @@ namespace qiquanui
               optionOrFuture = _optionOrFuture;
 
              ///不用到的在这里初始化
+             ///
+
+           
 
               
               ifChooseOTGVCH = false;
@@ -257,7 +259,7 @@ namespace qiquanui
                                  double _accuracy,
                                  int _arithmeticProgression, 
                                  bool _isBuy,
-                                 bool _optionOrFuture
+                                 bool _optionOrFuture                                 
                               )
          {
              userID = _userID;
@@ -277,6 +279,7 @@ namespace qiquanui
              isBuy = _isBuy;
 
              optionOrFuture = _optionOrFuture;
+
 
              //////不用到的在这里初始化
             

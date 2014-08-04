@@ -33,12 +33,12 @@ namespace qiquanui
 
     public partial class MainWindow : Window
     {
-        DataManager dm;
+         DataManager dm;
         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper;
 
-        TradingManager otm;   //维护交易区的指针
+         TradingManager otm;   //维护交易区的指针
 
-        HistoryManager hm;  //维护历史记录区的指针
+         HistoryManager hm;  //维护历史记录区的指针
 
 
 
@@ -672,9 +672,9 @@ namespace qiquanui
             PlaceOrder placeOrder = new PlaceOrder();
             placeOrder.Show();
 
-            PlaceOrderManager pom = new PlaceOrderManager(placeOrder);
+           PlaceOrderManager pom = new PlaceOrderManager(placeOrder);
 
-
+            placeOrder.getPoint(hm, pom, dm,otm,this);
 
             if (tradingListView.Items.Count > 0)
             {
@@ -779,7 +779,7 @@ namespace qiquanui
 
                         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                        pom.OnAdd(orderUserID, orderInstrumentID, orderTradingType, orderTradingNum, orderClientageType, orderClientagePrice, orderMarketPrice, orderClientageCondition, orderFinalPrice, optionOrFuture);
+                        pom.OnAdd(orderUserID, orderInstrumentID, orderTradingType, orderTradingNum, orderClientageType, orderClientagePrice, orderMarketPrice, orderClientageCondition, orderFinalPrice, optionOrFuture, otd.IsBuy);
 
                     }
 
@@ -1027,57 +1027,57 @@ namespace qiquanui
 
         }
 
-        private void bidROMBtn_Click(object sender, RoutedEventArgs e)        //期权看涨 “买”按钮
+        private void bidROMBtn_Click(object sender, RoutedEventArgs e)        //期权看涨 “买价”按钮  实际上是卖期权
         {
 
 
             int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
-            BuyOrSellForButtonForOption(exercisePrice, "babdah", "看涨", true, false);
-
-        }
-
-        private void askROMBtn_Click(object sender, RoutedEventArgs e)      //期权看涨 “卖” 按钮
-        {
-            //System.Windows.MessageBox.Show("看涨  卖");
-            int exercisePrice = Convert.ToInt32(((sender as System.Windows.Controls.Button).Tag));  //获取按钮Tag
-            //System.Windows.MessageBox.Show(((sender as System.Windows.Controls.Button).Tag).GetType().ToString());
-
             BuyOrSellForButtonForOption(exercisePrice, "babdah", "看涨", false, false);
 
         }
 
-        private void bidDOMBtn_Click(object sender, RoutedEventArgs e)    //期权看跌 “买”   按钮
-        {
-            //System.Windows.MessageBox.Show("看跌  买");
-            int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
-            BuyOrSellForButtonForOption(exercisePrice, "babdah", "看跌", true, false);
+        private void askROMBtn_Click(object sender, RoutedEventArgs e)      //期权看涨 “卖价” 按钮  买期权
+         {
+            //System.Windows.MessageBox.Show("看涨  卖");
+            int exercisePrice = Convert.ToInt32(((sender as System.Windows.Controls.Button).Tag));  //获取按钮Tag
+            //System.Windows.MessageBox.Show(((sender as System.Windows.Controls.Button).Tag).GetType().ToString());
+
+            BuyOrSellForButtonForOption(exercisePrice, "babdah", "看涨", true, false);
+
         }
 
-        private void askDOMBtn_Click(object sender, RoutedEventArgs e)     //期权看跌 “卖"  按钮
+        private void bidDOMBtn_Click(object sender, RoutedEventArgs e)    //期权看跌 “买价”按钮 实际上是卖期权
         {
-            //System.Windows.MessageBox.Show("看跌  卖");
+            //System.Windows.MessageBox.Show("看跌  买");
             int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
             BuyOrSellForButtonForOption(exercisePrice, "babdah", "看跌", false, false);
         }
 
+        private void askDOMBtn_Click(object sender, RoutedEventArgs e)     //期权看跌 “卖"  按钮   实际上是买期权
+        {
+            //System.Windows.MessageBox.Show("看跌  卖");
+            int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
+            BuyOrSellForButtonForOption(exercisePrice, "babdah", "看跌", true, false);
+        }
 
 
 
-        private void askFMBtn_Click(object sender, RoutedEventArgs e)      //期货“卖”按钮
+
+        private void askFMBtn_Click(object sender, RoutedEventArgs e)      //期货“卖价”按钮   买期货
         {
             string selectedInstrumentName = ((sender as System.Windows.Controls.Button).Tag).ToString();    //获取“卖”按钮Tag
             //System.Windows.MessageBox.Show(selectedInstrumentName);
 
             //future selectedFuture = ObservableOb[selectedInstrumentName];
 
-            BuyOrSellForButtonForFuture(selectedInstrumentName, "123", false, true);
+            BuyOrSellForButtonForFuture(selectedInstrumentName, "123", true, true);
 
         }
 
-        private void bidFMBtn_Click(object sender, RoutedEventArgs e)    //期货“买”按钮
+        private void bidFMBtn_Click(object sender, RoutedEventArgs e)    //期货“买”按钮  卖期货
         {
             string selectedInstrumentName = ((sender as System.Windows.Controls.Button).Tag).ToString();
-            BuyOrSellForButtonForFuture(selectedInstrumentName, "123", true, true);
+            BuyOrSellForButtonForFuture(selectedInstrumentName, "123", false, true);
         }
 
 
@@ -1085,6 +1085,9 @@ namespace qiquanui
 
         public void BuyOrSellForButtonForOption(int _buttonTag, string _SelectedUserID, string _selectedCallOrPut, bool _isBuy, bool _optionOrFuture)
         {
+           // this.tradingListView.Visibility = Visibility.Visible;
+
+            this.tradingTabItem.IsSelected = true;
 
             bool haveSame = false;    //用以判断交易区中是否有相同的
 
@@ -1109,14 +1112,14 @@ namespace qiquanui
                     if (selectedOption.BidPrice1.Equals("-"))
                         isValid = false;
                     else
-                        selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice1);
+                        selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice1);
                 }
                 else if (_isBuy == false && _selectedCallOrPut.Equals("看涨"))
                 {
                     if (selectedOption.AskPrice1.Equals("-"))
                         isValid = false;
                     else
-                        selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice1);
+                        selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice1);
 
                 }
                 else if (_isBuy == true && _selectedCallOrPut.Equals("看跌"))
@@ -1124,14 +1127,14 @@ namespace qiquanui
                     if (selectedOption.BidPrice2.Equals("-"))
                         isValid = false;
                     else
-                        selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice2);
+                        selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice2);
                 }
                 else if (_isBuy == false && _selectedCallOrPut.Equals("看跌"))
                 {
                     if (selectedOption.AskPrice2.Equals("-"))
                         isValid = false;
                     else
-                        selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice2);
+                        selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice2);
                 }
 
 
@@ -1169,8 +1172,9 @@ namespace qiquanui
 
                     if (haveSame == false)    //没有相同的  入列表中
                     {
-
+                        //otm.TurnOver();
                         otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut, Convert.ToString(selectedExercisePrice), selectedMarketPrice, selectedIsBuy, _optionOrFuture);
+                        //otm.TurnOver();
                     }
                 }
 
@@ -1181,6 +1185,10 @@ namespace qiquanui
 
         public void BuyOrSellForButtonForFuture(string _buttonTag, string _SelectedUserID, bool _isBuy, bool _optionOrFuture)
         {
+            //this.tradingListView.Visibility = Visibility.Visible;
+
+            this.tradingTabItem.IsSelected = true;
+
             bool haveSame = false;
 
             bool isValid = true;
@@ -1198,14 +1206,14 @@ namespace qiquanui
                     if (selectedFuture.BidPrice1.Equals("-"))
                         isValid = false;
                     else
-                        selectedMarketPrice = Convert.ToDouble(selectedFuture.BidPrice1);
+                        selectedMarketPrice = Convert.ToDouble(selectedFuture.AskPrice1); 
                 }
                 else if (_isBuy == false)
                 {
                     if (selectedFuture.AskPrice1.Equals("-"))
                         isValid = false;
                     else
-                        selectedMarketPrice = Convert.ToDouble(selectedFuture.AskPrice1);
+                        selectedMarketPrice = Convert.ToDouble(selectedFuture.BidPrice1);
                 }
 
 
@@ -1239,6 +1247,21 @@ namespace qiquanui
                         otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut,selectedExercisePrice, selectedMarketPrice, selectedIsBuy, _optionOrFuture);
                     }
 
+                }
+            }
+        }
+
+        private void cancelOrderBtn_Click(object sender, RoutedEventArgs e)   //历史记录区 “删除”按钮
+        {
+
+            //hm.OrderByTime();
+
+            for (int i = hm.HistoryOC.Count() - 1; i >= 0; i--)
+            {
+                HistoryData selectedHd = hm.HistoryOC[i];
+                if (selectedHd.HIfChoose == true && selectedHd.TradingState.Equals(HistoryManager.POST))
+                {
+                    hm.HistoryOC.RemoveAt(i);
                 }
             }
         }
