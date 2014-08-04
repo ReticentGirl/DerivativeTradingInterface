@@ -532,12 +532,14 @@ namespace qiquanui
         {
             if (Canvas2.Width == 29.0)
             {
-                openRightCanvas();            
+                openRightCanvas();
+                
             }
             else if (Canvas2.Width == 60.0)
             {
                 CloseRightCanvas();
             }
+            
         }
         //右伸缩板的展开和收缩
         private void openRightCanvas()
@@ -560,6 +562,7 @@ namespace qiquanui
                 darkRectangleShow();
                 riskWindow.Show();
                 
+
                 Canvas2Border1.Visibility = Visibility.Visible;
                 canvas2Storyboard.Begin(this);
             }
@@ -647,6 +650,7 @@ namespace qiquanui
         {
             StrategyWindow strategyWindow = new StrategyWindow(this);
             CloseLeftCanvas();
+            CloseRightCanvas();
             strategyWindow.Show();
 
         } //策略实验室，点击“开始分析”

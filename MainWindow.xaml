@@ -1815,7 +1815,7 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Grid>
-                       </ControlTemplate>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -2018,30 +2018,30 @@
                     </ListView.View>
                 </ListView>
 
-                <ListView x:Name="subjectMatterMarketGrid" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"   Height="149" Canvas.Top="30" MinWidth="882" Width="Auto" Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Foreground="#FF9198AC">
+                <ListView x:Name="subjectMatterMarketGrid" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"   Height="58" Canvas.Top="30" MinWidth="882" Width="1120" Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" FlowDirection="LeftToRight" Foreground="#FF9198AC">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
 
-                            <GridViewColumn x:Name="SMMG1"  Header=" 最新价" Width=" 100">
+                            <GridViewColumn x:Name="SMMG1"  Header=" 最新价" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="SMMGLab1" Content="{Binding LastPrice,UpdateSourceTrigger=PropertyChanged}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        <Label x:Name="SMMGLab1" Content="{Binding LastPrice,UpdateSourceTrigger=PropertyChanged}" MinWidth="50" Width="Auto" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="SMMG2"  Header=" 涨跌" Width=" 100">
+                            <GridViewColumn x:Name="SMMG2"  Header=" 涨跌" Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="SMMGLab2" Content="{Binding RiseAndFall}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="SMMGLab2" Content="{Binding RiseAndFall}" MinWidth="50" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="SMMG3"  Header=" 涨跌幅" Width=" 100">
+                            <GridViewColumn x:Name="SMMG3"  Header=" 涨跌幅" Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="SMMGLab3" Content="{Binding RiseAndFallRate}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="SMMGLab3" Content="{Binding RiseAndFallRate}" MinWidth="50" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2049,7 +2049,7 @@
                             <GridViewColumn x:Name="SMMG4"  Header=" 买价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="SMMGLab4" Content="{Binding BidPrice1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="SMMGLab4" Content="{Binding BidPrice1}" MinWidth="60" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2057,7 +2057,7 @@
                             <GridViewColumn x:Name="SMMG5"  Header=" 卖价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="SMMGLab5" Content="{Binding AskPrice1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="SMMGLab5" Content="{Binding AskPrice1}" MinWidth="60" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2065,7 +2065,7 @@
                             <GridViewColumn x:Name="SMMG6"  Header=" 最高价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="SMMGLab6" Content="{Binding HighestPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="SMMGLab6" Content="{Binding HighestPrice}" MinWidth="60" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2073,7 +2073,7 @@
                             <GridViewColumn x:Name="SMMG7"  Header=" 最低价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="SMMGLab7" Content="{Binding LowestPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="SMMGLab7" Content="{Binding LowestPrice}" MinWidth="60" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2094,10 +2094,10 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="SMMG10"  Header=" 更新时间" Width=" 100">
+                            <GridViewColumn x:Name="SMMG10"  Header=" 更新时间" Width="130">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="SMMGLab10" Content="{Binding UpdateTime}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="SMMGLab10" Content="{Binding UpdateTime}" Width="130" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2107,8 +2107,8 @@
                     </ListView.View>
 
                 </ListView>
-                <Border x:Name="titileBorder4" BorderBrush="#FF414559" BorderThickness="0,1,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" Width="1128" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="79" >
-                    <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Height="25" Width="1128" FlowDirection="LeftToRight" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" Canvas.Top="100" RenderTransformOrigin="0.5,0.5" MouseEnter="optionsMarketTitleGrid_MouseEnter" MouseLeave="optionsMarketTitleGrid_MouseLeave" >
+                <Border x:Name="titileBorder4" BorderBrush="#FF414559" BorderThickness="0,1,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" Width="1128" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="88" >
+                    <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Width="1128" FlowDirection="LeftToRight" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" Canvas.Top="100" RenderTransformOrigin="0.5,0.5" MouseEnter="optionsMarketTitleGrid_MouseEnter" MouseLeave="optionsMarketTitleGrid_MouseLeave" Margin="0,-1" >
 
                         <Grid.RenderTransform>
                             <TransformGroup>
@@ -2133,7 +2133,7 @@
                         <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Grid.ColumnSpan="2" Margin="79,0,31,0"/>
                     </Grid>
                 </Border>
-                <ListView x:Name="optionsMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Height="252" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="104" Canvas.Left="-7" >
+                <ListView x:Name="optionsMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Height="243" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="113" Canvas.Left="-7" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">
@@ -2503,7 +2503,7 @@
             <TextBlock x:Name="showMaxLotBIPTextBlock" Text="800" Grid.Column="1" Grid.Row="1" Margin="5,76,-1,-13" Foreground="#FFBCBDCB"/>
         </Grid>
         <Button x:Name="darkRectangle" HorizontalAlignment="Left" Margin="29,38,0,0" VerticalAlignment="Top" Width="1127" Height="627" Style="{StaticResource darkRectangleStyle}"  Visibility="Hidden" Click="darkRectangle_Click"/>
-        
+
         <!--策略实验室伸缩面板-->
         <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519"  ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft">
             <Label x:Name="type" Content="衍生品种类：" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Canvas.Left="185" Canvas.Top="40"/>
@@ -2590,7 +2590,7 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
-        
+
 
 
 
