@@ -1596,6 +1596,182 @@
                         <!--只有Grid才能装下这么多Child-->
                         <Grid>
                             <!--带特效的底层背景-->
+                            <Border x:Name="back" Opacity="0.8" CornerRadius="0" Width="49" Height="30" BorderBrush="#FFFFF300" BorderThickness="0">
+                                <Border.BitmapEffect>
+                                    <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="Red" />
+                                </Border.BitmapEffect>
+                                <Rectangle x:Name="buttonRect" Width="49" Height="30">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="Red"/>
+                                            <GradientStop Offset="1" Color="#FFFFA200"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                            </Border>
+
+                            <!--按钮内容-->
+                            <ContentPresenter 
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            RecognizesAccessKey="True"
+                                />
+
+                        </Grid>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="#FFFF5F5F" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FFFFD58A" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="Transparent" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF8A92A9" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX=".98" ScaleY=".98"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value=".55,.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--定义背景变绿的样式-->
+        <Style x:Key="marketListViewButtom_green" TargetType="Button" >
+            <!--修改模板属性-->
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--只有Grid才能装下这么多Child-->
+                        <Grid>
+                            <!--带特效的底层背景-->
+                            <Border x:Name="back" Opacity="0.8" CornerRadius="0" Width="49" Height="30"  BorderBrush="#FFFFF300" BorderThickness="0">
+                                <Border.BitmapEffect>
+                                    <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="Red" />
+                                </Border.BitmapEffect>
+                                <Rectangle x:Name="buttonRect" Width="49" Height="30">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="Green"/>
+                                            <GradientStop Offset="1" Color="#FFFFF300"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+
+                            </Border>
+
+                            <!--按钮内容-->
+                            <ContentPresenter 
+            Margin="0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            RecognizesAccessKey="True"
+                                />
+
+                        </Grid>
+                        <!--触发器-->
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="#FF3ED43E" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FFFFFBA0" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="Button.IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+
+                                            <ColorAnimation To="Transparent" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation To="#FF8A92A9" BeginTime="0:0:0" Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[0].(GradientStop.Color)" />
+                                            <ColorAnimation Duration="0:0:0.15" Storyboard.TargetName="buttonRect" Storyboard.TargetProperty="(Rectangle.Fill).(LinearGradientBrush.GradientStops)[1].(GradientStop.Color)" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX=".98" ScaleY=".98"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value=".55,.55"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!--定义正常的背景变红的样式-->
+        <Style x:Key="marketListViewButtom_red_normal" TargetType="Button" >
+            <!--修改模板属性-->
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <!--控件模板-->
+                    <ControlTemplate TargetType="Button">
+                        <!--只有Grid才能装下这么多Child-->
+                        <Grid>
+                            <!--带特效的底层背景-->
                             <Border x:Name="back" Opacity="0.8" CornerRadius="0">
                                 <Border.BitmapEffect>
                                     <OuterGlowBitmapEffect Opacity="0.8" GlowSize="0" GlowColor="Red" />
@@ -1673,8 +1849,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <!--定义背景变红的样式-->
-        <Style x:Key="marketListViewButtom_green" TargetType="Button" >
+        <!--定义正常背景变绿的样式-->
+        <Style x:Key="marketListViewButtom_green_normal" TargetType="Button" >
             <!--修改模板属性-->
 
             <Setter Property="Template">
@@ -1883,7 +2059,7 @@
                             <GridViewColumn x:Name="lastPriceFMGVCH"   Header="最新价格" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="lastFMLab" Content="{Binding LastPrice,UpdateSourceTrigger=PropertyChanged}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="lastFMLab" Content="{Binding LastPrice,UpdateSourceTrigger=PropertyChanged}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1905,7 +2081,7 @@
                             <GridViewColumn x:Name="bidVolumeFMGVCH"  Header="买量" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="bidFMLab" Content="{Binding BidVolume1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="bidFMLab" Content="{Binding BidVolume1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1914,7 +2090,7 @@
                             <GridViewColumn x:Name="askVolumeFMGVCH"   Header="卖量" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="openFMLab" Content="{Binding AskVolume1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="openFMLab" Content="{Binding AskVolume1}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1923,7 +2099,7 @@
                             <GridViewColumn x:Name="openInterestFMGVCH"   Header="成交量" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="openFMLab" Content="{Binding OpenInterest}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="openFMLab" Content="{Binding OpenInterest}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1933,7 +2109,7 @@
                             <GridViewColumn x:Name="openPriceFMGVCH"   Header="今日开盘价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="openFMLab" Content="{Binding OpenPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="openFMLab" Content="{Binding OpenPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1941,7 +2117,7 @@
                             <GridViewColumn x:Name="riseAndFallFMGVCH"  Header="涨跌" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="riseFMLab" Content="{Binding RiseAndFall}" Width="Auto" MinWidth="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="riseFMLab" Content="{Binding RiseAndFall}" Width="Auto" MinWidth="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1949,7 +2125,7 @@
                             <GridViewColumn x:Name="riseAndFallRateFMGVCH"   Header="涨幅%" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="riseRateFMLab" Content="{Binding RiseAndFallRate}" Width="Auto" MinWidth="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="riseRateFMLab" Content="{Binding RiseAndFallRate}" Width="Auto" MinWidth="50" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1958,7 +2134,7 @@
                             <GridViewColumn x:Name="highestPriceFMGVCH"   Header="最高价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="highestFMLab" Content="{Binding HighestPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="highestFMLab" Content="{Binding HighestPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1966,7 +2142,7 @@
                             <GridViewColumn x:Name="lowestPriceFMGVCH"   Header="最低价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="lowestFMLab" Content="{Binding LowestPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="lowestFMLab" Content="{Binding LowestPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1974,7 +2150,7 @@
                             <GridViewColumn x:Name="upperLimitPriceFMGVCH"  Header="涨停板价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="upperFMLab" Content="{Binding UpperLimitPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="upperFMLab" Content="{Binding UpperLimitPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1983,7 +2159,7 @@
                             <GridViewColumn x:Name="lowerLimitPriceFMGVCH"   Header="跌停板价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="lowerFMLab" Content="{Binding LowerLimitPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="lowerFMLab" Content="{Binding LowerLimitPrice}" Width="Auto" MinWidth="60" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -1991,7 +2167,7 @@
                             <GridViewColumn x:Name="preSettlementPriceFMGVCH"  Header="昨日结算价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="preSettleFMLab" Content="{Binding PreSettlementPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="preSettleFMLab" Content="{Binding PreSettlementPrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2000,7 +2176,7 @@
                             <GridViewColumn x:Name="preClosePriceFMGVCH"  Header="昨日收盘价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="preCloseFMLab" Content="{Binding PreClosePrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="preCloseFMLab" Content="{Binding PreClosePrice}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2009,7 +2185,7 @@
                             <GridViewColumn x:Name="preOpenInterestFMGVCH"  Header="昨日成交量" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="preOpenFMLab" Content="{Binding PreOpenInterest}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                        <Label x:Name="preOpenFMLab" Content="{Binding PreOpenInterest}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2018,7 +2194,7 @@
                     </ListView.View>
                 </ListView>
 
-                <ListView x:Name="subjectMatterMarketGrid" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"   Height="58" Canvas.Top="30" MinWidth="882" Width="1120" Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" FlowDirection="LeftToRight" Foreground="#FF9198AC">
+                <ListView x:Name="subjectMatterMarketGrid" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"   Height="61" Canvas.Top="30" MinWidth="882" Width="1127" Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" FlowDirection="LeftToRight" Foreground="#FF9198AC">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
 
@@ -2107,8 +2283,8 @@
                     </ListView.View>
 
                 </ListView>
-                <Border x:Name="titileBorder4" BorderBrush="#FF414559" BorderThickness="0,1,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" Width="1128" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="88" >
-                    <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Width="1128" FlowDirection="LeftToRight" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Center" Canvas.Top="100" RenderTransformOrigin="0.5,0.5" MouseEnter="optionsMarketTitleGrid_MouseEnter" MouseLeave="optionsMarketTitleGrid_MouseLeave" Margin="0,-1" >
+                <Border x:Name="titileBorder4" BorderBrush="#FF7B7F95" BorderThickness="0,2,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" Width="1128" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="91" >
+                    <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Width="1127" FlowDirection="LeftToRight" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Canvas.Top="100" RenderTransformOrigin="0.5,0.5" MouseEnter="optionsMarketTitleGrid_MouseEnter" MouseLeave="optionsMarketTitleGrid_MouseLeave" Margin="0" VerticalAlignment="Top" >
 
                         <Grid.RenderTransform>
                             <TransformGroup>
@@ -2129,11 +2305,11 @@
                         <Border BorderBrush="#FF414559" BorderThickness="0,0,1,0" Grid.Column="1" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="79" MaxWidth="79" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled"/>
                         <Border BorderBrush="#FF414559" BorderThickness="0,0,1,0" Grid.Column="2" HorizontalAlignment="Left" Height="25" VerticalAlignment="Top" Width="370" MaxWidth="400" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="1,0,0,0" />
 
-                        <TextBlock Text=" 看涨" TextAlignment="Center" Grid.Row=" 0" Grid.Column=" 0" Margin="3,0,101,0" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Grid.ColumnSpan="2"/>
-                        <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="#FF70728A" Grid.ColumnSpan="2" Margin="79,0,31,0"/>
+                        <TextBlock Text=" 看涨" TextAlignment="Center" Grid.Row=" 0" Grid.Column=" 0" Margin="3,-1,101,1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="White" Grid.ColumnSpan="2" FontSize="14" FontWeight="Bold"/>
+                        <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="White" Grid.ColumnSpan="2" Margin="79,-1,31,1" FontSize="14" FontWeight="Bold"/>
                     </Grid>
                 </Border>
-                <ListView x:Name="optionsMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Height="243" Width="1127" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="113" Canvas.Left="-7" >
+                <ListView x:Name="optionsMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Height="240" Width="1134" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,0,1" Foreground="#FF9198AC" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="116" Canvas.Left="-7" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">
@@ -2160,7 +2336,7 @@
                             <GridViewColumn x:Name="volumeROMGVCH" Header=" 现量"  Width="80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="volumeROMBox"  Content="{Binding Volume1}" Width=" 80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"    />
+                                        <Label x:Name="volumeROMBox"  Content="{Binding Volume1}" Width=" 80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"    />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2168,16 +2344,25 @@
                             <GridViewColumn x:Name="openInterestROMGVCH" Header=" 成交量"  Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="openROMBox"  Content="{Binding OpenInterest1}" Width=" 80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"    />
+                                        <Label x:Name="openROMBox"  Content="{Binding OpenInterest1}" Width=" 80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"    />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价" DisplayMemberBinding="{Binding ExercisePrice}" Width=" 80"/>
+                            <GridViewColumn x:Name="exercisePriceOMGVCH" Header=" 行权价"  Width=" 80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Border Margin="0" Background="#FF9198AC">
+                                            <Label Content="{Binding ExercisePrice}" Width=" 80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Foreground="#FF0E0F13"    />
+                                        </Border>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
                             <GridViewColumn x:Name="openInterestDOMGVCH" Header=" 成交量"  Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="openDOMBox"  Content="{Binding OpenInterest2}" Width=" 80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center"    />
+                                        <Label x:Name="openDOMBox"  Content="{Binding OpenInterest2}" Width=" 80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" Foreground="#FF9198AC"    />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2185,7 +2370,7 @@
                             <GridViewColumn x:Name="volumeDOMGVCH" Header=" 现量"  Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Label x:Name="volumeDOMBox"  Content="{Binding Volume2}" Width=" 80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"    />
+                                        <Label x:Name="volumeDOMBox"  Content="{Binding Volume2}" Width=" 80" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF9198AC"    />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2546,7 +2731,7 @@
             </Canvas>
             <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="110" Canvas.Top="216" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Click="startStrategyBtn_Click"/>
 
-            <Button x:Name="StategyCanvasButtom" Content="    策略实验室   STRATEGY LAB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="188" Canvas.Left="-80" Canvas.Top="110" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="28" Click="StategyCanvasButtom_Click">
+            <Button x:Name="StategyCanvasButtom" Content="    策略设计实验室   STRATEGY-DESIGN LAB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Canvas.Left="-116" Canvas.Top="146" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="28" Click="StategyCanvasButtom_Click">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -2563,7 +2748,7 @@
         <!--风险实验室伸缩面板-->
         <Canvas x:Name="Canvas2" HorizontalAlignment="Right" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF14161E" >
 
-            <Button x:Name="RiskCanvasButtom" Content="   RISK LAB   风险实验室" HorizontalAlignment="Left" VerticalAlignment="Top" Width="152" Canvas.Left="-62" Canvas.Top="92" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="29" Click="RiskCanvasButtom_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
+            <Button x:Name="RiskCanvasButtom" Content="   RISK-MANAGEMENT LAB   风险管理实验室" HorizontalAlignment="Left" VerticalAlignment="Top" Width="270" Canvas.Left="-121" Canvas.Top="151" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="29" Click="RiskCanvasButtom_Click" HorizontalContentAlignment="Left" VerticalContentAlignment="Top">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
