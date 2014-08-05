@@ -2054,6 +2054,7 @@
                 <ListView x:Name="futuresMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"  Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="#FF9198AC">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
+                            <GridViewColumn x:Name="instrumentIDFMGVCH" DisplayMemberBinding="{Binding InstrumentID}" Header=" 合约代码" Width=" 100" />
                             <!--0-->
                             <GridViewColumn x:Name="instrumentNameFMGVCH" DisplayMemberBinding="{Binding InstrumentName}" Header=" 名称" Width=" 100" />
                             <GridViewColumn x:Name="lastPriceFMGVCH"   Header="最新价格" Width=" 100">

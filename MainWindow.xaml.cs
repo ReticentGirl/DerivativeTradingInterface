@@ -59,6 +59,10 @@ namespace qiquanui
         Thread dataThread;
 
         // Thread tradingThread;
+        void ctpStart()
+        {
+            new MktData().Run();
+        }
 
         public MainWindow()
         {
@@ -71,7 +75,7 @@ namespace qiquanui
 
             //tradingthread = new thread(new threadstart(tradingthreadstart));    //交易区线程启动
             //tradingthread.start();
-
+            //new  Thread(new ThreadStart(ctpStart)).Start();
 
 
 
@@ -335,11 +339,14 @@ namespace qiquanui
 
             optionsMarketListView.Visibility = Visibility.Hidden;
             optionsMarketTitleGrid.Visibility = Visibility.Hidden;
-            subjectMatterLabel.Visibility = Visibility.Hidden;
-            subjectMatterComboBox.Visibility = Visibility.Hidden;
+            subjectMatterLabel.Visibility = Visibility.Visible;
+            subjectMatterComboBox.Visibility = Visibility.Visible;
             futuresMarketListView.Visibility = Visibility.Visible;
             subjectMatterMarketGrid.Visibility = Visibility.Hidden;
             titileBorder4.Visibility = Visibility.Hidden;
+            dueDateLabel.Visibility = Visibility.Hidden;
+            dueDateComboBox.Visibility = Visibility.Hidden;
+
         } //行情区，“衍生品种类”选择“期货”，隐藏“标的期货”、cvx指数、期权行情，显示期货行情
 
         private void optionsComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -352,6 +359,9 @@ namespace qiquanui
             subjectMatterComboBox.Visibility = Visibility.Visible;
             subjectMatterMarketGrid.Visibility = Visibility.Visible;
             titileBorder4.Visibility = Visibility.Visible;
+            dueDateLabel.Visibility = Visibility.Visible;
+            dueDateComboBox.Visibility = Visibility.Visible;
+
         } //行情区，“衍生品种类”选择“期权”，显示“标的商品”、cvx指数、期权行情，隐藏期货行情
         private void TopCanvasButtomGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -845,6 +855,15 @@ namespace qiquanui
         /// <param name="e"></param>
         private void subjectMatterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            string type = typeComboBox.Text.Trim();
+            if (type.Equals("期货"))
+            {
+                dataThread = new Thread(new ThreadStart(DmUpdate));
+                dataThread.Start();
+
+                return;
+            }
+
             if (e.AddedItems.Count == 0) return;
             string _subject = (string)e.AddedItems[0];
             subjectMatterComboBox.Text = _subject;
@@ -872,29 +891,48 @@ namespace qiquanui
         /// <param name="e"></param>
         private void traderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.RemovedItems.Count == 0) return;
+            if (e.RemovedItems.Count == 0 || e.AddedItems.Count==0) return;
             string trader;
-            trader = (string)((ComboBoxItem)e.AddedItems[0]).Content;
+            trader = (string)e.AddedItems[0];
             trader = trader.Trim();
             type_change(typeComboBox.Text.Trim(), trader);
         }
 
         private void type_change(string _type, string _trader)
         {
+            traderComboBox.Text = _trader;
             if (!_type.Equals("期权"))
             {
-                string duedatesql = "SELECT duedate FROM staticdata s  where exchangename='" + _trader + "' and optionorfuture=1 group by duedate ";
-                DataTable dt = DataControl.QueryTable(duedatesql);
-                dueDateComboBox.Items.Clear();
+                //string duedatesql = "SELECT duedate FROM staticdata s  where exchangename='" + _trader + "' and optionorfuture=1 group by duedate ";
+                //DataTable dt = DataControl.QueryTable(duedatesql);
+                //dueDateComboBox.Items.Clear();
+                //for (int i = 0; i < dt.Rows.Count; i++)
+                //{
+                //    string _duedate = (string)dt.Rows[i][0];
+                //    if (_duedate.Length == 4 && _duedate[0].Equals('1') && !_duedate.Equals("1407"))
+                //        dueDateComboBox.Items.Add(_duedate);
+                //}
+                //dueDateComboBox.SelectedIndex = 0;
+
+                string subjectlist;
+                if (_trader.Equals("全部"))
+                    subjectlist = "SELECT instrumentname FROM staticdata s where  instrumenttype='期货' and exchangename<>'大商所' and  duedate<>'1407' and duedate<>'no' group by instrumentname";
+                else 
+                    subjectlist = "SELECT instrumentname FROM staticdata s where  instrumenttype='期货' and exchangename='"+_trader+"' and  duedate<>'1407' and duedate<>'no' group by instrumentname";
+
+                DataTable dt = DataControl.QueryTable(subjectlist);
+                subjectMatterComboBox.Items.Clear();
+                subjectMatterComboBox.Items.Add("全部");
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    string _duedate = (string)dt.Rows[i][0];
-                    if (_duedate.Length == 4 && _duedate[0].Equals('1') && !_duedate.Equals("1407"))
-                        dueDateComboBox.Items.Add(_duedate);
+                    string _subject = (string)dt.Rows[i][0];
+                    subjectMatterComboBox.Items.Add(_subject);
                 }
-                dueDateComboBox.SelectedIndex = 0;
+                subjectMatterComboBox.SelectedIndex = 0;
+                
                 return;
             }
+
             string trader = _trader;
             subjectMatterComboBox.Items.Clear();
             if (trader.Equals("上期所"))
@@ -929,7 +967,7 @@ namespace qiquanui
             string subject = subjectMatterComboBox.Text.Trim();
 
             if ((type.Equals("期权") && (trader.Equals("") || duedata.Equals("") || subject.Equals(""))) ||
-                (type.Equals("期货") && (trader.Equals("") || duedata.Equals(""))))
+                (type.Equals("期货") && (trader.Equals("") )))
                 return;
 
             dataThread = new Thread(new ThreadStart(DmUpdate));
@@ -939,11 +977,26 @@ namespace qiquanui
 
         private void typeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.RemovedItems.Count == 0) type_change("期货", "中金所");
+            string type = ((string)((ComboBoxItem)e.AddedItems[0]).Content).Trim();
+            typeComboBox.Text = type;
+            if (type.Equals("期货"))
+            {
+                traderComboBox.Items.Clear();
+                traderComboBox.Items.Add("全部");
+                traderComboBox.Items.Add("中金所");
+                traderComboBox.Items.Add("上期所");
+                traderComboBox.Items.Add("郑商所");
+                traderComboBox.SelectedIndex = 0;
+                type_change(type, "全部");
+            }
             else
             {
-                string type = ((string)((ComboBoxItem)e.AddedItems[0]).Content).Trim();
-                type_change(type, traderComboBox.Text.Trim());
+                traderComboBox.Items.Clear();
+                traderComboBox.Items.Add("中金所");
+                traderComboBox.Items.Add("上期所");
+                traderComboBox.Items.Add("郑商所");
+                traderComboBox.SelectedIndex = 0;
+                type_change(type, "中金所");
             }
         }
 

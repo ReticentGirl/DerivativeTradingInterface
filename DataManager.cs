@@ -180,6 +180,7 @@ namespace qiquanui
         private string lastDate;
         private string updateTime;
 
+ 
         public string LastDate
         {
             get { return lastDate; }
@@ -397,7 +398,7 @@ namespace qiquanui
         public Hashtable name_no = new Hashtable(100);//名字对应的行数（期货）
         int tot_line = 0;
 
-        const int Max_line = 30;
+        const int Max_line = 100;
         int[,] ob_no2 = new int[Max_line, 20];//表示行index1的第index2列是否被修改（OnTimedEvent更新面板数据时）
         int[,] ob_timer = new int[Max_line, 20];
         int[,] ob_old = new int[Max_line, 20];
@@ -408,7 +409,7 @@ namespace qiquanui
         const int TIMER_UNIT = 100;
         int mytimer = 0;
         bool locked = false;
-        int[] timer_milli = { 100, 200 };
+        int[] timer_milli = { 300, 300 };
         public void TimeManage(object sender, ElapsedEventArgs e)
         {
             if (locked) return;
@@ -582,6 +583,7 @@ namespace qiquanui
 
             if (box_type.Equals("期权"))
             {
+                Hide();
 
                 ///根据行权价的列表list，将所有行权价对应的行数保存在ep_no中
                 DataTable list = DataControl.QueryTable(exercisesql);
@@ -655,11 +657,19 @@ namespace qiquanui
             }
             else
             {
+                Hide2();
                 ///期货
                 while (locked) { }
                 locked = true;
                 ObservableOb2 = new ObservableCollection<future>();
-                updatesql = "SELECT * from staticdata where optionorfuture=1 and duedate='" + box_time + "' and exchangename='" + box_exchange + "'";
+                if (!box_future.Equals("全部"))
+                    updatesql = "select * from staticdata where instrumentname='" + box_future + "' and duedate<>'1407' and duedate<>'no' ";
+                else if (!box_exchange.Equals("全部"))
+                    updatesql = "select * from staticdata where exchangename='"+box_exchange+"' and instrumenttype='期货' and duedate<>'1407' and duedate<>'no'";
+                else 
+                    updatesql =" select * from staticdata where exchangename<>'大商所' and instrumenttype='期货' and duedate<>'1407' and duedate<>'no'";
+
+                //updatesql = "SELECT * from staticdata where optionorfuture=1 and duedate='" + box_time + "' and exchangename='" + box_exchange + "'";
                 DataTable dt = DataControl.QueryTable(updatesql);
                 tot_line = dt.Rows.Count;
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -672,7 +682,7 @@ namespace qiquanui
                     future _fu = new future();
                     _fu.instrumentid = _id;
                     ObservableOb2.Add(_fu);
-                    for (int j = 0; j < 17; j++)
+                    for (int j = 0; j < 18; j++)
                     {
                         ob_timer[i, j] = 0;
                         ob_no2[i, j] = 0;
@@ -760,44 +770,48 @@ namespace qiquanui
 
                 double _preClose = (double)dr["PreClosePrice"];
 
+                int j = 0;
+                _new_string = (string)dr["InstrumentID"];
+                _fu.InstrumentID = _new_string;
+                j++;
                 //0
                 _new_string = (string)dr["InstrumentName"];
                 _fu.InstrumentName = _new_string;
-
+                j++;
                 //1
                 _new_string = Math.Round((double)dr["LastPrice"], 1).ToString("f1");
-                _fu.LastPrice = SetTextAndColor(i, 1, _new_string, _fu.LastPrice, _preClose);
-
+                _fu.LastPrice = SetTextAndColor(i, j, _new_string, _fu.LastPrice, _preClose);
+                j++;
                 //2
                 _new_string = Math.Round((double)dr["AskPrice1"], 1).ToString("f1");
-                _fu.AskPrice1 = SetTextAndColor(i, 2, _new_string, _fu.AskPrice1, _preClose);
-
+                _fu.AskPrice1 = SetTextAndColor(i, j, _new_string, _fu.AskPrice1, _preClose);
+                j++;
                 //3
                 _new_string = Math.Round((double)dr["BidPrice1"], 1).ToString("f1");
-                _fu.BidPrice1 = SetTextAndColor(i, 3, _new_string, _fu.BidPrice1, _preClose);
-
+                _fu.BidPrice1 = SetTextAndColor(i, j, _new_string, _fu.BidPrice1, _preClose);
+                j++;
                 //4
                 _new_string = ((Int64)dr["BidVolume1"]).ToString();
                 _fu.BidVolume1 = _new_string;
                 if (first)
-                    SetColor(i, 4, 7);
-
+                    SetColor(i, j, 7);
+                j++;
                 //5
                 _new_string = ((Int64)dr["AskVolume1"]).ToString();
                 _fu.AskVolume1 = _new_string;
                 if (first)
-                    SetColor(i, 5, 7);
-
+                    SetColor(i, j, 7);
+                j++;
                 //6
                 _new_string = Math.Round(((double)dr["OpenInterest"]), 1).ToString();
                 _fu.OpenInterest = _new_string;
                 if (first)
-                    SetColor(i, 6, 7);
-
+                    SetColor(i, j, 7);
+                j++;
                 //7
                 _new_string = Math.Round(((double)dr["OpenPrice"]), 1).ToString("f1");
-                _fu.OpenPrice = SetTextAndColor(i, 7, _new_string, _fu.OpenPrice, _preClose);
-
+                _fu.OpenPrice = SetTextAndColor(i, j, _new_string, _fu.OpenPrice, _preClose);
+                j++;
                 //8
                 double x = Math.Round(((double)dr["RiseAndFall"]), 1);
                 _new_string = x.ToString("f1");
@@ -816,10 +830,10 @@ namespace qiquanui
                     if (_fu.RiseAndFall[0].Equals('▼'))
                         _temp = "-" + _temp.Substring(1);
                     else _temp = _temp.Substring(1);
-                    _new_string = SetTextAndColor(i, 8, _new_string, _temp, 0);
+                    _new_string = SetTextAndColor(i, j, _new_string, _temp, 0);
                 }
                 else
-                    _new_string = SetTextAndColor(i, 8, _new_string, _fu.RiseAndFall, 0);
+                    _new_string = SetTextAndColor(i, j, _new_string, _fu.RiseAndFall, 0);
                 //▲▼
                 if (!_new_string.Equals("-"))
                 {
@@ -832,41 +846,41 @@ namespace qiquanui
                     }
                 }
                 _fu.RiseAndFall = _new_string;
-
+                j++;
                 //9
                 _new_string = Math.Round(((double)dr["RiseAndFallRate"]) * 100.0, 2).ToString("f2");
-                _fu.RiseAndFallRate = SetTextAndColor(i, 9, _new_string, _fu.RiseAndFallRate, 0);
-
+                _fu.RiseAndFallRate = SetTextAndColor(i, j, _new_string, _fu.RiseAndFallRate, 0);
+                j++;
                 //10
                 _new_string = Math.Round((double)dr["HighestPrice"], 1).ToString("f1");
-                _fu.HighestPrice = SetTextAndColor(i, 10, _new_string, _fu.HighestPrice, _preClose);
-
+                _fu.HighestPrice = SetTextAndColor(i, j, _new_string, _fu.HighestPrice, _preClose);
+                j++;
                 //11
                 _new_string = Math.Round((double)dr["LowestPrice"], 1).ToString("f1");
-                _fu.LowestPrice = SetTextAndColor(i, 11, _new_string, _fu.LowestPrice, _preClose);
-
+                _fu.LowestPrice = SetTextAndColor(i, j, _new_string, _fu.LowestPrice, _preClose);
+                j++;
                 //12
                 _new_string = Math.Round((double)dr["UpperLimitPrice"], 1).ToString("f1");
-                _fu.UpperLimitPrice = SetTextAndColor(i, 12, _new_string, _fu.UpperLimitPrice, _preClose);
-
+                _fu.UpperLimitPrice = SetTextAndColor(i, j, _new_string, _fu.UpperLimitPrice, _preClose);
+                j++;
                 //13
                 _new_string = Math.Round((double)dr["LowerLimitPrice"], 1).ToString("f1");
-                _fu.LowerLimitPrice = SetTextAndColor(i, 13, _new_string, _fu.LowerLimitPrice, _preClose);
-
+                _fu.LowerLimitPrice = SetTextAndColor(i, j, _new_string, _fu.LowerLimitPrice, _preClose);
+                j++;
                 //14
                 _new_string = Math.Round((double)dr["PreSettlementPrice"], 1).ToString("f1");
-                _fu.PreSettlementPrice = SetTextAndColor(i, 14, _new_string, _fu.PreSettlementPrice, _preClose);
-
+                _fu.PreSettlementPrice = SetTextAndColor(i, j, _new_string, _fu.PreSettlementPrice, _preClose);
+                j++;
                 //15
                 _new_string = Math.Round((double)dr["PreClosePrice"], 1).ToString("f1");
-                _fu.PreClosePrice = SetTextAndColor(i, 15, _new_string, _fu.PreClosePrice, _preClose);
-
+                _fu.PreClosePrice = SetTextAndColor(i, j, _new_string, _fu.PreClosePrice, _preClose);
+                j++;
                 //16
                 _new_string = Math.Round((double)dr["PreOpenInterest"], 1).ToString();
                 _fu.PreOpenInterest = _new_string;
                 if (first)
-                    SetColor(i, 16, 7);
-
+                    SetColor(i, j, 7);
+                j++;
 
             }
 
@@ -1281,8 +1295,8 @@ namespace qiquanui
                 for (int i = 0; i < tot_line; i++)
                 {
                     ////option _op = ObservableObj[i] as option;
-                    for (int j = 0; j < 17; j++)
-                        if (ob_no2[i, j] > 0 && !(j == 0))
+                    for (int j = 0; j < 18; j++)
+                        if (ob_no2[i, j] > 0 && !(j <= 1))
                         {
                             UIElement u = pwindow.futuresMarketListView.ItemContainerGenerator.ContainerFromIndex(i) as UIElement;
                             if (u == null) continue;
@@ -1298,7 +1312,7 @@ namespace qiquanui
                             }
                             //option dr = (pwindow.optionsMarketListView.Items[0]) as option;
 
-                            if (j == 2 || j == 3)
+                            if (j == 4 || j == 3)
                             {
 
                                 System.Windows.Controls.Button b = x as System.Windows.Controls.Button;
@@ -1408,8 +1422,6 @@ namespace qiquanui
             {
                 ObservableObj = ObservableObj2;
                 ObservableOb = ObservableOb2;
-                pwindow.optionsMarketListView.Visibility = Visibility.Hidden;
-                pwindow.subjectMatterMarketGrid.Visibility = Visibility.Hidden;
                 pwindow.optionsMarketListView.DataContext = ObservableObj;
                 pwindow.subjectMatterMarketGrid.DataContext = ObservableOb;
                 pwindow.subjectMatterMarketGrid.ItemsSource = ObservableOb;
@@ -1434,11 +1446,51 @@ namespace qiquanui
             else
             {
                 ObservableOb = ObservableOb2;
-                pwindow.futuresMarketListView.Visibility = Visibility.Hidden;
                 pwindow.futuresMarketListView.DataContext = ObservableOb;
             }
 
         }
+
+
+        /// <summary>
+        /// 期权数据隐藏
+        /// </summary>
+        public void Hide()
+        {
+
+            ShowCallBack d;
+            if (System.Threading.Thread.CurrentThread != pwindow.Dispatcher.Thread)
+            {
+                d = new ShowCallBack(Hide);
+                pwindow.Dispatcher.Invoke(d, new object[] { });
+            }
+            else
+            {
+                pwindow.optionsMarketListView.Visibility = Visibility.Hidden;
+                pwindow.subjectMatterMarketGrid.Visibility = Visibility.Hidden;
+            }
+
+        }
+
+        /// <summary>
+        /// 期货数据隐藏
+        /// </summary>
+        public void Hide2()
+        {
+
+            ShowCallBack d;
+            if (System.Threading.Thread.CurrentThread != pwindow.Dispatcher.Thread)
+            {
+                d = new ShowCallBack(Hide2);
+                pwindow.Dispatcher.Invoke(d, new object[] { });
+            }
+            else
+            {
+                pwindow.futuresMarketListView.Visibility = Visibility.Hidden;
+            }
+
+        }
+
 
         /// <summary>
         /// 期权数据可视

@@ -26,7 +26,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -41,5 +42,12 @@ obj/Debug/
 !bin/Debug/*.dll
 !bin/Debug/*.dll
 
+#Release
+bin/Release/
+obj/Release/
+!bin/Release/*.dll
+!bin/Release/*.dll
+
 *.sqlite
-qiquanui.v11.suo
+*.suo
+*.sln
