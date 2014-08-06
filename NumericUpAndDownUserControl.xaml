@@ -9,7 +9,7 @@
              Height="25" d:DesignWidth="80">
     <UserControl.Resources>
         <Style TargetType="{x:Type TextBox}">
-            <Setter Property="Foreground" Value="#FF9198AC"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="#FF2E3143"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="SelectionBrush" Value="#FF3E414D"/>

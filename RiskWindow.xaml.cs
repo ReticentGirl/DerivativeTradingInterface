@@ -202,72 +202,72 @@ namespace qiquanui
 
         private void Grid1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Grid1Storyboard.Begin(this);
+           // Grid1Storyboard.Begin(this);
         }
 
         private void Grid1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Grid1Storyboard_Leave.Begin(this);
+           // Grid1Storyboard_Leave.Begin(this);
         }
 
         private void Grid2_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Grid2Storyboard.Begin(this);
+          //  Grid2Storyboard.Begin(this);
         }
 
         private void Grid2_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            Grid2Storyboard_Leave.Begin(this);
+        {//
+          //  Grid2Storyboard_Leave.Begin(this);
         }
 
         private void Grid1Label1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Grid1Label1Storyboard.Begin(this);
+         //   Grid1Label1Storyboard.Begin(this);
         }
 
         private void Grid1Label1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Grid1Label1Storyboard_Leave.Begin(this);
+          //  Grid1Label1Storyboard_Leave.Begin(this);
         }
 
         private void Grid2Label1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Grid2Label1Storyboard.Begin(this);
+           // Grid2Label1Storyboard.Begin(this);
         }
 
         private void Grid2Label1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            Grid2Label1Storyboard_Leave.Begin(this);
+           // Grid2Label1Storyboard_Leave.Begin(this);
         }
 
         private void compoGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            compoGridStoryboard.Begin(this);
+           // compoGridStoryboard.Begin(this);
         }
 
         private void compoGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            compoGridStoryboard_Leave.Begin(this);
+           /// compoGridStoryboard_Leave.Begin(this);
         }
 
         private void GammaTabGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            GammaTabGridStoryboard.Begin(this);
+           // GammaTabGridStoryboard.Begin(this);
         }
 
         private void GammaTabGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            GammaTabGridStoryboard_Leave.Begin(this);
+           // GammaTabGridStoryboard_Leave.Begin(this);
         }
 
         private void DeltaTabGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            DeltaTabGridStoryboard.Begin(this);
+           // DeltaTabGridStoryboard.Begin(this);
         }
 
         private void DeltaTabGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            DeltaTabGridStoryboard_Leave.Begin(this);
+            //DeltaTabGridStoryboard_Leave.Begin(this);
         }
 
        

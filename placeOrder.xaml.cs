@@ -99,12 +99,12 @@ namespace qiquanui
 
         private void tradingCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            tradingCanvasStoryboard.Begin(this);
+           // tradingCanvasStoryboard.Begin(this);
         }
 
         private void tradingCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            tradingCanvasStoryboard_Leave.Begin(this);
+           // tradingCanvasStoryboard_Leave.Begin(this);
         }
 
 

@@ -1185,7 +1185,7 @@ namespace qiquanui
                                     case 6:
                                         ///此处为平价时，无背景
                                         t.Background = System.Windows.Media.Brushes.Transparent;
-                                        t.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                        t.Foreground = System.Windows.Media.Brushes.White;
                                         break;
                                     case 2:
                                         ///此处为价格变动，且为涨价时，有背景
@@ -1209,7 +1209,7 @@ namespace qiquanui
                                         break;
                                     case 7:
                                         ///此处为中性数值，无背景
-                                        t.Foreground =new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF9198AC")); 
+                                        t.Foreground =System.Windows.Media.Brushes.White;
                                         break;
                                 }
                             }
@@ -1244,7 +1244,7 @@ namespace qiquanui
                             case 6:
                                 ///此处为平价时，无背景
                                 t.Background = System.Windows.Media.Brushes.Transparent;
-                                t.Foreground = System.Windows.Media.Brushes.AliceBlue;
+                                t.Foreground = System.Windows.Media.Brushes.White;
                                 break;
                             case 2:
                                 ///此处为价格变动，且为涨价时，有背景
@@ -1268,7 +1268,7 @@ namespace qiquanui
                                 break;
                             case 7:
                                 ///此处为中性数值，无背景
-                                t.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF9198AC")); 
+                                t.Foreground = System.Windows.Media.Brushes.White;
                                 break;
                         }
 
@@ -1388,7 +1388,7 @@ namespace qiquanui
                                         break;
                                     case 7:
                                         ///此处为中性数值，无背景
-                                        t.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF9198AC")); 
+                                        t.Foreground = System.Windows.Media.Brushes.White; 
                                         break;
                                 }
                             }

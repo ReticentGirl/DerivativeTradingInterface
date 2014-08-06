@@ -793,7 +793,7 @@
         <Style  TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="#FF76768B"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
 
             <Setter Property="Template">
@@ -1230,7 +1230,7 @@
             </Button.Background>
         </Button>
         <Canvas x:Name="groupCanvas"   Margin="24,43,348,470" Background="#FF191616" MouseEnter="groupCanvas_MouseEnter" MouseLeave="groupCanvas_MouseLeave" >
-            <ListView x:Name="groupListView" HorizontalAlignment="Left" Height="140" VerticalAlignment="Top" Width="814" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListView x:Name="groupListView" HorizontalAlignment="Left" Height="140" VerticalAlignment="Top" Width="814" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn x:Name="ifChosenGGVCH" Header=" ">

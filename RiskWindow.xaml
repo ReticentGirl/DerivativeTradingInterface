@@ -934,7 +934,7 @@
         <Style  TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="OverridesDefaultStyle" Value="True"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="Foreground" Value="#FF76768B"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
 
             <Setter Property="Template">
@@ -1022,7 +1022,7 @@
         </Style>
 
         <Style x:Key="textboxStyle" TargetType="{x:Type TextBox}">
-            <Setter Property="Foreground" Value="#FF9198AC"/>
+            <Setter Property="Foreground" Value="White"/>
             <Setter Property="BorderBrush" Value="#FF2E3143"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="SelectionBrush" Value="#FF3E414D"/>
@@ -1185,11 +1185,11 @@
             <!--设置单元格背景色-->
             <Label x:Name="Grid1Label1" Grid.Column="0" Grid.RowSpan="2" Background="#FF0A080C" MouseEnter="Grid1Label1_MouseEnter" MouseLeave="Grid1Label1_MouseLeave" />
 
-            <TextBlock x:Name="confidenceLevelCompoTB" Text="置信水平：" Grid.Column="0" Margin="16,9,0,133" VerticalAlignment="Center" Height="16" Grid.Row="1" Foreground="#FF958E97"/>
-            <TextBox x:Name="setConfidenceLevelCompoTBox" Grid.Column="0" Margin="76,5,25,129" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource textboxStyle}"/>
+            <TextBlock x:Name="confidenceLevelCompoTB" Text="置信水平：" Grid.Column="0" Margin="16,9,0,133" VerticalAlignment="Center" Height="16" Grid.Row="1" Foreground="White"/>
+            <TextBox x:Name="setConfidenceLevelCompoTBox" Grid.Column="0" Margin="76,5,25,129" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource textboxStyle}" Foreground="White"/>
             <Button x:Name="okCompoBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="42,35,41,103" Grid.Row="1" Height="20" Style="{StaticResource darkButton}" Background="#FF363338" BorderBrush="{x:Null}"/>
 
-            <TextBlock Text="当前组合：" Grid.Column="1" Grid.Row="0" Margin="10,10,563,91" Foreground="#FF958E97"/>
+            <TextBlock Text="当前组合：" Grid.Column="1" Grid.Row="0" Margin="10,10,563,91" Foreground="White"/>
             <Grid x:Name="compoGrid" Grid.Column="1" Grid.Row="0" Margin="50,33,40,30" MouseEnter="compoGrid_MouseEnter" MouseLeave="compoGrid_MouseLeave">
                 <Grid.Background>
                     <SolidColorBrush Color="#FF35313C" Opacity="0.7"/>
@@ -1207,18 +1207,18 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="deltaCompoGTB" Text="Delta" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="deltaCompoGTB" Text="Delta" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="2,2,0,1" Grid.Column="0" Grid.Row="0" />
-                <TextBlock x:Name="gammaCompoGTB" Text="Gamma" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="gammaCompoGTB" Text="Gamma" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="1" Grid.Row="0" />
-                <TextBlock x:Name="thetaCompoGTB" Text="Theta" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="thetaCompoGTB" Text="Theta" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="2" Grid.Row="0" />
-                <TextBlock x:Name="vegaCompoGTB" Text="Vega" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="vegaCompoGTB" Text="Vega" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="3" Grid.Row="0" />
-                <TextBlock x:Name="rhoCompoGTB" Text="Rho" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="rhoCompoGTB" Text="Rho" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="4" Grid.Row="0" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,2,1" Grid.Column="5" Grid.Row="0" />
-                <TextBlock x:Name="varCompoGTB" Text="Var" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="varCompoGTB" Text="Var" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="2,0,0,2" Grid.Column="0" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="1" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="2" Grid.Row="1" />
@@ -1226,10 +1226,10 @@
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="4" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,2,2" Grid.Column="5" Grid.Row="1" />
             </Grid>
-            
-            <ListView x:Name="optionsRiskLV" Grid.Column="1" Grid.Row="1" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+            <ListView x:Name="optionsRiskLV" Grid.Column="1" Grid.Row="1" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
                 <ListView.View>
-                    <GridView>                       
+                    <GridView>
                         <GridViewColumn x:Name="instrumentIDORGVCH" Header="交易代码" Width="110"/>
                         <GridViewColumn x:Name="deltaORGVCH" Header="Delta" Width="60"/>
                         <GridViewColumn x:Name="gammaORGVCH" Header="Gamma" Width="60"/>
@@ -1256,12 +1256,12 @@
             <!--设置单元格背景色-->
             <Label x:Name="Grid2Label1" Grid.Column="0" Grid.RowSpan="2" Background="#FF0A080C" MouseEnter="Grid2Label1_MouseEnter" MouseLeave="Grid2Label1_MouseLeave" />
 
-            <TextBlock x:Name="confidenceLevelRecomTB" Text="置信水平：" Grid.Column="0" Grid.RowSpan="2" Margin="16,0,0,0" VerticalAlignment="Center" Foreground="#FF958E97"/>
-            <TextBox x:Name="setConfidenceLevelRecomTBox" Width="50" Grid.Column="0" Grid.RowSpan="2" Margin="50,0,0,0" VerticalAlignment="Center" Style="{StaticResource textboxStyle}"/>
+            <TextBlock x:Name="confidenceLevelRecomTB" Text="置信水平：" Grid.Column="0" Grid.RowSpan="2" Margin="16,0,0,0" VerticalAlignment="Center" Foreground="White"/>
+            <TextBox x:Name="setConfidenceLevelRecomTBox" Width="50" Grid.Column="0" Grid.RowSpan="2" Margin="50,0,0,0" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" Foreground="White"/>
             <Button x:Name="okRecomBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="43,148,40,91" Height="20" Style="{StaticResource darkButton}" Background="#FF252327" BorderBrush="{x:Null}"/>
 
-            <TextBlock x:Name="recomTB" Text="基于VaR值的最优对冲策略：" Grid.Column="1" Grid.Row="0" Margin="10,10,472,238"/>
-            <ListView x:Name="recomLV" Grid.Column="1" Grid.Row="0" Margin="0,43,0,36" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <TextBlock x:Name="recomTB" Text="基于VaR值的最优对冲策略：" Grid.Column="1" Grid.Row="0" Margin="10,10,472,238" Foreground="White"/>
+            <ListView x:Name="recomLV" Grid.Column="1" Grid.Row="0" Margin="0,43,0,36" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn x:Name="ifChooseRGVCH" Header="勾选" Width="50">
@@ -1314,9 +1314,9 @@
             </TabItem>
         </TabControl>
 
-        <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="#FF958E97" Background="{x:Null}" Margin="0,0,105,333" Height="26" />
+        <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="White" Background="{x:Null}" Margin="0,0,105,333" Height="26" />
 
-        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0"  Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="0,0,20,333" Style="{StaticResource CboCommomStyle}"/>
+        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0"  Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="0,0,20,333" Style="{StaticResource CboCommomStyle}"/>
 
         </Grid>
 </Window>

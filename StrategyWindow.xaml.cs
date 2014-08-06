@@ -144,12 +144,12 @@ namespace qiquanui
 
         private void groupCanvas_MouseEnter(object sender, MouseEventArgs e)
         {
-            groupCanvasStoryboard.Begin(this);
+           // groupCanvasStoryboard.Begin(this);
         }
 
         private void groupCanvas_MouseLeave(object sender, MouseEventArgs e)
         {
-            groupCanvasStoryboard_Leave.Begin(this);
+           // groupCanvasStoryboard_Leave.Begin(this);
         }
     }
 }

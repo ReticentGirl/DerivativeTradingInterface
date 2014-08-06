@@ -296,42 +296,42 @@ namespace qiquanui
 
         private void Grid1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            grid1Storyboard.Begin(this);
+            //grid1Storyboard.Begin(this);
         } //鼠标进入行情区，区域增亮
 
         private void Grid1_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            grid1Storyboard_Leave.Begin(this);
+            //grid1Storyboard_Leave.Begin(this);
         } //鼠标离开行情区，区域亮度还原
 
         private void Grid3_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            grid3Storyboard.Begin(this);
+            //grid3Storyboard.Begin(this);
         } //鼠标进入操作区，区域增亮
 
         private void Grid3_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            grid3Storyboard_Leave.Begin(this);
+            //grid3Storyboard_Leave.Begin(this);
         } //鼠标离开操作区，区域亮度还原
         private void optionsMarketTitleGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            optionsMarketTitleGridStoryboard.Begin(this);
+            //optionsMarketTitleGridStoryboard.Begin(this);
 
         } //鼠标进入期权对应标的物行情区，区域增亮
 
         private void optionsMarketTitleGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            optionsMarketTitleGridStoryboard_Leave.Begin(this);
+          //  optionsMarketTitleGridStoryboard_Leave.Begin(this);
         } //鼠标离开期权对应标的物行情区，区域亮度还原
 
         private void basicInforAndPromptGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            basicInforAndPromptGridStoryboard.Begin(this);
+          //  basicInforAndPromptGridStoryboard.Begin(this);
         }
 
         private void basicInforAndPromptGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            basicInforAndPromptGridStoryboard_Leave.Begin(this);
+          //  basicInforAndPromptGridStoryboard_Leave.Begin(this);
         }
 
         private void futuresComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -361,32 +361,32 @@ namespace qiquanui
         } //行情区，“衍生品种类”选择“期权”，显示“标的商品”、cvx指数、期权行情，隐藏期货行情
         private void TopCanvasButtomGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            TopCanvasButtomGridStoryboard.Begin(this);
+           // TopCanvasButtomGridStoryboard.Begin(this);
         }
 
         private void TopCanvasButtomGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            TopCanvasButtomGridStoryboard_Leave.Begin(this);
+            //TopCanvasButtomGridStoryboard_Leave.Begin(this);
 
         }
         private void strategyOfOptionsCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            strategyOfOptionsCanvasStoryboard.Begin(this);
+          //  strategyOfOptionsCanvasStoryboard.Begin(this);
         }
 
         private void strategyOfOptionsCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            strategyOfOptionsCanvasStoryboard_Leave.Begin(this);
+            //strategyOfOptionsCanvasStoryboard_Leave.Begin(this);
         }
 
         private void strategyOfFuturesCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            strategyOfFuturesCanvasStoryboard.Begin(this);
+           // strategyOfFuturesCanvasStoryboard.Begin(this);
         }
 
         private void strategyOfFuturesCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            strategyOfFuturesCanvasStoryboard_Leave.Begin(this);
+            //strategyOfFuturesCanvasStoryboard_Leave.Begin(this);
         }
         
         
