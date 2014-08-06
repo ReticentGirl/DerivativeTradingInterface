@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Timers;
+using System.Data;
 
 namespace qiquanui
 {
@@ -37,6 +39,7 @@ namespace qiquanui
 
         private string clientageCondition;   //托单条件   0  ROD 當日有效單    1 FOK  委託之數量須全部且立即成交，否則取消   2 IOC 立即成交否則取消
 
+        private string clientageType;  //委托方式
 
 
         public bool OptionOrFuture
@@ -185,6 +188,16 @@ namespace qiquanui
 
 
 
+        public string ClientageType
+        {
+            get { return clientageType; }
+            set
+            {
+                clientageType = value;
+                OnPropertyChanged("ClientageType");
+            }
+        }
+
 
 
         public HistoryData()
@@ -202,7 +215,8 @@ namespace qiquanui
             string _timeLimit,
             string _userID,
             string _clientageCondition,
-            bool _optionOrFuture
+            bool _optionOrFuture,
+            string _clientageType
                            )
         {
 
@@ -218,7 +232,7 @@ namespace qiquanui
             userID = _userID;
             clientageCondition = _clientageCondition;
             optionOrFuture = _optionOrFuture;
-
+            clientageType = _clientageType;
 
             hIfChoose = false;   //初始化为false
         }
@@ -253,6 +267,8 @@ namespace qiquanui
         public static string NOTDONE = "挂单取消";
         public static string POST = "挂单状态";
 
+        System.Timers.Timer historyTimer; //刷新历史记录的计时器
+
 
         public HistoryManager(MainWindow _pwindow)
         {
@@ -261,6 +277,12 @@ namespace qiquanui
             pwindow.historyListView.ItemsSource = HistoryOC;
 
             //OnAdd("1", "2", "3", 4, 5, "6", 7.0, 8.0, "9", "10","11",false);
+
+            historyTimer = new System.Timers.Timer(500);
+
+            historyTimer.Start();
+
+            historyTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
 
         }
 
@@ -278,11 +300,12 @@ namespace qiquanui
             string _timeLimit,
             string _userID,
             string _clientageCondition,
-            bool _optionOrFuture
+            bool _optionOrFuture,
+            string _clientageType
             )
         {
             TurnOver();
-            HistoryOC.Add(new HistoryData(_instrumentID, _tradingTime, _tradingType, _postNum, _doneNum, _tradingState, _postPrice, _donePrice, _timeLimit, _userID, _clientageCondition, _optionOrFuture));
+            HistoryOC.Add(new HistoryData(_instrumentID, _tradingTime, _tradingType, _postNum, _doneNum, _tradingState, _postPrice, _donePrice, _timeLimit, _userID, _clientageCondition, _optionOrFuture, _clientageType));
             TurnOver();
         }
 
@@ -326,6 +349,8 @@ namespace qiquanui
                 bool temp_optionOrFuture = head_hd.OptionOrFuture;
 
                 string temp_clientageCondition = head_hd.ClientageCondition;
+
+                string temp_clientageType = head_hd.ClientageType;
                 ///////////////////////////////////////////////////////////////////////////////////////////
 
                 head_hd.HIfChoose = tail_hd.HIfChoose;
@@ -353,6 +378,8 @@ namespace qiquanui
                 head_hd.OptionOrFuture = tail_hd.OptionOrFuture;
 
                 head_hd.ClientageCondition = tail_hd.ClientageCondition;
+
+                head_hd.ClientageType = tail_hd.ClientageType;
                 /////////////////////////////////////////////////////////////////////////////////
 
                 tail_hd.HIfChoose = temp_hIfChoose;
@@ -381,11 +408,484 @@ namespace qiquanui
 
                 tail_hd.ClientageCondition = temp_clientageCondition;
 
-
+                tail_hd.ClientageType = temp_clientageType;
 
             }
 
         }
+
+        public void OnTimedEvent(object sender, ElapsedEventArgs e)
+        {
+            Refresh();
+        }
+
+        public void Refresh()
+        {
+            /////////////
+            //ROD (Rest of Day order)：當日有效單。
+            //FOK (Fill or kill order)：委託之數量須全部且立即成交，否則取消
+            //IOC (Immediate or cancel)：立即成交否則取消
+            ////////////
+
+            for (int i = 0; i < HistoryOC.Count(); i++)
+            {
+                HistoryData hd = HistoryOC[i];
+                if (hd.OptionOrFuture == false) //期权
+                    RefreshForOption(hd);
+                else
+                    RefreshForFuture(hd);
+            }
+
+        }
+
+
+        void RefreshForOption(HistoryData _hd)
+        {
+            Random rd = new Random();
+
+            if (_hd.ClientageType.Equals("市价") && _hd.TradingState.Equals(POST))
+            {
+                if (_hd.ClientageCondition.Equals("FOK"))
+                {
+                    _hd.DoneNum = _hd.PostNum;
+                    _hd.TradingState = ALLDONE;
+                    _hd.DonePrice = _hd.PostPrice;
+
+                    HistoryToHold();
+                }
+                else if (_hd.ClientageCondition.Equals("IOC"))
+                {
+                    double rate = rd.NextDouble();   //返回一个 0.0到1.0之间的数
+                    if (rate > 0.2)            //当RATE 大与0.2 时  成交成功
+                    {
+                        _hd.DoneNum = _hd.PostNum;
+                        _hd.TradingState = ALLDONE;
+                        _hd.DonePrice = _hd.PostPrice;
+
+                        HistoryToHold();   //加入持仓区
+                    }
+                    else
+                    {
+
+
+                        if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                        {
+                            _hd.DoneNum = _hd.PostNum;
+                            _hd.DonePrice = _hd.PostPrice;
+                            _hd.TradingState = ALLDONE;
+
+                            HistoryToHold();   //加入持仓区
+                        }
+                        else
+                        {
+                            double rate2 = 1 - (Math.Abs(rd.NextDouble() - 0.5));
+                            _hd.DoneNum = (int)(_hd.PostNum * rate2);
+                            _hd.TradingState = SOMEDONE;
+
+                            _hd.DonePrice = _hd.PostPrice;
+
+                            HistoryToHold();    //加入持仓区
+                        }
+
+
+
+                    }
+                }
+
+
+
+            }
+            else if (_hd.ClientageType.Equals("限价"))
+            {
+
+                string t_instrumentID = _hd.InstrumentID;
+
+                DataRow nDr = (DataRow)DataManager.All[t_instrumentID];
+
+                ///////////////////////买卖做不同处理
+                if (_hd.TradingType.Equals("买开") || _hd.TradingType.Equals("买平"))
+                {
+                    double nowAskPrice = Math.Round((double)nDr["AskPrice1"], 1);
+
+                    if (nowAskPrice <= _hd.PostPrice)
+                    {
+                        if (_hd.ClientageCondition.Equals("ROD") && _hd.TradingState.Equals(POST))    //ROD 且 处于POST
+                        {
+                            if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                            {
+                                _hd.DoneNum = _hd.PostNum;
+                                _hd.DonePrice = _hd.PostPrice;
+                                _hd.TradingState = ALLDONE;
+
+                                HistoryToHold();   //加入持仓区
+                            }
+                            else
+                            {
+                                double rpRate = Math.Abs(rd.NextDouble() - 0.5);
+                                int t_num = (int)(_hd.PostNum * rpRate);    //买 Num为正
+                                _hd.DoneNum += t_num;
+                                _hd.DonePrice = nowAskPrice;
+                                _hd.TradingState = POST;
+
+                                if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
+                                {
+                                    _hd.DoneNum = _hd.PostNum;
+                                    _hd.TradingState = ALLDONE;
+                                }
+
+                                HistoryToHold();   //加入持仓区
+                            }
+
+
+                        }
+                        else if (_hd.ClientageCondition.Equals("FOK") && _hd.TradingState.Equals(POST))
+                        {
+                            double fpRate = rd.NextDouble();
+
+                            if (fpRate < 0.2)  //不成
+                            {
+                                _hd.TradingState = NOTDONE;
+                            }
+                            else          //全成
+                            {
+                                _hd.DoneNum = _hd.PostNum;
+                                _hd.TradingState = ALLDONE;
+                                _hd.DonePrice = nowAskPrice;
+
+                                HistoryToHold();   //加入持仓区
+                            }
+
+                        }
+                        else if (_hd.ClientageCondition.Equals("IOC") && _hd.TradingState.Equals(POST))
+                        {
+                            double ipRate1 = rd.NextDouble();
+                            if (ipRate1 < 0.2)  //不成
+                            {
+                                _hd.TradingState = NOTDONE;
+                            }
+                            else         //部成 或者 全成
+                            {
+                                double ipRate2 = rd.NextDouble();
+                                if (ipRate2 > 0.5)   //部成
+                                {
+                                    if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                                    {
+                                        _hd.DoneNum = _hd.PostNum;
+                                        _hd.DonePrice = _hd.PostPrice;
+                                        _hd.TradingState = ALLDONE;
+
+                                        HistoryToHold();   //加入持仓区
+                                    }
+                                    else
+                                    {
+                                        
+                                        double ipRate3 = 1 - (Math.Abs(rd.NextDouble() - 0.5));
+                                     
+                                        _hd.DoneNum = (int)(_hd.PostNum * ipRate3);
+                                        _hd.DonePrice = nowAskPrice;
+                                        _hd.TradingState = SOMEDONE;
+
+                                        HistoryToHold();   //加入持仓区
+                                    }
+                                  
+                                }
+                                else           //全成
+                                {
+                                    _hd.DoneNum = _hd.PostNum;
+                                    _hd.DonePrice = nowAskPrice;
+                                    _hd.TradingState = ALLDONE;
+
+                                    HistoryToHold();   //加入持仓区
+                                }
+
+                            }
+
+                        }
+                    }
+                }
+                else if (_hd.TradingType.Equals("卖开") || _hd.TradingType.Equals("卖平"))
+                {
+                    double nowBidPrice = Math.Round((double)nDr["BidPrice1"], 1);
+
+                    if (nowBidPrice >= _hd.PostPrice)   //  当买价   大于挂单价钱时才激发 
+                    {
+                        if (_hd.ClientageCondition.Equals("ROD") && _hd.TradingState.Equals(POST))    //ROD 且 处于POST
+                        {
+                            if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                            {
+                                _hd.DoneNum = _hd.PostNum;
+                                _hd.DonePrice = _hd.PostPrice;
+                                _hd.TradingState = ALLDONE;
+
+                                HistoryToHold();   //加入持仓区
+                            }
+                            else
+                            {
+                                double rpRate = Math.Abs(rd.NextDouble() - 0.5);
+                                int t_num = (int)(_hd.PostNum * rpRate);       //卖 Num为负
+                                _hd.DoneNum += t_num;                         //加上一个负数
+                                _hd.DonePrice = nowBidPrice;
+                                _hd.TradingState = POST;
+
+                                if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))     //两个都是负数
+                                {
+                                    _hd.DoneNum = _hd.PostNum;
+                                    _hd.TradingState = ALLDONE;
+                                }
+
+                                HistoryToHold();   //加入持仓区
+                            }
+
+
+                        }
+                        else if (_hd.ClientageCondition.Equals("FOK") && _hd.TradingState.Equals(POST))
+                        {
+                            double fpRate = rd.NextDouble();
+
+                            if (fpRate < 0.2)  //不成
+                            {
+                                _hd.TradingState = NOTDONE;
+                            }
+                            else          //全成
+                            {
+                                _hd.DoneNum = _hd.PostNum;
+                                _hd.TradingState = ALLDONE;
+                                _hd.DonePrice = nowBidPrice;
+
+                                HistoryToHold();   //加入持仓区
+                            }
+
+                        }
+                        else if (_hd.ClientageCondition.Equals("IOC") && _hd.TradingState.Equals(POST))
+                        {
+                            double ipRate1 = rd.NextDouble();
+                            if (ipRate1 < 0.2)  //不成
+                            {
+                                _hd.TradingState = NOTDONE;
+                            }
+                            else         //部成 或者 全成
+                            {
+                                double ipRate2 = rd.NextDouble();
+                                if (ipRate2 > 0.5)   //部成
+                                {
+
+                                    if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                                    {
+                                        _hd.DoneNum = _hd.PostNum;
+                                        _hd.DonePrice = _hd.PostPrice;
+                                        _hd.TradingState = ALLDONE;
+
+                                        HistoryToHold();   //加入持仓区
+                                    }
+                                    else
+                                    {
+
+                                        
+                                        double ipRate3 = 1 - (Math.Abs(rd.NextDouble() - 0.5)); //让取值不会是1
+                                        _hd.DoneNum = (int)(_hd.PostNum * ipRate3);
+                                        _hd.DonePrice = nowBidPrice;
+                                        _hd.TradingState = SOMEDONE;
+
+                                        HistoryToHold();   //加入持仓区
+                                    }
+                                   
+                                }
+                                else           //全成
+                                {
+                                    _hd.DoneNum = _hd.PostNum;
+                                    _hd.DonePrice = nowBidPrice;
+                                    _hd.TradingState = ALLDONE;
+
+                                    HistoryToHold();   //加入持仓区
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+
+
+        void RefreshForFuture(HistoryData _hd)
+        {
+            string t_instrumentID = _hd.InstrumentID;
+
+            DataRow nDr = (DataRow)DataManager.All[t_instrumentID];
+
+            Random rd = new Random();
+
+            if (_hd.TradingState.Equals(POST))
+            {
+                if (_hd.ClientageType.Equals("限价"))
+                {
+                    //////////////////////买卖不同 而且期货只有ROD
+                    if (_hd.TradingType.Equals("买开") || _hd.TradingType.Equals("买平"))
+                    {
+                        double nowAskPrice = Math.Round((double)nDr["AskPrice1"], 1);
+
+                        if (nowAskPrice <= _hd.PostPrice)
+                        {
+                            if (_hd.ClientageCondition.Equals("ROD") && _hd.TradingState.Equals(POST))    //ROD 且 处于POST
+                            {
+                                if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                                {
+                                    _hd.DoneNum = _hd.PostNum;
+                                    _hd.DonePrice = _hd.PostPrice;
+                                    _hd.TradingState = ALLDONE;
+
+                                    HistoryToHold();   //加入持仓区
+                                }
+                                else
+                                {
+                                    double rpRate = Math.Abs(rd.NextDouble() - 0.5);
+                                    int t_num = (int)(_hd.PostNum * rpRate);    //买 Num为正
+                                    _hd.DoneNum += t_num;
+                                    _hd.DonePrice = nowAskPrice;
+                                    _hd.TradingState = POST;
+
+                                    if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
+                                    {
+                                        _hd.DoneNum = _hd.PostNum;
+                                        _hd.TradingState = ALLDONE;
+
+
+                                        HistoryToHold();   //加入持仓区
+                                    }
+                                }
+
+
+
+                            }
+
+                        }
+
+                    }
+                    else if (_hd.TradingType.Equals("卖开") || _hd.TradingType.Equals("卖平"))
+                    {
+                        double nowBidPrice = Math.Round((double)nDr["BidPrice1"], 1);
+
+                        if (nowBidPrice >= _hd.PostPrice)   //  当买价   大与挂单价钱时才激发 
+                        {
+                            if (_hd.ClientageCondition.Equals("ROD") && _hd.TradingState.Equals(POST))    //ROD 且 处于POST
+                            {
+
+                                if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                                {
+                                    _hd.DoneNum = _hd.PostNum;
+                                    _hd.DonePrice = _hd.PostPrice;
+                                    _hd.TradingState = ALLDONE;
+
+                                    HistoryToHold();   //加入持仓区
+                                }
+                                else
+                                {
+                                    double rpRate = Math.Abs(rd.NextDouble() - 0.5);
+                                    int t_num = (int)(_hd.PostNum * rpRate);       //卖 Num为负
+                                    _hd.DoneNum += t_num;                         //加上一个负数
+                                    _hd.DonePrice = nowBidPrice;
+                                    _hd.TradingState = POST;
+
+                                    if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))     //两个都是负数
+                                    {
+                                        _hd.DoneNum = _hd.PostNum;
+                                        _hd.TradingState = ALLDONE;
+                                    }
+
+                                    HistoryToHold();   //加入持仓区
+                                }
+
+
+                            }
+                        }
+                    }
+                }
+                else if (_hd.ClientageType.Equals("市价"))
+                {
+                    if (_hd.TradingType.Equals("买开") || _hd.TradingType.Equals("买平"))
+                    {
+                        double nowAskPrice = Math.Round((double)nDr["AskPrice1"], 1);
+
+                        if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                        {
+                            _hd.DoneNum = _hd.PostNum;
+                            _hd.DonePrice = _hd.PostPrice;
+                            _hd.TradingState = ALLDONE;
+
+                            HistoryToHold();   //加入持仓区
+                        }
+                        else
+                        {
+                            double fbRate = Math.Abs(rd.NextDouble() - 0.5);
+                            int t_num = (int)(_hd.PostNum * fbRate);
+                            _hd.DoneNum += t_num;
+                            _hd.DonePrice = nowAskPrice;
+                            _hd.TradingState = POST;
+
+                            if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
+                            {
+                                _hd.DoneNum = _hd.PostNum;
+                                _hd.TradingState = ALLDONE;
+                            }
+
+                            HistoryToHold();   //加入持仓区
+
+                        }
+
+
+                    }
+                    else if (_hd.TradingType.Equals("卖开") || _hd.TradingType.Equals("卖平"))
+                    {
+                        double nowBidPrice = Math.Round((double)nDr["BidPrice1"], 1);
+
+                        if (Math.Abs(_hd.PostNum) <= 5)   //小于等于5的就模拟全部成交   
+                        {
+                            _hd.DoneNum = _hd.PostNum;
+                            _hd.DonePrice = _hd.PostPrice;
+                            _hd.TradingState = ALLDONE;
+
+                            HistoryToHold();   //加入持仓区
+                        }
+                        else
+                        {
+                            double fsRate = Math.Abs(rd.NextDouble() - 0.5);
+                            int t_num = (int)(_hd.PostNum * fsRate);
+                            _hd.DoneNum += t_num;
+                            _hd.DonePrice = nowBidPrice;
+                            _hd.TradingState = POST;
+
+                            if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
+                            {
+                                _hd.DoneNum = _hd.PostNum;
+                                _hd.TradingState = ALLDONE;
+                            }
+
+                            HistoryToHold();   //加入持仓区
+
+                        }
+
+
+                    }
+
+
+
+                }
+            }
+
+
+
+        }
+
+        void HistoryToHold()   //提交到持仓区
+        {
+
+        }
+
+
 
     }
 }

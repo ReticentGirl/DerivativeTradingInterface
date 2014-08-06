@@ -656,16 +656,16 @@
             <TextBlock x:Name="serviceTB" Text="手续费" Foreground="#FF9198AC" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="15" Margin="46,8,44,8" Width="36"/>
             <Border BorderThickness="0,2,2,1" Grid.Column="2" Grid.Row="0" BorderBrush="#FF4E5268"/>
 
-            <TextBlock x:Name="showRoyaltyTB" Text="" Foreground="#FF9198AC" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="showRoyaltyTB" Text="{Binding Royalty,UpdateSourceTrigger=PropertyChanged}" Foreground="#FF9198AC" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Border BorderThickness="2,0,1,2" Grid.Column="0" Grid.Row="1" BorderBrush="#FF4E5268"/>
-            <TextBlock x:Name="showMarginTB" Text="" Foreground="#FF9198AC" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="showMarginTB" Text="{Binding Margin,UpdateSourceTrigger=PropertyChanged}" Foreground="#FF9198AC" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Border BorderThickness="0,0,1,2" Grid.Column="1" Grid.Row="1" BorderBrush="#FF4E5268"/>
-            <TextBlock x:Name="showServiceTB" Text="" Foreground="#FF9198AC" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="showServiceTB" Text="{Binding Fee,UpdateSourceTrigger=PropertyChanged}" Foreground="#FF9198AC" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Border BorderThickness="0,0,2,2" Grid.Column="2" Grid.Row="1" BorderBrush="#FF4E5268"/>
 
         </Grid>
 
-            <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel" Style="{StaticResource darkButton}"/>
+            <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel" Style="{StaticResource darkButton}" Click="cancleBtn_Click"/>
             <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,0,99,10" VerticalAlignment="Bottom" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Style="{StaticResource darkButton}" Click="OKBtn_Click"/>
      
     </Grid>

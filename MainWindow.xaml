@@ -2461,9 +2461,9 @@
                                     <GridViewColumn x:Name="formOfClientageTGVCH" Header=" 委托方式" Width="80">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
-                                                <ComboBox x:Name="formOfClientageTComboBox" SelectedIndex="{Binding ClientageType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
+                                                <ComboBox x:Name="formOfClientageTComboBox" SelectedIndex="{Binding ClientageType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC" SelectionChanged="formOfClientageTComboBox_SelectionChanged">
                                                     <ComboBoxItem x:Name="marketPriceTCBI" Content=" 市价" HorizontalAlignment="Left" Width=" 80" />
-                                                    <ComboBoxItem x:Name="limitPriceTCBI" Content=" 限价" HorizontalAlignment="Left" Width=" 80" />
+                                                    <ComboBoxItem x:Name="limitPriceTCBI" Content=" 限价" HorizontalAlignment="Left" Width=" 80"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -2480,9 +2480,9 @@
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
                                                 <ComboBox x:Name="conditionTComboBox" SelectedIndex="{Binding ClientageCondition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
-                                                    <ComboBoxItem x:Name="rodCondiTCBI" Content=" ROD" Visibility="{Binding}" HorizontalAlignment="Left" Width=" 80"/>
-                                                    <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 80"/>
-                                                    <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 80"/>
+                                                    <ComboBoxItem x:Name="comboBoxItem1" Content=" ROD" Visibility="{Binding AboutROD,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Width=" 80"/>
+                                                    <ComboBoxItem Content=" FOK"   Visibility="{Binding AboutFOK,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width=" 80"/>
+                                                    <ComboBoxItem Content=" IOC" Visibility="{Binding AboutIOC,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width=" 80"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -2561,7 +2561,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="#FF9198AC">
+                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="6,7,-6,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="#FF9198AC">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChoose" Header="勾选" Width="50">
@@ -2582,7 +2582,7 @@
                                     <GridViewColumn x:Name="priceOfTransactionHGVCH" Header=" 成交价格" DisplayMemberBinding="{Binding DonePrice, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="timeLimitHGVCH" Header=" 有效期" DisplayMemberBinding="{Binding TimeLimit, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="userHGVCH" Header=" 投资账户" DisplayMemberBinding="{Binding UserID, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
-                                    <GridViewColumn x:Name="IDOfTransactionHGVCH" Header=" 交易单号" Width="120"/>
+                                    <GridViewColumn x:Name="IDOfTransactionHGVCH" Header="交易单号"   DisplayMemberBinding="{Binding ClientageType, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

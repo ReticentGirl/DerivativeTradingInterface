@@ -31,6 +31,8 @@ namespace qiquanui
     {
         private Storyboard tradingCanvasStoryboard, tradingCanvasStoryboard_Leave;
 
+     
+
         HistoryManager porder_hm;  //下单盒子中维护历史记录区的指针
         PlaceOrderManager porder_pom; //下单盒子中维护盒子数据的指针
         TradingManager porder_tm;  ///交易区指针
@@ -117,6 +119,8 @@ namespace qiquanui
             OrderToHistory();
             cleanTrading();
             pWindow.historyTabItem.IsSelected = true;
+            //pWindow.historyListView.Visibility = Visibility.Visible;
+
 
             //porder_hm.HistoryOC.OrderBy(x>x.y);
 
@@ -170,9 +174,9 @@ namespace qiquanui
 
                 bool oOptionOrFuture = pOrder.OptionOrFuture;
 
+                string oClientageType = pOrder.ClientageType;
 
-
-                porder_hm.OnAdd(oInstrumentID, oTradingTime, oTradingType, oPostNum, oPostNum, oTradingState, oPostPrice, oDonePrice, oTimeLimit, oUserID, oClientageCondition, oOptionOrFuture);
+                porder_hm.OnAdd(oInstrumentID, oTradingTime, oTradingType, oPostNum, oDoneNum, oTradingState, oPostPrice, oDonePrice, oTimeLimit, oUserID, oClientageCondition, oOptionOrFuture, oClientageType);
 
             }
 

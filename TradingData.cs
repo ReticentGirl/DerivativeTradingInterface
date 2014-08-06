@@ -5,12 +5,16 @@ using System.Text;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace qiquanui
 {
     public class TradingData : INotifyPropertyChanged
     {
-        
+        //public static string ccUsed ="Visible";
+        //public static string ccNotUsed = "Collapsed";
+
+
         private bool ifChooseOTGVCH;  //是否选择了
         private string userID;   //投资账户
         private string instrumentID;   //合约代码
@@ -35,6 +39,47 @@ namespace qiquanui
         private bool optionOrFuture;   //期权(false)或者期货(true)
 
         private int typeChangeCount;   //是按下的那一次导致的 买开卖开买平卖平 的变换
+
+        Visibility aboutROD ;
+
+        Visibility aboutFOK;
+
+        Visibility aboutIOC;
+
+
+
+        public Visibility AboutROD
+        {
+            get { return aboutROD; }
+            set
+            {
+
+                aboutROD = value;
+                OnPropertyChanged("AboutROD");
+            }
+        }
+
+        public Visibility AboutFOK
+        {
+            get { return aboutFOK; }
+            set
+            {
+
+                aboutFOK = value;
+                OnPropertyChanged("AboutFOK");
+            }
+        }
+
+        public Visibility AboutIOC
+        {
+            get { return aboutIOC; }
+            set
+            {
+
+                aboutIOC = value;
+                OnPropertyChanged("AboutIOC");
+            }
+        }
 
      
         public int TypeChangeCount
@@ -240,6 +285,23 @@ namespace qiquanui
               }
 
 
+              if (optionOrFuture == false)    //如果是期权
+              {
+                  clientageCondition = 2;  //默认为 IOC
+
+                  aboutROD = Visibility.Collapsed;   //又因为是市价 所有 没有ROD
+
+              }
+              else    //期货默认为ROD
+              {
+                  clientageCondition = 0;
+
+                  aboutFOK = Visibility.Collapsed;    //期货没有这两个
+                  aboutIOC = Visibility.Collapsed;
+              }
+
+              
+
               typeChangeCount = 0;
 
          }
@@ -285,7 +347,7 @@ namespace qiquanui
             
              ifChooseOTGVCH = false;
 
-
+            
              typeChangeCount = 0;  
          }
 

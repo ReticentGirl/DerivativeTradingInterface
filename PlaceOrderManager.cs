@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Timers;
 using System.Data;
-
 using System.Windows.Data;
 
 namespace qiquanui
@@ -212,17 +211,17 @@ namespace qiquanui
 
     public class OrderCapitalData : INotifyPropertyChanged
     {
-        private double occupyCapital;    //占用资金
+        private double royalty;    //占用资金
         private double fee;              //手续费
+        private double margin;     //保证金
 
-
-        public double OccupyCapital
+        public double Royalty
         {
-            get { return occupyCapital; }
+            get { return royalty; }
             set
             {
-                occupyCapital = value;
-                OnPropertyChanged("OccupyCapital");
+                royalty = value;
+                OnPropertyChanged("Royalty");
             }
         }
 
@@ -237,6 +236,16 @@ namespace qiquanui
             }
         }
 
+        public double Margin
+        {
+            get { return margin; }
+            set
+            {
+                margin = value;
+                OnPropertyChanged("Margin");
+            }
+        }
+
         public OrderCapitalData()
         {
            
@@ -244,10 +253,11 @@ namespace qiquanui
 
 
 
-            public OrderCapitalData(double _occupyCapital,double _fee)
+            public OrderCapitalData(double _royalty, double _fee, double _margin)
             {
-                occupyCapital=_occupyCapital;
+                royalty = _royalty;
                 fee = _fee;
+                margin = _margin;
             }
         #region INotifyPropertyChanged 成员
 
@@ -280,7 +290,7 @@ namespace qiquanui
 
             System.Timers.Timer placeOrderTimer; //刷新下单盒子的计时器
 
-            OrderCapitalData orderOccupy = new OrderCapitalData(0,0);
+            OrderCapitalData orderOccupy = new OrderCapitalData(0,0,0);
 
             static double eachFee = 5;   //初定每笔手续费5元
 
@@ -322,17 +332,15 @@ namespace qiquanui
         {
             if (OrderOC.Count() > 0)
             {
-                double[] costArry = new double[OrderOC.Count()];
+                double[] royaltyArry = new double[OrderOC.Count()];
                 double[] feeArry = new double[OrderOC.Count()];
+                double[] marginArry = new double[OrderOC.Count()];
 
                 for (int i = 0; i < OrderOC.Count(); i++)
                 {
                     string reInstrumentID = OrderOC[i].InstrumentID;
 
-                    orderOccupy.OccupyCapital=0;  //每次清理为零
-                    
-                    orderOccupy.Fee = 0;   //每次清理为零
-
+                   
                     DataRow nDr = (DataRow)DataManager.All[reInstrumentID];
 
                     double nMarketPrice = 0;
@@ -348,37 +356,51 @@ namespace qiquanui
                     if (OrderOC[i].ClientageType.Equals("市价"))
                         OrderOC[i].FinalPrice = nMarketPrice;
 
-                    double cost = caculateCost(nDr, reInstrumentID, OrderOC[i].OptionOrFuture, OrderOC[i].IsBuy, OrderOC[i].TradingNum, OrderOC[i].FinalPrice);
 
-                    costArry[i] = cost;
+
+                    ///////////////////////////////
+                    double royalty = caculateRoyalty(nDr, reInstrumentID, OrderOC[i].OptionOrFuture, OrderOC[i].IsBuy, OrderOC[i].TradingNum, OrderOC[i].FinalPrice);
+
+
+                    royaltyArry[i] = royalty;
 
                     feeArry[i] = Math.Abs(OrderOC[i].TradingNum) * eachFee;
-                    //orderOccupy.OccupyCapital += cost;
 
+                    marginArry[i] = caculateMargin(nDr, reInstrumentID, OrderOC[i].OptionOrFuture, OrderOC[i].IsBuy, OrderOC[i].TradingNum, OrderOC[i].FinalPrice);
+                    //orderOccupy.OccupyCapital += cost;
 
                     
                 }
+                orderOccupy.Royalty = 0;  //每次清理为零
+
+                orderOccupy.Fee = 0;   //每次清理为零
+
+                orderOccupy.Margin = 0;  //每次清理为零
+
 
                 for (int j = 0; j < OrderOC.Count(); j++)
                 {
-                    orderOccupy.OccupyCapital += costArry[j];   //将所有权利金加起来
+                    orderOccupy.Royalty += royaltyArry[j];   //将所有权利金加起来
 
                     orderOccupy.Fee += feeArry[j];     //将所有手续费加起来
+
+                    orderOccupy.Margin += marginArry[j];   //将所有的保证金加起来
+
                 }
 
             }
         }
 
 
-        double caculateCost(DataRow _nDr,string _InstrumentID,bool _optionOrFuture,bool _isBuy,int _tradingNum,double _finalPrice)    //计算花费
+        double caculateRoyalty(DataRow _nDr, string _InstrumentID, bool _optionOrFuture, bool _isBuy, int _tradingNum, double _finalPrice)    //计算花费
         {
-            //if (_optionOrFuture == false)  //表示是期权
+            if (_optionOrFuture == false)  //表示是期权   
             {
                 int instrumentMultiplier = Convert.ToInt32(_nDr["InstrumentMultiplier"]);
 
                 double cost = Math.Abs(_tradingNum) * instrumentMultiplier * _finalPrice;
 
-                if (_isBuy==true)   //买返回正，卖饭回负
+                if (_isBuy==true)   //买返回正，卖返回负   正表示支出  负表示获得
                 {
                     return cost;
                 }
@@ -386,7 +408,83 @@ namespace qiquanui
                 {
                     return -cost;
                 }
+
+            }
+            else    //期货不用权利金
+            {
+                return 0;
+            }
+         
+        }
+
+        double caculateMargin(DataRow _nDr, string _InstrumentID, bool _optionOrFuture, bool _isBuy, int _tradingNum, double _finalPrice)
+        {
+            if (_optionOrFuture == false)   //对于卖家期货保证金计算
+            {
+                if (_isBuy == false)   //卖期权  要交保证金
+                {
+                    int t_callOrPut = Convert.ToInt32(_nDr["CallOrPut"]);
+
+                    //////////
+                    //////////////////////////////以下数据从ALL获取//////////////////////
+
+
+                    double t_PreClosePrice = Math.Round((double)_nDr["PreClosePrice"], 1);  //昨收盘价
+
+                    double t_PreSettlementPrice = Math.Round((double)_nDr["PreSettlementPrice"], 1);  //前结算价
+
+                    double t_ExercisePrice = Math.Round((double)_nDr["ExercisePrice"], 1);
+
+
+                    double MarginAdjust = 0.1;//股指期权保证金调整系数  
+                    double MiniGuarantee = 0.5;//最低保障系数  
+
+                    //int VolumeMultiple = 100;
+                    int instrumentMultiplier = Convert.ToInt32(_nDr["InstrumentMultiplier"]);   //合约乘数  
+
+
+                    double dummy = Math.Max(t_ExercisePrice - t_PreClosePrice, 0.0);//虚值额  
+
+
+
+                    if (t_callOrPut == 0)  //看涨
+                    {
+
+                        
+
+                        double c_margin = (t_PreSettlementPrice + t_PreClosePrice * Math.Max(MarginAdjust - dummy / t_PreClosePrice, MarginAdjust * MiniGuarantee)) * instrumentMultiplier;//保证金  
+
+                        return c_margin;
+
+                    }
+                    else if (t_callOrPut == 1)   //看跌
+                    {
+                        double p_margin = (t_PreSettlementPrice + Math.Max(t_PreClosePrice * MarginAdjust - dummy, t_ExercisePrice * MarginAdjust * MiniGuarantee)) * instrumentMultiplier;
+
+                        return p_margin;
+
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else    //买期权 不用保证金
+                {
+                    return 0;
+                }
                 
+            }
+            else     //期货保证金计算
+            {
+                double marginRate = Convert.ToDouble(_nDr["GuaranteeMoney"]) ;   //保证金率
+
+                double instrumentMultiplier = Convert.ToInt32(_nDr["InstrumentMultiplier"]);
+
+                double t_margin = _finalPrice * instrumentMultiplier * Math.Abs(_tradingNum) * marginRate; //交易价格*交易单位*交易手数*保证金收取比例
+
+                return t_margin;
+                //return 0;
             }
         }
 
