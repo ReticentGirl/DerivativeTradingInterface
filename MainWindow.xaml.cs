@@ -339,8 +339,6 @@ namespace qiquanui
 
             optionsMarketListView.Visibility = Visibility.Hidden;
             optionsMarketTitleGrid.Visibility = Visibility.Hidden;
-            subjectMatterLabel.Visibility = Visibility.Visible;
-            subjectMatterComboBox.Visibility = Visibility.Visible;
             futuresMarketListView.Visibility = Visibility.Visible;
             subjectMatterMarketGrid.Visibility = Visibility.Hidden;
             titileBorder4.Visibility = Visibility.Hidden;
@@ -355,8 +353,6 @@ namespace qiquanui
             futuresMarketListView.Visibility = Visibility.Hidden;
             optionsMarketListView.Visibility = Visibility.Visible;
             optionsMarketTitleGrid.Visibility = Visibility.Visible;
-            subjectMatterLabel.Visibility = Visibility.Visible;
-            subjectMatterComboBox.Visibility = Visibility.Visible;
             subjectMatterMarketGrid.Visibility = Visibility.Visible;
             titileBorder4.Visibility = Visibility.Visible;
             dueDateLabel.Visibility = Visibility.Visible;
@@ -1318,6 +1314,8 @@ namespace qiquanui
                 }
             }
         }
+
+ 
        
         
 

@@ -1189,7 +1189,7 @@
             <TextBox x:Name="setConfidenceLevelCompoTBox" Grid.Column="0" Margin="76,5,25,129" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource textboxStyle}"/>
             <Button x:Name="okCompoBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="42,35,41,103" Grid.Row="1" Height="20" Style="{StaticResource darkButton}" Background="#FF363338" BorderBrush="{x:Null}"/>
 
-            <TextBlock Text="当前组合：" Grid.Column="1" Grid.Row="0" Margin="20,10,553,91" Foreground="#FF958E97"/>
+            <TextBlock Text="当前组合：" Grid.Column="1" Grid.Row="0" Margin="10,10,563,91" Foreground="#FF958E97"/>
             <Grid x:Name="compoGrid" Grid.Column="1" Grid.Row="0" Margin="50,33,40,30" MouseEnter="compoGrid_MouseEnter" MouseLeave="compoGrid_MouseLeave">
                 <Grid.Background>
                     <SolidColorBrush Color="#FF35313C" Opacity="0.7"/>
@@ -1226,8 +1226,8 @@
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="4" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,2,2" Grid.Column="5" Grid.Row="1" />
             </Grid>
-
-            <ListView x:Name="optionsRiskLV" Grid.Column="1" Grid.Row="1" Margin="0,1,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            
+            <ListView x:Name="optionsRiskLV" Grid.Column="1" Grid.Row="1" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.View>
                     <GridView>                       
                         <GridViewColumn x:Name="instrumentIDORGVCH" Header="交易代码" Width="110"/>
@@ -1260,7 +1260,8 @@
             <TextBox x:Name="setConfidenceLevelRecomTBox" Width="50" Grid.Column="0" Grid.RowSpan="2" Margin="50,0,0,0" VerticalAlignment="Center" Style="{StaticResource textboxStyle}"/>
             <Button x:Name="okRecomBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="43,148,40,91" Height="20" Style="{StaticResource darkButton}" Background="#FF252327" BorderBrush="{x:Null}"/>
 
-            <ListView x:Name="recomLV" Grid.Column="1" Grid.Row="0" Margin="0,0,0,36" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <TextBlock x:Name="recomTB" Text="基于VaR值的最优对冲策略：" Grid.Column="1" Grid.Row="0" Margin="10,10,472,238"/>
+            <ListView x:Name="recomLV" Grid.Column="1" Grid.Row="0" Margin="0,43,0,36" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn x:Name="ifChooseRGVCH" Header="勾选" Width="50">

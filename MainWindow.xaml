@@ -2041,11 +2041,11 @@
                         <ComboBoxItem x:Name="traderComboBoxItem4" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="traderComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
-                    <Label x:Name="subjectMatterLabel" Content="标的商品" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="422,2,0,4" Height="23" />
-                    <ComboBox x:Name="subjectMatterComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="476,3,0,0" SelectionChanged="subjectMatterComboBox_SelectionChanged">
+                    <Label x:Name="subjectMatterLabel" Content="标的商品" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="273,2,0,4" Height="23" />
+                    <ComboBox x:Name="subjectMatterComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="327,3,0,0" SelectionChanged="subjectMatterComboBox_SelectionChanged">
                     </ComboBox>
-                    <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="275,2,0,1" Height="26" />
-                    <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="330,3,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
+                    <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="448,3,0,0" Height="26" />
+                    <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="502,3,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
                     <Label x:Name="userLabel" Content="投资账户" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#FF9198AC" Background="{x:Null}" Margin="601,2,0,1" Height="26" />
                     <ComboBox x:Name="userComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="655,3,0,0" />
 
@@ -2417,7 +2417,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,7,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" SelectionChanged="tradingListView_SelectionChanged" Grid.ColumnSpan="2">
+                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="#FF9198AC" SelectionChanged="tradingListView_SelectionChanged" Margin="0,6,0,0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseTGVCH" Header="勾选" Width="50" >
@@ -2463,7 +2463,7 @@
                                             <DataTemplate>
                                                 <ComboBox x:Name="formOfClientageTComboBox" SelectedIndex="{Binding ClientageType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
                                                     <ComboBoxItem x:Name="marketPriceTCBI" Content=" 市价" HorizontalAlignment="Left" Width=" 80" />
-                                                    <ComboBoxItem x:Name="limitPriceTCBI" Content=" 限价" HorizontalAlignment="Left" Width=" 80"/>
+                                                    <ComboBoxItem x:Name="limitPriceTCBI" Content=" 限价" HorizontalAlignment="Left" Width=" 80" />
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -2480,7 +2480,7 @@
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
                                                 <ComboBox x:Name="conditionTComboBox" SelectedIndex="{Binding ClientageCondition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="#FF9198AC">
-                                                    <ComboBoxItem x:Name="comboBoxItem1" Content=" ROD" HorizontalAlignment="Left" Width=" 80"/>
+                                                    <ComboBoxItem x:Name="rodCondiTCBI" Content=" ROD" Visibility="{Binding}" HorizontalAlignment="Left" Width=" 80"/>
                                                     <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 80"/>
                                                     <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 80"/>
                                                 </ComboBox>
