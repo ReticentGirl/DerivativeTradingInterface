@@ -22,6 +22,7 @@ namespace qiquanui
     {
         private double originalHeight, originalWidth, Top1_StrategyLabw, Top1_StrategyLabwper, groupListVieww, groupListViewwper, groupListViewh, groupListViewhper;
         private Storyboard groupCanvasStoryboard, groupCanvasStoryboard_Leave;
+        private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
 
         MainWindow pWindow;
         public StrategyWindow(MainWindow _pWindow)
@@ -36,38 +37,38 @@ namespace qiquanui
             groupListViewh = groupListView.Height;
             groupListVieww = groupListView.Width;
 
+            windowShadowControlWidth = 0;
+
             groupCanvasStoryboard = (Storyboard)this.FindResource("groupCanvasAnimate");
             groupCanvasStoryboard_Leave = (Storyboard)this.FindResource("groupCanvasAnimate_Leave");
         }
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
-        }
-      
+            if (isWindowMax == false)
+            {
+                this.DragMove();
+            }
+            else if (isWindowMax == true) ;
+
+        }//窗口移动
+
+
         private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (this.WindowState == WindowState.Normal)
-            {
-                this.WindowState = WindowState.Maximized;
-                maxButton.Style = Resources["normalSty"] as Style;
-                this.Opacity = 1;
-                Border1.Visibility = Visibility.Hidden;
-            }
-            else if (this.WindowState == WindowState.Maximized)
-            {
-                this.WindowState = WindowState.Normal;
-                maxButton.Style = Resources["maxSty"] as Style;
-                this.Opacity = 0.95;
-                this.Left = 50;
-                this.Top = 50;
-                Border1.Visibility = Visibility.Visible;
-
-            }
-        }
+            MaxButton_Click_1(null, null);
+        } //双击标题栏最大化、还原
         private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
         {
+            if (this.ActualHeight > SystemParameters.WorkArea.Height || this.ActualWidth > SystemParameters.WorkArea.Width)
+            {
+                this.WindowState = System.Windows.WindowState.Normal;
+                MaxButton_Click_1(null, null);
+            }
+
             ResizeControl();
-        }
+
+
+        } //拉伸窗口调用ResizeControl()
         private bool ResizeControl()
         {
             Border1.Width = this.Width-14.0;
@@ -77,10 +78,10 @@ namespace qiquanui
             groupListViewwper = (this.Width - (originalWidth - groupListVieww)) / (originalWidth - (originalWidth - groupListVieww));
             groupListViewhper = (this.Height - (originalHeight - groupListViewh)) / (originalHeight - (originalHeight - groupListViewh));
 
-            groupListView.Width = groupListViewwper * groupListVieww;
-            groupListView.Height = groupListViewhper * groupListViewh;
+            groupListView.Width = groupListViewwper * groupListVieww + 2 * windowShadowControlWidth;
+            groupListView.Height = groupListViewhper * groupListViewh + 2 * windowShadowControlWidth;
 
-            Top1_StrategyLab.Width = Top1_StrategyLabwper * Top1_StrategyLabw;
+            Top1_StrategyLab.Width = Top1_StrategyLabwper * Top1_StrategyLabw + 2 * windowShadowControlWidth;
 
             return true;
         }
@@ -89,35 +90,59 @@ namespace qiquanui
             this.WindowState = WindowState.Minimized;
         }
 
+        Rect rcnormal;//定义一个全局rect记录还原状态下窗口的位置和大小。
+        bool isWindowMax = false;
         private void MaxButton_Click_1(object sender, RoutedEventArgs e)
         {
 
-            if (this.WindowState == WindowState.Normal)
+            if (isWindowMax == false)
             {
-                this.WindowState = WindowState.Maximized;
+                Rect rcnormal = new Rect(this.Left, this.Top, this.Width, this.Height);//保存下当前位置与大小
+                windowShadowControlWidth = 7;
+                this.BorderThickness = new Thickness(0);
                 maxButton.Style = Resources["normalSty"] as Style;
                 this.Opacity = 1;
                 Border1.Visibility = Visibility.Hidden;
+
+
+                Rect rc = SystemParameters.WorkArea;//获取工作区大小
+                this.Left = 0;//设置位置
+                this.Top = 0;
+
+
+                this.Width = rc.Width;
+                this.Height = rc.Height;
+                isWindowMax = true;
+
             }
-            else if (this.WindowState == WindowState.Maximized)
+            else if (isWindowMax == true)
             {
-                this.WindowState = WindowState.Normal;
+                windowShadowControlWidth = 0;
+                this.BorderThickness = new Thickness(7);
                 maxButton.Style = Resources["maxSty"] as Style;
+                this.Left = rcnormal.Left;
+                this.Top = rcnormal.Top;
+                this.Width = rcnormal.Width;
+                this.Height = rcnormal.Height;
                 this.Left = 50;
                 this.Top = 50;
                 this.Opacity = 0.95;
+
                 Border1.Visibility = Visibility.Visible;
+                isWindowMax = false;
+
             }
 
-        }
+        } //最大化窗口按钮
         private bool closeStoryBoardCompleted = false;
         private DoubleAnimation closeAnimation1;
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
-            
+            pWindow.WindowState = WindowState.Normal;
+            pWindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
             this.Close();
 
-            pWindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
+            
         }
         private void closeWindow_Completed(object sender, EventArgs e)
         {

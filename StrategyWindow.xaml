@@ -8,7 +8,7 @@
         
         SizeChanged="Window_SizeChanged"
         Closing="Window_Closing"
-        Title="StrategyWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF0F0D0D" Foreground="#FFA89B9B" BorderThickness="7" AllowsTransparency="True" Opacity="0.95" Left="100" Top="20">
+        Title="StrategyWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF0F0D0D" Foreground="#FFA89B9B" BorderThickness="7" AllowsTransparency="True" Opacity="0.95" Left="100" Top="20" ResizeMode="CanResizeWithGrip" MinWidth="1200" MinHeight="700.5">
 
 
 

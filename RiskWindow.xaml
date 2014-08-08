@@ -6,7 +6,7 @@
         Closing="Window_Closing"
         SizeChanged="Window_SizeChanged"
        
-        Title="RiskWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF120D13" Foreground="#FFB3A9B6" Opacity="0.95" BorderThickness="7" AllowsTransparency="True" Left="40" Top="20" HorizontalAlignment="Left" VerticalAlignment="Top">
+        Title="RiskWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF120D13" Foreground="#FFB3A9B6" Opacity="0.95" BorderThickness="7" AllowsTransparency="True" Left="40" Top="20" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="1200" MinHeight="700.5" ResizeMode="CanResizeWithGrip">
     <Window.Resources>
 
 

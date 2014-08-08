@@ -9,7 +9,7 @@
         Closing="Window_Closing"
     
     
-        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="974" MinHeight="650" Width="1198.75" Height="700.5" Opacity="0.95">
+        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1190" MinHeight="680" Width="1198.75" Height="700.5" Opacity="0.95">
     <Window.Resources>
 
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
@@ -2404,20 +2404,20 @@
             </Canvas>
         </Grid>
         <!--操作区-->
-        <Grid x:Name="Grid3" HorizontalAlignment="Left" Height="238" Margin="29,0,0,21" VerticalAlignment="Bottom" Width="915" Background="#FF0D0D11" MouseEnter="Grid3_MouseEnter" MouseLeave="Grid3_MouseLeave">
+        <Grid x:Name="Grid3" HorizontalAlignment="Left" Height="245" Margin="29,0,0,21" VerticalAlignment="Bottom" Width="914" Background="#FF0D0D11" MouseEnter="Grid3_MouseEnter" MouseLeave="Grid3_MouseLeave">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TabControl x:Name="multipleTabControl" HorizontalAlignment="Left" Height="273" VerticalAlignment="Top" Width="915" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,-35,0,0">
-                <TabItem x:Name="tradingTabItem" Header="交易区" Foreground="White"  Style="{StaticResource TabItemStyle}" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,6,2,-10">
+            <TabControl x:Name="multipleTabControl" HorizontalAlignment="Left" Height="273" VerticalAlignment="Top" Width="914" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,-35,0,0">
+                <TabItem x:Name="tradingTabItem" Header="交易区" Foreground="White"  Style="{StaticResource TabItemStyle}" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,9,2,-13">
 
-                    <Grid Margin="-4,0,-3,0">
+                    <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" SelectionChanged="tradingListView_SelectionChanged" Margin="0,6,0,0">
+                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" SelectionChanged="tradingListView_SelectionChanged" Margin="0,10,0,0">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseTGVCH" Header="" Width="50" >
@@ -2519,13 +2519,13 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem x:Name="holdDetailTabItem" Header="持仓" Background="White" Style="{StaticResource TabItemStyle}" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,6,2,-10">
-                    <Grid Margin="-4,0,-3,0">
+                <TabItem x:Name="holdDetailTabItem" Header="持仓" Background="White" Style="{StaticResource TabItemStyle}" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,9,2,-13">
+                    <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="914"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,7,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,10,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseHDGVCH" Header="勾选" Width="50">
@@ -2553,20 +2553,20 @@
                         <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="analyseBtn" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
-                        <CheckBox x:Name="optionsHDCheckBox" Content="仅显示期权交易明细" HorizontalAlignment="Left" Margin="159,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                        <CheckBox x:Name="optionsHDCheckBox" Content="仅显示期权交易明细" HorizontalAlignment="Left" Margin="160,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
                         <CheckBox x:Name="futuresHDCheckBox" Content="仅显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
-                        <Button x:Name="pickUserHDBtn" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,532,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
+                        <Button x:Name="pickUserHDBtn" Content="筛选账户" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="80" Margin="292,0,0,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
 
                     </Grid>
                 </TabItem>
 
-                <TabItem x:Name="historyTabItem" Header="历史记录" Foreground="White"  Style="{StaticResource TabItemStyle}" Margin="-2,6,2,-10">
-                    <Grid Margin="-4,0,-3,0">
+                <TabItem x:Name="historyTabItem" Header="历史记录" Foreground="White"  Style="{StaticResource TabItemStyle}" Margin="-2,9,2,-13">
+                    <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="916"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="214" VerticalAlignment="Top" Width="916" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="6,7,-6,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
+                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,-3,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChoose" Header="勾选" Width="50">
@@ -2600,13 +2600,13 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem x:Name="userManageTabItem" Header="账户管理" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,6,2,-10">
-                    <Grid>
+                <TabItem x:Name="userManageTabItem" Header="账户管理" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,9,2,-13">
+                    <Grid Margin="-3,0,-3,-5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="209" VerticalAlignment="Top" Width="915"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="-3,7,-3,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" Foreground="White">
+                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="217" VerticalAlignment="Top" Width="914"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" Foreground="White">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userUMGVCH" Header=" 账户号" Width=" 100"/>
@@ -2643,7 +2643,10 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <Button x:Name="addUserBtn" Content="添加账户" HorizontalAlignment="Right" Height="19" Margin="0,0,18,6" VerticalAlignment="Bottom" Width="82" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Style="{StaticResource darkButton}" Padding="1" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
+
+                        <Button x:Name="addUserBtn" Content="添加账户" HorizontalAlignment="Right" Height="19" Margin="0,0,18,3" VerticalAlignment="Bottom" Width="82" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Style="{StaticResource darkButton}" Padding="1" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
+
+
                     </Grid>
                 </TabItem>
 
@@ -2673,7 +2676,7 @@
             </TabControl>
         </Grid>
         <!--基本信息及动态提示区-->
-        <Grid x:Name="basicInforAndPromptGrid" HorizontalAlignment="Right" Height="242" Margin="0,0,29,21" VerticalAlignment="Bottom" Width="213" Background="#FF22242B" MouseEnter="basicInforAndPromptGrid_MouseEnter" MouseLeave="basicInforAndPromptGrid_MouseLeave">
+        <Grid x:Name="basicInforAndPromptGrid" HorizontalAlignment="Right" Height="245" Margin="0,0,29,21" VerticalAlignment="Bottom" Width="213" Background="#FF22242B" MouseEnter="basicInforAndPromptGrid_MouseEnter" MouseLeave="basicInforAndPromptGrid_MouseLeave">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>

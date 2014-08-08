@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
 
+
 namespace qiquanui
 {
     /// <summary>
@@ -33,14 +34,19 @@ namespace qiquanui
 
     public partial class MainWindow : Window
     {
-        DataManager dm;
-        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper;
+
+         DataManager dm;
+         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper;
+
 
         TradingManager otm;   //维护交易区的指针
 
         HistoryManager hm;  //维护历史记录区的指针
 
         BasicInforAndPromptManager bip;   //维护基本信息和提示的指针
+
+         private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
+
 
 
 
@@ -66,7 +72,7 @@ namespace qiquanui
         {
             new MktData().Run();
         }
-
+        private Rect rc = SystemParameters.WorkArea;
         public MainWindow()
         {
 
@@ -79,7 +85,8 @@ namespace qiquanui
             //tradingthread = new thread(new threadstart(tradingthreadstart));    //交易区线程启动
             //tradingthread.start();
             //new  Thread(new ThreadStart(ctpStart)).Start();
-
+            //窗口最大化时显示任务栏
+            
 
 
             InitializeComponent();
@@ -121,10 +128,12 @@ namespace qiquanui
             Grid1w = Grid1.Width;
             Grid1h = Grid1.Height;
             profitListVieww = profitListView.Width;
+            subjectMatterMarketGridw = subjectMatterMarketGrid.Width;
 
             darkRectanglew = darkRectangle.Width;
             darkRectangleh = darkRectangle.Height;
 
+            windowShadowControlWidth = 0;
 
             //初始化伸缩面板动画
             grid1Storyboard = (Storyboard)this.FindResource("grid1Animate");
@@ -155,59 +164,70 @@ namespace qiquanui
 
             typeComboBox.SelectedIndex = 0;
             typeInStrategyPanelComboBox.SelectedIndex = 1;
-
+            
         }
 
 
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            if (isWindowMax == false)
+            {
+                this.DragMove();
+            }
+            else if (isWindowMax == true) ;
+
         }//窗口移动
 
 
         private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (this.WindowState == WindowState.Normal)
-            {
-                this.WindowState = WindowState.Maximized;
-                maxButton.Style = Resources["normalSty"] as Style;
-                this.Opacity = 1;
-                Border1.Visibility = Visibility.Hidden;
-            }
-            else if (this.WindowState == WindowState.Maximized)
-            {
-                this.WindowState = WindowState.Normal;
-                maxButton.Style = Resources["maxSty"] as Style;
-                this.Opacity = 0.95;
-                this.Left = 50;
-                this.Top = 50;
-                Border1.Visibility = Visibility.Visible;
-
-            }
+            MaxButton_Click_1(null,null);
         } //双击标题栏最大化、还原
         private void MinButton_Click_1(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         } //最小化窗口按钮
-
+        Rect rcnormal;//定义一个全局rect记录还原状态下窗口的位置和大小。
+        bool isWindowMax = false;
         private void MaxButton_Click_1(object sender, RoutedEventArgs e)
         {
 
-            if (this.WindowState == WindowState.Normal)
+            if (isWindowMax == false)
             {
-                this.WindowState = WindowState.Maximized;
+                Rect rcnormal = new Rect(this.Left, this.Top, this.Width, this.Height);//保存下当前位置与大小
+                windowShadowControlWidth = 7;
+                this.BorderThickness = new Thickness(0);
                 maxButton.Style = Resources["normalSty"] as Style;
                 this.Opacity = 1;
-                Border1.Visibility = Visibility.Collapsed;
+                Border1.Visibility = Visibility.Hidden;
+                
+                
+                Rect rc = SystemParameters.WorkArea;//获取工作区大小
+                this.Left = 0;//设置位置
+                this.Top = 0;
+                
+                
+                this.Width = rc.Width;
+                this.Height = rc.Height;
+                isWindowMax = true;
+                
             }
-            else if (this.WindowState == WindowState.Maximized)
+            else if (isWindowMax == true)
             {
-                this.WindowState = WindowState.Normal;
+                windowShadowControlWidth = 0;
+                this.BorderThickness = new Thickness(7);
                 maxButton.Style = Resources["maxSty"] as Style;
+                this.Left = rcnormal.Left;
+                this.Top = rcnormal.Top;
+                this.Width = rcnormal.Width;
+                this.Height = rcnormal.Height;
                 this.Left = 50;
                 this.Top = 50;
                 this.Opacity = 0.95;
+                
                 Border1.Visibility = Visibility.Visible;
+                isWindowMax = false;
+               
             }
 
         } //最大化窗口按钮
@@ -245,6 +265,7 @@ namespace qiquanui
 
         private bool ResizeControl()
         {
+            
 
             optionsMarketTitleGridwper = TopCanvasButtomGridwper = TopCanvas1wper = Grid1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w));
             profitListViewwper = userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = tradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
@@ -252,49 +273,63 @@ namespace qiquanui
             optionsMarketListViewhper = (this.Height - (originalHeight - optionsMarketListViewh)) / (originalHeight - (originalHeight - optionsMarketListViewh));
             TopCanvas1hper = Grid1hper = grid3hper = (this.Height - (originalHeight - Grid1h)) / (originalHeight - (originalHeight - Grid1h));
             titileBorder4wper = (this.Width - (originalWidth - titileBorder4w)) / (originalWidth - (originalWidth - titileBorder4w));
+            subjectMatterMarketGridwper = (this.Width - (originalWidth - subjectMatterMarketGridw)) / (originalWidth - (originalWidth - subjectMatterMarketGridw));
+
 
             darkRectanglewper = (this.Width - (originalWidth - darkRectanglew)) / (originalWidth - (originalWidth - darkRectanglew));
             darkRectanglehper = (this.Height - (originalHeight - darkRectangleh)) / (originalHeight - (originalHeight - darkRectangleh));
 
             statusBar1wper = this.Width / originalWidth;
             canvas2hper = canvas1hper = (this.Height - (originalHeight - canvas1h)) / (originalHeight - (originalHeight - canvas1h));
-            Border1.Height = this.Height - 14.0;
-            Border1.Width = this.Width - 14.0;
-            Grid1.Width = futuresMarketListView.Width = list1w * list1wper;
-            futuresMarketListView.Height = list1h * list1hper;
-            Grid1.Height = Grid1h * Grid1hper;
-            historyListView.Width = historyListVieww * historyListViewwper;
-            userManageListView.Width = userManageListVieww * userManageListViewwper;
 
 
-            Grid3.Width = grid3w * grid3wper;
-            Top1.Width = top1w * top1wper;
-            Canvas1.Height = canvas1h * canvas1hper;
-            Canvas2.Height = canvas2h * canvas2hper;
-            tradingListView.Width = tradingListVieww * tradingListViewwper;
-            multipleTabControl.Width = multipleTabControlw * multipleTabControlwper;
-            holdDetailListView.Width = optionsHoldDetailListVieww * optionsHoldDetailListViewwper;
-            profitListView.Width = profitListViewwper * profitListVieww;
-            statusBar1.Width = statusBar1w * statusBar1wper;
-            optionsMarketListView.Width = optionsMarketListVieww * optionsMarketListViewwper;
-            optionsMarketListView.Height = optionsMarketListViewh * optionsMarketListViewhper;
-            TopCanvas1.Width = TopCanvas1w * TopCanvas1wper;
-            TopCanvas1.Height = TopCanvas1h * TopCanvas1hper;
-            TopCanvasButtomGrid.Width = TopCanvasButtomGridw * TopCanvasButtomGridwper;
-            optionsMarketTitleGrid.Width = optionsMarketTitleGridwper * optionsMarketTitleGridw;
-            titileBorder4.Width = titileBorder4wper * titileBorder4w;
+            Border1.Height = this.Height - 14.0 + 2 * windowShadowControlWidth;
+            Border1.Width = this.Width - 14.0 + 2 * windowShadowControlWidth;
+            Grid1.Width = futuresMarketListView.Width = list1w * list1wper + 2 * windowShadowControlWidth;
+            futuresMarketListView.Height = list1h * list1hper + 2 * windowShadowControlWidth;
+            Grid1.Height = Grid1h * Grid1hper + 2 * windowShadowControlWidth;
+            historyListView.Width = historyListVieww * historyListViewwper + 2 * windowShadowControlWidth;
+            userManageListView.Width = userManageListVieww * userManageListViewwper + 2 * windowShadowControlWidth;
 
-            darkRectangle.Width = darkRectanglew * darkRectanglewper;
-            darkRectangle.Height = darkRectangleh * darkRectanglehper;
 
-            Canvas1Border1.Height = Canvas1.Height;
+            Grid3.Width = grid3w * grid3wper + 2 * windowShadowControlWidth;
+            Top1.Width = top1w * top1wper + 2 * windowShadowControlWidth;
+            Canvas1.Height = canvas1h * canvas1hper + 2 * windowShadowControlWidth;
+            Canvas2.Height = canvas2h * canvas2hper + 2 * windowShadowControlWidth;
+            tradingListView.Width = tradingListVieww * tradingListViewwper + 2 * windowShadowControlWidth;
+            multipleTabControl.Width = multipleTabControlw * multipleTabControlwper + 2 * windowShadowControlWidth;
+            holdDetailListView.Width = optionsHoldDetailListVieww * optionsHoldDetailListViewwper + 2 * windowShadowControlWidth;
+            profitListView.Width = profitListViewwper * profitListVieww + 2 * windowShadowControlWidth;
+            statusBar1.Width = statusBar1w * statusBar1wper + 2 * windowShadowControlWidth;
+            optionsMarketListView.Width = optionsMarketListVieww * optionsMarketListViewwper + 2 * windowShadowControlWidth;
+            optionsMarketListView.Height = optionsMarketListViewh * optionsMarketListViewhper + 2 * windowShadowControlWidth;
+            TopCanvas1.Width = TopCanvas1w * TopCanvas1wper + 2 * windowShadowControlWidth;
+            TopCanvas1.Height = TopCanvas1h * TopCanvas1hper + 2 * windowShadowControlWidth;
+            TopCanvasButtomGrid.Width = TopCanvasButtomGridw * TopCanvasButtomGridwper + 2 * windowShadowControlWidth;
+            optionsMarketTitleGrid.Width = optionsMarketTitleGridwper * optionsMarketTitleGridw + 2 * windowShadowControlWidth;
+            titileBorder4.Width = titileBorder4wper * titileBorder4w + 2 * windowShadowControlWidth;
+            subjectMatterMarketGrid.Width = subjectMatterMarketGridw * subjectMatterMarketGridwper + 2 * windowShadowControlWidth;
 
-            Canvas2Border1.Height = Canvas2.Height;
+            darkRectangle.Width = darkRectanglew * darkRectanglewper + 2 * windowShadowControlWidth;
+            darkRectangle.Height = darkRectangleh * darkRectanglehper + 2 * windowShadowControlWidth;
+
+            Canvas1Border1.Height = Canvas1.Height + 2 * windowShadowControlWidth;
+
+            Canvas2Border1.Height = Canvas2.Height + 2 * windowShadowControlWidth;
+
             return true;
         } //拉伸窗口时改变各个控件大小
         private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
         {
-            ResizeControl();
+            if (this.ActualHeight > SystemParameters.WorkArea.Height || this.ActualWidth > SystemParameters.WorkArea.Width)
+            {
+                this.WindowState = System.Windows.WindowState.Normal;
+                MaxButton_Click_1(null, null);
+            }
+
+                ResizeControl();
+            
+            
         } //拉伸窗口调用ResizeControl()
 
 
@@ -435,7 +470,7 @@ namespace qiquanui
             rcTimer.Stop();
         }
 
-        private void darkRectangleHidden()//黑幕隐藏
+        public void darkRectangleHidden()//黑幕隐藏
         {
 
             if (((Canvas1.Width == 29.0 || Canvas2.Width == 29.0) && ((isLeftCanvasHiding == true || isRightCanvasHiding == true) && !(isLeftCanvasHiding == true && isRightCanvasHiding == true))) || ((isLeftCanvasHiding == false && isRightCanvasHiding == false) && (((Canvas2.Width > 29.0) && (Canvas2.Width <= 60.0)) || ((Canvas1.Width > 29.0) && (Canvas1.Width <= 292.0)))) || ((isLeftCanvasHiding == true && isRightCanvasHiding == true) && (Canvas1.Width == 292.0 && Canvas2.Width == 60.0)))
@@ -456,7 +491,7 @@ namespace qiquanui
                 dTimer.Start();
             }
         }
-        private void darkRectangleShow()//黑幕显现
+        public void darkRectangleShow()//黑幕显现
         {
             if ((Canvas1.Width == 29.0 && Canvas2.Width == 29.0 && ((isLeftCanvasExpanding == true || isRightCanvasExpanding == true) && !(isLeftCanvasExpanding == true && isRightCanvasExpanding == true))) || ((isLeftCanvasHiding == false && isRightCanvasHiding == false) && (isLeftCanvasExpanding == true && isRightCanvasExpanding == true) && (((Canvas2.Width >= 29.0) && (Canvas2.Width < 60.0)) || ((Canvas1.Width >= 29.0) && (Canvas1.Width < 292.0)))))
             {
@@ -475,7 +510,7 @@ namespace qiquanui
             }
         }
 
-        private void darkRectangle_Click(object sender, RoutedEventArgs e)//点击黑幕后两侧伸缩面板缩回，黑幕消失
+        public void darkRectangle_Click(object sender, RoutedEventArgs e)//点击黑幕后两侧伸缩面板缩回，黑幕消失
         {
             darkRectangleHidden();
 
@@ -483,7 +518,7 @@ namespace qiquanui
             CloseRightCanvas();
         }
         //左伸缩板的展开和收缩
-        private void openLeftCanvas()
+        public void openLeftCanvas()
         {
             if (Canvas1.Width == 29.0 || (isLeftCanvasHiding == true && Canvas1.Width <= 292.0 && Canvas1.Width >= 29.0))
             {
@@ -504,7 +539,7 @@ namespace qiquanui
             }
 
         }
-        private void CloseLeftCanvas()
+        public void CloseLeftCanvas()
         {
             if (Canvas1.Width == 292.0 || (isLeftCanvasExpanding == true && Canvas1.Width <= 292.0 && Canvas1.Width >= 29.0))
             {
@@ -544,6 +579,10 @@ namespace qiquanui
             {
                 openRightCanvas();
 
+                RiskWindow riskWindow = new RiskWindow(this);
+                riskWindow.Show();
+                this.WindowState = WindowState.Minimized;
+
             }
             else if (Canvas2.Width == 60.0)
             {
@@ -552,7 +591,7 @@ namespace qiquanui
 
         }
         //右伸缩板的展开和收缩
-        private void openRightCanvas()
+        public void openRightCanvas()
         {
             if (Canvas2.Width == 29.0 || (isRightCanvasHiding == true && Canvas2.Width <= 60.0 && Canvas2.Width >= 29.0))
             {
@@ -568,16 +607,15 @@ namespace qiquanui
                 Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
                 canvas2Storyboard.Begin(this);
                 RightImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative));
-                RiskWindow riskWindow = new RiskWindow();
+                
                 darkRectangleShow();
-                riskWindow.Show();
 
 
                 Canvas2Border1.Visibility = Visibility.Visible;
                 canvas2Storyboard.Begin(this);
             }
         }
-        private void CloseRightCanvas()
+        public void CloseRightCanvas()
         {
             if (Canvas2.Width == 60.0 || (isRightCanvasExpanding == true && Canvas2.Width <= 60.0 && Canvas2.Width >= 29.0))
             {
@@ -659,9 +697,11 @@ namespace qiquanui
         private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
         {
             StrategyWindow strategyWindow = new StrategyWindow(this);
+            strategyWindow.Show();
+            this.WindowState = WindowState.Minimized;
             CloseLeftCanvas();
             CloseRightCanvas();
-            strategyWindow.Show();
+            
 
         } //策略实验室，点击“开始分析”
 

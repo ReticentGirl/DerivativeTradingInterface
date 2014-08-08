@@ -31,9 +31,14 @@ namespace qiquanui
     {
         private double originalHeight, originalWidth, Grid1w, Grid1h, Grid1wper, Grid1hper, Grid2w, Grid2h, Grid2wper, Grid2hper, Grid1Label1h, Grid1Label1hper, Grid2Label1h, Grid2Label1hper, DeltaTabGridh, DeltaTabGridhper, GammaTabGridh, GammaTabGridhper, optionsRiskLVw, optionsRiskLVwper, optionsRiskLVh, optionsRiskLVhper, recomLVw, recomLVwper, recomLVh, recomLVhper, DeltaAndGammaTabControlh, DeltaAndGammaTabControlhper;
         private Storyboard Grid1Storyboard, Grid1Storyboard_Leave, Grid2Storyboard, Grid2Storyboard_Leave, Grid1Label1Storyboard, Grid1Label1Storyboard_Leave, Grid2Label1Storyboard, Grid2Label1Storyboard_Leave, compoGridStoryboard, compoGridStoryboard_Leave, DeltaTabGridStoryboard, DeltaTabGridStoryboard_Leave, GammaTabGridStoryboard, GammaTabGridStoryboard_Leave;
-        public RiskWindow()
+        private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
+        MainWindow pWindow;
+        public RiskWindow(MainWindow _pWindow)
         {
             InitializeComponent();
+
+            pWindow = _pWindow;
+
             originalHeight = this.Height;
             originalWidth = this.Width;
 
@@ -52,6 +57,7 @@ namespace qiquanui
             recomLVh = recomLV.Height;
             DeltaAndGammaTabControlh = DeltaAndGammaTabControl.Height;
 
+            windowShadowControlWidth = 0;
 
             Grid1Storyboard = (Storyboard)this.FindResource("Grid1Animate");
             Grid1Storyboard_Leave = (Storyboard)this.FindResource("Grid1Animate_Leave");
@@ -74,66 +80,74 @@ namespace qiquanui
         }
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            this.DragMove();
+            if (isWindowMax == false)
+            {
+                this.DragMove();
+            }
+            else if (isWindowMax == true) ;
+
         }//窗口移动
+
+
         private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if (this.WindowState == WindowState.Normal)
-            {
-                Border1.Visibility = Visibility.Hidden;
-                this.WindowState = WindowState.Maximized;
-                
-                maxButton.Style = Resources["normalSty"] as Style;
-                this.Opacity = 1;
-                
-                
-            }
-            else if (this.WindowState == WindowState.Maximized)
-            {
-                Border1.Visibility = Visibility.Visible;
-                this.WindowState = WindowState.Normal;
-                
-                maxButton.Style = Resources["maxSty"] as Style;
-                this.Opacity = 0.95;
-                this.Left = 50;
-                this.Top = 50;
-                
-               
-            }
+            MaxButton_Click_1(null, null);
         } //双击标题栏最大化、还原
         private void MinButton_Click_1(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         } //最小化窗口按钮
 
+        Rect rcnormal;//定义一个全局rect记录还原状态下窗口的位置和大小。
+        bool isWindowMax = false;
         private void MaxButton_Click_1(object sender, RoutedEventArgs e)
         {
 
-            if (this.WindowState == WindowState.Normal)
+            if (isWindowMax == false)
             {
-                Border1.Visibility = Visibility.Collapsed;
-                this.WindowState = WindowState.Maximized;
+                Rect rcnormal = new Rect(this.Left, this.Top, this.Width, this.Height);//保存下当前位置与大小
+                windowShadowControlWidth = 7;
+                this.BorderThickness = new Thickness(0);
                 maxButton.Style = Resources["normalSty"] as Style;
                 this.Opacity = 1;
-               
-               
+                Border1.Visibility = Visibility.Hidden;
+
+
+                Rect rc = SystemParameters.WorkArea;//获取工作区大小
+                this.Left = 0;//设置位置
+                this.Top = 0;
+
+
+                this.Width = rc.Width;
+                this.Height = rc.Height;
+                isWindowMax = true;
+                
             }
-            else if (this.WindowState == WindowState.Maximized)
+            else if (isWindowMax == true)
             {
-                Border1.Visibility = Visibility.Visible;
-                this.WindowState = WindowState.Normal;
+                windowShadowControlWidth = 0;
+                this.BorderThickness = new Thickness(7);
                 maxButton.Style = Resources["maxSty"] as Style;
+                this.Left = rcnormal.Left;
+                this.Top = rcnormal.Top;
+                this.Width = rcnormal.Width;
+                this.Height = rcnormal.Height;
                 this.Left = 50;
                 this.Top = 50;
                 this.Opacity = 0.95;
-                
-                
+
+                Border1.Visibility = Visibility.Visible;
+                isWindowMax = false;
+
             }
 
         } //最大化窗口按钮
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
+            pWindow.WindowState = WindowState.Normal;
+            pWindow.CloseLeftCanvas();
+            pWindow.CloseRightCanvas();
             this.Close();
         }//关闭窗口按钮
 
@@ -179,26 +193,34 @@ namespace qiquanui
             recomLVhper = (this.Height - (originalHeight - recomLVh - Grid1h)) / (originalHeight - (originalHeight - recomLVh - Grid1h));
             DeltaAndGammaTabControlhper = (this.Height - (originalHeight - DeltaAndGammaTabControlh)) / (originalHeight - (originalHeight - DeltaAndGammaTabControlh));
 
-           
-            Grid1.Width=Grid1w*Grid1wper;
-            Grid1.Height=Grid1h*Grid1hper;
-            Grid2.Width=Grid2w*Grid2wper;
-            Grid2.Height=Grid2h*Grid2hper;
-            Grid1Label1.Height=Grid1Label1h*Grid1Label1hper;
-            Grid2Label1.Height=Grid2Label1h*Grid2Label1hper;
-            DeltaTabGrid.Height=DeltaTabGridh*DeltaTabGridhper;
-            GammaTabGrid.Height=GammaTabGridh*GammaTabGridhper;
-            optionsRiskLV.Width=optionsRiskLVw*optionsRiskLVwper;
-            optionsRiskLV.Height=optionsRiskLVh*optionsRiskLVhper;
-            recomLV.Width=recomLVw*recomLVwper;
-            recomLV.Height=recomLVh*recomLVhper;
-            DeltaAndGammaTabControl.Height = DeltaAndGammaTabControlh * DeltaAndGammaTabControlhper;
+
+            Grid1.Width = Grid1w * Grid1wper + 2 * windowShadowControlWidth;
+            Grid1.Height = Grid1h * Grid1hper + 2 * windowShadowControlWidth;
+            Grid2.Width = Grid2w * Grid2wper + 2 * windowShadowControlWidth;
+            Grid2.Height = Grid2h * Grid2hper + 2 * windowShadowControlWidth;
+            Grid1Label1.Height = Grid1Label1h * Grid1Label1hper + 2 * windowShadowControlWidth;
+            Grid2Label1.Height = Grid2Label1h * Grid2Label1hper + 2 * windowShadowControlWidth;
+            DeltaTabGrid.Height = DeltaTabGridh * DeltaTabGridhper + 2 * windowShadowControlWidth;
+            GammaTabGrid.Height = GammaTabGridh * GammaTabGridhper + 2 * windowShadowControlWidth;
+            optionsRiskLV.Width = optionsRiskLVw * optionsRiskLVwper + 2 * windowShadowControlWidth;
+            optionsRiskLV.Height = optionsRiskLVh * optionsRiskLVhper + 2 * windowShadowControlWidth;
+            recomLV.Width = recomLVw * recomLVwper + 2 * windowShadowControlWidth;
+            recomLV.Height = recomLVh * recomLVhper + 2 * windowShadowControlWidth;
+            DeltaAndGammaTabControl.Height = DeltaAndGammaTabControlh * DeltaAndGammaTabControlhper + 2 * windowShadowControlWidth;
 
         }//拉伸窗口调用ResizeControl()
         private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
         {
+            if (this.ActualHeight > SystemParameters.WorkArea.Height || this.ActualWidth > SystemParameters.WorkArea.Width)
+            {
+                this.WindowState = System.Windows.WindowState.Normal;
+                MaxButton_Click_1(null, null);
+            }
+
             ResizeControl();
-        }
+
+
+        } //拉伸窗口调用ResizeControl()
 
         private void Grid1_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
