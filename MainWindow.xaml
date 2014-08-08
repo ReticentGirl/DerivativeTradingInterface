@@ -9,7 +9,7 @@
         Closing="Window_Closing"
     
     
-        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1190" MinHeight="680" Width="1198.75" Height="700.5" Opacity="0.95">
+        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1190" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95">
     <Window.Resources>
 
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
@@ -2512,7 +2512,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" Margin="20,12,0,0" VerticalAlignment="Top"/>
+                        <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" Margin="19,18,0,0" VerticalAlignment="Top"/>
                         <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
                         <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click"/>
                         <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
@@ -2522,7 +2522,7 @@
                 <TabItem x:Name="holdDetailTabItem" Header="持仓" Background="White" Style="{StaticResource TabItemStyle}" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,9,2,-13">
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="914"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,10,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
