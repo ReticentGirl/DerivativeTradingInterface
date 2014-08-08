@@ -37,6 +37,19 @@ namespace qiquanui
 
         private bool isBuy;
 
+        private bool isFromGradient;    //是否是由于 使用了等差梯度 加入到 交易盒子中的
+
+
+        public bool IsFromGradient
+        {
+            get { return isFromGradient; }
+            set
+            {
+                isFromGradient = value;
+                OnPropertyChanged("IsFromGradient");
+            }
+        }
+
 
         public bool IsBuy
         {
@@ -175,7 +188,8 @@ namespace qiquanui
                                  string _clientageCondition,
                                  double _finalPrice,
                                  bool _optionOrFuture,
-                                 bool _isBuy
+                                 bool _isBuy,
+                                 bool _isFromGradient
                               )
          {
              userID = _userID;
@@ -189,6 +203,7 @@ namespace qiquanui
              finalPrice = _finalPrice;
              optionOrFuture = _optionOrFuture;
              isBuy = _isBuy;
+             isFromGradient = _isFromGradient;
          }
 
         #region INotifyPropertyChanged 成员
@@ -317,10 +332,10 @@ namespace qiquanui
         }
 
 
-        public void OnAdd(string _userID,string _instrumentID,string _tradingType,int _tradingNum,string _clientageType,double _clientagePrice,double _marketPrice,string _clientageCondition,double _finalPrice,bool _optionOrFuture,bool _isBuy)
+            public void OnAdd(string _userID, string _instrumentID, string _tradingType, int _tradingNum, string _clientageType, double _clientagePrice, double _marketPrice, string _clientageCondition, double _finalPrice, bool _optionOrFuture, bool _isBuy, bool _isFromGradient)
         {
 
-            OrderOC.Add(new PlaceOrderData(_userID, _instrumentID, _tradingType, _tradingNum, _clientageType, _clientagePrice, _marketPrice, _clientageCondition, _finalPrice, _optionOrFuture, _isBuy));
+            OrderOC.Add(new PlaceOrderData(_userID, _instrumentID, _tradingType, _tradingNum, _clientageType, _clientagePrice, _marketPrice, _clientageCondition, _finalPrice, _optionOrFuture, _isBuy, _isFromGradient));
         }
 
         public void OnTimedEvent(object sender, ElapsedEventArgs e)

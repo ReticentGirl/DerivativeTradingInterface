@@ -33,12 +33,15 @@ namespace qiquanui
 
     public partial class MainWindow : Window
     {
-         DataManager dm;
+        DataManager dm;
         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper;
 
-         TradingManager otm;   //维护交易区的指针
+        TradingManager otm;   //维护交易区的指针
 
-         HistoryManager hm;  //维护历史记录区的指针
+        HistoryManager hm;  //维护历史记录区的指针
+
+        BasicInforAndPromptManager bip;   //维护基本信息和提示的指针
+
 
 
 
@@ -85,6 +88,7 @@ namespace qiquanui
 
             hm = new HistoryManager(this);
 
+            bip = new BasicInforAndPromptManager(this);
             //otm.OnAdd();
 
             //设置窗口距离显示屏边界距离
@@ -282,9 +286,9 @@ namespace qiquanui
 
             darkRectangle.Width = darkRectanglew * darkRectanglewper;
             darkRectangle.Height = darkRectangleh * darkRectanglehper;
-            
+
             Canvas1Border1.Height = Canvas1.Height;
-       
+
             Canvas2Border1.Height = Canvas2.Height;
             return true;
         } //拉伸窗口时改变各个控件大小
@@ -388,8 +392,8 @@ namespace qiquanui
         {
             //strategyOfFuturesCanvasStoryboard_Leave.Begin(this);
         }
-        
-        
+
+
         //WPF的定时器使用DispatcherTimer类对象，用来为darkrectangle的逐渐消失计时
         private System.Windows.Threading.DispatcherTimer dTimer = new DispatcherTimer();
         //WPF的定时器使用DispatcherTimer类对象，用来为leftCanvas的逐渐展开计时
@@ -434,7 +438,7 @@ namespace qiquanui
         private void darkRectangleHidden()//黑幕隐藏
         {
 
-            if (((Canvas1.Width == 29.0 || Canvas2.Width == 29.0) && ((isLeftCanvasHiding == true || isRightCanvasHiding == true) && !(isLeftCanvasHiding == true && isRightCanvasHiding == true))) || ((isLeftCanvasHiding == false && isRightCanvasHiding == false) && (((Canvas2.Width > 29.0) && (Canvas2.Width <= 60.0)) || ((Canvas1.Width > 29.0) && (Canvas1.Width <= 292.0))))||((isLeftCanvasHiding==true&&isRightCanvasHiding==true)&&(Canvas1.Width==292.0&&Canvas2.Width==60.0)))
+            if (((Canvas1.Width == 29.0 || Canvas2.Width == 29.0) && ((isLeftCanvasHiding == true || isRightCanvasHiding == true) && !(isLeftCanvasHiding == true && isRightCanvasHiding == true))) || ((isLeftCanvasHiding == false && isRightCanvasHiding == false) && (((Canvas2.Width > 29.0) && (Canvas2.Width <= 60.0)) || ((Canvas1.Width > 29.0) && (Canvas1.Width <= 292.0)))) || ((isLeftCanvasHiding == true && isRightCanvasHiding == true) && (Canvas1.Width == 292.0 && Canvas2.Width == 60.0)))
             {
                 Storyboard s = new Storyboard();
                 this.Resources.Add(Guid.NewGuid().ToString(), s);
@@ -450,7 +454,7 @@ namespace qiquanui
                 dTimer.Tick += new EventHandler(dTimer_Tick);
                 dTimer.Interval = new TimeSpan(0, 0, 1);
                 dTimer.Start();
-             }
+            }
         }
         private void darkRectangleShow()//黑幕显现
         {
@@ -474,7 +478,7 @@ namespace qiquanui
         private void darkRectangle_Click(object sender, RoutedEventArgs e)//点击黑幕后两侧伸缩面板缩回，黑幕消失
         {
             darkRectangleHidden();
-            
+
             CloseLeftCanvas();
             CloseRightCanvas();
         }
@@ -498,16 +502,16 @@ namespace qiquanui
                 Canvas1Border1.Visibility = Visibility.Visible;
                 canvas1Storyboard.Begin(this);
             }
-                
+
         }
         private void CloseLeftCanvas()
         {
-            if (Canvas1.Width == 292.0||(isLeftCanvasExpanding==true&&Canvas1.Width<=292.0&&Canvas1.Width>=29.0))
+            if (Canvas1.Width == 292.0 || (isLeftCanvasExpanding == true && Canvas1.Width <= 292.0 && Canvas1.Width >= 29.0))
             {
                 lcTimer.Tick += new EventHandler(lcTimer_Tick);
                 lcTimer.Interval = TimeSpan.FromSeconds(0.4);
                 lcTimer.Start();
-                isLeftCanvasHiding= true;
+                isLeftCanvasHiding = true;
                 DoubleAnimation animate = new DoubleAnimation();
                 animate.To = 29.0;
                 animate.Duration = new Duration(TimeSpan.FromSeconds(0.4));
@@ -532,25 +536,25 @@ namespace qiquanui
                 CloseLeftCanvas();
             }
         }
-       
+
 
         private void RiskCanvasButtom_Click(object sender, RoutedEventArgs e)
         {
             if (Canvas2.Width == 29.0)
             {
                 openRightCanvas();
-                
+
             }
             else if (Canvas2.Width == 60.0)
             {
                 CloseRightCanvas();
             }
-            
+
         }
         //右伸缩板的展开和收缩
         private void openRightCanvas()
         {
-            if (Canvas2.Width == 29.0||(isRightCanvasHiding == true && Canvas2.Width <= 60.0 && Canvas2.Width >= 29.0))
+            if (Canvas2.Width == 29.0 || (isRightCanvasHiding == true && Canvas2.Width <= 60.0 && Canvas2.Width >= 29.0))
             {
                 rcTimer_show.Tick += new EventHandler(rcTimer_show_Tick);
                 rcTimer_show.Interval = TimeSpan.FromSeconds(0.4);
@@ -567,7 +571,7 @@ namespace qiquanui
                 RiskWindow riskWindow = new RiskWindow();
                 darkRectangleShow();
                 riskWindow.Show();
-                
+
 
                 Canvas2Border1.Visibility = Visibility.Visible;
                 canvas2Storyboard.Begin(this);
@@ -593,7 +597,7 @@ namespace qiquanui
                 canvas2Storyboard_Leave.Begin(this);
             }
         }
-     
+
 
 
         private void predictComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -678,9 +682,9 @@ namespace qiquanui
             PlaceOrder placeOrder = new PlaceOrder();
             placeOrder.Show();
 
-           PlaceOrderManager pom = new PlaceOrderManager(placeOrder);
+            PlaceOrderManager pom = new PlaceOrderManager(placeOrder);
 
-            placeOrder.getPoint(hm, pom, dm,otm,this);
+            placeOrder.getPoint(hm, pom, dm, otm, this);
 
             if (tradingListView.Items.Count > 0)
             {
@@ -690,14 +694,12 @@ namespace qiquanui
                     TradingData otd = (TradingData)tradingListView.Items[i];
                     if (otd.IfChooseOTGVCH == true)
                     {
-                        // System.Windows.MessageBox.Show(otd.InstrumentID);
+
                         string orderUserID = otd.UserID;   //投资账户
 
                         string orderInstrumentID = otd.InstrumentID;   //合约代码
 
-                       // string orderCallOrPut = otd.CallOrPut;   //看涨（0/false）看跌（1/true）
 
-                       // double orderExercisePrice = Convert.ToDouble(otd.ExercisePrice);  //行权价
 
                         string orderTradingType = "";  //交易类型   0 买开  1 卖开  2买平 3卖平
 
@@ -733,7 +735,12 @@ namespace qiquanui
 
                         }
 
-                        double orderClientagePrice = otd.ClientagePrice; //委托价格
+                        double orderClientagePrice = 0;
+                        if (otd.ClientageType == 1)   //限价
+                        {
+                            orderClientagePrice = Convert.ToDouble(otd.ClientagePrice); //委托价格
+                        }
+
 
                         double orderMarketPrice = otd.MarketPrice;   //市场价格
 
@@ -763,29 +770,79 @@ namespace qiquanui
                         bool optionOrFuture = otd.OptionOrFuture;
 
 
-                        //////////////////////////////以下数据从ALL获取//////////////////////
 
-                        //DataRow nDr = (DataRow)DataManager.All[selectedInstrumentID];
+                        pom.OnAdd(orderUserID, orderInstrumentID, orderTradingType, orderTradingNum, orderClientageType, orderClientagePrice, orderMarketPrice, orderClientageCondition, orderFinalPrice, optionOrFuture, otd.IsBuy, false);
 
-                        ////nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
+                        if (otd.IsSetGradient == true)   //如果设置了等差
+                        {
+                            //int count = 0;  //计算等差次数
+                            for (int count = 1; count <= 2; count++)
+                            {
 
-                        //double selectedPreClosePrice = Math.Round((double)nDr["PreClosePrice"], 1);
+                                string g_clientageType = "限价";
 
-                        //double selectedPreSettlementPrice = Math.Round((double)nDr["PreSettlementPrice"], 1);
+                                if (otd.IsBuy == true)    //买卖  NUM正负不同
+                                {
+                                    int g_tradingNum = orderTradingNum - count * otd.ArithmeticProgression;
+
+                                    if (g_tradingNum > 0)
+                                    {
+
+                                        double gp_clientagePrice = orderFinalPrice + count * otd.Accuracy;    //正的
+                                        double gp_finalPrice = gp_clientagePrice;
+
+                                        pom.OnAdd(orderUserID, orderInstrumentID, orderTradingType, g_tradingNum, g_clientageType, gp_clientagePrice, orderMarketPrice, orderClientageCondition, gp_finalPrice, optionOrFuture, otd.IsBuy, true);
 
 
-                        //double MarginAdjust = 0.1;//股指期权保证金调整系数  
-                        //double MiniGuarantee = 0.5;//最低保障系数  
-                        //int VolumeMultiple = 100;//合约乘数  
+
+                                        double gn_clientagePrice = orderFinalPrice - count * otd.Accuracy;    //负的
+                                        double gn_finalPrice = gn_clientagePrice;
+
+                                        pom.OnAdd(orderUserID, orderInstrumentID, orderTradingType, g_tradingNum, g_clientageType, gn_clientagePrice, orderMarketPrice, orderClientageCondition, gn_finalPrice, optionOrFuture, otd.IsBuy, true);
+
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+
+                                }
+                                else if (otd.IsBuy == false)
+                                {
+                                    int g_tradingNum = orderTradingNum + count * otd.ArithmeticProgression;
 
 
-                        //double dummy = Math.Max(selectedPreClosePrice - selectedExercisePrice, 0.0);//虚值额  
+                                    if (g_tradingNum < 0)
+                                    {
 
-                        //double Margin = (selectedPreSettlementPrice + Math.Max(selectedPreClosePrice * MarginAdjust - dummy, selectedExercisePrice * MarginAdjust * MiniGuarantee)) * VolumeMultiple;//保证金  
+                                        double gp_clientagePrice = orderFinalPrice + count * otd.Accuracy;    //正的
+                                        double gp_finalPrice = gp_clientagePrice;
 
-                        /////////////////////////////////////////////////////////////////////////////////////////////////////
+                                        pom.OnAdd(orderUserID, orderInstrumentID, orderTradingType, g_tradingNum, g_clientageType, gp_clientagePrice, orderMarketPrice, orderClientageCondition, gp_finalPrice, optionOrFuture, otd.IsBuy, true);
 
-                        pom.OnAdd(orderUserID, orderInstrumentID, orderTradingType, orderTradingNum, orderClientageType, orderClientagePrice, orderMarketPrice, orderClientageCondition, orderFinalPrice, optionOrFuture, otd.IsBuy);
+
+
+                                        double gn_clientagePrice = orderFinalPrice - count * otd.Accuracy;    //负的
+                                        double gn_finalPrice = gn_clientagePrice;
+
+                                        pom.OnAdd(orderUserID, orderInstrumentID, orderTradingType, g_tradingNum, g_clientageType, gn_clientagePrice, orderMarketPrice, orderClientageCondition, gn_finalPrice, optionOrFuture, otd.IsBuy, true);
+
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+
+                                }
+
+
+
+
+
+
+
+                            }
+                        }
 
                     }
 
@@ -823,6 +880,44 @@ namespace qiquanui
         {
             //System.Windows.MessageBox.Show("change");
             TradingData selectedItem = tradingListView.SelectedItem as TradingData;
+
+            if (selectedItem != null)
+            {
+                
+
+                string se_nowUserID = "123";
+                string se_totalCapital = "100000";                    //用户总资本
+                string se_availableCapital = "1000000";           //可用资产
+                string se_occupyCapital = "1000000";                        //占用资产
+                string se_nowInstrumentID = selectedItem.InstrumentID;
+                string se_dayToEnd = "";                                //到期天数
+                string se_dueDate = "";                                       //到期日
+                string se_tickSize = "";                           //最小变动价位
+                string se_maxTradeNum = "";                         //最大可交易手数
+
+
+                DataRow nDr = (DataRow)DataManager.All[se_nowInstrumentID];
+
+
+                se_dueDate = nDr["LastDate"].ToString();
+
+                DateTime dt_dueDate = DateTime.ParseExact(se_dueDate, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
+
+                TimeSpan sp_dueDate = dt_dueDate - dm.now;
+
+                double i_dueDate = Math.Round(sp_dueDate.TotalDays,1);
+
+               // System.Windows.MessageBox.Show(i_dueDate.ToString());
+
+                se_dayToEnd = i_dueDate.ToString();
+
+
+                bip.changeInfo(se_nowUserID, se_totalCapital, se_availableCapital, se_occupyCapital, se_nowInstrumentID, se_dayToEnd, se_dueDate, se_tickSize, se_maxTradeNum);
+
+            }
+
+           
+             
 
         }
 
@@ -887,7 +982,7 @@ namespace qiquanui
         /// <param name="e"></param>
         private void traderComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (e.RemovedItems.Count == 0 || e.AddedItems.Count==0) return;
+            if (e.RemovedItems.Count == 0 || e.AddedItems.Count == 0) return;
             string trader;
             trader = (string)e.AddedItems[0];
             trader = trader.Trim();
@@ -913,8 +1008,8 @@ namespace qiquanui
                 string subjectlist;
                 if (_trader.Equals("全部"))
                     subjectlist = "SELECT instrumentname FROM staticdata s where  instrumenttype='期货' and exchangename<>'大商所' and  duedate<>'1407' and duedate<>'no' group by instrumentname";
-                else 
-                    subjectlist = "SELECT instrumentname FROM staticdata s where  instrumenttype='期货' and exchangename='"+_trader+"' and  duedate<>'1407' and duedate<>'no' group by instrumentname";
+                else
+                    subjectlist = "SELECT instrumentname FROM staticdata s where  instrumenttype='期货' and exchangename='" + _trader + "' and  duedate<>'1407' and duedate<>'no' group by instrumentname";
 
                 DataTable dt = DataControl.QueryTable(subjectlist);
                 subjectMatterComboBox.Items.Clear();
@@ -925,7 +1020,7 @@ namespace qiquanui
                     subjectMatterComboBox.Items.Add(_subject);
                 }
                 subjectMatterComboBox.SelectedIndex = 0;
-                
+
                 return;
             }
 
@@ -963,7 +1058,7 @@ namespace qiquanui
             string subject = subjectMatterComboBox.Text.Trim();
 
             if ((type.Equals("期权") && (trader.Equals("") || duedata.Equals("") || subject.Equals(""))) ||
-                (type.Equals("期货") && (trader.Equals("") )))
+                (type.Equals("期货") && (trader.Equals(""))))
                 return;
 
             dataThread = new Thread(new ThreadStart(DmUpdate));
@@ -984,6 +1079,8 @@ namespace qiquanui
                 traderComboBox.Items.Add("郑商所");
                 traderComboBox.SelectedIndex = 0;
                 type_change(type, "全部");
+
+                this.addSubjectMatter.Visibility = Visibility.Hidden;  //加入标的商品 按钮隐藏
             }
             else
             {
@@ -993,6 +1090,8 @@ namespace qiquanui
                 traderComboBox.Items.Add("郑商所");
                 traderComboBox.SelectedIndex = 0;
                 type_change(type, "中金所");
+
+                this.addSubjectMatter.Visibility = Visibility.Visible;   //加入标的商品 按钮显示
             }
         }
 
@@ -1034,7 +1133,7 @@ namespace qiquanui
 
                 otd.TypeChangeCount += 1;
 
-                if (otd.TypeChangeCount>1)   //如果已经不是第一次改变，那就要判断是否有重复
+                if (otd.TypeChangeCount > 1)   //如果已经不是第一次改变，那就要判断是否有重复
                 {
                     if (otd.OptionOrFuture == false)  //如果是期权
                     {
@@ -1043,7 +1142,7 @@ namespace qiquanui
                             {
                                 TradingData td = otm.TradingOC[j];
                                 if (td.UserID == otd.UserID && td.InstrumentID == otd.InstrumentID && Convert.ToDouble(td.ExercisePrice) == Convert.ToDouble(otd.ExercisePrice) && td.IsBuy == otd.IsBuy &&
-                                    td.CallOrPut.Equals(otd.CallOrPut) && td.OptionOrFuture == otd.OptionOrFuture&&i!=j)
+                                    td.CallOrPut.Equals(otd.CallOrPut) && td.OptionOrFuture == otd.OptionOrFuture && i != j)
                                     becomeSame = true;
                             }
                     }
@@ -1054,7 +1153,7 @@ namespace qiquanui
                             {
                                 TradingData td = otm.TradingOC[j];
 
-                                if (td.InstrumentID.Equals(otd.InstrumentID) && td.IsBuy == otd.IsBuy && td.OptionOrFuture == otd.OptionOrFuture&&i!=j)
+                                if (td.InstrumentID.Equals(otd.InstrumentID) && td.IsBuy == otd.IsBuy && td.OptionOrFuture == otd.OptionOrFuture && i != j)
                                 {
                                     becomeSame = true;
                                 }
@@ -1063,7 +1162,7 @@ namespace qiquanui
                     }
                 }
 
-                
+
 
                 if (becomeSame == true)
                 {
@@ -1086,7 +1185,7 @@ namespace qiquanui
         }
 
         private void askROMBtn_Click(object sender, RoutedEventArgs e)      //期权看涨 “卖价” 按钮  买期权
-         {
+        {
             //System.Windows.MessageBox.Show("看涨  卖");
             int exercisePrice = Convert.ToInt32(((sender as System.Windows.Controls.Button).Tag));  //获取按钮Tag
             //System.Windows.MessageBox.Show(((sender as System.Windows.Controls.Button).Tag).GetType().ToString());
@@ -1134,7 +1233,7 @@ namespace qiquanui
 
         public void BuyOrSellForButtonForOption(int _buttonTag, string _SelectedUserID, string _selectedCallOrPut, bool _isBuy, bool _optionOrFuture)
         {
-           // this.tradingListView.Visibility = Visibility.Visible;
+            // this.tradingListView.Visibility = Visibility.Visible;
 
             this.tradingTabItem.IsSelected = true;
 
@@ -1215,7 +1314,7 @@ namespace qiquanui
                         {
                             TradingData td = otm.TradingOC[i];
                             if (td.UserID == selectedUserID && td.InstrumentID == selectedInstrumentID && Convert.ToDouble(td.ExercisePrice) == selectedExercisePrice && td.IsBuy == selectedIsBuy &&
-                                td.CallOrPut.Equals(selectedCallOrPut)&&td.OptionOrFuture==_optionOrFuture)
+                                td.CallOrPut.Equals(selectedCallOrPut) && td.OptionOrFuture == _optionOrFuture)
                                 haveSame = true;
                         }
 
@@ -1248,14 +1347,14 @@ namespace qiquanui
 
                 future selectedFuture = dm.ObservableOb[selectedIndex];
 
-                 double selectedMarketPrice = 0;
+                double selectedMarketPrice = 0;
 
                 if (_isBuy == true)
                 {
                     if (selectedFuture.BidPrice1.Equals("-"))
                         isValid = false;
                     else
-                        selectedMarketPrice = Convert.ToDouble(selectedFuture.AskPrice1); 
+                        selectedMarketPrice = Convert.ToDouble(selectedFuture.AskPrice1);
                 }
                 else if (_isBuy == false)
                 {
@@ -1272,28 +1371,28 @@ namespace qiquanui
 
                     string selectedInstrumentID = selectedFuture.instrumentid;
 
-                  
-                    string selectedCallOrPut ="-";     //因为是期货，所以没有看涨看跌
+
+                    string selectedCallOrPut = "-";     //因为是期货，所以没有看涨看跌
 
                     string selectedExercisePrice = "-";    //因为是期货，所以没有行权价
 
                     bool selectedIsBuy = _isBuy;
 
                     if (otm.TradingOC.Count() > 0)    //判断是否有相同的
-                    for (int i = 0; i < otm.TradingOC.Count(); i++)
-                    {
-                        TradingData td = otm.TradingOC[i];
-
-                        if (td.InstrumentID.Equals(selectedInstrumentID)&&td.IsBuy==_isBuy && td.OptionOrFuture == _optionOrFuture)
+                        for (int i = 0; i < otm.TradingOC.Count(); i++)
                         {
-                            haveSame = true;
-                        }
+                            TradingData td = otm.TradingOC[i];
 
-                    }
+                            if (td.InstrumentID.Equals(selectedInstrumentID) && td.IsBuy == _isBuy && td.OptionOrFuture == _optionOrFuture)
+                            {
+                                haveSame = true;
+                            }
+
+                        }
 
                     if (haveSame == false)   //如果没有相同的
                     {
-                        otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut,selectedExercisePrice, selectedMarketPrice, selectedIsBuy, _optionOrFuture);
+                        otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut, selectedExercisePrice, selectedMarketPrice, selectedIsBuy, _optionOrFuture);
                     }
 
                 }
@@ -1326,6 +1425,16 @@ namespace qiquanui
                     cTd.AboutFOK = Visibility.Collapsed;
                     cTd.AboutIOC = Visibility.Collapsed;
                     cTd.AboutROD = Visibility.Visible;
+                    if (cTd.ClientageType == 0) //市价
+                    {
+                        cTd.ClientagePrice = "-";
+                        cTd.IsEnableOfClientagePrice = false;
+                    }
+                    else if (cTd.ClientageType == 1)    //限价
+                    {
+                        cTd.ClientagePrice = cTd.MarketPrice.ToString();
+                        cTd.IsEnableOfClientagePrice = true;
+                    }
                 }
                 else     //如果是期权
                 {
@@ -1334,19 +1443,89 @@ namespace qiquanui
                         cTd.AboutFOK = Visibility.Visible;
                         cTd.AboutIOC = Visibility.Visible;
                         cTd.AboutROD = Visibility.Collapsed;
+
+                        cTd.ClientagePrice = "-";
+                        cTd.IsEnableOfClientagePrice = false;
                     }
                     else if (cTd.ClientageType == 1)    //限价
                     {
                         cTd.AboutFOK = Visibility.Visible;
                         cTd.AboutIOC = Visibility.Visible;
                         cTd.AboutROD = Visibility.Visible;
+
+                        cTd.ClientagePrice = cTd.MarketPrice.ToString();
+                        cTd.IsEnableOfClientagePrice = true;
                     }
 
                 }
             }
         }
-       
-        
+
+        private void addSubjectMatter_Click(object sender, RoutedEventArgs e)            //加入标的的商品  按钮
+        {
+            if (this.typeComboBox.SelectedIndex == 1)
+            {
+                /////////////////////默认为买入
+                bool haveSame = false;
+
+                future add_Future = dm.ObservableOb[0];
+
+                double add_MarketPrice = Convert.ToDouble(add_Future.AskPrice1);
+
+                string add_userID = "123";            //先这样用着
+
+                string add_instrumentID = add_Future.instrumentid;
+
+                string add_callOrPut = "-";
+
+                string add_exercisePrice = "-";
+
+                bool add_isBuy = true;
+
+                if (otm.TradingOC.Count() > 0)    //判断是否有相同的
+                    for (int i = 0; i < otm.TradingOC.Count(); i++)
+                    {
+                        TradingData td = otm.TradingOC[i];
+
+                        if (td.InstrumentID.Equals(add_instrumentID) && td.IsBuy == add_isBuy && td.OptionOrFuture == true)
+                        {
+                            haveSame = true;
+                        }
+
+                    }
+
+                if (haveSame == false)   //如果没有相同的
+                {
+                    otm.OnAdd(add_userID, add_instrumentID, add_callOrPut, add_exercisePrice, add_MarketPrice, add_isBuy, true);
+                }
+
+
+            }
+        }
+
+        private void accuracyTTextBox_TextChanged(object sender, TextChangedEventArgs e)     //交易区 精确度 数值变化响应
+        {
+            for (int i = 0; i < otm.TradingOC.Count(); i++)
+            {
+                TradingData c_td = otm.TradingOC[i];
+
+                DataRow nDr = (DataRow)DataManager.All[c_td.InstrumentID];
+
+                double c_accuracyUnit = (double)nDr["MinUnit"];
+
+                //double iii = 1.2 % 0.2;
+
+                if ((int)(c_td.Accuracy * 100) % (int)(c_accuracyUnit * 100) != 0)   //乘100 是为了解决小数取余有问题的问题
+                {
+                    int time = (int)(c_td.Accuracy / c_accuracyUnit); //倍数
+
+                    c_td.Accuracy = c_accuracyUnit * time;
+                }
+            }
+
+        }
+
+
 
 
 

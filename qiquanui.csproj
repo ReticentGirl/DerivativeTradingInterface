@@ -81,6 +81,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BasicInforAndPromptManager.cs" />
     <Compile Include="DataControl.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="DynamicData.cs" />

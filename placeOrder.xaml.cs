@@ -191,7 +191,7 @@ namespace qiquanui
                 for (int j = porder_pom.OrderOC.Count()-1; j >=0 ; j--)
                 {
                     PlaceOrderData cPo = porder_pom.OrderOC[j];
-                    if (cTd.InstrumentID == cPo.InstrumentID && cTd.IsBuy == cPo.IsBuy)
+                    if (cTd.InstrumentID == cPo.InstrumentID && cTd.IsBuy == cPo.IsBuy && cPo.IsFromGradient==false)
                         porder_tm.TradingOC.RemoveAt(i);
                 }
             }
