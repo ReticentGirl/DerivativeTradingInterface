@@ -53,6 +53,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="amcharts.windows">
+      <HintPath>.\amcharts.windows.dll</HintPath>
+    </Reference>
     <Reference Include="CTP">
       <HintPath>.\CTP.dll</HintPath>
     </Reference>
