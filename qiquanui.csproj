@@ -85,6 +85,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BasicInforAndPromptManager.cs" />
+    <Compile Include="ChartControl.cs" />
     <Compile Include="DataControl.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="DynamicData.cs" />
@@ -99,6 +100,7 @@
       <DependentUpon>RiskWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlaceOrderManager.cs" />
+    <Compile Include="SomeCalculate.cs" />
     <Compile Include="TradingData.cs" />
     <Compile Include="TradingManager.cs" />
     <Compile Include="StaticData.cs" />

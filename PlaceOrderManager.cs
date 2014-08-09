@@ -307,7 +307,7 @@ namespace qiquanui
 
             OrderCapitalData orderOccupy = new OrderCapitalData(0,0,0);
 
-            static double eachFee = 5;   //初定每笔手续费5元
+            //static double eachFee = 5;   //初定每笔手续费5元
 
 
             public PlaceOrderManager(PlaceOrder _pOrderWindow)
@@ -374,14 +374,18 @@ namespace qiquanui
 
 
                     ///////////////////////////////
-                    double royalty = caculateRoyalty(nDr, reInstrumentID, OrderOC[i].OptionOrFuture, OrderOC[i].IsBuy, OrderOC[i].TradingNum, OrderOC[i].FinalPrice);
-
+                    //double royalty = caculateRoyalty(nDr, reInstrumentID, OrderOC[i].OptionOrFuture, OrderOC[i].IsBuy, OrderOC[i].TradingNum, OrderOC[i].FinalPrice);
+                    double royalty = SomeCalculate.caculateRoyalty(reInstrumentID, OrderOC[i].TradingNum, OrderOC[i].IsBuy, OrderOC[i].FinalPrice);
 
                     royaltyArry[i] = royalty;
 
-                    feeArry[i] = Math.Abs(OrderOC[i].TradingNum) * eachFee;
+                    feeArry[i]=SomeCalculate.calculateFees(reInstrumentID,OrderOC[i].TradingNum,OrderOC[i].FinalPrice);
 
-                    marginArry[i] = caculateMargin(nDr, reInstrumentID, OrderOC[i].OptionOrFuture, OrderOC[i].IsBuy, OrderOC[i].TradingNum, OrderOC[i].FinalPrice);
+                    //feeArry[i] = Math.Abs(OrderOC[i].TradingNum) * eachFee;
+
+
+                    marginArry[i] = SomeCalculate.caculateMargin(reInstrumentID, OrderOC[i].TradingNum, OrderOC[i].IsBuy, OrderOC[i].FinalPrice);
+                    //marginArry[i] = caculateMargin(nDr, reInstrumentID, OrderOC[i].OptionOrFuture, OrderOC[i].IsBuy, OrderOC[i].TradingNum, OrderOC[i].FinalPrice);
                     //orderOccupy.OccupyCapital += cost;
 
                     
@@ -406,7 +410,7 @@ namespace qiquanui
             }
         }
 
-
+        /*
         double caculateRoyalty(DataRow _nDr, string _InstrumentID, bool _optionOrFuture, bool _isBuy, int _tradingNum, double _finalPrice)    //计算花费
         {
             if (_optionOrFuture == false)  //表示是期权   
@@ -431,7 +435,9 @@ namespace qiquanui
             }
          
         }
+        */
 
+        /*
         double caculateMargin(DataRow _nDr, string _InstrumentID, bool _optionOrFuture, bool _isBuy, int _tradingNum, double _finalPrice)
         {
             if (_optionOrFuture == false)   //对于卖家期货保证金计算
@@ -502,7 +508,7 @@ namespace qiquanui
                 //return 0;
             }
         }
-
+        */
         
 
     }

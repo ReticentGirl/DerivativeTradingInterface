@@ -1565,6 +1565,28 @@ namespace qiquanui
 
         }
 
+    
+        private void chooseAllCheckBox_Click(object sender, RoutedEventArgs e)     //交易区 全选 勾选
+        {
+            System.Windows.Controls.CheckBox all_selected = sender as System.Windows.Controls.CheckBox;
+
+            if (all_selected.IsChecked == true)
+            {
+                for (int i = 0; i < otm.TradingOC.Count(); i++)
+                {
+                    otm.TradingOC[i].IfChooseOTGVCH = true;
+               }
+            }
+            else if (all_selected.IsChecked == false)
+            {
+                for (int i = 0; i < otm.TradingOC.Count(); i++)
+                {
+                    otm.TradingOC[i].IfChooseOTGVCH = false;
+                }
+            }
+            
+        }
+
 
 
 
