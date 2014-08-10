@@ -107,6 +107,7 @@
     <Compile Include="StrategyWindow.xaml.cs">
       <DependentUpon>StrategyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserManager.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

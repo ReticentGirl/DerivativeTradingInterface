@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Collections;
+using System.Collections.ObjectModel;
 
 
 namespace qiquanui
@@ -67,7 +69,7 @@ namespace qiquanui
 
                     rate_fees = _finalPrice * instrumentMultiplier * Math.Abs(_tradingNum) * rate_eachfee[tag];
 
-                    future_fees=Math.Round(rate_fees,1);
+                    future_fees = Math.Round(rate_fees, 1);
                 }
                 else
                 {
@@ -75,7 +77,7 @@ namespace qiquanui
 
                     num_fees = Math.Abs(_tradingNum) * num_eachefee[tag];
 
-                    future_fees= Math.Round(num_fees,1);
+                    future_fees = Math.Round(num_fees, 1);
                 }
 
 
@@ -91,7 +93,7 @@ namespace qiquanui
         }
 
 
-        static public double caculateRoyalty(string _instrumentID, int _tradingNum, bool _isBuy,double _finalPrice)
+        static public double caculateRoyalty(string _instrumentID, int _tradingNum, bool _isBuy, double _finalPrice)
         {
             DataRow nDr = (DataRow)DataManager.All[_instrumentID];
 
@@ -196,6 +198,119 @@ namespace qiquanui
                 return t_margin;
                 //return 0;
             }
+        }
+
+
+
+        static public int calculateCanBuyNum(TradingData _seTd, ObservableCollection<TradingData> _tradingOC)
+        {
+
+            double otherCostOfMargin = 0;
+            double otherCostOfRoyalty = 0;
+
+            DataRow uDr = (DataRow)UserManager.userHash[_seTd.UserID];
+
+            double seAvailable = Convert.ToDouble(uDr["AvailableCapital"]);
+
+            for (int i = 0; i < _tradingOC.Count(); i++)
+            {
+                if (_tradingOC[i].IsBuy == _seTd.IsBuy && _tradingOC[i].UserID.Equals(_seTd.UserID) && _tradingOC[i].InstrumentID.Equals(_seTd.InstrumentID))
+                {
+
+                }
+                else
+                {
+                    if (_tradingOC[i].OptionOrFuture == true)   //期货
+                    {
+                        if (_tradingOC[i].ClientageType==0)
+                        {
+                            otherCostOfMargin += caculateMargin(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, _tradingOC[i].MarketPrice);
+                        }
+                        else if (_tradingOC[i].ClientageType==1)
+                        {
+                            otherCostOfMargin += caculateMargin(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, Convert.ToDouble(_tradingOC[i].ClientagePrice));
+                        }
+
+                    }
+                    else if (_tradingOC[i].OptionOrFuture == false)   //期权
+                    {
+                           //扣权利金  或者获得 权利金
+                        {
+                            if (_tradingOC[i].ClientageType==0)
+                            {
+                                otherCostOfRoyalty += caculateRoyalty(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, _tradingOC[i].MarketPrice);
+
+                            }
+                            else if (_tradingOC[i].ClientageType==1)
+                            {
+                                otherCostOfRoyalty += caculateRoyalty(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, Convert.ToDouble(_tradingOC[i].ClientagePrice));
+
+                            }
+
+                        }
+                       if (_tradingOC[i].IsBuy == false)  //保证金
+                        {
+                            if (_tradingOC[i].ClientageType==0)
+                            {
+                                otherCostOfMargin += caculateMargin(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, _tradingOC[i].MarketPrice);
+                            }
+                            else if (_tradingOC[i].ClientageType==1)
+                            {
+                                otherCostOfMargin += caculateMargin(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, Convert.ToDouble(_tradingOC[i].ClientagePrice));
+                            }
+                        }
+                    }
+                }
+            }
+
+            int canBuyNum = 0;
+
+            if (_seTd.OptionOrFuture == true)
+            {
+                double eachMargin = 0;
+                if (_seTd.ClientageType==0)
+                {
+                    eachMargin = SomeCalculate.caculateMargin(_seTd.InstrumentID, 1, _seTd.IsBuy, _seTd.MarketPrice);
+                }
+                else if (_seTd.ClientageType==1)
+                {
+                    eachMargin = SomeCalculate.caculateMargin(_seTd.InstrumentID, 1, _seTd.IsBuy, Convert.ToDouble(_seTd.ClientagePrice));
+                }
+                canBuyNum = (int)((seAvailable - otherCostOfMargin - otherCostOfRoyalty) / eachMargin);
+
+            }
+            else if (_seTd.OptionOrFuture == false)
+            {
+                if (_seTd.IsBuy==true)
+                {
+                    double eachRoyalty=0;
+                    if (_seTd.ClientageType==0)
+                    {
+                        eachRoyalty = SomeCalculate.caculateRoyalty(_seTd.InstrumentID, 1, _seTd.IsBuy, _seTd.MarketPrice);
+                    }
+                    else if (_seTd.ClientageType==1)
+                    {
+                        eachRoyalty = SomeCalculate.caculateRoyalty(_seTd.InstrumentID, 1, _seTd.IsBuy,Convert.ToDouble(_seTd.ClientagePrice));
+                    }
+
+                    canBuyNum = (int)((seAvailable - otherCostOfMargin - otherCostOfRoyalty)/eachRoyalty);
+                }
+                else if (_seTd.IsBuy == false)
+                {
+                    double eachMargin=0;
+                    if (_seTd.ClientageType==0)
+                    {
+                        eachMargin = SomeCalculate.caculateMargin(_seTd.InstrumentID, 1, _seTd.IsBuy, _seTd.MarketPrice);
+                    }
+                    else if (_seTd.ClientageType==1)
+                    {
+                        eachMargin = SomeCalculate.caculateMargin(_seTd.InstrumentID, 1, _seTd.IsBuy, Convert.ToDouble(_seTd.ClientagePrice));
+                    }
+                    canBuyNum =(int) ((seAvailable - otherCostOfMargin - otherCostOfRoyalty) / eachMargin);
+                }
+            }
+
+            return canBuyNum;
         }
 
     }

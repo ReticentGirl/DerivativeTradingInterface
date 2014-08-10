@@ -45,6 +45,8 @@ namespace qiquanui
 
         BasicInforAndPromptManager bip;   //维护基本信息和提示的指针
 
+        UserManager um;
+
          private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
 
 
@@ -95,7 +97,9 @@ namespace qiquanui
 
             hm = new HistoryManager(this);
 
-            bip = new BasicInforAndPromptManager(this);
+            bip = new BasicInforAndPromptManager(this, dm, otm);
+
+            um = new UserManager(this);
             //otm.OnAdd();
 
             //设置窗口距离显示屏边界距离
@@ -915,7 +919,7 @@ namespace qiquanui
 
 
 
-
+        
         private void tradingListView_SelectionChanged(object sender, SelectionChangedEventArgs e)    //交易区窗口选择列改变事件
         {
             //System.Windows.MessageBox.Show("change");
@@ -923,12 +927,24 @@ namespace qiquanui
 
             if (selectedItem != null)
             {
-                
+                bip.getSelectedItemPoint(selectedItem);
+            }
+            
 
-                string se_nowUserID = "123";
-                string se_totalCapital = "100000";                    //用户总资本
-                string se_availableCapital = "1000000";           //可用资产
-                string se_occupyCapital = "1000000";                        //占用资产
+            /*
+            if (selectedItem != null)
+            {
+
+
+                string se_nowUserID = selectedItem.UserID;
+
+                DataRow uDr = (DataRow)UserManager.userHash[se_nowUserID];
+
+
+
+                string se_totalCapital = uDr["UserEquity"].ToString();                    //用户总资本
+                string se_availableCapital = uDr["AvailableCapital"].ToString();           //可用资产
+                string se_occupyCapital = uDr["UsedMargin"].ToString();                        //占用资产
                 string se_nowInstrumentID = selectedItem.InstrumentID;
                 string se_dayToEnd = "";                                //到期天数
                 string se_dueDate = "";                                       //到期日
@@ -951,17 +967,20 @@ namespace qiquanui
 
                 se_dayToEnd = i_dueDate.ToString();
 
+                se_tickSize = nDr["MinUnit"].ToString();
+
+                se_maxTradeNum = SomeCalculate.calculateCanBuyNum(selectedItem, otm.TradingOC).ToString();
 
                 bip.changeInfo(se_nowUserID, se_totalCapital, se_availableCapital, se_occupyCapital, se_nowInstrumentID, se_dayToEnd, se_dueDate, se_tickSize, se_maxTradeNum);
 
             }
 
-           
+           */
              
 
         }
-
-
+        
+        
 
 
         #region 顶端各选单逻辑
@@ -1220,7 +1239,9 @@ namespace qiquanui
 
 
             int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
-            BuyOrSellForButtonForOption(exercisePrice, "babdah", "看涨", false, false);
+
+            string userID = this.userComboBox.Text;
+            BuyOrSellForButtonForOption(exercisePrice,userID, "看涨", false, false);
 
         }
 
@@ -1229,8 +1250,8 @@ namespace qiquanui
             //System.Windows.MessageBox.Show("看涨  卖");
             int exercisePrice = Convert.ToInt32(((sender as System.Windows.Controls.Button).Tag));  //获取按钮Tag
             //System.Windows.MessageBox.Show(((sender as System.Windows.Controls.Button).Tag).GetType().ToString());
-
-            BuyOrSellForButtonForOption(exercisePrice, "babdah", "看涨", true, false);
+            string userID = this.userComboBox.Text;
+            BuyOrSellForButtonForOption(exercisePrice, userID, "看涨", true, false);
 
         }
 
@@ -1238,14 +1259,16 @@ namespace qiquanui
         {
             //System.Windows.MessageBox.Show("看跌  买");
             int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
-            BuyOrSellForButtonForOption(exercisePrice, "babdah", "看跌", false, false);
+            string userID = this.userComboBox.Text;
+            BuyOrSellForButtonForOption(exercisePrice, userID, "看跌", false, false);
         }
 
         private void askDOMBtn_Click(object sender, RoutedEventArgs e)     //期权看跌 “卖"  按钮   实际上是买期权
         {
             //System.Windows.MessageBox.Show("看跌  卖");
             int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
-            BuyOrSellForButtonForOption(exercisePrice, "babdah", "看跌", true, false);
+            string userID = this.userComboBox.Text;
+            BuyOrSellForButtonForOption(exercisePrice, userID, "看跌", true, false);
         }
 
 
@@ -1257,15 +1280,16 @@ namespace qiquanui
             //System.Windows.MessageBox.Show(selectedInstrumentName);
 
             //future selectedFuture = ObservableOb[selectedInstrumentName];
-
-            BuyOrSellForButtonForFuture(selectedInstrumentName, "123", true, true);
+            string userID = this.userComboBox.Text;
+            BuyOrSellForButtonForFuture(selectedInstrumentName, userID, true, true);
 
         }
 
         private void bidFMBtn_Click(object sender, RoutedEventArgs e)    //期货“买”按钮  卖期货
         {
             string selectedInstrumentName = ((sender as System.Windows.Controls.Button).Tag).ToString();
-            BuyOrSellForButtonForFuture(selectedInstrumentName, "123", false, true);
+            string userID = this.userComboBox.Text;
+            BuyOrSellForButtonForFuture(selectedInstrumentName, userID, false, true);
         }
 
 

@@ -2417,7 +2417,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" SelectionChanged="tradingListView_SelectionChanged" Margin="0,10,0,0">
+                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,10,0,0" SelectionChanged="tradingListView_SelectionChanged">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseTGVCH" Header="" Width="50" >
@@ -2427,14 +2427,14 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="userTGVCH" Header="投资账户" Width="100">
-                                        <GridViewColumn.CellTemplate>
+                                    <GridViewColumn x:Name="userTGVCH" Header="投资账户" DisplayMemberBinding="{Binding UserID}" Width="100">
+                                        <!--<GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox x:Name="userTComboBox"  Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="White">
+                                                <ComboBox x:Name="userTComboBox" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="White">
 
                                                 </ComboBox>
                                             </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
+                                        </GridViewColumn.CellTemplate>-->
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="nameOTGVCH" Header="交易代码 "  DisplayMemberBinding="{Binding InstrumentID}" Width="110"/>
                                     <GridViewColumn x:Name="typeOTGVCH" Header="合约类型 " DisplayMemberBinding="{Binding CallOrPut}" Width="80"/>
@@ -2608,37 +2608,32 @@
                         <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="217" VerticalAlignment="Top" Width="914"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" Foreground="White">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn x:Name="userUMGVCH" Header=" 账户号" Width=" 100"/>
-                                    <GridViewColumn x:Name="statusOfUserUMGVCH" Header=" 登录状态" Width=" 70">
+                                    <GridViewColumn x:Name="userIDUMGVCH" Header=" 账户号" DisplayMemberBinding="{Binding UserID,UpdateSourceTrigger=PropertyChanged}" Width=" 100"/>
+                                   
+                                    <GridViewColumn x:Name="statusOfUserUMGVCH" Header=" 登录状态"  Width=" 70">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox x:Name="setUserStatusComboBox" Width="Auto">
-                                                    <ComboBoxItem x:Name="login" Content="登录" HorizontalContentAlignment="Left"/>
+                                                <ComboBox x:Name="setUserStatusComboBox" SelectedIndex="{Binding UserState,UpdateSourceTrigger=PropertyChanged}" Width="Auto">
                                                     <ComboBoxItem x:Name="logout" Content="登出" HorizontalContentAlignment="Left"/>
+                                                    <ComboBoxItem x:Name="login" Content="登录" HorizontalContentAlignment="Left"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="beginCapitalUMGVCH" Header=" 期初结存" Width=" Auto"/>
-                                    <GridViewColumn x:Name="basicMarginUMGVCH" Header=" 基础保证金" Width=" Auto"/>
-                                    <GridViewColumn x:Name="rightsOfMarketValueUMGVCH" Header=" 市值权益" Width=" Auto"/>
-                                    <GridViewColumn x:Name="availableCapitalUMGVCH" Header=" 可用资金" Width=" Auto"/>
-                                    <GridViewColumn x:Name="additionalFundUMGVCH" Header=" 应追加资金" Width=" Auto"/>
-                                    <GridViewColumn x:Name="workingCapitalUMGVCH" Header=" 出入金" Width=" Auto"/>
-                                    <GridViewColumn x:Name="offsetGainAndLossUMGVCH" Header=" 平仓盈亏" Width=" Auto"/>
-                                    <GridViewColumn x:Name="floatingGainAndLossUMGVCH" Header=" 浮动盈亏" Width=" Auto"/>
-                                    <GridViewColumn x:Name="implementGainAndLossUMGVCH" Header=" 执行盈亏" Width=" Auto"/>
-                                    <GridViewColumn x:Name="serviceChargeUMGVCH" Header=" 手续费" Width=" Auto"/>
-                                    <GridViewColumn x:Name="exerciseServiceChargeUMGVCH" Header=" 行权手续费" Width=" Auto"/>
-                                    <GridViewColumn x:Name="deliveryServiceChargeUMGVCH" Header=" 交割手续费" Width=" Auto"/>
-                                    <GridViewColumn x:Name="incomeOfRoyaltyUMGVCH" Header=" 权利金收入" Width=" Auto"/>
-                                    <GridViewColumn x:Name="payOfRoyaltyUMGVCH" Header=" 权利金支出" Width=" Auto"/>
-                                    <GridViewColumn x:Name="endCapitalUMGVCH" Header=" 期末结存" Width=" Auto"/>
-                                    <GridViewColumn x:Name="pledgePaymentUMGVCH" Header=" 质押金" Width=" Auto"/>
-                                    <GridViewColumn x:Name="customerBenefitUMGVCH" Header=" 客户权益" Width=" Auto"/>
-                                    <GridViewColumn x:Name="usedMarginUMGVCH" Header=" 保证金占用" Width=" Auto"/>
-                                    <GridViewColumn x:Name="deliveryMarginUMGVCH" Header=" 交割保证金" Width=" Auto"/>
-                                    <GridViewColumn x:Name="riskDegreeUMGVCH" Header=" 风险度" Width=" Auto"/>
+                                    <GridViewColumn x:Name="userNameUMGVCH" Header=" 用户名称" DisplayMemberBinding="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" Width=" 100"/>
+                                    <GridViewColumn x:Name="openCompanyUMGVCH" Header="开户公司" DisplayMemberBinding="{Binding OpenCompany,UpdateSourceTrigger=PropertyChanged}" Width=" 100"/>
+                                    <GridViewColumn x:Name="beginCapitalUMGVCH" Header=" 期初结存" DisplayMemberBinding="{Binding OpeningBalance,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="endCapitalUMGVCH" Header=" 期末结存" DisplayMemberBinding="{Binding FinalBalance,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="usedMarginUMGVCH" Header=" 保证金占用" DisplayMemberBinding="{Binding UsedMargin,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="availableCapitalUMGVCH" Header=" 可用资金" DisplayMemberBinding="{Binding AvailableCapital,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="additionalFundUMGVCH" Header=" 应追加资金" DisplayMemberBinding="{Binding AdditionalCapital,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="offsetGainAndLossUMGVCH" Header=" 平仓盈亏" DisplayMemberBinding="{Binding ClosedProfitAndLoss,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="floatingGainAndLossUMGVCH" Header=" 浮动盈亏" DisplayMemberBinding="{Binding FloatingProfitAndLoss,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="serviceChargeUMGVCH" Header=" 手续费" DisplayMemberBinding="{Binding ProcedureFees,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="incomeOfRoyaltyUMGVCH" Header=" 权利金收入" DisplayMemberBinding="{Binding RoyaltyIncome,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="payOfRoyaltyUMGVCH" Header=" 权利金支出" DisplayMemberBinding="{Binding RoyaltyOutcome,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="customerBenefitUMGVCH" Header=" 客户权益" DisplayMemberBinding="{Binding UserEquity,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
+                                    <GridViewColumn x:Name="riskDegreeUMGVCH" Header=" 风险度" DisplayMemberBinding="{Binding RiskLevel,UpdateSourceTrigger=PropertyChanged}" Width=" Auto"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

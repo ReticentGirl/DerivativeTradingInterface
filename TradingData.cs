@@ -25,7 +25,7 @@ namespace qiquanui
 
 
         private int tradingNum;   //交易手数
-        private int clientageType;   //委托方式    0 市价  限价
+        private int clientageType;   //委托方式    0 市价  1限价
         private string clientagePrice; //委托价格
         private double marketPrice;   //市场价格
         private int clientageCondition;   //托单条件   0  ROD 當日有效單    1 FOK  委託之數量須全部且立即成交，否則取消   2 IOC 立即成交否則取消
