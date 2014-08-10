@@ -2512,7 +2512,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="20,12,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
+                        <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
                         <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
                         <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click"/>
                         <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
@@ -2709,15 +2709,15 @@
                 <ComboBoxItem x:Name="optionsInStrategyPanelComboBoxItem" Content="期权" HorizontalAlignment="Left" Width="65" Selected="optionsInStrategyPanelComboBoxItem_Selected" />
             </ComboBox>
             <Canvas x:Name="strategyOfOptionsCanvas" HorizontalAlignment="Left" Height="167" Background="#FF151519" Width="234" Canvas.Left="31" Canvas.Top="79" MouseEnter="strategyOfOptionsCanvas_MouseEnter" MouseLeave="strategyOfOptionsCanvas_MouseLeave">
-                <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="171" FlowDirection="LeftToRight" />
-                <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Canvas.Left="40" >
+                <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="171" FlowDirection="LeftToRight" />
+                <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Canvas.Left="44" >
                     <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem2" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
                     <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem3" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
 
                 </ComboBox>
-                <Label x:Name="nameInStrategyPanelLabel" Content="标的商品：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" Background="{x:Null}" Canvas.Left="159" Canvas.Top="30" FlowDirection="LeftToRight" />
-                <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Canvas.Left="40" Canvas.Top="30" >
+                <Label x:Name="nameInStrategyPanelLabel" Content="标的商品：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Background="{x:Null}" Canvas.Left="159" Canvas.Top="30" FlowDirection="LeftToRight" />
+                <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Canvas.Left="44" Canvas.Top="30" >
                     <ComboBox.Background>
                         <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                             <GradientStop Color="Transparent" Offset="0"/>
@@ -2725,15 +2725,15 @@
                         </LinearGradientBrush>
                     </ComboBox.Background>
                 </ComboBox>
-                <Label x:Name="predictLabel" Content="情景选择：" Canvas.Left="149" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight" Canvas.Top="60"/>
-                <ComboBox x:Name="predictComboBox" Canvas.Left="13" Canvas.Top="62" Width="111" FlowDirection="LeftToRight"  Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" >
+                <Label x:Name="predictLabel" Content="情景选择：" Canvas.Left="149" Foreground="White" Width="80" FlowDirection="LeftToRight" Canvas.Top="60"/>
+                <ComboBox x:Name="predictComboBox" Canvas.Left="13" Canvas.Top="62" Width="111" FlowDirection="LeftToRight"  Style="{StaticResource CboCommomStyle}" Foreground="White" >
                     <ComboBoxItem x:Name ="predictComboBoxItem1" Content=" 上涨" HorizontalAlignment="Left" Selected="predictComboBoxItem_Selected" />
                     <ComboBoxItem x:Name="predictComboBoxItem2" Content=" 下跌" HorizontalAlignment="Left" Selected="predictComboBoxItem2_Selected" />
                     <ComboBoxItem x:Name="predictComboBoxItem3" Content=" 波动" HorizontalAlignment="Left" Selected="predictComboBoxItem3_Selected" />
                     <ComboBoxItem x:Name="predictComboBoxItem4" Content=" 与标的物组合" HorizontalAlignment="Left" Selected="predictComboBoxItem4_Selected"  />
                 </ComboBox>
-                <Label x:Name="maxAmountOfUpAndDownLabel" Content="最高涨跌幅：" Canvas.Left="151" Canvas.Top="121" Foreground="#FF9198AC" Width="80" FlowDirection="LeftToRight"/>
-                <TextBox x:Name="maxAmountOfUpAndDownTextBox" Height="23" Canvas.Left="70" TextWrapping="Wrap" Text="%" Canvas.Top="92" Width="54" Style="{StaticResource textboxStyle}" Foreground="#FF9198AC" Visibility="Hidden"/>
+                <Label x:Name="maxAmountOfUpAndDownLabel" Content="最高涨跌幅：" Canvas.Left="151" Canvas.Top="121" Foreground="White" Width="80" FlowDirection="LeftToRight"/>
+                <TextBox x:Name="maxAmountOfUpAndDownTextBox" Height="23" Canvas.Left="70" TextWrapping="Wrap" Text="%" Canvas.Top="92" Width="54" Style="{StaticResource textboxStyle}" Foreground="White" Visibility="Hidden"/>
                 <Label x:Name="volatilityLabel" Content="波动率：" Canvas.Left="153" Canvas.Top="90" Foreground="White" Width="80" FlowDirection="LeftToRight" Visibility="Hidden"/>
                 <ComboBox x:Name="volatilityComboBox" FlowDirection="LeftToRight" Canvas.Left="79" Canvas.Top="92" Width="45" Height="23"  Style="{StaticResource CboCommomStyle}" Foreground="White" Visibility="Hidden" >
                     <ComboBoxItem Content=" 高" HorizontalAlignment="Left" />
@@ -2742,8 +2742,8 @@
             </Canvas>
 
             <Canvas x:Name="strategyOfFuturesCanvas" HorizontalAlignment="Left" Height="29" Background="#FF151519" Width="234" Canvas.Left="31" Canvas.Top="79" Visibility="Hidden" MouseEnter="strategyOfFuturesCanvas_MouseEnter" MouseLeave="strategyOfFuturesCanvas_MouseLeave">
-                <Label x:Name="typeOfArbitrageLabel" Content=" 套利类型：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF9198AC" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="160" FlowDirection="LeftToRight" />
-                <ComboBox x:Name="typeOfArbitrageComoBox" Width="100" FlowDirection="LeftToRight"  Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" Canvas.Left="22" Canvas.Top="2">
+                <Label x:Name="typeOfArbitrageLabel" Content=" 套利类型：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" Canvas.Left="160" FlowDirection="LeftToRight" />
+                <ComboBox x:Name="typeOfArbitrageComoBox" Width="100" FlowDirection="LeftToRight"  Style="{StaticResource CboCommomStyle}" Foreground="White" Canvas.Left="22" Canvas.Top="2">
                     <ComboBoxItem x:Name="typeOfArbitrageComoBox1" Content=" 期权与期货" HorizontalAlignment="Left" />
                     <ComboBoxItem x:Name="typeOfArbitrageComoBox2" Content=" 期货与期货" HorizontalAlignment="Left" />
                 </ComboBox>
