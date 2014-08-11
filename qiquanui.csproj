@@ -101,6 +101,7 @@
     </Compile>
     <Compile Include="PlaceOrderManager.cs" />
     <Compile Include="SomeCalculate.cs" />
+    <Compile Include="Strategy.cs" />
     <Compile Include="TradingData.cs" />
     <Compile Include="TradingManager.cs" />
     <Compile Include="StaticData.cs" />

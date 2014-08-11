@@ -578,11 +578,14 @@ namespace qiquanui
         {
             //ClearOb();
 
+
             ///将界面中所选的东西保存在全局变量中
             GetChoice();
 
             if (box_type.Equals("期权"))
             {
+                new Test().Run();
+
                 Hide();
 
                 ///根据行权价的列表list，将所有行权价对应的行数保存在ep_no中
@@ -768,7 +771,7 @@ namespace qiquanui
 
                 string _new_string;
 
-                double _preClose = (double)dr["PreClosePrice"];
+                double _preClose = Math.Round((double)dr["PreClosePrice"],1);
 
                 int j = 0;
                 _new_string = (string)dr["InstrumentID"];

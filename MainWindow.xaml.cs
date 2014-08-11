@@ -1005,6 +1005,9 @@ namespace qiquanui
         /// <param name="e"></param>
         private void subjectMatterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //如果只是Clear导致的就忽略它
+            if (e.AddedItems.Count == 0) return;
+
             string type = typeComboBox.Text.Trim();
             if (type.Equals("期货"))
             {
@@ -1014,7 +1017,6 @@ namespace qiquanui
                 return;
             }
 
-            if (e.AddedItems.Count == 0) return;
             string _subject = (string)e.AddedItems[0];
             subjectMatterComboBox.Text = _subject;
             string _option = "";
