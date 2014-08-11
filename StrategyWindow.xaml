@@ -1380,10 +1380,10 @@
             <!--盈亏对比图、走势图-->
             <TabControl x:Name="TopCenterTabControl" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="470" Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}">
                 <TabItem Header="盈亏对比图" Foreground="White" Style="{StaticResource TopCenterTabItemStyle}" Margin="0,2,0,-2">
-                    <Grid x:Name="ComparasionChartGrid" Background="#FF040201" Margin="0,0,-2,-2" Width="468" Height="295" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Grid x:Name="ComparasionChartGrid" Background="#FF040201" Margin="0,0,-2,-2" Width="468" Height="292" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </TabItem>
                 <TabItem Header="走势图" Foreground="White" Style="{StaticResource TopCenterTabItemStyle}" Margin="0,2,0,-2">
-                    <Grid x:Name="TendencyChartGrid" Background="#FF040201" Width="468" Height="295" Margin="0,0,-2,-2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Grid x:Name="TendencyChartGrid" Background="#FF040201" Width="468" Height="292" Margin="0,0,-2,-2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </TabItem>
             </TabControl>
             <!--概率图-->

@@ -121,7 +121,7 @@ namespace qiquanui
             topLeftGridhper = (this.Height - (originalHeight - topLeftGridh - groupListViewh)) / (originalHeight - (originalHeight - topLeftGridh - groupListViewh));
             TopRightAndTopCenterGridwper = (this.Width - (originalWidth - topLeftGridw - TopRightAndTopCenterGridw)) / (originalWidth - (originalWidth - topLeftGridw - TopRightAndTopCenterGridw));
             TopRightAndTopCenterGridhper = (this.Height - (originalHeight - TopRightAndTopCenterGridh - groupListViewh)) / (originalHeight - (originalHeight - TopRightAndTopCenterGridh - groupListViewh));
-            TendencyChartGridwper=ComparasionChartGridwper = TopCenterTabControlwper = (this.Width - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridw)) / (originalWidth - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridw));
+            TendencyChartGridwper = ComparasionChartGridwper = TopCenterTabControlwper = (this.Width - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridtlw - topLeftGridtrw)) / (originalWidth - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridtlw - topLeftGridtrw));
             TopCenterTabControlhper = (this.Height - (originalHeight - ComparasionChartGridh - groupListViewh)) / (originalHeight - (originalHeight - ComparasionChartGridh - groupListViewh));
             probabilityChartwper = TopRightCanvaswper = (this.Width - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridw)) / (originalWidth - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridw));
             probabilityCharthper = TopRightCanvashper = (this.Height - (originalHeight - probabilityCharth - ButtomRightGridh)) / (originalHeight - (originalHeight - probabilityCharth - ButtomRightGridh));
@@ -149,15 +149,15 @@ namespace qiquanui
             TopRightAndTopCenterGrid.Height = TopRightAndTopCenterGridh * TopRightAndTopCenterGridhper + windowShadowControlWidth;
             TopCenterTabControl.Width = TopCenterTabControlw * TopCenterTabControlwper +  windowShadowControlWidth;
             TopCenterTabControl.Height = TopCenterTabControlh * TopCenterTabControlhper + windowShadowControlWidth;
-            probabilityChart.Width = probabilityChartw * probabilityChartwper +  windowShadowControlWidth;
-            probabilityChart.Height = probabilityCharth * probabilityCharthper + windowShadowControlWidth;
-            TopRightCanvas.Width = TopRightCanvasw * TopRightCanvaswper + windowShadowControlWidth;
-            TopRightCanvas.Height = TopRightCanvash * TopRightCanvashper + windowShadowControlWidth;
-            ButtomRightGrid.Width = ButtomRightGridw * ButtomRightGridwper ;
+            //probabilityChart.Width = probabilityChartw * probabilityChartwper +  windowShadowControlWidth;
+            //probabilityChart.Height = probabilityCharth * probabilityCharthper + windowShadowControlWidth;
+           // TopRightCanvas.Width = TopRightCanvasw * TopRightCanvaswper + windowShadowControlWidth;
+           // TopRightCanvas.Height = TopRightCanvash * TopRightCanvashper + windowShadowControlWidth;
+            TopRightCanvas.Width = probabilityChart.Width = ButtomRightGrid.Width = ButtomRightGridw * ButtomRightGridwper;
             ButtomRightGrid.Height = ButtomRightGridh * ButtomRightGridhper + windowShadowControlWidth;
             TendencyChartGrid.Height = TendencyChartGridh * TendencyChartGridhper + windowShadowControlWidth;
             TendencyChartGrid.Width = TendencyChartGridw * TendencyChartGridwper + windowShadowControlWidth;
-            ComparasionChartGrid.Height = ComparasionChartGridhper * ComparasionChartGridh +windowShadowControlWidth;
+            TopRightCanvas.Height = probabilityChart.Height = ComparasionChartGrid.Height = ComparasionChartGridhper * ComparasionChartGridh + windowShadowControlWidth;
             ComparasionChartGrid.Width = ComparasionChartGridw * ComparasionChartGridwper+windowShadowControlWidth;
 
 
