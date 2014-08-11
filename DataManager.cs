@@ -460,11 +460,22 @@ namespace qiquanui
         public DataManager(MainWindow window)
         {
             pwindow = window;
+
+            string timesql = "select * from timenow";
+            DataTable dt = DataControl.QueryTable(timesql);
+            int day = (int)(Int64)dt.Rows[0][0];
+            day++;
+            if (day > 25) day = 24;
+            timesql = "update timenow set now=" + day;
+            DataControl.QueryTable(timesql);
+            now = new DateTime(2014, 7, day, 14, 0, 25);
+
+
             timer = new System.Timers.Timer(TIMER_UNIT);
             timer.Elapsed += new ElapsedEventHandler(TimeManage);
-            timer.Start();
 
-            now = new DateTime(2014, 7, 25, 14, 0, 25);
+
+
             string _month, _day;
             if (now.Month < 10) _month = "0" + now.Month;
             else _month = "" + now.Month;
@@ -473,6 +484,9 @@ namespace qiquanui
             nowdate = _month + _day;
             initial();
             prepare();
+
+            timer.Start();
+
         }
 
         int pt = 0;
