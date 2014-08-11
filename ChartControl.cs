@@ -8,51 +8,6 @@ using System.Collections.ObjectModel;
 namespace qiquanui
 {
 
-    public class XY : INotifyPropertyChanged
-    {
-        private double x;
-        private double y;
-
-        // public double x { get; set; }
-        // public double y { get; set; }
-
-        public double X
-        {
-            get { return x; }
-            set
-            {
-                x = value;
-                OnPropertyChanged("X");
-            }
-        }
-
-        public double Y
-        {
-            get { return y; }
-            set
-            {
-                y = value;
-                OnPropertyChanged("Y");
-            }
-        }
-
-
-
-        #region INotifyPropertyChanged 成员
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        void OnPropertyChanged(string name)
-        {
-            if (PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(name));
-        }
-
-
-
-
-        #endregion
-    }
 
 
     class ChartControl
