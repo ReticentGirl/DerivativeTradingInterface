@@ -1363,14 +1363,17 @@
         <DropShadowEffect Color="#FFFF7400" BlurRadius="7" Direction="270" ShadowDepth="3" Opacity="0.75"/>
     </Window.Effect>
     <Grid>
+        <Grid.Background>
+            <ImageBrush/>
+        </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="19*"/>
-            <RowDefinition Height="324*"/>
+            <RowDefinition/>
+            <RowDefinition Height="648"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Frame x:Name="Top1_StrategyLab" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF0F0D0D" MouseDown="Top1_MouseDown" MouseDoubleClick="Top1_MouseDoubleClick" Margin="0" Grid.RowSpan="2"/>
+        <Frame x:Name="Top1_StrategyLab" Content="" HorizontalAlignment="Left" Height="38" VerticalAlignment="Top" Width="1186" Background="#FF0F0D0D" MouseDown="Top1_MouseDown" MouseDoubleClick="Top1_MouseDoubleClick" Margin="0"/>
 
         <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}">
             <Button.Background>
@@ -1407,13 +1410,70 @@
         <Label x:Name="dueDateLabel" Content="到期年月：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="625,11,0,1" Height="26" />
         <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="689,13,0,0" />
         <!--交易区-->
-        <TabControl Margin="28,335.25,378,35" Grid.Row="1">
+        <!--盈亏对比图、走势图-->
+        <!--概率图-->
+        <Canvas HorizontalAlignment="Right" Height="228" Margin="0,182,896,0" VerticalAlignment="Top" Width="280" Background="#FF0F0D0D" Grid.Row="1">
+            <am:LineChart x:Name="probabilityChart" Width="250" Height="200"
+					Background="#FF0F0D0D" PlotAreaBackground="#FF0F0D0D" Foreground="#FF0F0D0D"
+					PlotAreaMargin="0,21,0,0" PlotAreaBorderBrush="#FF0F0D0D"
+                      
+					BorderBrush="#FF0F0D0D" BorderThickness="1" 
+					IndicatorStroke="#880D8ECF" IndicatorBalloonForeground="Black"
+                    IsIndicatorEnabled="True"
+                    BalloonsEnabled="True"
+                      
+					ZoomOutButtonForeground="#FFFFFFFF" ZoomOutButtonHoverForeground="#FFFF0F00" 
+					ZoomOutButtonMargin="0,90,75,0" ContentMargin="0" RenderTransformOrigin="0.5,0.5">
+                <am:LineChart.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.23"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </am:LineChart.RenderTransform>
+                <!--图例-->
+                <am:LineChart.Legend>
+                    <am:Legend HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+							IsGraphTogglingEnabled="True" ValuesEnabled="True" />
+                </am:LineChart.Legend>
+
+                <am:LineChart.LeftValueAxis>
+                    <am:ValueAxis StrokeThickness="0" />
+                </am:LineChart.LeftValueAxis>
+
+                <am:LineChart.CategoryAxis>
+                    <am:CategoryAxis StrokeThickness="0" />
+                </am:LineChart.CategoryAxis>
+
+                <am:LineChart.LeftValueAxisGrid>
+                    <am:ValueGrid Stroke="#08FFFFFF" />
+                </am:LineChart.LeftValueAxisGrid>
+
+                <am:LineChart.CategoryAxisGrid>
+                    <am:CategoryGrid Stroke="#08FFFFFF" />
+                </am:LineChart.CategoryAxisGrid>
+                <am:LineChart.Content >
+                    <Grid Width="640" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </am:LineChart.Content>
+                <am:LineChart.Graphs >
+                    <am:LineChartGraph Name="VolatilityGraph" Height="72" Width="237" Brush="White" AreaFillOpacity="0.5" BulletType="None" IsFilled="True" AreaFill="Blue"  />
+                </am:LineChart.Graphs>
+            </am:LineChart>
+            <TextBlock TextWrapping="Wrap" Height="28" Width="136" Background="#FF0F0D0D" Canvas.Left="2" Canvas.Top="2"/>
+        </Canvas>
+        <TabControl HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="780" Height="212" Grid.Row="1" Margin="214,0,192,10">
             <TabItem Header="特定情景收益">
                 <Grid Background="#FF221715" Margin="-3,-2,-3,-4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="groupListView" HorizontalAlignment="Left" Height="222" VerticalAlignment="Top" Width="780" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White">
+                    <ListView x:Name="groupListView" Width="780" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,0,0,38">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenGGVCH" Header="" Width="50">
@@ -1446,7 +1506,7 @@
                     </ListView>
 
                     <CheckBox x:Name="chooseAllGCheckBox" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,8,0,0"/>
-                    <Button x:Name="placeOrderGButton" Content="一键下单" Margin="0,0,25,4" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
+                    <Button x:Name="placeOrderGButton" Content="一键下单" Margin="0,0,25,10" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
 
                 </Grid>
             </TabItem>
@@ -1491,64 +1551,8 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <!--盈亏对比图、走势图-->
-        <TabControl HorizontalAlignment="Left" Height="321" Margin="396,7,0,0" VerticalAlignment="Top" Width="434" Grid.Row="1">
-            <TabItem Header="盈亏对比图">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Header="走势图">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-        </TabControl>
-        <!--概率图-->
-        <Canvas HorizontalAlignment="Left" Height="300" Margin="841,28.25,0,0" VerticalAlignment="Top" Width="339" Background="#FFF9A867" Grid.Row="1">
-            <am:LineChart x:Name="probabilityChart" Width="339" Height="300"
-					Background="Transparent" PlotAreaBackground="Wheat" Foreground="#FFFFFF"
-					PlotAreaMargin="0,21,0,0" PlotAreaBorderBrush="#555555"
-                      
-					BorderBrush="#000000" BorderThickness="1" 
-					IndicatorStroke="#880D8ECF" IndicatorBalloonForeground="Black"
-                    IsIndicatorEnabled="True"
-                    BalloonsEnabled="True"
-                      
-					ZoomOutButtonForeground="#FFFFFFFF" ZoomOutButtonHoverForeground="#FFFF0F00" 
-					ZoomOutButtonMargin="0,90,75,0" Canvas.Left="0" ContentMargin="0">
-
-                <am:LineChart.Legend>
-                    <am:Legend HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
-							IsGraphTogglingEnabled="True" ValuesEnabled="True" Margin="70,0,0,30" />
-                </am:LineChart.Legend>
-
-                <am:LineChart.LeftValueAxis>
-                    <am:ValueAxis StrokeThickness="0" />
-                </am:LineChart.LeftValueAxis>
-
-                <am:LineChart.CategoryAxis>
-                    <am:CategoryAxis StrokeThickness="0" />
-                </am:LineChart.CategoryAxis>
-
-                <am:LineChart.LeftValueAxisGrid>
-                    <am:ValueGrid Stroke="#08FFFFFF" />
-                </am:LineChart.LeftValueAxisGrid>
-
-                <am:LineChart.CategoryAxisGrid>
-                    <am:CategoryGrid Stroke="#08FFFFFF" />
-                </am:LineChart.CategoryAxisGrid>
-                <am:LineChart.Content >
-                    <Grid Width="640" Height="420">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                    </Grid>
-                </am:LineChart.Content>
-                <am:LineChart.Graphs >
-                    <am:LineChartGraph Name="VolatilityGraph" Height="72" Width="237" Brush="White" AreaFillOpacity="0.5" BulletType="None" IsFilled="True" AreaFill="Blue"  />
-                </am:LineChart.Graphs>
-            </am:LineChart>
-        </Canvas>
         <!--盈亏图-->
-        <Canvas HorizontalAlignment="Left" Height="277" Margin="841,357.25,0,0" VerticalAlignment="Top" Width="339" Background="#FF9C7B60" Grid.Row="1"/>
+        <Canvas HorizontalAlignment="Right" Height="228" Margin="0,0,906,420" VerticalAlignment="Bottom" Width="280" Background="#FF0F0D0D" Grid.Row="1"/>
 
         <Border x:Name="Border1" BorderBrush="#FFC35B04" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" >
             <Border.RenderTransform>
@@ -1560,13 +1564,166 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
-        <Canvas HorizontalAlignment="Left" Height="150" Margin="36,12,0,0" Grid.Row="1" VerticalAlignment="Top" Width="164" Background="#FFFF7400">
-            <Button x:Name="upBtn" Content="上涨" Width="124" Height="81" Canvas.Top="30"/>
-            <Button Content="单买看涨" Width="40" Height="81" Canvas.Top="30" Canvas.Left="124"/>
+
+        <!--低波动率-->
+        <!--【低波动率】特定策略-->
+        <Canvas x:Name="topWideCanvas" HorizontalAlignment="Left" Height="25" Margin="689,165,0,0" Grid.Row="1" VerticalAlignment="Top" Width="81" Background="#FFF98A2D" RenderTransformOrigin="0.5,0.5">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-17.627"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Button x:Name="topWideBtn" Content="顶部宽跨"  Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5"/>
         </Canvas>
-        <Canvas HorizontalAlignment="Left" Height="150" Margin="215,12,0,0" Grid.Row="1" VerticalAlignment="Top" Width="163" Background="#FFDE7924"/>
-        <Canvas HorizontalAlignment="Left" Height="150" Margin="37,172,0,0" Grid.Row="1" VerticalAlignment="Top" Width="163" Background="#FFF9BD8A"/>
-        <Canvas HorizontalAlignment="Left" Height="150" Margin="215,172,0,0" Grid.Row="1" VerticalAlignment="Top" Width="163" Background="#FFEE9E5C"/>
+        <Canvas x:Name="topCrossCanvas" HorizontalAlignment="Left" Height="25" Margin="699,195,0,0" Grid.Row="1" VerticalAlignment="Top" Width="83" Background="#FFF98A2D" RenderTransformOrigin="0.5,0.5">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-17.627"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Button x:Name="topCrossBtn" Content="顶部跨式" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5"/>
+        </Canvas>
+
+        <Polygon x:Name="lowVolatilityPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="472,173,528,331" RenderTransformOrigin="0.5,0.5">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="72.367"/>
+                    <TranslateTransform X="72.044" Y="9.37"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
+        <!--【低波动率】设定参数-->
+        <Canvas x:Name="lowVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="604,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Background="#FFFF7400">
+            <TextBlock x:Name="miniRateOfVolatiTB" Text="最小波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="1" Foreground="Black"/>
+            <TextBox x:Name="setMiniRateOfVolatiTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="61" Canvas.Top="7" Foreground="Black" Width="44"/>
+        </Canvas>
+        <Button x:Name="lowVolatilityBtn" Content="低波动率" HorizontalAlignment="Left" Margin="640,198,0,0" Grid.Row="1" VerticalAlignment="Top" Width="52" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+
+
+        <!--高波动率-->
+        <!--【高波动率】特定策略-->
+        <Canvas x:Name="bottomWideCanvas" HorizontalAlignment="Left" Height="26" Margin="390,164,0,0" Grid.Row="1" VerticalAlignment="Top" Width="83" Background="#FFF98A2D" RenderTransformOrigin="0.5,0.5">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="17.627"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Button x:Name="bottomWideBtn" Content="底部宽跨"  Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        </Canvas>
+        <Canvas x:Name="bottomCrossCanvas" HorizontalAlignment="Left" Height="25" Margin="380,194,0,0" Grid.Row="1" VerticalAlignment="Top" Width="83" Background="#FFF98A2D" RenderTransformOrigin="0.5,0.5">
+            <Canvas.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="17.627"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Canvas.RenderTransform>
+            <Button x:Name="bottomCrossBtn" Content="底部跨式" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        </Canvas>
+
+        <Polygon x:Name="highVolatilityPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="499,275,501,229" RenderTransformOrigin="0.5,0.5">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="288.521"/>
+                    <TranslateTransform X="-66.838" Y="-94.725"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
+        <!--【高波动率】设定参数-->
+        <Canvas x:Name="highVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="451,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
+            <TextBlock x:Name="maxRateOfVolatiTB" Text="最大波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
+            <TextBox x:Name="setMaxRateOfVolatiTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
+        </Canvas>
+        <Button x:Name="highVolatilityBtn" Content="高波动率" HorizontalAlignment="Left" Margin="470,198,0,0" Grid.Row="1" VerticalAlignment="Top" Width="53" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+
+        <!--无风险套利-->
+        <!--【无风险套利】特定策略-->
+        <Ellipse x:Name="conversionArbitrageEllipse" Fill="#FFF6852B" HorizontalAlignment="Left" Height="47" Margin="470,84,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46"/>
+        <Ellipse x:Name="multiSubjectMatterEllipse" Fill="#FFF6852B" HorizontalAlignment="Left" Height="47" Margin="524,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46"/>
+        <Ellipse x:Name="boxArbitrageEllipse" Fill="#FFF6852B" HorizontalAlignment="Left" Height="47" Margin="589,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46"/>
+        <Ellipse x:Name="convexityArbitrageEllipse" Fill="#FFF6852B" HorizontalAlignment="Left" Height="47" Margin="642,84,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46"/>
+
+        <Polygon x:Name="risklessArbiPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="449,236,551,268" RenderTransformOrigin="0.5,0.5">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.495"/>
+                    <TranslateTransform X="39.988" Y="-93.573"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
+        <!--【无风险套利】设定参数-->
+        <Button x:Name="risklessArbiBtn" Content="无风险套利" HorizontalAlignment="Left" Margin="544,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+
+
+        <!--下跌-->
+        <!--【下跌】特定策略-->
+        <Canvas x:Name="buyAndDownpCanvas" HorizontalAlignment="Left" Height="25" Margin="652,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="94" Background="#FFF98A2D">
+            <Button x:Name="buyAndDownBtn" Content="单买看跌"  Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}" Canvas.Left="13"/>
+        </Canvas>
+        <Canvas x:Name="bearSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="611,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" Background="#FFF98A2D">
+            <Button x:Name="bearSpreadBtn" Content="熊市差价" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}" Canvas.Left="19"/>
+        </Canvas>
+
+        <Polygon x:Name="downPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="536,175,464,329" RenderTransformOrigin="0.5,0.5">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="144.512"/>
+                    <TranslateTransform X="-14.929" Y="71.934"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
+        <!--【下跌】设定参数-->
+        <Canvas x:Name="downCanvas" HorizontalAlignment="Left" Height="30" Margin="583,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
+            <TextBlock x:Name="maxRateOfDecreTB" Text="最大跌幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
+            <TextBox x:Name="setMaxRateOfDecreTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
+        </Canvas>
+        <Button Content="下  跌" HorizontalAlignment="Left" Margin="592,347,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+
+        <!--上涨-->
+        <!--【上涨】特定策略-->
+        <Canvas x:Name="buyAndUpCanvas" HorizontalAlignment="Left" Height="25" Margin="416,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="94" Background="#FFF98A2D">
+            <Button x:Name="buyAndUpBtn" Content="单买看涨" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        </Canvas>
+        <Canvas x:Name="bullSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="448,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" Background="#FFF98A2D">
+            <Button x:Name="bullSpreadBtn" Content="牛市差价" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        </Canvas>
+
+        <Polygon x:Name="upPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Margin="553,239,447,265" RenderTransformOrigin="0.5,0.5" Fill="#FFF46E05">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="216.586"/>
+                    <TranslateTransform X="-99.711" Y="6.919"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
+        <!--【上涨】设定参数-->
+        <Canvas x:Name="upCanvas" HorizontalAlignment="Left" Height="30" Margin="469,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
+            <TextBlock x:Name="maxRateOfGrothTB" Text="最大涨幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
+            <TextBox x:Name="setMaxRateOfGrothTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
+        </Canvas>
+        <Button Content="上  涨" HorizontalAlignment="Left" Margin="521,347,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+
+
 
     </Grid>
 </Window>

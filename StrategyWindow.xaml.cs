@@ -75,11 +75,11 @@ namespace qiquanui
             Border1.Height = this.Height - 14.0;
 
             Top1_StrategyLabwper = (this.Width - (originalWidth - Top1_StrategyLabw)) / (originalWidth - (originalWidth - Top1_StrategyLabw));
-            groupListViewwper = (this.Width - (originalWidth - groupListVieww)) / (originalWidth - (originalWidth - groupListVieww));
-            groupListViewhper = (this.Height - (originalHeight - groupListViewh)) / (originalHeight - (originalHeight - groupListViewh));
+            //groupListViewwper = (this.Width - (originalWidth - groupListVieww)) / (originalWidth - (originalWidth - groupListVieww));
+            //groupListViewhper = (this.Height - (originalHeight - groupListViewh)) / (originalHeight - (originalHeight - groupListViewh));
 
-            groupListView.Width = groupListViewwper * groupListVieww + 2 * windowShadowControlWidth;
-            groupListView.Height = groupListViewhper * groupListViewh + 2 * windowShadowControlWidth;
+            //groupListView.Width = groupListViewwper * groupListVieww + 2 * windowShadowControlWidth;
+            //groupListView.Height = groupListViewhper * groupListViewh + 2 * windowShadowControlWidth;
 
             Top1_StrategyLab.Width = Top1_StrategyLabwper * Top1_StrategyLabw + 2 * windowShadowControlWidth;
 
