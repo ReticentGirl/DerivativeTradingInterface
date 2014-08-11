@@ -1606,6 +1606,17 @@
             <TextBox x:Name="setMiniRateOfVolatiTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="61" Canvas.Top="7" Foreground="Black" Width="44"/>
         </Canvas>
         <Button x:Name="lowVolatilityBtn" Content="低波动率" HorizontalAlignment="Left" Margin="640,198,0,0" Grid.Row="1" VerticalAlignment="Top" Width="52" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <!--【低波动率】打开面板-->
+        <Polygon x:Name="openLowVolatilityPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="472,173,528,331" RenderTransformOrigin="0.5,0.5">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="72.367"/>
+                    <TranslateTransform X="72.044" Y="9.37"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
 
 
         <!--高波动率-->
@@ -1649,6 +1660,17 @@
             <TextBox x:Name="setMaxRateOfVolatiTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
         </Canvas>
         <Button x:Name="highVolatilityBtn" Content="高波动率" HorizontalAlignment="Left" Margin="470,198,0,0" Grid.Row="1" VerticalAlignment="Top" Width="53" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <!--【高波动率】打开面板-->
+        <Polygon x:Name="openHighVolatilityPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="499,275,501,229" RenderTransformOrigin="0.5,0.5">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="288.521"/>
+                    <TranslateTransform X="-66.838" Y="-94.725"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
 
         <!--无风险套利-->
         <!--【无风险套利】特定策略-->
@@ -1669,6 +1691,17 @@
         </Polygon>
         <!--【无风险套利】设定参数-->
         <Button x:Name="risklessArbiBtn" Content="无风险套利" HorizontalAlignment="Left" Margin="544,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <!--【无风险套利】打开面板-->
+        <Polygon x:Name="openRisklessArbiPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="449,236,551,268" RenderTransformOrigin="0.5,0.5">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.495"/>
+                    <TranslateTransform X="39.988" Y="-93.573"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
 
 
         <!--下跌-->
@@ -1696,6 +1729,17 @@
             <TextBox x:Name="setMaxRateOfDecreTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
         </Canvas>
         <Button Content="下  跌" HorizontalAlignment="Left" Margin="592,347,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <!--【下跌】打开面板-->
+        <Polygon x:Name="openDownPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="536,175,464,329" RenderTransformOrigin="0.5,0.5">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="144.512"/>
+                    <TranslateTransform X="-14.929" Y="71.934"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
 
         <!--上涨-->
         <!--【上涨】特定策略-->
@@ -1716,12 +1760,24 @@
                 </TransformGroup>
             </Polygon.RenderTransform>
         </Polygon>
+
         <!--【上涨】设定参数-->
         <Canvas x:Name="upCanvas" HorizontalAlignment="Left" Height="30" Margin="469,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
             <TextBlock x:Name="maxRateOfGrothTB" Text="最大涨幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
             <TextBox x:Name="setMaxRateOfGrothTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
         </Canvas>
-        <Button Content="上  涨" HorizontalAlignment="Left" Margin="521,347,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <Button x:Name="upBtn" Content="上  涨" HorizontalAlignment="Left" Margin="521,347,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}" Click="upBtn_Click"/>
+        <!--【上涨】打开面板-->
+        <Polygon x:Name="openUpPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Margin="553,239,447,265" RenderTransformOrigin="0.5,0.5" Fill="#FFF46E05" MouseLeftButtonDown="openUpPoly_MouseLeftButtonDown" Visibility="Hidden">
+            <Polygon.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="216.586"/>
+                    <TranslateTransform X="-99.711" Y="6.919"/>
+                </TransformGroup>
+            </Polygon.RenderTransform>
+        </Polygon>
 
 
 

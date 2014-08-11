@@ -176,5 +176,16 @@ namespace qiquanui
         {
            // groupCanvasStoryboard_Leave.Begin(this);
         }
+
+        private void openUpPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void upBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
