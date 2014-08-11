@@ -1064,11 +1064,11 @@
                             </Grid.ColumnDefinitions>
                             <Popup x:Name="PART_Popup" AllowsTransparency="true" Grid.ColumnSpan="2" IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}" Margin="1" PopupAnimation="{DynamicResource {x:Static SystemParameters.ComboBoxPopupAnimationKey}}" Placement="Bottom">
                                 <Border x:Name="Shdw" MaxHeight="{TemplateBinding MaxDropDownHeight}" MinWidth="{Binding ActualWidth, ElementName=MainGrid}">
-                                    <Border x:Name="DropDownBorder" BorderBrush="#FF3D3F4F" BorderThickness="1" Background="#FF777FB0">
+                                    <Border x:Name="DropDownBorder" BorderBrush="#FF4F453D" BorderThickness="1" Background="#FFB08E77">
                                         <ScrollViewer x:Name="DropDownScrollViewer">
                                             <Grid RenderOptions.ClearTypeHint="Enabled">
                                                 <Canvas HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
-                                                    <Rectangle x:Name="OpaqueRect" Height="{Binding ActualHeight, ElementName=DropDownBorder}" Width="{Binding ActualWidth, ElementName=DropDownBorder}" Fill="#FF14161F"/>
+                                                    <Rectangle x:Name="OpaqueRect" Height="{Binding ActualHeight, ElementName=DropDownBorder}" Width="{Binding ActualWidth, ElementName=DropDownBorder}" Fill="#FF1F1614"/>
                                                 </Canvas>
                                                 <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                                             </Grid>
@@ -1076,7 +1076,7 @@
                                     </Border>
                                 </Border>
                             </Popup>
-                            <ToggleButton Background="{TemplateBinding Background}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ComboBoxReadonlyToggleButton}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="#FF303240"/>
+                            <ToggleButton Background="{TemplateBinding Background}" Grid.ColumnSpan="2" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ComboBoxReadonlyToggleButton}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="#FF403630"/>
                             <ContentPresenter ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" Content="{TemplateBinding SelectionBoxItem}" ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsHitTestVisible="false" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -1088,7 +1088,7 @@
                                 <Setter Property="Height" TargetName="DropDownBorder" Value="95"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="BorderBrush" Value="#FF272935"/>
+                                <Setter Property="BorderBrush" Value="#FF352C27"/>
                                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                                 <Setter Property="Background" Value="#FFF4F4F4"/>
                             </Trigger>
@@ -1100,7 +1100,7 @@
                                 <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=DropDownScrollViewer}"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="Background" Value="#FF3F4149"/>
+                                <Setter Property="Background" Value="#FF49433F"/>
                                 <Setter Property="BorderBrush" Value="White"/>
                                 <Setter Property="BorderThickness" Value="1"/>
                             </Trigger>
@@ -1117,7 +1117,7 @@
                     <Setter Property="Template" Value="{StaticResource ComboBoxEditableTemplate}"/>
                 </Trigger>
                 <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" Value="#FF3E414D"/>
+                    <Setter Property="Background" Value="#FF4D443E"/>
                     <Setter Property="BorderBrush" Value="White"/>
                     <Setter Property="BorderThickness" Value="1"/>
                 </Trigger>
@@ -1137,13 +1137,13 @@
 
         <Style x:Key="textboxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Foreground" Value="#FF9198AC"/>
-            <Setter Property="BorderBrush" Value="#FF2E3143"/>
+            <Setter Property="BorderBrush" Value="#FF43392E"/>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="SelectionBrush" Value="#FF3E414D"/>
+            <Setter Property="SelectionBrush" Value="#FF4D433E"/>
 
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property="Background" Value="#FF3E414D"/>
+                    <Setter Property="Background" Value="#FF4D433E"/>
 
                 </Trigger>
             </Style.Triggers>
@@ -1178,10 +1178,10 @@
                                 <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Fill" TargetName="Arrow" Value="#FF51546A"/>
+                                <Setter Property="Fill" TargetName="Arrow" Value="#FF6A5A51"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#FF3F4149"/>
+                                <Setter TargetName="Border" Property="Background" Value="#FF49443F"/>
                                 <Setter TargetName="Border" Property="BorderBrush" Value="White"/>
 
                             </Trigger>
@@ -1220,10 +1220,10 @@
                                 <Setter Property="RenderPressed" TargetName="Chrome" Value="true"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Fill" TargetName="Arrow" Value="#FF51546A"/>
+                                <Setter Property="Fill" TargetName="Arrow" Value="#FF6A5951"/>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="Border" Property="Background" Value="#FF3F4149"/>
+                                <Setter TargetName="Border" Property="Background" Value="#FF49433F"/>
                                 <Setter TargetName="Border" Property="BorderBrush" Value="White"/>
 
                             </Trigger>
@@ -1266,15 +1266,15 @@
             </Button.Background>
         </Button>
         <!--设置区-->
-        <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" FlowDirection="LeftToRight" Margin="315,11,0,0" Grid.RowSpan="2" />
-        <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="369,13,0,0" Grid.RowSpan="2" >
+        <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" FlowDirection="LeftToRight" Margin="18,8,0,0" Grid.RowSpan="2" />
+        <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="72,10,0,0" Grid.RowSpan="2" >
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem2" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem3" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
 
         </ComboBox>
-        <Label x:Name="nameInStrategyPanelLabel" Content="标的商品：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" Background="{x:Null}" FlowDirection="LeftToRight" Margin="465,11,0,0" Grid.RowSpan="2" />
-        <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="529,13,0,0" Grid.RowSpan="2" >
+        <Label x:Name="nameInStrategyPanelLabel" Content="标的商品：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" Background="{x:Null}" FlowDirection="LeftToRight" Margin="168,8,0,0" Grid.RowSpan="2" />
+        <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="232,10,0,0" Grid.RowSpan="2" >
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="Transparent" Offset="0"/>
@@ -1282,22 +1282,22 @@
                 </LinearGradientBrush>
             </ComboBox.Background>
         </ComboBox>
-        <Label x:Name="dueDateLabel" Content="到期年月：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="625,11,0,1" Height="26" Grid.RowSpan="2" />
-        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="689,13,0,0" Grid.RowSpan="2" />
+        <Label x:Name="dueDateLabel" Content="到期年月：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="328,8,0,4" Height="26" Grid.RowSpan="2" />
+        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="392,10,0,0" Grid.RowSpan="2" />
         <!--交易区-->
-        <TabControl x:Name="groupListViewTabControl" Margin="28,335,356,21" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}">
-            <TabItem Header="特定情景收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,1,2,-1">
+        <TabControl x:Name="groupListViewTabControl" Margin="19,0,0,21" Grid.Row="2" Background="{x:Null}" BorderBrush="{x:Null}" Width="802" Height="288" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <TabItem Header="特定情景收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,-2,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="#FFF0F0F0" Offset="0"/>
                         <GradientStop Color="White" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid x:Name="specificConditionGrid" Background="#FF221715" Margin="-3,-2,-25,-4">
+                <Grid x:Name="specificConditionGrid" Background="#FF060404" Margin="-3,-5,-25,-4" Width="803" Height="269" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="groupListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="802" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White">
+                    <ListView x:Name="groupListView" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="802" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,0,0,30">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenGGVCH" Header="" Width="50">
@@ -1334,9 +1334,9 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="特定策略收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,1,2,-1">
-                <Grid x:Name="specificStrategyGrid" Background="#FF221715" Margin="-3,0,-4,-4">
-                    <ListView x:Name="strategyListView" HorizontalAlignment="Left" Height="239" VerticalAlignment="Top" Width="803" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Canvas.Top="-1" Margin="0,-2,0,0">
+            <TabItem Header="特定策略收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,-2,0,2" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <Grid x:Name="specificStrategyGrid" Background="#FF060404" Margin="-3,-5,-4,-4" Width="803" Height="270" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <ListView x:Name="strategyListView" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="803" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Canvas.Top="-1">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChooseSGVCH" Header="" Width="50">
@@ -1376,19 +1376,19 @@
             </TabItem>
         </TabControl>
 
-        <Grid x:Name="TopRightAndTopCenterGrid" HorizontalAlignment="Right" Height="321" Grid.Row="2" VerticalAlignment="Top" Width="792" Margin="0,9,10,0" UseLayoutRounding="True">
+        <Grid x:Name="TopRightAndTopCenterGrid" HorizontalAlignment="Right" Height="318" Grid.Row="2" VerticalAlignment="Top" Width="816" Margin="0,6,19,0" UseLayoutRounding="True">
             <!--盈亏对比图、走势图-->
-            <TabControl x:Name="TopCenterTabControl" HorizontalAlignment="Left" Height="321" VerticalAlignment="Top" Width="434" Grid.Row="2" Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}">
+            <TabControl x:Name="TopCenterTabControl" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="470" Background="{x:Null}" BorderThickness="0" BorderBrush="{x:Null}">
                 <TabItem Header="盈亏对比图" Foreground="White" Style="{StaticResource TopCenterTabItemStyle}" Margin="0,2,0,-2">
-                    <Grid x:Name="ComparasionChartGrid" Background="#FF040201" Margin="0,0,-4,-2" Width="434" Height="295" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Grid x:Name="ComparasionChartGrid" Background="#FF040201" Margin="0,0,-2,-2" Width="468" Height="295" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </TabItem>
                 <TabItem Header="走势图" Foreground="White" Style="{StaticResource TopCenterTabItemStyle}" Margin="0,2,0,-2">
-                    <Grid x:Name="TendencyChartGrid" Background="#FF040201" Width="433" Height="295" Margin="0,0,-3,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                    <Grid x:Name="TendencyChartGrid" Background="#FF040201" Width="468" Height="295" Margin="0,0,-2,-2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </TabItem>
             </TabControl>
             <!--概率图-->
-            <Canvas x:Name="TopRightCanvas" HorizontalAlignment="Right" Height="300" VerticalAlignment="Top" Width="339" Background="#FF040201" Canvas.Left="453" Canvas.Top="21" Margin="0,21,0,0">
-                <am:LineChart x:Name="probabilityChart" Width="339" Height="300"
+            <Canvas x:Name="TopRightCanvas" HorizontalAlignment="Right" Height="292" VerticalAlignment="Top" Width="336" Background="#FF040201" Canvas.Left="453" Canvas.Top="21" Margin="0,26,0,0">
+                <am:LineChart x:Name="probabilityChart" Width="336" Height="292"
             	Background="Transparent" PlotAreaBackground="Wheat" Foreground="#FFFFFF"
             	PlotAreaMargin="0,21,0,0" PlotAreaBorderBrush="#555555"
                       
@@ -1434,15 +1434,15 @@
         </Grid>
 
         <!--盈亏图-->
-        <Grid x:Name="ButtomRightGrid" HorizontalAlignment="Right" Height="269" Margin="0,0,10,21" VerticalAlignment="Bottom" Width="336" Background="#FFF96B00" Grid.Row="2"/>
-        <Grid x:Name="topLeftGrid" HorizontalAlignment="Left" Height="310" Margin="28,12,0,0" Grid.Row="2" VerticalAlignment="Top" Width="341">
-            <Canvas Height="150" Width="164" Background="#FFF96B00" Canvas.Left="-1" Margin="0,0,177,160" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <Button x:Name="upBtn" Content="上涨" Width="124" Height="81" Canvas.Top="30"/>
-                <Button Content="单买看涨" Width="40" Height="81" Canvas.Top="30" Canvas.Left="124"/>
+        <Grid x:Name="ButtomRightGrid" HorizontalAlignment="Right" Height="269" Margin="0,0,19,21" VerticalAlignment="Bottom" Width="336" Background="Black" Grid.Row="2"/>
+        <Grid x:Name="topLeftGrid" HorizontalAlignment="Left" Height="318" Margin="19,6,0,0" Grid.Row="2" VerticalAlignment="Top" Width="318">
+            <Canvas x:Name="topLeftGridtl" Height="155" Width="155" Background="#FFF96B00" Canvas.Left="-1" Margin="0,0,177,160" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button x:Name="upBtn" Content="上涨" Width="116" Height="81" Canvas.Top="30"/>
+                <Button Content="单买看涨" Width="40" Height="81" Canvas.Top="30" Canvas.Left="116"/>
             </Canvas>
-            <Canvas Height="150" Width="163" Background="#FFF96B00" Canvas.Left="178" FlowDirection="RightToLeft" Margin="178,0,0,160" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <Canvas Height="150" Width="163" Background="#FFF96B00" Canvas.Top="160" Margin="0,160,178,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-            <Canvas Height="150" Width="163" Background="#FFF96B00" Canvas.Left="178" Canvas.Top="160" Margin="178,160,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            <Canvas x:Name="topLeftGridtr" Height="155" Width="155" Background="#FFF96B00" Canvas.Left="178" FlowDirection="RightToLeft" Margin="178,0,0,160" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <Canvas x:Name="topLeftGridbl" Height="155" Width="155" Background="#FFF96B00" Canvas.Top="160" Margin="0,160,178,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+            <Canvas x:Name="topLeftGridbr" Height="155" Width="155" Background="#FFF96B00" Canvas.Left="178" Canvas.Top="160" Margin="178,160,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
         </Grid>
         <Border x:Name="Border1" BorderBrush="#FFC35B04" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.RowSpan="3" >
             <Border.RenderTransform>
