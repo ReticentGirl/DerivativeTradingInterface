@@ -20,7 +20,7 @@ namespace qiquanui
      
     public partial class StrategyWindow : Window
     {
-        private double originalHeight, originalWidth, Top1_StrategyLabw, Top1_StrategyLabwper, groupListVieww, groupListViewwper, groupListViewh, groupListViewhper, topLeftGridw, topLeftGridwper, topLeftGridh, topLeftGridhper, TopRightAndTopCenterGridw, TopRightAndTopCenterGridwper, TopRightAndTopCenterGridh, TopRightAndTopCenterGridhper, TopCenterTabControlw, TopCenterTabControlwper, TopCenterTabControlh, TopCenterTabControlhper, TopRightCanvasw, TopRightCanvaswper, TopRightCanvash, TopRightCanvashper, probabilityChartw, probabilityChartwper, probabilityCharth, probabilityCharthper, ButtomRightGridw, ButtomRightGridwper, ButtomRightGridh, ButtomRightGridhper, groupListViewTabControlw, groupListViewTabControlwper, groupListViewTabControlh, groupListViewTabControlhper, specificConditionGridw, specificConditionGridwper, specificConditionGridh, specificConditionGridhper, specificStrategyGridw, specificStrategyGridwper, specificStrategyGridh, specificStrategyGridhper, strategyListVieww, strategyListViewwper, strategyListViewh, strategyListViewhper, ComparasionChartGridh, ComparasionChartGridhper, ComparasionChartGridw, ComparasionChartGridwper, TendencyChartGridh, TendencyChartGridhper, TendencyChartGridw, TendencyChartGridwper, topLeftGridtlw, topLeftGridtlwper, topLeftGridtlh, topLeftGridtlhper, topLeftGridtrw, topLeftGridtrwper, topLeftGridtrh, topLeftGridtrhper, topLeftGridblw, topLeftGridblwper, topLeftGridblh, topLeftGridblhper, topLeftGridbrw, topLeftGridbrwper, topLeftGridbrh, topLeftGridbrhper;
+        private double originalHeight, originalWidth, Top1_StrategyLabw, Top1_StrategyLabwper, groupListVieww, groupListViewwper, groupListViewh, groupListViewhper;
         private Storyboard groupCanvasStoryboard, groupCanvasStoryboard_Leave;
         private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
 
@@ -37,40 +37,7 @@ namespace qiquanui
             groupListViewh = groupListView.Height;
             groupListVieww = groupListView.Width;
 
-            topLeftGridw = topLeftGrid.Width;
-            topLeftGridh = topLeftGrid.Height;
-            TopRightAndTopCenterGridw = TopRightAndTopCenterGrid.Width;
-            TopRightAndTopCenterGridh = TopRightAndTopCenterGrid.Height;
-            TopCenterTabControlw=TopCenterTabControl.Width;
-            TopCenterTabControlh=TopCenterTabControl.Height;
-            TopRightCanvasw=TopRightCanvas.Width;
-            TopRightCanvash=TopRightCanvas.Height;
-            probabilityChartw=probabilityChart.Width;
-            probabilityCharth=probabilityChart.Height;
-            ButtomRightGridw = ButtomRightGrid.Width;
-            ButtomRightGridh = ButtomRightGrid.Height;
-            groupListViewTabControlw = groupListViewTabControl.Width;
-            groupListViewTabControlh = groupListViewTabControl.Height;
-            specificConditionGridw = specificConditionGrid.Width;
-            specificConditionGridh = specificConditionGrid.Height;
-            specificStrategyGridw = specificStrategyGrid.Width;
-            specificStrategyGridh = specificStrategyGrid.Height;
-            strategyListVieww = strategyListView.Width;
-            strategyListViewh = strategyListView.Height;
-            ComparasionChartGridh = ComparasionChartGrid.Height;
-            ComparasionChartGridw = ComparasionChartGrid.Width;
-            TendencyChartGridw = TendencyChartGrid.Width;
-            TendencyChartGridh = TendencyChartGrid.Height;
-
-
-            topLeftGridbrw = topLeftGridbr.Width;
-            topLeftGridbrh = topLeftGridbr.Height;
-            topLeftGridtlw = topLeftGridtl.Width;
-            topLeftGridtlh = topLeftGridtl.Height;
-            topLeftGridtrw = topLeftGridtr.Width;
-            topLeftGridtrh = topLeftGridtr.Height;
-            topLeftGridblw = topLeftGridbl.Width;
-            topLeftGridblh = topLeftGridbl.Height;
+            
 
 
             windowShadowControlWidth = 0;
@@ -107,68 +74,20 @@ namespace qiquanui
         } //拉伸窗口调用ResizeControl()
         private bool ResizeControl()
         {
-            Border1.Width = this.Width - 14.0 + 2 * windowShadowControlWidth;
-            Border1.Height = this.Height - 14.0 + 2 * windowShadowControlWidth;
+            Border1.Width = this.Width - 14.0;
+            Border1.Height = this.Height - 14.0;
 
             Top1_StrategyLabwper = (this.Width - (originalWidth - Top1_StrategyLabw)) / (originalWidth - (originalWidth - Top1_StrategyLabw));
-            specificStrategyGridwper = specificConditionGridwper = (this.Width - (originalWidth - specificConditionGridw - ButtomRightGridw)) / (originalWidth - (originalWidth - specificConditionGridw - ButtomRightGridw));
-            specificStrategyGridhper = specificConditionGridhper = (this.Height - (originalHeight - specificStrategyGridh - topLeftGridtlh - topLeftGridblh)) / (originalHeight - (originalHeight - specificStrategyGridh - topLeftGridtlh - topLeftGridblh));
-            groupListViewTabControlwper = (this.Width - (originalWidth - groupListViewTabControlw - ButtomRightGridw)) / (originalWidth - (originalWidth - groupListViewTabControlw - ButtomRightGridw));
-            groupListViewTabControlhper = (this.Height - (originalHeight - groupListViewTabControlh - topLeftGridtlh - topLeftGridblh)) / (originalHeight - (originalHeight - groupListViewTabControlh - topLeftGridtlh - topLeftGridblh));
-            strategyListViewwper=groupListViewwper = (this.Width - (originalWidth - groupListVieww - ButtomRightGridw)) / (originalWidth - (originalWidth - groupListVieww - ButtomRightGridw));
-            strategyListViewhper = groupListViewhper = (this.Height - (originalHeight - groupListViewh - topLeftGridtlh - topLeftGridblh)) / (originalHeight - (originalHeight - groupListViewh - topLeftGridtlh - topLeftGridblh));
-            topLeftGridwper = (this.Width - (originalWidth - topLeftGridw - TopRightAndTopCenterGridw)) / (originalWidth - (originalWidth - topLeftGridw - TopRightAndTopCenterGridw));
-            topLeftGridhper = (this.Height - (originalHeight - topLeftGridh - groupListViewh)) / (originalHeight - (originalHeight - topLeftGridh - groupListViewh));
-            TopRightAndTopCenterGridwper = (this.Width - (originalWidth - topLeftGridw - TopRightAndTopCenterGridw)) / (originalWidth - (originalWidth - topLeftGridw - TopRightAndTopCenterGridw));
-            TopRightAndTopCenterGridhper = (this.Height - (originalHeight - TopRightAndTopCenterGridh - groupListViewh)) / (originalHeight - (originalHeight - TopRightAndTopCenterGridh - groupListViewh));
-            TendencyChartGridwper = ComparasionChartGridwper = TopCenterTabControlwper = (this.Width - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridtlw - topLeftGridtrw)) / (originalWidth - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridtlw - topLeftGridtrw));
-            TopCenterTabControlhper = (this.Height - (originalHeight - ComparasionChartGridh - groupListViewh)) / (originalHeight - (originalHeight - ComparasionChartGridh - groupListViewh));
-            probabilityChartwper = TopRightCanvaswper = (this.Width - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridw)) / (originalWidth - (originalWidth - TopCenterTabControlw - TopRightCanvasw - topLeftGridw));
-            probabilityCharthper = TopRightCanvashper = (this.Height - (originalHeight - probabilityCharth - ButtomRightGridh)) / (originalHeight - (originalHeight - probabilityCharth - ButtomRightGridh));
-            ButtomRightGridwper = (this.Width - (originalWidth - groupListVieww - ButtomRightGridw)) / (originalWidth - (originalWidth - groupListVieww - ButtomRightGridw));
-            ButtomRightGridhper = (this.Height - (originalHeight - ButtomRightGridh - probabilityCharth)) / (originalHeight - (originalHeight - ButtomRightGridh - probabilityCharth));
-            TendencyChartGridhper=ComparasionChartGridhper = (this.Height - (originalHeight - groupListViewh - ComparasionChartGridh)) / (originalHeight - (originalHeight - groupListViewh - ComparasionChartGridh));
             
-            topLeftGridblwper=topLeftGridbrwper=topLeftGridtrwper= topLeftGridtlwper = (this.Width - (originalWidth - topLeftGridtlw - topLeftGridtrw - TopCenterTabControlw - TopRightCanvasw)) / (originalWidth - (originalWidth - topLeftGridtlw - topLeftGridtrw - TopCenterTabControlw - TopRightCanvasw));
-            topLeftGridblhper = topLeftGridbrhper = topLeftGridtrhper = topLeftGridtlhper = (this.Height - (originalHeight - strategyListViewh - topLeftGridblh - topLeftGridtlh)) / (originalHeight - (originalHeight - strategyListViewh - topLeftGridblh - topLeftGridtlh));
+             
+            
+            //groupListViewwper = (this.Width - (originalWidth - groupListVieww)) / (originalWidth - (originalWidth - groupListVieww));
+            
+            //groupListViewhper = (this.Height - (originalHeight - groupListViewh)) / (originalHeight - (originalHeight - groupListViewh));
+           
 
-
-            groupListView.Width = groupListViewwper * groupListVieww + 2 * windowShadowControlWidth;
-            groupListView.Height = groupListViewhper * groupListViewh+windowShadowControlWidth;
-            strategyListView.Width = strategyListVieww * strategyListViewwper + 2 * windowShadowControlWidth;
-            strategyListView.Height = strategyListViewh * strategyListViewhper + windowShadowControlWidth;
-            specificStrategyGrid.Width = specificStrategyGridw * specificStrategyGridwper + 2 * windowShadowControlWidth;
-            specificStrategyGrid.Height = specificStrategyGridh * specificStrategyGridhper + windowShadowControlWidth;
-            specificConditionGrid.Width = specificConditionGridw * specificConditionGridwper + 2 * windowShadowControlWidth;
-            specificConditionGrid.Height = specificConditionGridh * specificConditionGridhper + windowShadowControlWidth;
-            groupListViewTabControl.Width = groupListViewTabControlw * groupListViewTabControlwper + 2 * windowShadowControlWidth;
-            groupListViewTabControl.Height = groupListViewTabControlh * groupListViewTabControlhper + windowShadowControlWidth;
-            topLeftGrid.Width = topLeftGridw * topLeftGridwper;
-            topLeftGrid.Height = topLeftGridh * topLeftGridhper + windowShadowControlWidth;
-            TopRightAndTopCenterGrid.Width = TopRightAndTopCenterGridw * TopRightAndTopCenterGridwper + 2 * windowShadowControlWidth;
-            TopRightAndTopCenterGrid.Height = TopRightAndTopCenterGridh * TopRightAndTopCenterGridhper + windowShadowControlWidth;
-            TopCenterTabControl.Width = TopCenterTabControlw * TopCenterTabControlwper +  windowShadowControlWidth;
-            TopCenterTabControl.Height = TopCenterTabControlh * TopCenterTabControlhper + windowShadowControlWidth;
-            //probabilityChart.Width = probabilityChartw * probabilityChartwper +  windowShadowControlWidth;
-            //probabilityChart.Height = probabilityCharth * probabilityCharthper + windowShadowControlWidth;
-           // TopRightCanvas.Width = TopRightCanvasw * TopRightCanvaswper + windowShadowControlWidth;
-           // TopRightCanvas.Height = TopRightCanvash * TopRightCanvashper + windowShadowControlWidth;
-            TopRightCanvas.Width = probabilityChart.Width = ButtomRightGrid.Width = ButtomRightGridw * ButtomRightGridwper;
-            ButtomRightGrid.Height = ButtomRightGridh * ButtomRightGridhper + windowShadowControlWidth;
-            TendencyChartGrid.Height = TendencyChartGridh * TendencyChartGridhper + windowShadowControlWidth;
-            TendencyChartGrid.Width = TendencyChartGridw * TendencyChartGridwper + windowShadowControlWidth;
-            TopRightCanvas.Height = probabilityChart.Height = ComparasionChartGrid.Height = ComparasionChartGridhper * ComparasionChartGridh + windowShadowControlWidth;
-            ComparasionChartGrid.Width = ComparasionChartGridw * ComparasionChartGridwper+windowShadowControlWidth;
-
-
-            topLeftGridbl.Width = topLeftGridblw * topLeftGridblwper;
-            topLeftGridbl.Height = topLeftGridblh * topLeftGridblhper + 1 / 2 * windowShadowControlWidth;
-            topLeftGridtl.Width = topLeftGridtlw * topLeftGridtlwper;
-            topLeftGridtl.Height = topLeftGridtlh * topLeftGridtlhper + 1 / 2 * windowShadowControlWidth;
-            topLeftGridtr.Width = topLeftGridtrw * topLeftGridtrwper;
-            topLeftGridtr.Height = topLeftGridtrh * topLeftGridtrhper + 1 / 2 * windowShadowControlWidth;
-            topLeftGridbr.Width = topLeftGridbrw * topLeftGridbrwper;
-            topLeftGridbr.Height = topLeftGridbrh * topLeftGridbrhper + 1 / 2 * windowShadowControlWidth;
+            //groupListView.Width = groupListViewwper * groupListVieww + 2 * windowShadowControlWidth;
+            //groupListView.Height = groupListViewhper * groupListViewh + 2 * windowShadowControlWidth;
 
 
             Top1_StrategyLab.Width = Top1_StrategyLabwper * Top1_StrategyLabw + 2 * windowShadowControlWidth;
@@ -266,5 +185,16 @@ namespace qiquanui
         {
            // groupCanvasStoryboard_Leave.Begin(this);
         }
+
+        private void openUpPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void upBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

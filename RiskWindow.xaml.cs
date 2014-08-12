@@ -204,8 +204,8 @@ namespace qiquanui
             GammaTabGrid.Height = GammaTabGridh * GammaTabGridhper + 2 * windowShadowControlWidth;
             optionsRiskLV.Width = optionsRiskLVw * optionsRiskLVwper + 2 * windowShadowControlWidth;
             optionsRiskLV.Height = optionsRiskLVh * optionsRiskLVhper + 2 * windowShadowControlWidth;
-            recomLV.Width = recomLVw * recomLVwper + 2 * windowShadowControlWidth;
-            recomLV.Height = recomLVh * recomLVhper + 2 * windowShadowControlWidth;
+            //recomLV.Width = recomLVw * recomLVwper + 2 * windowShadowControlWidth;
+            //recomLV.Height = recomLVh * recomLVhper + 2 * windowShadowControlWidth;
             DeltaAndGammaTabControl.Height = DeltaAndGammaTabControlh * DeltaAndGammaTabControlhper + 2 * windowShadowControlWidth;
 
         }//拉伸窗口调用ResizeControl()
