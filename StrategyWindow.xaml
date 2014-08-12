@@ -1270,15 +1270,15 @@
             </Button.Background>
         </Button>
         <!--设置区-->
-        <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" FlowDirection="LeftToRight" Margin="18,8,0,0" Grid.RowSpan="2" />
-        <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="72,10,0,0" Grid.RowSpan="2" >
+        <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" FlowDirection="LeftToRight" Margin="315,11,0,0" />
+        <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="369,13,0,0" >
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem2" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem3" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
 
         </ComboBox>
-        <Label x:Name="nameInStrategyPanelLabel" Content="标的商品：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" Background="{x:Null}" FlowDirection="LeftToRight" Margin="168,8,0,0" Grid.RowSpan="2" />
-        <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="232,10,0,0" Grid.RowSpan="2" >
+        <Label x:Name="nameInStrategyPanelLabel" Content="标的商品：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" Background="{x:Null}" FlowDirection="LeftToRight" Margin="465,11,0,0" />
+        <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="529,13,0,0" >
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="Transparent" Offset="0"/>
@@ -1286,10 +1286,10 @@
                 </LinearGradientBrush>
             </ComboBox.Background>
         </ComboBox>
-        <Label x:Name="dueDateLabel" Content="到期年月：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="328,8,0,4" Height="26" Grid.RowSpan="2" />
-        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="392,10,0,0" Grid.RowSpan="2" />
-       
-        
+        <Label x:Name="dueDateLabel" Content="到期年月：" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="625,11,0,1" Height="26" />
+        <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="689,13,0,0" />
+
+
         <!--概率图-->
         <Canvas HorizontalAlignment="Right" Height="228" Margin="0,182,896,0" VerticalAlignment="Top" Width="280" Background="#FF0F0D0D" Grid.Row="1">
             <am:LineChart x:Name="probabilityChart" Width="250" Height="200"
@@ -1539,6 +1539,7 @@
             </Polygon.RenderTransform>
         </Polygon>
         <!--【高波动率】设定参数-->
+        <Canvas x:Name="highVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="451,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
             <TextBlock x:Name="maxRateOfVolatiTB" Text="最大波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
             <TextBox x:Name="setMaxRateOfVolatiTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
         </Canvas>
@@ -1593,6 +1594,7 @@
             <Button x:Name="buyAndDownBtn" Content="单买看跌"  Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}" Canvas.Left="13"/>
         </Canvas>
         <Canvas x:Name="bearSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="611,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" Background="#FFF98A2D">
+            <Button x:Name="bearSpreadBtn" Content="熊市差价" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}" Canvas.Left="19"/>
         </Canvas>
 
         <Polygon x:Name="downPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="536,175,464,329" RenderTransformOrigin="0.5,0.5">
@@ -1626,10 +1628,14 @@
         <!--上涨-->
         <!--【上涨】特定策略-->
         <Canvas x:Name="buyAndUpCanvas" HorizontalAlignment="Left" Height="25" Margin="416,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="94" Background="#FFF98A2D">
-        <Canvas HorizontalAlignment="Left" Height="150" Margin="215,12,0,0" Grid.Row="1" VerticalAlignment="Top" Width="163" Background="#FFDE7924"/>
+            <Button x:Name="buyAndUpBtn" Content="单买看涨" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        </Canvas>
+        <Canvas x:Name="bullSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="448,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" Background="#FFF98A2D">
             <Button x:Name="bullSpreadBtn" Content="牛市差价" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        </Canvas>
 
-        <Canvas HorizontalAlignment="Left" Height="150" Margin="215,12,0,0" Grid.Row="1" VerticalAlignment="Top" Width="163" Background="#FFDE7924"/>
+        <Polygon x:Name="upPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Margin="553,239,447,265" RenderTransformOrigin="0.5,0.5" Fill="#FFF46E05">
+
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1641,6 +1647,7 @@
         </Polygon>
 
         <!--【上涨】设定参数-->
+        <Canvas x:Name="upCanvas" HorizontalAlignment="Left" Height="30" Margin="469,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
             <TextBlock x:Name="maxRateOfGrothTB" Text="最大涨幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
             <TextBox x:Name="setMaxRateOfGrothTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
         </Canvas>
