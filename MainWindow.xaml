@@ -2047,7 +2047,7 @@
                     <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="448,3,0,0" Height="26" />
                     <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="502,3,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
                     <Label x:Name="userLabel" Content="投资账户" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="601,2,0,1" Height="26" />
-                    <ComboBox x:Name="userComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="655,3,0,0" />
+                    <ComboBox x:Name="userComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" SelectedIndex="0" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="655,3,0,0" />
 
                 </Grid>
 
@@ -2531,28 +2531,28 @@
                                     <GridViewColumn x:Name="ifChooseHDGVCH" Header="勾选" Width="50">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <CheckBox x:Name="ifChooseHDCheckBox" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <CheckBox x:Name="ifChooseHDCheckBox" IsChecked="{Binding IsChoose,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="userHDGVCH" Header="投资账户"  Width="100"/>
-                                    <GridViewColumn x:Name="traderHDGVCH" Header="交易商" Width="80"/>
-                                    <GridViewColumn x:Name="typeHDGVCH" Header="衍生品名称" Width="80"/>
-                                    <GridViewColumn x:Name="openTransactionHDGVCH" Header=" 开仓日期" Width="100"/>
-                                    <GridViewColumn x:Name="costHDGVCH" Header=" 成本" Width="90"/>
-                                    <GridViewColumn x:Name="lotHDGVCH" Header=" 手数" Width="60"/>
-                                    <GridViewColumn x:Name="typeOfTradeHDGVCH" Header=" 买/卖" Width="40"/>
-                                    <GridViewColumn x:Name="deliveryTimeHDGVCH" Header=" 交割期" Width="100"/>
-                                    <GridViewColumn x:Name="profitAndLossHDGVCH" Header=" 浮动盈亏" Width="100"/>
-                                    <GridViewColumn x:Name="marketProfitAndLossHDGVCH" Header=" 盯市盈亏" Width="100"/>
-                                    <GridViewColumn x:Name="cashDepositHDGVCH" Header=" 保证金" Width="100"/>
+                                    <GridViewColumn x:Name="userHDGVCH" Header="投资账户" DisplayMemberBinding="{Binding UserID,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="traderHDGVCH" Header="交易商" DisplayMemberBinding="{Binding ExchangeName,UpdateSourceTrigger=PropertyChanged}" Width="80"/>
+                                    <GridViewColumn x:Name="typeHDGVCH" Header="交易代码" DisplayMemberBinding="{Binding InstrumentID,UpdateSourceTrigger=PropertyChanged}" Width="80"/>
+                                    <GridViewColumn x:Name="latestPriceHDGVCH" Header="最新价" DisplayMemberBinding="{Binding LatestPrice,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="averagePriceHDGVCH" Header="持仓均价" DisplayMemberBinding="{Binding AveragePrice,UpdateSourceTrigger=PropertyChanged}" Width="90"/>
+                                    <GridViewColumn x:Name="lotHDGVCH" Header=" 手数" DisplayMemberBinding="{Binding TradingNum,UpdateSourceTrigger=PropertyChanged}" Width="60"/>
+                                    <GridViewColumn x:Name="typeOfTradeHDGVCH" Header=" 买/卖" DisplayMemberBinding="{Binding BuyOrSell,UpdateSourceTrigger=PropertyChanged}" Width="40"/>
+                                    <GridViewColumn x:Name="dueDateHDGVCH" Header=" 到期日期" DisplayMemberBinding="{Binding DueDate,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="floatingProfitAndLossHDGVCH" Header=" 浮动盈亏" DisplayMemberBinding="{Binding FloatingProfitAndLoss,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="floatingProfitAndLossRateHDGVCH" Header="浮动盈亏比" DisplayMemberBinding="{Binding FloatingProfitAndLossRate,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="cashDepositHDGVCH" Header=" 保证金" DisplayMemberBinding="{Binding Margin,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
 
                         <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="analyseBtn" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
-                        <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
+                        <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="closeOutBtn_Click"/>
                         <CheckBox x:Name="optionsHDCheckBox" Content="仅显示期权交易明细" HorizontalAlignment="Left" Margin="160,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
                         <CheckBox x:Name="futuresHDCheckBox" Content="仅显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
 

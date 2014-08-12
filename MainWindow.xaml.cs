@@ -47,6 +47,8 @@ namespace qiquanui
 
         UserManager um;
 
+        PositionsManager pm;   //维护持仓区
+
          private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
 
 
@@ -95,11 +97,18 @@ namespace qiquanui
 
             otm = new TradingManager(this);
 
-            hm = new HistoryManager(this);
+       
 
             bip = new BasicInforAndPromptManager(this, dm, otm);
 
             um = new UserManager(this);
+
+            pm = new PositionsManager(this,um);
+
+            hm = new HistoryManager(this, pm,um);
+
+            um.GetPositonManagerPoint(pm);
+
             //otm.OnAdd();
 
             //设置窗口距离显示屏边界距离
@@ -1611,6 +1620,24 @@ namespace qiquanui
                 }
             }
             
+        }
+
+        private void closeOutBtn_Click(object sender, RoutedEventArgs e)   //平仓按钮
+        {
+            ////string testsql = "INSERT INTO Positions VALUES('001109','a1409',1,2,1)";
+
+            ////string testsql2 = "UPDATE Positions SET UserID='001108' WHERE UserID='001109'";
+            //string _userID = "001108";
+            //string _insrtumentID = "a1409";
+
+            //string querySql = String.Format("SELECT * from Positions WHERE UserID='{0}' AND InstrumentID='{1}'", _userID, _insrtumentID);
+
+            //DataTable test = DataControl.QueryTable(querySql);
+
+            //string id = (string)test.Rows[0]["UserID"];
+            ////DataControl.InsertOrUpdate(testsql2);
+
+           // HistoryManager.TestHistoryToHold("001109", "a1408", 50, 1, 1);
         }
 
 

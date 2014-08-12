@@ -10,7 +10,7 @@ namespace qiquanui
 {
     class DataControl
     {
-        //static string dataPath = "G:/花旗/Code/Test/TestForSQLite/Data.sqlite;";
+        //static string dataPath = "E:/Data.sqlite;";
 
         static string dataPath = "db/Data.sqlite;";    //相对路径
  
@@ -53,6 +53,46 @@ namespace qiquanui
             }
 
             return dt;
-        } 
+        }
+
+        public static void InsertOrUpdate(string _sql)
+        {
+            SQLiteConnection conn = new SQLiteConnection("Data Source=" + dataPath);
+            conn.Open();
+            SQLiteCommand cmd = new SQLiteCommand(conn);
+
+            try
+            {
+                cmd.CommandText = _sql;
+                cmd.ExecuteNonQuery();
+            }
+            catch (SQLiteException se)
+            {
+               // dbTrans.Rollback();
+                 Console.WriteLine(se.Message + " \n\n" + se.Source + "\n\n" + se.StackTrace + "\n\n" + se.Data + " \n");
+                //return false;
+            }
+            catch (ArgumentException ae)
+            {
+                //dbTrans.Rollback();
+                Console.WriteLine(ae.Message + " \n\n" + ae.Source + "\n\n" + ae.StackTrace + "\n\n" + ae.Data + " \n");
+                // return false;
+            }
+            catch (Exception ex)
+            {
+                //dbTrans.Rollback();
+                //Do　any　logging　operation　here　if　necessary  
+               Console.WriteLine (ex.Message + "\n\n" + ex.Source + "\n\n" + ex.StackTrace + "\n\n" + ex.Data + " \n");
+                // return false;
+            }
+            catch
+            {
+                //dbTrans.Rollback();
+                Console.WriteLine("Fail");   
+            }
+        }
+
+
+
     }
 }

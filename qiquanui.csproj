@@ -96,6 +96,7 @@
     <Compile Include="PlaceOrder.xaml.cs">
       <DependentUpon>PlaceOrder.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PositionsManager.cs" />
     <Compile Include="RiskWindow.xaml.cs">
       <DependentUpon>RiskWindow.xaml</DependentUpon>
     </Compile>

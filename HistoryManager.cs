@@ -41,6 +41,18 @@ namespace qiquanui
 
         private string clientageType;  //委托方式
 
+        private int isBuy;
+
+
+        public int IsBuy
+        {
+            get { return isBuy; }
+            set
+            {
+                isBuy = value;
+                OnPropertyChanged("IsBuy");
+            }
+        }
 
         public bool OptionOrFuture
         {
@@ -235,6 +247,12 @@ namespace qiquanui
             clientageType = _clientageType;
 
             hIfChoose = false;   //初始化为false
+
+            //交易类型   0 买开  1 卖开  2买平 3卖平
+            if (tradingType.Equals("买开") || tradingType.Equals("买平"))
+                isBuy = 1;
+            else if(tradingType.Equals("卖开") || tradingType.Equals("卖平"))
+                isBuy = 0;
         }
 
 
@@ -262,6 +280,10 @@ namespace qiquanui
 
         MainWindow pwindow;    //主窗体指针
 
+        PositionsManager h_pm; //持仓指针
+
+        UserManager h_um;   //账户管理指针
+
         public static string ALLDONE = "全成";
         public static string SOMEDONE = "部成";
         public static string NOTDONE = "挂单取消";
@@ -270,9 +292,13 @@ namespace qiquanui
         System.Timers.Timer historyTimer; //刷新历史记录的计时器
 
 
-        public HistoryManager(MainWindow _pwindow)
+        public HistoryManager(MainWindow _pwindow, PositionsManager _pm,UserManager _um)
         {
             pwindow = _pwindow;
+
+            h_pm = _pm;
+
+            h_um = _um;
 
             pwindow.historyListView.ItemsSource = HistoryOC;
 
@@ -351,6 +377,8 @@ namespace qiquanui
                 string temp_clientageCondition = head_hd.ClientageCondition;
 
                 string temp_clientageType = head_hd.ClientageType;
+
+                int temp_isBuy = head_hd.IsBuy;
                 ///////////////////////////////////////////////////////////////////////////////////////////
 
                 head_hd.HIfChoose = tail_hd.HIfChoose;
@@ -380,6 +408,8 @@ namespace qiquanui
                 head_hd.ClientageCondition = tail_hd.ClientageCondition;
 
                 head_hd.ClientageType = tail_hd.ClientageType;
+
+                head_hd.IsBuy = tail_hd.IsBuy;
                 /////////////////////////////////////////////////////////////////////////////////
 
                 tail_hd.HIfChoose = temp_hIfChoose;
@@ -409,6 +439,8 @@ namespace qiquanui
                 tail_hd.ClientageCondition = temp_clientageCondition;
 
                 tail_hd.ClientageType = temp_clientageType;
+
+                tail_hd.IsBuy = temp_isBuy;
 
             }
 
@@ -451,7 +483,7 @@ namespace qiquanui
                     _hd.TradingState = ALLDONE;
                     _hd.DonePrice = _hd.PostPrice;
 
-                    HistoryToHold();
+                    HistoryToHold(_hd.UserID,_hd.InstrumentID,_hd.DonePrice,_hd.DoneNum,_hd.IsBuy);
                 }
                 else if (_hd.ClientageCondition.Equals("IOC"))
                 {
@@ -462,7 +494,7 @@ namespace qiquanui
                         _hd.TradingState = ALLDONE;
                         _hd.DonePrice = _hd.PostPrice;
 
-                        HistoryToHold();   //加入持仓区
+                        HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                     }
                     else
                     {
@@ -474,7 +506,7 @@ namespace qiquanui
                             _hd.DonePrice = _hd.PostPrice;
                             _hd.TradingState = ALLDONE;
 
-                            HistoryToHold();   //加入持仓区
+                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                         }
                         else
                         {
@@ -484,7 +516,7 @@ namespace qiquanui
 
                             _hd.DonePrice = _hd.PostPrice;
 
-                            HistoryToHold();    //加入持仓区
+                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);    //加入持仓区
                         }
 
 
@@ -517,7 +549,7 @@ namespace qiquanui
                                 _hd.DonePrice = _hd.PostPrice;
                                 _hd.TradingState = ALLDONE;
 
-                                HistoryToHold();   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                             }
                             else
                             {
@@ -533,7 +565,7 @@ namespace qiquanui
                                     _hd.TradingState = ALLDONE;
                                 }
 
-                                HistoryToHold();   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                             }
 
 
@@ -552,7 +584,7 @@ namespace qiquanui
                                 _hd.TradingState = ALLDONE;
                                 _hd.DonePrice = nowAskPrice;
 
-                                HistoryToHold();   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                             }
 
                         }
@@ -574,7 +606,7 @@ namespace qiquanui
                                         _hd.DonePrice = _hd.PostPrice;
                                         _hd.TradingState = ALLDONE;
 
-                                        HistoryToHold();   //加入持仓区
+                                        HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                     }
                                     else
                                     {
@@ -585,7 +617,7 @@ namespace qiquanui
                                         _hd.DonePrice = nowAskPrice;
                                         _hd.TradingState = SOMEDONE;
 
-                                        HistoryToHold();   //加入持仓区
+                                        HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                     }
                                   
                                 }
@@ -595,7 +627,7 @@ namespace qiquanui
                                     _hd.DonePrice = nowAskPrice;
                                     _hd.TradingState = ALLDONE;
 
-                                    HistoryToHold();   //加入持仓区
+                                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                 }
 
                             }
@@ -617,7 +649,7 @@ namespace qiquanui
                                 _hd.DonePrice = _hd.PostPrice;
                                 _hd.TradingState = ALLDONE;
 
-                                HistoryToHold();   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                             }
                             else
                             {
@@ -633,7 +665,7 @@ namespace qiquanui
                                     _hd.TradingState = ALLDONE;
                                 }
 
-                                HistoryToHold();   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                             }
 
 
@@ -652,7 +684,7 @@ namespace qiquanui
                                 _hd.TradingState = ALLDONE;
                                 _hd.DonePrice = nowBidPrice;
 
-                                HistoryToHold();   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                             }
 
                         }
@@ -675,7 +707,7 @@ namespace qiquanui
                                         _hd.DonePrice = _hd.PostPrice;
                                         _hd.TradingState = ALLDONE;
 
-                                        HistoryToHold();   //加入持仓区
+                                        HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                     }
                                     else
                                     {
@@ -686,7 +718,7 @@ namespace qiquanui
                                         _hd.DonePrice = nowBidPrice;
                                         _hd.TradingState = SOMEDONE;
 
-                                        HistoryToHold();   //加入持仓区
+                                        HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                     }
                                    
                                 }
@@ -696,7 +728,7 @@ namespace qiquanui
                                     _hd.DonePrice = nowBidPrice;
                                     _hd.TradingState = ALLDONE;
 
-                                    HistoryToHold();   //加入持仓区
+                                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                 }
 
                             }
@@ -738,7 +770,7 @@ namespace qiquanui
                                     _hd.DonePrice = _hd.PostPrice;
                                     _hd.TradingState = ALLDONE;
 
-                                    HistoryToHold();   //加入持仓区
+                                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                 }
                                 else
                                 {
@@ -754,7 +786,7 @@ namespace qiquanui
                                         _hd.TradingState = ALLDONE;
 
 
-                                        HistoryToHold();   //加入持仓区
+                                        HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                     }
                                 }
 
@@ -780,7 +812,7 @@ namespace qiquanui
                                     _hd.DonePrice = _hd.PostPrice;
                                     _hd.TradingState = ALLDONE;
 
-                                    HistoryToHold();   //加入持仓区
+                                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                 }
                                 else
                                 {
@@ -796,7 +828,7 @@ namespace qiquanui
                                         _hd.TradingState = ALLDONE;
                                     }
 
-                                    HistoryToHold();   //加入持仓区
+                                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                 }
 
 
@@ -816,7 +848,7 @@ namespace qiquanui
                             _hd.DonePrice = _hd.PostPrice;
                             _hd.TradingState = ALLDONE;
 
-                            HistoryToHold();   //加入持仓区
+                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                         }
                         else
                         {
@@ -832,7 +864,7 @@ namespace qiquanui
                                 _hd.TradingState = ALLDONE;
                             }
 
-                            HistoryToHold();   //加入持仓区
+                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
 
                         }
 
@@ -848,7 +880,7 @@ namespace qiquanui
                             _hd.DonePrice = _hd.PostPrice;
                             _hd.TradingState = ALLDONE;
 
-                            HistoryToHold();   //加入持仓区
+                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                         }
                         else
                         {
@@ -864,7 +896,7 @@ namespace qiquanui
                                 _hd.TradingState = ALLDONE;
                             }
 
-                            HistoryToHold();   //加入持仓区
+                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
 
                         }
 
@@ -880,8 +912,63 @@ namespace qiquanui
 
         }
 
-        void HistoryToHold()   //提交到持仓区
+        // void HistoryToHold()
+        //{
+
+        //}
+        public void HistoryToHold(string _userID,string _insrtumentID,double _finalPrice,int _tradingNum,int _isBuy)   //提交到持仓区
         {
+
+            string querySql = String.Format("SELECT * from Positions WHERE UserID='{0}' AND InstrumentID='{1}' AND IsBuy='{2}'",_userID,_insrtumentID,_isBuy);
+
+            DataTable testForNull = null;
+
+            testForNull = DataControl.QueryTable(querySql);
+
+            DataRow hasRow =null;
+
+            if (testForNull.Rows.Count>0)
+            {
+                hasRow = testForNull.Rows[0];
+            }
+
+    
+          
+
+            if (hasRow != null)   //说明原来就已经买过这个东西了
+            {
+                double old_averagePrice =Convert.ToDouble(hasRow["AveragePrice"]);
+
+                int old_tradingNum =Convert.ToInt32(hasRow["TradingNum"]);
+
+                int new_tradingNum=old_tradingNum+_tradingNum;
+
+                double new_averagePrice = (old_averagePrice * Math.Abs(old_tradingNum) + _finalPrice *Math.Abs(_tradingNum)) / Math.Abs(new_tradingNum);
+
+                string updateSql = String.Format("UPDATE Positions SET AveragePrice='{0}',TradingNum='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy='{4}'", new_averagePrice, new_tradingNum, _userID, _insrtumentID, _isBuy);
+
+                DataControl.InsertOrUpdate(updateSql);
+            }
+            else if (hasRow == null)
+            {
+                string insertSql = String.Format("INSERT INTO Positions VALUES('{0}','{1}','{2}','{3}','{4}')", _userID, _insrtumentID, _finalPrice, _tradingNum, _isBuy);
+
+                DataControl.InsertOrUpdate(insertSql);
+            }
+
+            //// 资金扣除
+
+            //h_um.changeMarginForPlace(_userID, _insrtumentID, _finalPrice, _tradingNum, _isBuy);
+            //h_um.changeRoyaltyForPlace(_userID, _insrtumentID, _finalPrice, _tradingNum, _isBuy);
+            //h_um.changeFeesForPlace(_userID, _insrtumentID, _finalPrice, _tradingNum, _isBuy);
+            ////每次执行之后要刷新持仓区
+            ////h_pm.GetInfoFromDBToOC();
+
+            //h_um.GetInfoFromDBToHash();
+            //h_um.GetInfoFromHashToOC();
+            //h_um.GetPositionsFromDBToUserPositions();
+
+            h_um.UserManagerHandleInHistory(_userID, _insrtumentID, _finalPrice, _tradingNum, _isBuy);
 
         }
 
