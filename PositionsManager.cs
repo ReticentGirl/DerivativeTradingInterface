@@ -19,12 +19,15 @@ namespace qiquanui
         private string instrumentID;
         private double latestPrice;
         private double averagePrice;
+        private double positionAveragePrice;
         private int tradingNum;
         private string buyOrSell;
         private string dueDate;
         private double floatingProfitAndLoss;
         private double floatingProfitAndLossRate;
         private double margin;
+
+
 
 
         public bool IsChoose
@@ -96,6 +99,19 @@ namespace qiquanui
                 OnPropertyChanged("AveragePrice");
             }
         }
+
+
+        public double PositionAveragePrice
+        {
+            get { return positionAveragePrice; }
+            set
+            {
+
+                positionAveragePrice = value;
+                OnPropertyChanged("PositionAveragePrice");
+            }
+        }
+
 
 
         public int TradingNum
@@ -176,6 +192,7 @@ namespace qiquanui
          string _instrumentID,
          double _latestPrice,
          double _averagePrice,
+         double _positionAveragePrice,
          int _tradingNum,
          string _buyOrSell,
          string _dueDate,
@@ -189,6 +206,7 @@ namespace qiquanui
             instrumentID = _instrumentID;
             latestPrice = _latestPrice;
             averagePrice = _averagePrice;
+            positionAveragePrice = _positionAveragePrice;
             tradingNum = _tradingNum;
             buyOrSell = _buyOrSell;
             dueDate = _dueDate;
@@ -230,7 +248,7 @@ namespace qiquanui
         System.Timers.Timer positionsTimer; //刷新持仓区的计时器
 
 
-        public PositionsManager(MainWindow _pwindow,UserManager _um)
+        public PositionsManager(MainWindow _pwindow, UserManager _um)
         {
             pWindow = _pwindow;
 
@@ -268,6 +286,7 @@ namespace qiquanui
          string _instrumentID,
          double _latestPrice,
          double _averagePrice,
+         double _positionAveragePrice,
          int _tradingNum,
          string _buyOrSell,
          string _dueDate,
@@ -281,6 +300,7 @@ namespace qiquanui
           _instrumentID,
           _latestPrice,
           _averagePrice,
+          _positionAveragePrice,
           _tradingNum,
           _buyOrSell,
           _dueDate,
@@ -417,14 +437,14 @@ namespace qiquanui
                     }
 
                 }
-                    
+
             }
 
 
 
         }
 
- 
+
 
         public void Refresh()
         {
@@ -460,21 +480,35 @@ namespace qiquanui
 
                     double r_floatingProfitAndLossRate = r_floatingProfitAndLoss / r_pd.AveragePrice;
 
-                    double r_margin = SomeCalculate.caculateMargin(r_pd.InstrumentID, r_pd.TradingNum,r_isBuy,r_pd.AveragePrice);
+                    double r_margin = SomeCalculate.caculateMargin(r_pd.InstrumentID, r_pd.TradingNum, r_isBuy, r_pd.AveragePrice);
 
 
 
                     PositionsOC[i].LatestPrice = r_latestPrice;
-                    PositionsOC[i].FloatingProfitAndLoss = Math.Round(r_floatingProfitAndLoss,2);
-                    PositionsOC[i].FloatingProfitAndLossRate = Math.Round(r_floatingProfitAndLossRate,2);
+                    PositionsOC[i].FloatingProfitAndLoss = Math.Round(r_floatingProfitAndLoss, 2);
+                    PositionsOC[i].FloatingProfitAndLossRate = Math.Round(r_floatingProfitAndLossRate, 2);
                     PositionsOC[i].Margin = r_margin;
 
                 }
         }
 
+        public void initPositionAveragePrice()
+        {
+            for (int i = 0; i < PositionsOC.Count(); i++)
+            {
+                DataRow nDr = (DataRow)DataManager.All[PositionsOC[i].InstrumentID];
+
+                double new_PositionAveragePrice = Convert.ToDouble(nDr["PreClosePrice"]);
+
+                PositionsOC[i].PositionAveragePrice = new_PositionAveragePrice;
+
+                string updateSql = String.Format("UPDATE Positions SET PositionAveragePrice='{0}' WHERE InstrumentID='{1}'", new_PositionAveragePrice, PositionsOC[i].InstrumentID);
+
+                DataControl.InsertOrUpdate(updateSql);
+            }
+        }
 
 
-       
 
         //public void GetInfoFromHashToOC()
         //{

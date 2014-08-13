@@ -164,14 +164,14 @@ namespace qiquanui
 
 
 
-                        double c_margin = (t_PreSettlementPrice + t_PreClosePrice * Math.Max(MarginAdjust - dummy / t_PreClosePrice, MarginAdjust * MiniGuarantee)) * instrumentMultiplier;//保证金  
+                        double c_margin = (t_PreSettlementPrice + t_PreClosePrice * Math.Max(MarginAdjust - dummy / t_PreClosePrice, MarginAdjust * MiniGuarantee)) * instrumentMultiplier * Math.Abs(_tradingNum);//保证金  
 
                         return c_margin;
 
                     }
                     else if (t_callOrPut == 1)   //看跌
                     {
-                        double p_margin = (t_PreSettlementPrice + Math.Max(t_PreClosePrice * MarginAdjust - dummy, t_ExercisePrice * MarginAdjust * MiniGuarantee)) * instrumentMultiplier;
+                        double p_margin = (t_PreSettlementPrice + Math.Max(t_PreClosePrice * MarginAdjust - dummy, t_ExercisePrice * MarginAdjust * MiniGuarantee)) * instrumentMultiplier * Math.Abs(_tradingNum);
 
                         return p_margin;
 
@@ -191,7 +191,7 @@ namespace qiquanui
             {
                 double marginRate = Convert.ToDouble(nDr["GuaranteeMoney"]);   //保证金率
 
-                double instrumentMultiplier = Convert.ToInt32(nDr["InstrumentMultiplier"]);
+                int instrumentMultiplier = Convert.ToInt32(nDr["InstrumentMultiplier"]);
 
                 double t_margin = _finalPrice * instrumentMultiplier * Math.Abs(_tradingNum) * marginRate; //交易价格*交易单位*交易手数*保证金收取比例
 

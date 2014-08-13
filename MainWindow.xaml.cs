@@ -109,6 +109,10 @@ namespace qiquanui
 
             um.GetPositonManagerPoint(pm);
 
+            um.initOpeningBalance();   //一定要放在um pm 初始化之后
+
+            pm.initPositionAveragePrice();
+
             //otm.OnAdd();
 
             //设置窗口距离显示屏边界距离
@@ -180,6 +184,11 @@ namespace qiquanui
             
         }
 
+        //protected override void OnExit(ExitEventArgs e)
+        //{
+        //    Console.WriteLine("OnExit");
+        //    base.OnExit(e);
+        //} 
 
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -247,11 +256,14 @@ namespace qiquanui
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
+            int i = 0;
             this.Close();
+            
         }//关闭窗口按钮
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            
             if (!closeStoryBoardCompleted)
             {
                 closeAnimation1 = new DoubleAnimation();
@@ -1638,6 +1650,16 @@ namespace qiquanui
             ////DataControl.InsertOrUpdate(testsql2);
 
            // HistoryManager.TestHistoryToHold("001109", "a1408", 50, 1, 1);
+
+
+            //string deleteBuySqlAndSell = String.Format("DELETE FROM Positions WHERE UserID='{0}'AND InstrumentID='{1}' AND IsBuy =0", "001107","HO1408-C-1300");
+
+            //DataControl.InsertOrUpdate(deleteBuySqlAndSell);
+        }
+
+        private void Window_Closed_1(object sender, EventArgs e)   //窗体关闭前调用的函数
+        {
+            um.CalculateStaticFloatingProfitAndLossAndFinalBalance();
         }
 
 

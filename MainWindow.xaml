@@ -9,7 +9,7 @@
         Closing="Window_Closing"
     
     
-        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1190" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95">
+        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1190" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1">
     <Window.Resources>
 
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
@@ -2539,7 +2539,8 @@
                                     <GridViewColumn x:Name="traderHDGVCH" Header="交易商" DisplayMemberBinding="{Binding ExchangeName,UpdateSourceTrigger=PropertyChanged}" Width="80"/>
                                     <GridViewColumn x:Name="typeHDGVCH" Header="交易代码" DisplayMemberBinding="{Binding InstrumentID,UpdateSourceTrigger=PropertyChanged}" Width="80"/>
                                     <GridViewColumn x:Name="latestPriceHDGVCH" Header="最新价" DisplayMemberBinding="{Binding LatestPrice,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
-                                    <GridViewColumn x:Name="averagePriceHDGVCH" Header="持仓均价" DisplayMemberBinding="{Binding AveragePrice,UpdateSourceTrigger=PropertyChanged}" Width="90"/>
+                                    <GridViewColumn x:Name="averagePriceHDGVCH" Header="开仓均价" DisplayMemberBinding="{Binding AveragePrice,UpdateSourceTrigger=PropertyChanged}" Width="90"/>
+                                    <GridViewColumn x:Name="positionAveragePriceHDGVCH" Header="持仓均价" DisplayMemberBinding="{Binding PositionAveragePrice,UpdateSourceTrigger=PropertyChanged}" Width="90"/>
                                     <GridViewColumn x:Name="lotHDGVCH" Header=" 手数" DisplayMemberBinding="{Binding TradingNum,UpdateSourceTrigger=PropertyChanged}" Width="60"/>
                                     <GridViewColumn x:Name="typeOfTradeHDGVCH" Header=" 买/卖" DisplayMemberBinding="{Binding BuyOrSell,UpdateSourceTrigger=PropertyChanged}" Width="40"/>
                                     <GridViewColumn x:Name="dueDateHDGVCH" Header=" 到期日期" DisplayMemberBinding="{Binding DueDate,UpdateSourceTrigger=PropertyChanged}" Width="100"/>

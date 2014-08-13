@@ -31,7 +31,7 @@ namespace qiquanui
         private double royaltyOutcome;  //    11、	权利金支出
         private double royaltyIncome;  //   12、	权利金收入
         private double procedureFees;  //   13、	手续费
-        private double riskLevel;  //  14、	风险度
+        private string riskLevel;  //  14、	风险度
         private double additionalCapital;  //  15、	应追加资金
 
         public ObservableCollection<PositionsData> UserPositionsOC;
@@ -248,7 +248,7 @@ namespace qiquanui
 
 
 
-        public double RiskLevel
+        public string RiskLevel
         {
             get { return riskLevel; }
             set
@@ -301,7 +301,7 @@ namespace qiquanui
          double _royaltyOutcome,  //    11、	权利金支出
          double _royaltyIncome,  //   12、	权利金收入
          double _procedureFees,  //   13、	手续费
-         double _riskLevel,  //  14、	风险度
+         string _riskLevel,  //  14、	风险度
          double _additionalCapital  //  15、	应追加资金
             )
         {
@@ -395,6 +395,8 @@ namespace qiquanui
         public void Refresh()
         {
             RefreshUserPositionOC();
+
+            CalculateDynamicFloatingProfitAndLossAndUserEquityAndRiskLevel();
         }
 
         public void GetPositonManagerPoint(PositionsManager _pm)
@@ -419,7 +421,7 @@ namespace qiquanui
          double _royaltyOutcome,  //    11、	权利金支出
          double _royaltyIncome,  //   12、	权利金收入
          double _procedureFees,  //   13、	手续费
-         double _riskLevel,  //  14、	风险度
+         string _riskLevel,  //  14、	风险度
          double _additionalCapital  //  15、	应追加资金
             )
         {
@@ -513,7 +515,7 @@ namespace qiquanui
 
                 double e_procedureFees = Convert.ToDouble(userDr["ProcedureFees"]);
 
-                double e_riskLevel = Convert.ToDouble(userDr["RiskLevel"]);
+                string e_riskLevel = (userDr["RiskLevel"]).ToString();
 
                 double e_additionalCapital = Convert.ToDouble(userDr["AdditionalCapital"]);
 
@@ -608,6 +610,8 @@ namespace qiquanui
 
                             double d_averagePrice = Math.Round(Convert.ToDouble(dt.Rows[ii]["AveragePrice"]), 1);
 
+                            double d_positionAveragePrice = Math.Round(Convert.ToDouble(dt.Rows[ii]["PositionAveragePrice"]), 1);
+
                             int d_tradingNum = Convert.ToInt32(dt.Rows[ii]["TradingNum"]);
 
                             int d_isBuy = Convert.ToInt32(dt.Rows[ii]["IsBuy"]);
@@ -652,7 +656,7 @@ namespace qiquanui
 
                             double d_margin = SomeCalculate.caculateMargin(d_instrumentID, d_tradingNum, Convert.ToBoolean(d_isBuy), d_averagePrice);
 
-                            PositionsData d_pd = new PositionsData(d_userID, d_exchangeName, d_instrumentID, d_latestPrice, d_averagePrice, d_tradingNum, d_buyOrSell, d_dueDate, d_floatingProfitAndLoss, d_floatingProfitAndLossRate, d_margin);
+                            PositionsData d_pd = new PositionsData(d_userID, d_exchangeName, d_instrumentID, d_latestPrice, d_averagePrice,d_positionAveragePrice, d_tradingNum, d_buyOrSell, d_dueDate, d_floatingProfitAndLoss, d_floatingProfitAndLossRate, d_margin);
 
                             UserOC[jj].UserPositionsOC.Add(d_pd);
                         }
@@ -837,11 +841,267 @@ namespace qiquanui
             //每次执行之后要刷新持仓区
             //h_pm.GetInfoFromDBToOC();
 
+            //检测平仓
+            TestForCloseOut(_userID,_insrtumentID);
+
             GetInfoFromDBToHash();
             GetInfoFromHashToOC();
             GetPositionsFromDBToUserPositions();
         }
 
+
+        public void CalculateDynamicFloatingProfitAndLossAndUserEquityAndRiskLevel()
+        {
+            
+            for (int i = 0; i < UserOC.Count(); i++)
+            {
+                double u_floatingProfitAndLoss = 0;
+              
+
+                for (int j = 0; j < UserOC[i].UserPositionsOC.Count(); j++)
+                {
+                    u_floatingProfitAndLoss += UserOC[i].UserPositionsOC[j].FloatingProfitAndLoss;
+                }
+
+
+                UserOC[i].FloatingProfitAndLoss = u_floatingProfitAndLoss;
+
+                UserOC[i].UserEquity = UserOC[i].AvailableCapital + UserOC[i].UsedMargin + u_floatingProfitAndLoss;
+
+                double d_riskLevelRate = Math.Round(UserOC[i].UsedMargin / UserOC[i].UserEquity*100,2);
+
+
+                UserOC[i].RiskLevel = Convert.ToString(d_riskLevelRate) + "%";
+            }
+        }
+
+
+        public void TestForCloseOut(string _userID, string _insrtumentID)    //测试是否有 平仓
+        {
+            //bool testIsBuy = !Convert.ToBoolean(_isBuy);
+
+            string testQuerySql = String.Format("SELECT * from Positions WHERE UserID='{0}' AND InstrumentID='{1}'", _userID, _insrtumentID);
+
+            DataTable testForCloseOutTable = DataControl.QueryTable(testQuerySql);
+
+            if (testForCloseOutTable.Rows.Count == 2)
+            {
+
+                string getUserSql = String.Format("SELECT * FROM User WHERE UserID='{0}'", _userID);
+
+                DataTable userDataTable = DataControl.QueryTable(getUserSql);
+
+                DataRow userDr = userDataTable.Rows[0];
+
+                double new_usedMargin = Convert.ToDouble(userDr["UsedMargin"]);
+
+                double new_availableCapital = Convert.ToDouble(userDr["AvailableCapital"]);
+
+
+
+                DataRow positionBuy =null;
+                DataRow positionSell = null;
+
+                DataRow positionTemp =  testForCloseOutTable.Rows[0];
+
+
+                DataRow nDrAll = (DataRow)DataManager.All[_insrtumentID];
+
+                int instrumentMultiplier = Convert.ToInt32(nDrAll["InstrumentMultiplier"]);
+
+                //string First = "";    //先买 还是先卖
+ 
+
+                if (Convert.ToInt32(positionTemp["IsBuy"]) == 1)
+                {
+                    positionBuy = testForCloseOutTable.Rows[0];
+                    positionSell = testForCloseOutTable.Rows[1];
+                  //  First = "买";
+                }
+                else if (Convert.ToInt32(positionTemp["IsBuy"]) == 0)
+                {
+                    positionBuy = testForCloseOutTable.Rows[1];
+                    positionSell = testForCloseOutTable.Rows[0];
+                    //First = "卖";
+                }
+
+                if (Math.Abs(Convert.ToInt32(positionBuy["TradingNum"]) )==Math.Abs( Convert.ToInt32(positionSell["TradingNum"])))
+                {
+                    double cut_marginBuy = SomeCalculate.caculateMargin(_insrtumentID, Convert.ToInt32(positionBuy["TradingNum"]), true,Convert.ToDouble(positionBuy["AveragePrice"]));
+
+                    double cut_marginSell = SomeCalculate.caculateMargin(_insrtumentID, Convert.ToInt32(positionSell["TradingNum"]), false, Convert.ToDouble(positionSell["AveragePrice"]));
+
+                    new_usedMargin -= (cut_marginBuy + cut_marginSell);
+
+                    new_availableCapital += (cut_marginBuy + cut_marginSell);
+
+                    //////平仓盈亏
+                    double old_closedProfitAndLoss = Convert.ToDouble(userDr["ClosedProfitAndLoss"]);
+
+                    DataRow firstOne = testForCloseOutTable.Rows[0];
+
+                    DataRow secondOne = testForCloseOutTable.Rows[1];
+
+                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(firstOne["AveragePrice"]) - Convert.ToDouble(secondOne["AveragePrice"])) * Convert.ToInt32(positionBuy["TradingNum"]) * instrumentMultiplier;
+
+                    string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
+                    ///////////////////
+
+                    string deleteBuySqlAndSell = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND InstrumentID='{1}'", _userID, _insrtumentID);
+
+                    DataControl.InsertOrUpdate(deleteBuySqlAndSell);
+
+                    DataControl.InsertOrUpdate(updateUserSql);
+
+                    //string deleteSellSql = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND AND InstrumentID='{1}' AND IsBuy=1", _userID, _insrtumentID);
+
+                }
+                else if (Math.Abs(Convert.ToInt32(positionBuy["TradingNum"])) > Math.Abs(Convert.ToInt32(positionSell["TradingNum"])))
+                {
+                    int buyNum = Convert.ToInt32(positionBuy["TradingNum"]);
+
+                    int sellNum = Convert.ToInt32(positionSell["TradingNum"]);
+
+                    int d_num = Math.Abs(buyNum) - Math.Abs(sellNum);
+
+                    double cut_marginBuy = SomeCalculate.caculateMargin(_insrtumentID,Math.Abs(sellNum), true, Convert.ToDouble(positionBuy["AveragePrice"]));
+
+                    double cut_marginSell = SomeCalculate.caculateMargin(_insrtumentID, sellNum, false, Convert.ToDouble(positionSell["AveragePrice"]));
+
+                    new_usedMargin -= (cut_marginBuy + cut_marginSell);
+
+                    new_availableCapital += (cut_marginBuy + cut_marginSell);
+
+
+                    double old_positionAveragePrice = Convert.ToDouble(positionBuy["PositionAveragePrice"]);
+
+                    double sellAveragePrice = Convert.ToDouble(positionSell["AveragePrice"]);
+
+                    double new_positionAveragePrice = (old_positionAveragePrice * buyNum - Math.Abs(sellNum) * sellAveragePrice) / (buyNum + (Math.Abs(sellNum)));
+
+                    //////平仓盈亏
+                    double old_closedProfitAndLoss = Convert.ToDouble(userDr["ClosedProfitAndLoss"]);
+
+                    DataRow firstOne = testForCloseOutTable.Rows[0];
+
+                    DataRow secondOne = testForCloseOutTable.Rows[1];
+
+                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(firstOne["AveragePrice"]) - Convert.ToDouble(secondOne["AveragePrice"])) * Math.Abs(sellNum) * instrumentMultiplier;
+
+                    string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
+                    ///////////////////
+
+                    
+                    string updateBuySql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=1", d_num,new_positionAveragePrice, _userID, _insrtumentID);
+
+                    string deleteSellSql = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND InstrumentID='{1}' And IsBuy=0", _userID, _insrtumentID);
+
+                    DataControl.InsertOrUpdate(updateBuySql);
+
+                    DataControl.InsertOrUpdate(deleteSellSql);
+
+                    DataControl.InsertOrUpdate(updateUserSql);
+
+                }
+                else if (Math.Abs(Convert.ToInt32(positionBuy["TradingNum"])) < Math.Abs(Convert.ToInt32(positionSell["TradingNum"])))
+                {
+                    int buyNum = Convert.ToInt32(positionBuy["TradingNum"]);
+
+                    int sellNum = Convert.ToInt32(positionSell["TradingNum"]);
+
+                    int d_num = Math.Abs(sellNum) - Math.Abs(buyNum);
+
+                    double cut_marginBuy = SomeCalculate.caculateMargin(_insrtumentID, buyNum, true, Convert.ToDouble(positionBuy["AveragePrice"]));
+
+                    double cut_marginSell = SomeCalculate.caculateMargin(_insrtumentID, -buyNum, false, Convert.ToDouble(positionSell["AveragePrice"]));
+
+                    new_usedMargin -= (cut_marginBuy + cut_marginSell);
+
+                    new_availableCapital += (cut_marginBuy + cut_marginSell);
+
+
+                    double old_positionAveragePrice = Convert.ToDouble(positionSell["PositionAveragePrice"]);
+
+                    double buyAveragePrice = Convert.ToDouble(positionBuy["AveragePrice"]);
+
+                    double new_positionAveragePrice = (old_positionAveragePrice * Math.Abs(sellNum) - buyAveragePrice * buyNum) / (Math.Abs(sellNum) - buyNum);
+
+
+                    //////平仓盈亏
+                    double old_closedProfitAndLoss = Convert.ToDouble(userDr["ClosedProfitAndLoss"]);
+
+                    DataRow firstOne = testForCloseOutTable.Rows[0];
+
+                    DataRow secondOne = testForCloseOutTable.Rows[1];
+
+                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(firstOne["AveragePrice"]) - Convert.ToDouble(secondOne["AveragePrice"])) * Math.Abs(buyNum) * instrumentMultiplier;
+
+                    string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
+                    ///////////////////
+
+
+                    string updateSellSql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=0", -d_num,new_positionAveragePrice, _userID, _insrtumentID);
+
+                    string deleteBuySql = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND InstrumentID='{1}' And IsBuy=1", _userID, _insrtumentID);
+
+                    DataControl.InsertOrUpdate(updateSellSql);
+
+                    DataControl.InsertOrUpdate(deleteBuySql);
+
+                    DataControl.InsertOrUpdate(updateUserSql);
+
+                }
+
+                string upUserSql = string.Format("UPDATE User SET UsedMargin='{0}' AND AvailableCapital='{1}' WHERE UserID='{2}'", new_usedMargin, new_availableCapital, _userID);
+
+
+
+            }
+
+        }
+
+        public void CalculateStaticFloatingProfitAndLossAndFinalBalance()
+        {
+            for (int i = 0; i < UserOC.Count(); i++)
+            {
+                double new_finalBalance = UserOC[i].AvailableCapital + UserOC[i].UsedMargin;
+
+                double staticFloatingProfitAndLoss = 0;
+
+                for(int j=0;j<UserOC[i].UserPositionsOC.Count();j++)
+                {
+                    string s_instrumentID = UserOC[i].UserPositionsOC[j].InstrumentID;
+
+                    DataRow nDr =(DataRow)DataManager.All[s_instrumentID];
+
+                    double closePrice = Convert.ToDouble(nDr["ClosePrice"]);
+
+                    double eachStaticFloating = UserOC[i].UserPositionsOC[j].AveragePrice-closePrice;
+
+                    staticFloatingProfitAndLoss += eachStaticFloating;
+                }
+
+                string updateSql = String.Format("UPDATE User SET FinalBalance='{0}',FloatingProfitAndLoss='{1}' WHERE UserID='{2}'", new_finalBalance, staticFloatingProfitAndLoss, UserOC[i].UserID);
+
+                DataControl.InsertOrUpdate(updateSql);
+            }
+        }
+
+
+
+        public void initOpeningBalance()
+        {
+            for (int i = 0; i < UserOC.Count(); i++)
+            {
+                double old_finalBalance = UserOC[i].FinalBalance;
+
+                UserOC[i].OpeningBalance = old_finalBalance;
+
+                string updateSql = String.Format("UPDATE User SET OpeningBalance='{0}' WHERE UserID='{1}'", old_finalBalance, UserOC[i].UserID);
+
+                DataControl.InsertOrUpdate(updateSql);
+            }
+        }
 
 
 

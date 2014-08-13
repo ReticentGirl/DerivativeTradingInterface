@@ -939,19 +939,23 @@ namespace qiquanui
             {
                 double old_averagePrice =Convert.ToDouble(hasRow["AveragePrice"]);
 
+                double old_positionAveragePrice = Convert.ToDouble(hasRow["PositionAveragePrice"]);
+
                 int old_tradingNum =Convert.ToInt32(hasRow["TradingNum"]);
 
                 int new_tradingNum=old_tradingNum+_tradingNum;
 
                 double new_averagePrice = (old_averagePrice * Math.Abs(old_tradingNum) + _finalPrice *Math.Abs(_tradingNum)) / Math.Abs(new_tradingNum);
 
-                string updateSql = String.Format("UPDATE Positions SET AveragePrice='{0}',TradingNum='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy='{4}'", new_averagePrice, new_tradingNum, _userID, _insrtumentID, _isBuy);
+                double new_positionAveragePrice = (old_positionAveragePrice * Math.Abs(old_tradingNum) + _finalPrice * Math.Abs(_tradingNum)) / Math.Abs(new_tradingNum);
+
+                string updateSql = String.Format("UPDATE Positions SET AveragePrice='{0}',PositionAveragePrice='{1}',TradingNum='{2}' WHERE UserID='{3}' AND InstrumentID='{4}' AND IsBuy='{5}'", new_averagePrice,new_positionAveragePrice ,new_tradingNum, _userID, _insrtumentID, _isBuy);
 
                 DataControl.InsertOrUpdate(updateSql);
             }
             else if (hasRow == null)
             {
-                string insertSql = String.Format("INSERT INTO Positions VALUES('{0}','{1}','{2}','{3}','{4}')", _userID, _insrtumentID, _finalPrice, _tradingNum, _isBuy);
+                string insertSql = String.Format("INSERT INTO Positions VALUES('{0}','{1}','{2}','{3}','{4}','{5}')", _userID, _insrtumentID, _finalPrice, _finalPrice, _tradingNum, _isBuy);
 
                 DataControl.InsertOrUpdate(insertSql);
             }
@@ -967,6 +971,8 @@ namespace qiquanui
             //h_um.GetInfoFromDBToHash();
             //h_um.GetInfoFromHashToOC();
             //h_um.GetPositionsFromDBToUserPositions();
+
+
 
             h_um.UserManagerHandleInHistory(_userID, _insrtumentID, _finalPrice, _tradingNum, _isBuy);
 
