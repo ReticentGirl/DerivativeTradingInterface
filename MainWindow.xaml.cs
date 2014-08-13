@@ -209,6 +209,7 @@ namespace qiquanui
         {
             this.WindowState = WindowState.Minimized;
         } //最小化窗口按钮
+        
         Rect rcnormal;//定义一个全局rect记录还原状态下窗口的位置和大小。
         bool isWindowMax = false;
         private void MaxButton_Click_1(object sender, RoutedEventArgs e)
@@ -1634,33 +1635,25 @@ namespace qiquanui
             
         }
 
-        private void closeOutBtn_Click(object sender, RoutedEventArgs e)   //平仓按钮
+        private void sighInBtn_Click(object sender, RoutedEventArgs e)
         {
-            ////string testsql = "INSERT INTO Positions VALUES('001109','a1409',1,2,1)";
-
-            ////string testsql2 = "UPDATE Positions SET UserID='001108' WHERE UserID='001109'";
-            //string _userID = "001108";
-            //string _insrtumentID = "a1409";
-
-            //string querySql = String.Format("SELECT * from Positions WHERE UserID='{0}' AND InstrumentID='{1}'", _userID, _insrtumentID);
-
-            //DataTable test = DataControl.QueryTable(querySql);
-
-            //string id = (string)test.Rows[0]["UserID"];
-            ////DataControl.InsertOrUpdate(testsql2);
-
-           // HistoryManager.TestHistoryToHold("001109", "a1408", 50, 1, 1);
+            SignInWindow sighInWindow = new SignInWindow();
+            sighInWindow.Show();
 
 
             //string deleteBuySqlAndSell = String.Format("DELETE FROM Positions WHERE UserID='{0}'AND InstrumentID='{1}' AND IsBuy =0", "001107","HO1408-C-1300");
 
             //DataControl.InsertOrUpdate(deleteBuySqlAndSell);
-        }
+        }//打开注册窗口
 
         private void Window_Closed_1(object sender, EventArgs e)   //窗体关闭前调用的函数
         {
             um.CalculateStaticFloatingProfitAndLossAndFinalBalance();
         }
+
+
+
+
 
 
 

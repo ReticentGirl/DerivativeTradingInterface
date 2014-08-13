@@ -2041,10 +2041,10 @@
                         <ComboBoxItem x:Name="traderComboBoxItem4" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
                         <ComboBoxItem x:Name="traderComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
                     </ComboBox>
-                    <Label x:Name="subjectMatterLabel" Content="标的商品" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="273,2,0,4" Height="23" />
+                    <Label x:Name="subjectMatterLabel" Content="标的商品" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="273,3,0,3" Height="23" />
                     <ComboBox x:Name="subjectMatterComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="327,3,0,0" SelectionChanged="subjectMatterComboBox_SelectionChanged">
                     </ComboBox>
-                    <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="448,3,0,0" Height="26" />
+                    <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="448,2,0,1" Height="26" />
                     <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="502,3,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
                     <Label x:Name="userLabel" Content="投资账户" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="601,2,0,1" Height="26" />
                     <ComboBox x:Name="userComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" SelectedIndex="0" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="655,3,0,0" />
@@ -2553,7 +2553,7 @@
 
                         <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="analyseBtn" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
-                        <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="closeOutBtn_Click"/>
+                        <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <CheckBox x:Name="optionsHDCheckBox" Content="仅显示期权交易明细" HorizontalAlignment="Left" Margin="160,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
                         <CheckBox x:Name="futuresHDCheckBox" Content="仅显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
 
@@ -2606,7 +2606,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="217" VerticalAlignment="Top" Width="914"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" Foreground="White">
+                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" Foreground="White">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userIDUMGVCH" Header=" 账户号" DisplayMemberBinding="{Binding UserID,UpdateSourceTrigger=PropertyChanged}" Width=" 100"/>
@@ -2639,7 +2639,8 @@
                             </ListView.View>
                         </ListView>
 
-                        <Button x:Name="addUserBtn" Content="添加账户" HorizontalAlignment="Right" Height="19" Margin="0,0,18,6" VerticalAlignment="Bottom" Width="82" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Style="{StaticResource darkButton}" Padding="1" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
+                        <Button x:Name="addUserBtn" Content="添加账户" HorizontalAlignment="Right" Height="21" Margin="0,0,18,4" VerticalAlignment="Bottom" Width="82" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Style="{StaticResource darkButton}" Padding="1" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
+                        <Button x:Name="sighInBtn" Content="注册账户" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="80" Margin="18,0,0,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="sighInBtn_Click"/>
 
 
                     </Grid>

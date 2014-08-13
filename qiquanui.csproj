@@ -101,6 +101,9 @@
       <DependentUpon>RiskWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="PlaceOrderManager.cs" />
+    <Compile Include="SignInWindow.xaml.cs">
+      <DependentUpon>SignInWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SomeCalculate.cs" />
     <Compile Include="Strategy.cs" />
     <Compile Include="TradingData.cs" />
@@ -131,6 +134,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RiskWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SignInWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
