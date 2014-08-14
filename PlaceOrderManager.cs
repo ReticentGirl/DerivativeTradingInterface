@@ -19,7 +19,7 @@ namespace qiquanui
         //private string callOrPut;    //看涨（0/false）看跌（1/true）
         //private string exercisePrice;  //行权价
 
-        private string tradingType;  //交易类型   0 买开  1 卖开  2买平 3卖平
+        private string tradingType;  //交易类型   0 买  1 卖
 
         private int tradingNum;   //交易手数
 
@@ -362,9 +362,9 @@ namespace qiquanui
 
                     //string tt = OrderOC[i].CallOrPut;
 
-                    if (OrderOC[i].TradingType.Equals("买开") || OrderOC[i].TradingType.Equals("买平"))     //选择买价刷新
+                    if (OrderOC[i].TradingType.Equals("买"))     //选择买价刷新
                         nMarketPrice = Math.Round((double)nDr["AskPrice1"], 1);
-                    else if (OrderOC[i].TradingType.Equals("卖开") || OrderOC[i].TradingType.Equals("卖平"))
+                    else if (OrderOC[i].TradingType.Equals("卖"))
                         nMarketPrice = Math.Round((double)nDr["BidPrice1"], 1);
 
                     OrderOC[i].MarketPrice = nMarketPrice;

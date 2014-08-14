@@ -48,6 +48,8 @@ namespace qiquanui
         }
 
 
+
+
         public void OnAdd(string _userID, string instrumentID, string _callOrPut, string _exercisePrice, double _marketPrice, bool _isBuy, bool _optionOrFuture)
         {
             TradingData add_td = new TradingData(_userID, instrumentID, _callOrPut, _exercisePrice, _marketPrice, _isBuy, _optionOrFuture);
@@ -55,6 +57,147 @@ namespace qiquanui
             TradingOC.Add(add_td);
             //TurnOver();
             //add_td.ClickButton = false;    //点击按钮之后 这个属性改为false
+
+        }
+
+
+        public void AddTrading(string _instrumentID, bool _isBuy, int _TradingNum)
+        {
+            string a_userID = pwindow.userComboBox.Text;
+
+            string a_instrumentID = _instrumentID;
+
+            DataRow aDr = (DataRow)DataManager.All[a_instrumentID];
+
+            if (Convert.ToInt32(aDr["OptionOrFuture"]) == 0)  //期权
+            {
+                string a_callOrPut = "";
+
+                if (Convert.ToInt32(aDr["CallOrPut"]) == 0)
+                {
+                    a_callOrPut = "看涨";
+                }
+                else
+                {
+                    a_callOrPut = "看跌";
+                }
+
+                double a_exercisePrice = Convert.ToDouble(aDr["ExercisePrice"]);
+
+                double a_marketPrice = 0;
+
+                if (_isBuy == true)
+                {
+                    a_marketPrice = Convert.ToDouble(aDr["AskPrice1"]);
+                }
+                else
+                {
+                    a_marketPrice = Convert.ToDouble(aDr["BidPrice1"]);
+                }
+
+                bool a_optionOrFuture = false;   //期权
+
+                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice.ToString(),a_marketPrice, _isBuy,a_optionOrFuture);
+
+                TradingOC.Add(add_td);
+
+            }
+            else
+            {
+                string a_callOrPut = "-";
+
+                string a_exercisePrice = "-";
+
+                double a_marketPrice = 0;
+                
+                if (_isBuy == true)
+                {
+                    a_marketPrice = Convert.ToDouble(aDr["AskPrice1"]);
+                }
+                else
+                {
+                    a_marketPrice = Convert.ToDouble(aDr["BidPrice1"]);
+                }
+
+                bool a_optionOrFuture = true;
+
+                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice, a_marketPrice, _isBuy, a_optionOrFuture);
+
+                TradingOC.Add(add_td);
+
+            }
+
+          
+
+            
+        }
+
+
+        public void AddTradingForCloseOut(string _userID,string _instrumentID, bool _isBuy, int _tradingNum)
+        {
+            string a_userID = _userID;
+
+            string a_instrumentID = _instrumentID;
+
+            DataRow aDr = (DataRow)DataManager.All[a_instrumentID];
+
+            if (Convert.ToInt32(aDr["OptionOrFuture"]) == 0)  //期权
+            {
+                string a_callOrPut = "";
+
+                if (Convert.ToInt32(aDr["CallOrPut"]) == 0)
+                {
+                    a_callOrPut = "看涨";
+                }
+                else
+                {
+                    a_callOrPut = "看跌";
+                }
+
+                double a_exercisePrice = Convert.ToDouble(aDr["ExercisePrice"]);
+
+                double a_marketPrice = 0;
+
+                if (_isBuy == true)
+                {
+                    a_marketPrice = Convert.ToDouble(aDr["AskPrice1"]);
+                }
+                else
+                {
+                    a_marketPrice = Convert.ToDouble(aDr["BidPrice1"]);
+                }
+
+                bool a_optionOrFuture = false;   //期权
+
+                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice.ToString(), a_marketPrice, _isBuy,_tradingNum,a_optionOrFuture);
+
+                TradingOC.Add(add_td);
+
+            }
+            else
+            {
+                string a_callOrPut = "-";
+
+                string a_exercisePrice = "-";
+
+                double a_marketPrice = 0;
+
+                if (_isBuy == true)
+                {
+                    a_marketPrice = Convert.ToDouble(aDr["AskPrice1"]);
+                }
+                else
+                {
+                    a_marketPrice = Convert.ToDouble(aDr["BidPrice1"]);
+                }
+
+                bool a_optionOrFuture = true;
+
+                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice, a_marketPrice, _isBuy, a_optionOrFuture);
+
+                TradingOC.Add(add_td);
+
+            }
 
         }
 

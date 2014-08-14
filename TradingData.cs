@@ -21,7 +21,7 @@ namespace qiquanui
         private string callOrPut;    //看涨（0/false）看跌（1/true）
         private string exercisePrice;  //行权价
 
-        private int tradingType;  //交易类型   0 买开  1 卖开  2买平 3卖平
+        private int tradingType;  //交易类型   0 买  1 卖
 
 
         private int tradingNum;   //交易手数
@@ -38,7 +38,7 @@ namespace qiquanui
 
         private bool optionOrFuture;   //期权(false)或者期货(true)
 
-        private int typeChangeCount;   //是按下的那一次导致的 买开卖开买平卖平 的变换
+        private int typeChangeCount;   //是按下的那一次导致的 买 卖 的变换
 
         private bool isEnableOfClientagePrice;    //委托价格是否可用
 
@@ -288,7 +288,7 @@ namespace qiquanui
 
               if (_isBuy == true)
               {
-                  tradingType = 0;  //初始化为买开
+                  tradingType = 0;  //初始化为买
                   tradingNum = 1;
 
               }
@@ -319,6 +319,77 @@ namespace qiquanui
               typeChangeCount = 0;
 
          }
+
+
+         public TradingData(
+                                  string _userID,
+                                  string _instrumentID,
+                                  string _callOrPut,
+                                  string _exercisePrice,
+                                  double _marketPrice,
+                                  bool _isBuy,
+                                  int _tradingNum,
+                                  bool _optionOrFuture
+                               )
+         {
+             userID = _userID;
+             instrumentID = _instrumentID;
+             callOrPut = _callOrPut;
+             exercisePrice = _exercisePrice;
+             marketPrice = _marketPrice;
+
+             clientagePrice = "-";   //将委托价默认"-"
+
+             isBuy = _isBuy;
+
+             optionOrFuture = _optionOrFuture;
+
+             ///不用到的在这里初始化
+             ///
+
+
+             isEnableOfClientagePrice = false;
+
+             ifChooseOTGVCH = true;
+
+             if (_isBuy == true)
+             {
+                 tradingType = 0;  //初始化为买
+                 tradingNum = Math.Abs(_tradingNum);
+                 //tradingNum = 10;
+
+             }
+             else
+             {
+                
+                 tradingType = 1;
+                 tradingNum = -Math.Abs(_tradingNum);
+                // tradingNum = 10;
+             }
+
+
+             if (optionOrFuture == false)    //如果是期权
+             {
+                 clientageCondition = 2;  //默认为 IOC
+
+                 aboutROD = Visibility.Collapsed;   //又因为是市价 所有 没有ROD
+
+             }
+             else    //期货默认为ROD
+             {
+                 clientageCondition = 0;
+
+                 aboutFOK = Visibility.Collapsed;    //期货没有这两个
+                 aboutIOC = Visibility.Collapsed;
+             }
+
+
+
+             typeChangeCount = 0;
+
+         }
+
+
 
          public TradingData(
                                  string _userID,

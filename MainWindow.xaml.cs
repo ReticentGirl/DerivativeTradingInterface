@@ -103,7 +103,7 @@ namespace qiquanui
 
             um = new UserManager(this);
 
-            pm = new PositionsManager(this,um);
+            pm = new PositionsManager(this, um, otm);
 
             hm = new HistoryManager(this, pm,um);
 
@@ -257,7 +257,7 @@ namespace qiquanui
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
-            int i = 0;
+          
             this.Close();
             
         }//关闭窗口按钮
@@ -767,22 +767,17 @@ namespace qiquanui
 
 
 
-                        string orderTradingType = "";  //交易类型   0 买开  1 卖开  2买平 3卖平
+                        string orderTradingType = "";  //交易类型   0 买  1 卖
 
                         switch (otd.TradingType)
                         {
                             case 0:
-                                orderTradingType = "买开";
+                                orderTradingType = "买";
                                 break;
                             case 1:
-                                orderTradingType = "卖开";
+                                orderTradingType = "卖";
                                 break;
-                            case 2:
-                                orderTradingType = "买平";
-                                break;
-                            case 3:
-                                orderTradingType = "卖平";
-                                break;
+                           
                         }
 
 
@@ -1185,7 +1180,7 @@ namespace qiquanui
 
 
 
-        private void typeOfTradingTComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)    //对买开 卖开 买平 卖平 ComboBox 写动态 0 买开  1 卖开  2买平 3卖平
+        private void typeOfTradingTComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)    //对买 卖 ComboBox 写动态 0 买  1 卖
         {
 
             for (int i = 0; i < tradingListView.Items.Count; i++)
@@ -1194,24 +1189,20 @@ namespace qiquanui
 
                 bool becomeSame = false;   //改变了之后有相同的
 
+                int old_tradingNum = otd.TradingNum;
+
                 switch (otd.TradingType)
                 {
                     case 0:
                         otd.IsBuy = true;
-                        otd.TradingNum = 1;
+                        
+                        otd.TradingNum = Math.Abs(old_tradingNum);
                         break;
                     case 1:
                         otd.IsBuy = false;
-                        otd.TradingNum = -1;
+                        otd.TradingNum = -Math.Abs(old_tradingNum);
                         break;
-                    case 2:
-                        otd.IsBuy = true;
-                        otd.TradingNum = 1;
-                        break;
-                    case 3:
-                        otd.IsBuy = false;
-                        otd.TradingNum = -1;
-                        break;
+                 
                 }
 
                 otd.TypeChangeCount += 1;
@@ -1431,7 +1422,8 @@ namespace qiquanui
 
             if (_optionOrFuture == true)   //如果是期货
             {
-                int selectedIndex = (int)dm.name_no[_buttonTag];
+
+                int selectedIndex = (int)dm.id_no[_buttonTag];
 
                 future selectedFuture = dm.ObservableOb[selectedIndex];
 
@@ -1560,7 +1552,7 @@ namespace qiquanui
 
                 double add_MarketPrice = Convert.ToDouble(add_Future.AskPrice1);
 
-                string add_userID = "123";            //先这样用着
+                string add_userID = this.userComboBox.Text;            //先这样用着
 
                 string add_instrumentID = add_Future.instrumentid;
 
@@ -1637,7 +1629,7 @@ namespace qiquanui
 
         private void sighInBtn_Click(object sender, RoutedEventArgs e)
         {
-            SignInWindow sighInWindow = new SignInWindow();
+            SignInWindow sighInWindow = new SignInWindow(um);
             sighInWindow.Show();
 
 
@@ -1650,6 +1642,13 @@ namespace qiquanui
         {
             um.CalculateStaticFloatingProfitAndLossAndFinalBalance();
         }
+
+        private void closeOutBtn_Click(object sender, RoutedEventArgs e)    //平仓按钮 
+        {
+            pm.HandleCloseOut();
+        }
+
+       
 
 
 

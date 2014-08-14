@@ -68,15 +68,15 @@
         <TextBlock x:Name="signInTB" Foreground="#FF999999" HorizontalAlignment="Left" Margin="30,10,0,0" TextWrapping="Wrap" Text="注册账户" VerticalAlignment="Top" FontWeight="Bold" />
         <!--【注册信息】帐号-->
         <TextBlock x:Name="userIDTB" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="32,46,0,0" TextWrapping="Wrap" Text="帐号：" VerticalAlignment="Top" />
-        <TextBox x:Name="setUserIDTBox" HorizontalAlignment="Left" Height="23" Margin="73,40,0,0" TextWrapping="Wrap" Text="001109" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="120"/>
+        <TextBox x:Name="setUserIDTBox" HorizontalAlignment="Left" Height="23" Margin="73,40,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" VerticalContentAlignment="Center" Width="120" LostKeyboardFocus="setUserIDTBox_LostKeyboardFocus"/>
         <TextBlock x:Name="promptSUID" HorizontalAlignment="Left" Margin="201,46,0,0" TextWrapping="Wrap" Text="至少4字元，使用英文字母或阿拉伯数字" VerticalAlignment="Top" Foreground="#FF999999" Height="16"/>
         <!--【注册信息】密码-->
         <!--输入完确认密码后自动比对，相一致则在右侧出现勾-->
         <TextBlock x:Name="passwordTB" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="32,80,0,0" TextWrapping="Wrap" Text="密码：" VerticalAlignment="Top" />
         <PasswordBox x:Name="setPasswordPBox" HorizontalAlignment="Left" Height="23" Margin="73,74,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="120"/>
         <TextBlock x:Name="checkPasswordTB" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="214,80,0,0" TextWrapping="Wrap" Text="确认密码：" VerticalAlignment="Top" />       
-        <PasswordBox x:Name="checkPasswordPBox" HorizontalAlignment="Left" Height="23" Margin="279,74,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="120"/>
-        <TextBlock x:Name="wrongTypeTB" Foreground="#FFFF0303" HorizontalAlignment="Left" Margin="73,115,0,0" TextWrapping="Wrap" Text="两次输入不一致，请重新输入密码！" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="checkPasswordPBox" HorizontalAlignment="Left" Height="23" Margin="279,74,0,0" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="120" LostKeyboardFocus="checkPasswordPBox_LostKeyboardFocus"/>
+        <TextBlock x:Name="wrongTypeTB" Foreground="#FFFF0303" HorizontalAlignment="Left" Margin="73,115,0,0" TextWrapping="Wrap"  Visibility="Hidden"  VerticalAlignment="Top"/>
 
         <!--【注册信息】用户名-->
         <TextBlock x:Name="userNameTB" Foreground="#FFF1F1F1" HorizontalAlignment="Left" Margin="20,150,0,0" TextWrapping="Wrap" Text="用户名：" VerticalAlignment="Top" />
@@ -89,7 +89,7 @@
         <TextBox x:Name="setCompanyTBox" HorizontalAlignment="Left" Height="23" Margin="73,212,0,0" TextWrapping="Wrap" VerticalAlignment="Top" VerticalContentAlignment="Center" Width="262"/>
         
         <Button x:Name="resetBtn" Content="重置" HorizontalAlignment="Left" Margin="30,259,0,0" VerticalAlignment="Top" Width="75" Click="resetBtn_Click"/>
-        <Button x:Name="okBtn" Content="确认" HorizontalAlignment="Left" Margin="337,259,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="okBtn" Content="确认" HorizontalAlignment="Left" Margin="337,259,0,0" VerticalAlignment="Top" Width="75" Click="okBtn_Click"/>
 
 
 

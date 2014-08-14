@@ -635,28 +635,36 @@ namespace qiquanui
 
                             double d_latestPrice = 0;
 
-                            if (d_isBuy == 1)   //买
-                            {
-                                d_latestPrice = Convert.ToDouble(nDr["AskPrice1"]);
-                            }
-                            else if (d_isBuy == 0)
-                            {
-                                d_latestPrice = Convert.ToDouble(nDr["BidPrice1"]);
-                            }
+
+
+                            d_latestPrice = Convert.ToDouble(nDr["LastPrice"]);
 
                             string d_dueDate = nDr["LastDate"].ToString();
 
                             int d_instrumentMultiplier = Convert.ToInt32(nDr["InstrumentMultiplier"]);
 
-                            double d_floatingProfitAndLoss = (d_latestPrice - d_averagePrice) * Math.Abs(d_tradingNum) * d_instrumentMultiplier;
+                            double d_floatingProfitAndLoss = 0;
 
-                            //double d_floatingProfitAndLossRate = (d_latestPrice - d_averagePrice) / d_averagePrice;
+                            if (d_isBuy == 1)   //买
+                            {
+                                d_floatingProfitAndLoss = (d_latestPrice - d_averagePrice) * Math.Abs(d_tradingNum) * d_instrumentMultiplier;
+                            }
+                            else if (d_isBuy == 0)  //卖
+                            {
+                                d_floatingProfitAndLoss = (d_averagePrice -d_latestPrice) * Math.Abs(d_tradingNum) * d_instrumentMultiplier;
+                            }
+
+
+
+                            d_floatingProfitAndLoss = (d_latestPrice - d_averagePrice) * Math.Abs(d_tradingNum) * d_instrumentMultiplier;
+
+
 
                             double d_floatingProfitAndLossRate = d_floatingProfitAndLoss / d_averagePrice;
 
                             double d_margin = SomeCalculate.caculateMargin(d_instrumentID, d_tradingNum, Convert.ToBoolean(d_isBuy), d_averagePrice);
 
-                            PositionsData d_pd = new PositionsData(d_userID, d_exchangeName, d_instrumentID, d_latestPrice, d_averagePrice,d_positionAveragePrice, d_tradingNum, d_buyOrSell, d_dueDate, d_floatingProfitAndLoss, d_floatingProfitAndLossRate, d_margin);
+                            PositionsData d_pd = new PositionsData(d_userID, d_exchangeName, d_instrumentID, d_latestPrice, d_averagePrice, d_positionAveragePrice, d_tradingNum, d_buyOrSell, d_dueDate, d_floatingProfitAndLoss, d_floatingProfitAndLossRate, d_margin);
 
                             UserOC[jj].UserPositionsOC.Add(d_pd);
                         }
@@ -693,25 +701,29 @@ namespace qiquanui
 
                     double r_latestPrice = 0;
 
-                    bool r_isBuy = true;
+                    r_latestPrice = Convert.ToDouble(nDr["LastPrice"]);
 
-                    if (r_upo.BuyOrSell.Equals("买"))   //买
-                    {
-                        r_latestPrice = Convert.ToDouble(nDr["AskPrice1"]);
-                        r_isBuy = true;
-                    }
-                    else if (r_upo.BuyOrSell.Equals("卖"))
-                    {
-                        r_latestPrice = Convert.ToDouble(nDr["BidPrice1"]);
-                        r_isBuy = false;
-                    }
+                    bool r_isBuy = true;
 
 
                     int r_instrumentMultiplier = Convert.ToInt32(nDr["InstrumentMultiplier"]);
 
-                    double r_floatingProfitAndLoss = (r_latestPrice - r_upo.AveragePrice) * Math.Abs(r_upo.TradingNum) * r_instrumentMultiplier;
+                    double r_floatingProfitAndLoss = 0;
 
-                    //double r_floatingProfitAndLossRate = (r_latestPrice - r_pd.AveragePrice) / r_pd.AveragePrice;
+                    if (r_upo.BuyOrSell.Equals("买"))   //买
+                    {
+                        r_floatingProfitAndLoss = (r_latestPrice - r_upo.AveragePrice) * Math.Abs(r_upo.TradingNum) * r_instrumentMultiplier;
+                        
+                        r_isBuy = true;
+                    }
+                    else if (r_upo.BuyOrSell.Equals("卖"))
+                    {
+
+                        r_floatingProfitAndLoss = (r_upo.AveragePrice-r_latestPrice) * Math.Abs(r_upo.TradingNum) * r_instrumentMultiplier;
+
+                        r_isBuy = false;
+                    }
+
 
                     double r_floatingProfitAndLossRate = r_floatingProfitAndLoss / r_upo.AveragePrice;
 
@@ -842,7 +854,7 @@ namespace qiquanui
             //h_pm.GetInfoFromDBToOC();
 
             //检测平仓
-            TestForCloseOut(_userID,_insrtumentID);
+            TestForCloseOut(_userID, _insrtumentID);
 
             GetInfoFromDBToHash();
             GetInfoFromHashToOC();
@@ -852,11 +864,11 @@ namespace qiquanui
 
         public void CalculateDynamicFloatingProfitAndLossAndUserEquityAndRiskLevel()
         {
-            
+
             for (int i = 0; i < UserOC.Count(); i++)
             {
                 double u_floatingProfitAndLoss = 0;
-              
+
 
                 for (int j = 0; j < UserOC[i].UserPositionsOC.Count(); j++)
                 {
@@ -868,7 +880,7 @@ namespace qiquanui
 
                 UserOC[i].UserEquity = UserOC[i].AvailableCapital + UserOC[i].UsedMargin + u_floatingProfitAndLoss;
 
-                double d_riskLevelRate = Math.Round(UserOC[i].UsedMargin / UserOC[i].UserEquity*100,2);
+                double d_riskLevelRate = Math.Round(UserOC[i].UsedMargin / UserOC[i].UserEquity * 100, 2);
 
 
                 UserOC[i].RiskLevel = Convert.ToString(d_riskLevelRate) + "%";
@@ -880,7 +892,7 @@ namespace qiquanui
         {
             //bool testIsBuy = !Convert.ToBoolean(_isBuy);
 
-            string testQuerySql = String.Format("SELECT * from Positions WHERE UserID='{0}' AND InstrumentID='{1}'", _userID, _insrtumentID);
+            string testQuerySql = String.Format("SELECT * from Positions WHERE UserID='{0}' AND InstrumentID='{1}' ORDER BY ID", _userID, _insrtumentID);
 
             DataTable testForCloseOutTable = DataControl.QueryTable(testQuerySql);
 
@@ -899,10 +911,10 @@ namespace qiquanui
 
 
 
-                DataRow positionBuy =null;
+                DataRow positionBuy = null;
                 DataRow positionSell = null;
 
-                DataRow positionTemp =  testForCloseOutTable.Rows[0];
+                DataRow positionTemp = testForCloseOutTable.Rows[0];
 
 
                 DataRow nDrAll = (DataRow)DataManager.All[_insrtumentID];
@@ -910,13 +922,13 @@ namespace qiquanui
                 int instrumentMultiplier = Convert.ToInt32(nDrAll["InstrumentMultiplier"]);
 
                 //string First = "";    //先买 还是先卖
- 
+
 
                 if (Convert.ToInt32(positionTemp["IsBuy"]) == 1)
                 {
                     positionBuy = testForCloseOutTable.Rows[0];
                     positionSell = testForCloseOutTable.Rows[1];
-                  //  First = "买";
+                    //  First = "买";
                 }
                 else if (Convert.ToInt32(positionTemp["IsBuy"]) == 0)
                 {
@@ -925,9 +937,9 @@ namespace qiquanui
                     //First = "卖";
                 }
 
-                if (Math.Abs(Convert.ToInt32(positionBuy["TradingNum"]) )==Math.Abs( Convert.ToInt32(positionSell["TradingNum"])))
+                if (Math.Abs(Convert.ToInt32(positionBuy["TradingNum"])) == Math.Abs(Convert.ToInt32(positionSell["TradingNum"])))
                 {
-                    double cut_marginBuy = SomeCalculate.caculateMargin(_insrtumentID, Convert.ToInt32(positionBuy["TradingNum"]), true,Convert.ToDouble(positionBuy["AveragePrice"]));
+                    double cut_marginBuy = SomeCalculate.caculateMargin(_insrtumentID, Convert.ToInt32(positionBuy["TradingNum"]), true, Convert.ToDouble(positionBuy["AveragePrice"]));
 
                     double cut_marginSell = SomeCalculate.caculateMargin(_insrtumentID, Convert.ToInt32(positionSell["TradingNum"]), false, Convert.ToDouble(positionSell["AveragePrice"]));
 
@@ -941,6 +953,7 @@ namespace qiquanui
                     DataRow firstOne = testForCloseOutTable.Rows[0];
 
                     DataRow secondOne = testForCloseOutTable.Rows[1];
+
 
                     double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(firstOne["AveragePrice"]) - Convert.ToDouble(secondOne["AveragePrice"])) * Convert.ToInt32(positionBuy["TradingNum"]) * instrumentMultiplier;
 
@@ -964,7 +977,7 @@ namespace qiquanui
 
                     int d_num = Math.Abs(buyNum) - Math.Abs(sellNum);
 
-                    double cut_marginBuy = SomeCalculate.caculateMargin(_insrtumentID,Math.Abs(sellNum), true, Convert.ToDouble(positionBuy["AveragePrice"]));
+                    double cut_marginBuy = SomeCalculate.caculateMargin(_insrtumentID, Math.Abs(sellNum), true, Convert.ToDouble(positionBuy["AveragePrice"]));
 
                     double cut_marginSell = SomeCalculate.caculateMargin(_insrtumentID, sellNum, false, Convert.ToDouble(positionSell["AveragePrice"]));
 
@@ -991,8 +1004,8 @@ namespace qiquanui
                     string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
                     ///////////////////
 
-                    
-                    string updateBuySql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=1", d_num,new_positionAveragePrice, _userID, _insrtumentID);
+
+                    string updateBuySql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=1", d_num, new_positionAveragePrice, _userID, _insrtumentID);
 
                     string deleteSellSql = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND InstrumentID='{1}' And IsBuy=0", _userID, _insrtumentID);
 
@@ -1040,7 +1053,7 @@ namespace qiquanui
                     ///////////////////
 
 
-                    string updateSellSql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=0", -d_num,new_positionAveragePrice, _userID, _insrtumentID);
+                    string updateSellSql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=0", -d_num, new_positionAveragePrice, _userID, _insrtumentID);
 
                     string deleteBuySql = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND InstrumentID='{1}' And IsBuy=1", _userID, _insrtumentID);
 
@@ -1052,8 +1065,9 @@ namespace qiquanui
 
                 }
 
-                string upUserSql = string.Format("UPDATE User SET UsedMargin='{0}' AND AvailableCapital='{1}' WHERE UserID='{2}'", new_usedMargin, new_availableCapital, _userID);
+                string upUserSql = string.Format("UPDATE User SET  UsedMargin='{0}', AvailableCapital='{1}'  WHERE UserID='{2}' ", new_usedMargin, new_availableCapital, _userID);
 
+                DataControl.InsertOrUpdate(upUserSql);
 
 
             }
@@ -1068,15 +1082,15 @@ namespace qiquanui
 
                 double staticFloatingProfitAndLoss = 0;
 
-                for(int j=0;j<UserOC[i].UserPositionsOC.Count();j++)
+                for (int j = 0; j < UserOC[i].UserPositionsOC.Count(); j++)
                 {
                     string s_instrumentID = UserOC[i].UserPositionsOC[j].InstrumentID;
 
-                    DataRow nDr =(DataRow)DataManager.All[s_instrumentID];
+                    DataRow nDr = (DataRow)DataManager.All[s_instrumentID];
 
                     double closePrice = Convert.ToDouble(nDr["ClosePrice"]);
 
-                    double eachStaticFloating = UserOC[i].UserPositionsOC[j].AveragePrice-closePrice;
+                    double eachStaticFloating = UserOC[i].UserPositionsOC[j].AveragePrice - closePrice;
 
                     staticFloatingProfitAndLoss += eachStaticFloating;
                 }

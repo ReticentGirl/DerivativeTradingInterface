@@ -143,7 +143,7 @@ namespace qiquanui
             //porder_hm = _hm;
             //porder_pom = _pom;
 
-            for (int i = 0; i < porder_pom.OrderOC.Count(); i++)
+            for (int i = porder_pom.OrderOC.Count()-1; i >=0 ; i--)
             {
 
                 PlaceOrderData pOrder = porder_pom.OrderOC[i];

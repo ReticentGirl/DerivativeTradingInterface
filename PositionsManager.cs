@@ -186,6 +186,9 @@ namespace qiquanui
         }
 
 
+
+
+
         public PositionsData(
                string _userID,
          string _exchangeName,
@@ -243,16 +246,20 @@ namespace qiquanui
 
         UserManager p_um;
 
+        TradingManager p_tm;
+
         //Hashtable positionsHash = new Hashtable(100);
 
         System.Timers.Timer positionsTimer; //刷新持仓区的计时器
 
 
-        public PositionsManager(MainWindow _pwindow, UserManager _um)
+        public PositionsManager(MainWindow _pwindow, UserManager _um,TradingManager _tm)
         {
             pWindow = _pwindow;
 
             p_um = _um;
+
+            p_tm = _tm;
 
             pWindow.holdDetailListView.ItemsSource = PositionsOC;
 
@@ -273,6 +280,17 @@ namespace qiquanui
         public void OnTimedEvent(object sender, ElapsedEventArgs e)
         {
             Refresh();
+            //for (int i = 0; i < PositionsOC.Count(); i++)
+            //{
+            //    for (int j = 0; j < p_um.UserOC.Count(); j++)
+            //    {
+            //        for (int m = 0; m < p_um.UserOC[j].UserPositionsOC.Count(); m++)
+            //        {
+            //            if (PositionsOC[i].InstrumentID == p_um.UserOC[j].UserPositionsOC[m].InstrumentID)
+            //                System.Windows.MessageBox.Show("123");
+            //        }
+            //    }
+            //}
         }
 
 
@@ -433,7 +451,23 @@ namespace qiquanui
                     }
                     else
                     {
-                        PositionsOC.Add(n_pd);
+                        // bool n_isChoose = n_pd.IsChoose;
+                        string n_userID = n_pd.UserID;
+                        string n_exchangeName = n_pd.ExchangeName;
+                        string n_instrumentID = n_pd.InstrumentID;
+                        double n_latestPrice = n_pd.LatestPrice;
+                        double n_averagePrice = n_pd.AveragePrice;
+                        double n_positionAveragePrice = n_pd.PositionAveragePrice;
+                        int n_tradingNum = n_pd.TradingNum;
+                        string n_buyOrSell = n_pd.BuyOrSell;
+                        string n_dueDate = n_pd.DueDate;
+                        double n_floatingProfitAndLoss = n_pd.FloatingProfitAndLoss;
+                        double n_floatingProfitAndLossRate = n_pd.FloatingProfitAndLossRate;
+                        double n_margin = n_pd.Margin;
+
+                        PositionsData add_pd = new PositionsData(n_userID, n_exchangeName, n_instrumentID, n_latestPrice, n_averagePrice, n_positionAveragePrice, n_tradingNum, n_buyOrSell, n_dueDate, n_floatingProfitAndLoss
+                            , n_floatingProfitAndLossRate, n_margin);
+                        PositionsOC.Add(add_pd);
                     }
 
                 }
@@ -459,24 +493,33 @@ namespace qiquanui
 
                     double r_latestPrice = 0;
 
+
+
+
+
+                    r_latestPrice = Convert.ToDouble(nDr["LastPrice"]);
+
+
+                    int r_instrumentMultiplier = Convert.ToInt32(nDr["InstrumentMultiplier"]);
+
+                    double r_floatingProfitAndLoss = 0;
+
                     bool r_isBuy = true;
 
                     if (r_pd.BuyOrSell.Equals("买"))   //买
                     {
-                        r_latestPrice = Convert.ToDouble(nDr["AskPrice1"]);
+
+                        r_floatingProfitAndLoss = (r_latestPrice - r_pd.AveragePrice) * Math.Abs(r_pd.TradingNum) * r_instrumentMultiplier;
                         r_isBuy = true;
                     }
                     else if (r_pd.BuyOrSell.Equals("卖"))
                     {
-                        r_latestPrice = Convert.ToDouble(nDr["BidPrice1"]);
+
+                        r_floatingProfitAndLoss = (r_pd.AveragePrice - r_latestPrice) * Math.Abs(r_pd.TradingNum) * r_instrumentMultiplier;
                         r_isBuy = false;
                     }
 
-                    int r_instrumentMultiplier = Convert.ToInt32(nDr["InstrumentMultiplier"]);
 
-                    double r_floatingProfitAndLoss = (r_latestPrice - r_pd.AveragePrice) * Math.Abs(r_pd.TradingNum) * r_instrumentMultiplier;
-
-                    //double r_floatingProfitAndLossRate = (r_latestPrice - r_pd.AveragePrice) / r_pd.AveragePrice;
 
                     double r_floatingProfitAndLossRate = r_floatingProfitAndLoss / r_pd.AveragePrice;
 
@@ -509,23 +552,42 @@ namespace qiquanui
         }
 
 
+        public void HandleCloseOut()   //处理平仓
+        {
+            for (int i = 0; i < PositionsOC.Count(); i++)
+            {
+                PositionsData h_pd =PositionsOC[i];
 
-        //public void GetInfoFromHashToOC()
-        //{
-        //    PositionsOC.Clear(); //先清理了
-        //    foreach (DictionaryEntry eachPosition in positionsHash)
-        //    {
-        //        string e_userID = eachPosition.Key.ToString();
+                if (h_pd.IsChoose == true)
+                {
+                    string  c_userID= h_pd.UserID;
 
-        //        DataRow nDr = (DataRow)DataManager.All[e_userID];
+                    string c_instrumentID = h_pd.InstrumentID;
 
-        //        string exchangeName = nDr["ExchangeName"].ToString();
+                    bool c_isBuy = true;
+
+                    if (h_pd.BuyOrSell.Equals("买"))
+                    {
+                        c_isBuy = false;  //与所要平仓的相反
+                    }
+                    else
+                    {
+                        c_isBuy = true;
+                    }
+
+                    int c_tradingNum = h_pd.TradingNum;
+
+                    p_tm.AddTradingForCloseOut(c_userID, c_instrumentID, c_isBuy, c_tradingNum);
+
+                    pWindow.tradingTabItem.IsSelected = true;
+                }
+
+            }
+
+        }
 
 
 
-        //    }
-
-        //}
 
     }
 }

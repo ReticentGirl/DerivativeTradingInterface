@@ -19,7 +19,7 @@ namespace qiquanui
 
         private string tradingTime;   //交易时间
 
-        private string tradingType;  //交易类型   0 买开  1 卖开  2买平 3卖平
+        private string tradingType;  //交易类型   0 买  1 卖
 
         private int postNum;  //挂单手数
 
@@ -248,10 +248,10 @@ namespace qiquanui
 
             hIfChoose = false;   //初始化为false
 
-            //交易类型   0 买开  1 卖开  2买平 3卖平
-            if (tradingType.Equals("买开") || tradingType.Equals("买平"))
+            //交易类型   0 买  1 卖
+            if (tradingType.Equals("买"))
                 isBuy = 1;
-            else if(tradingType.Equals("卖开") || tradingType.Equals("卖平"))
+            else if(tradingType.Equals("卖"))
                 isBuy = 0;
         }
 
@@ -535,7 +535,7 @@ namespace qiquanui
                 DataRow nDr = (DataRow)DataManager.All[t_instrumentID];
 
                 ///////////////////////买卖做不同处理
-                if (_hd.TradingType.Equals("买开") || _hd.TradingType.Equals("买平"))
+                if (_hd.TradingType.Equals("买"))
                 {
                     double nowAskPrice = Math.Round((double)nDr["AskPrice1"], 1);
 
@@ -635,7 +635,7 @@ namespace qiquanui
                         }
                     }
                 }
-                else if (_hd.TradingType.Equals("卖开") || _hd.TradingType.Equals("卖平"))
+                else if (_hd.TradingType.Equals("卖"))
                 {
                     double nowBidPrice = Math.Round((double)nDr["BidPrice1"], 1);
 
@@ -756,7 +756,7 @@ namespace qiquanui
                 if (_hd.ClientageType.Equals("限价"))
                 {
                     //////////////////////买卖不同 而且期货只有ROD
-                    if (_hd.TradingType.Equals("买开") || _hd.TradingType.Equals("买平"))
+                    if (_hd.TradingType.Equals("买"))
                     {
                         double nowAskPrice = Math.Round((double)nDr["AskPrice1"], 1);
 
@@ -797,7 +797,7 @@ namespace qiquanui
                         }
 
                     }
-                    else if (_hd.TradingType.Equals("卖开") || _hd.TradingType.Equals("卖平"))
+                    else if (_hd.TradingType.Equals("卖"))
                     {
                         double nowBidPrice = Math.Round((double)nDr["BidPrice1"], 1);
 
@@ -838,7 +838,7 @@ namespace qiquanui
                 }
                 else if (_hd.ClientageType.Equals("市价"))
                 {
-                    if (_hd.TradingType.Equals("买开") || _hd.TradingType.Equals("买平"))
+                    if (_hd.TradingType.Equals("买"))
                     {
                         double nowAskPrice = Math.Round((double)nDr["AskPrice1"], 1);
 
@@ -870,7 +870,7 @@ namespace qiquanui
 
 
                     }
-                    else if (_hd.TradingType.Equals("卖开") || _hd.TradingType.Equals("卖平"))
+                    else if (_hd.TradingType.Equals("卖"))
                     {
                         double nowBidPrice = Math.Round((double)nDr["BidPrice1"], 1);
 
@@ -955,7 +955,8 @@ namespace qiquanui
             }
             else if (hasRow == null)
             {
-                string insertSql = String.Format("INSERT INTO Positions VALUES('{0}','{1}','{2}','{3}','{4}','{5}')", _userID, _insrtumentID, _finalPrice, _finalPrice, _tradingNum, _isBuy);
+                string insertSql = String.Format("INSERT INTO Positions (UserID,InstrumentID,AveragePrice,PositionAveragePrice,TradingNum,IsBuy) VALUES('{0}','{1}','{2}','{3}','{4}','{5}')"
+                    , _userID, _insrtumentID, _finalPrice, _finalPrice, _tradingNum, _isBuy);
 
                 DataControl.InsertOrUpdate(insertSql);
             }

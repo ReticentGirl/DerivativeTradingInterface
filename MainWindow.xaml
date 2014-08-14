@@ -2067,14 +2067,14 @@
                             <GridViewColumn x:Name="askPriceFMGVCH" Header="卖价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="askFMBtn" Content="{Binding AskPrice1}" Tag="{Binding InstrumentName}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource marketListViewButtom}" Click="askFMBtn_Click" Foreground="White"/>
+                                        <Button x:Name="askFMBtn" Content="{Binding AskPrice1}" Tag="{Binding InstrumentID}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource marketListViewButtom}" Click="askFMBtn_Click" Foreground="White"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
                             <GridViewColumn x:Name="bidPriceFMGVCH" Header="买价" Width=" 100">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button x:Name="bidFMBtn" Content="{Binding BidPrice1}"  Tag="{Binding InstrumentName}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource marketListViewButtom}" Foreground="White" Click="bidFMBtn_Click" />
+                                        <Button x:Name="bidFMBtn" Content="{Binding BidPrice1}"  Tag="{Binding InstrumentID}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource marketListViewButtom}" Foreground="White" Click="bidFMBtn_Click" />
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -2443,10 +2443,9 @@
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate>
                                                 <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="White" SelectionChanged="typeOfTradingTComboBox_SelectionChanged">
-                                                    <ComboBoxItem Content="买开" HorizontalContentAlignment="Left" Width="70"/>
-                                                    <ComboBoxItem Content="卖开" HorizontalContentAlignment="Left" Width="70"/>
-                                                    <ComboBoxItem Content="买平" HorizontalContentAlignment="Left" Width="70"/>
-                                                    <ComboBoxItem Content="卖平" HorizontalContentAlignment="Left" Width="70"/>
+                                                    <ComboBoxItem Content="买" HorizontalContentAlignment="Left" Width="70"/>
+                                                    <ComboBoxItem Content="卖" HorizontalContentAlignment="Left" Width="70"/>
+                                                   
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -2515,7 +2514,7 @@
                         <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
                         <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
                         <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click"/>
-                        <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
+                        <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="addSubjectMatter_Click"/>
                     </Grid>
                 </TabItem>
 
@@ -2553,7 +2552,7 @@
 
                         <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="analyseBtn" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
-                        <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
+                        <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="closeOutBtn_Click"/>
                         <CheckBox x:Name="optionsHDCheckBox" Content="仅显示期权交易明细" HorizontalAlignment="Left" Margin="160,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
                         <CheckBox x:Name="futuresHDCheckBox" Content="仅显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
 
@@ -2579,7 +2578,7 @@
                                     <GridViewColumn x:Name="nameHGVCH" Header="衍生品名称" DisplayMemberBinding="{Binding InstrumentID,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="timeHGVCH" Header="交易时间" DisplayMemberBinding="{Binding TradingTime, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="typeHGVCH" Header="交易类型" DisplayMemberBinding="{Binding TradingType, UpdateSourceTrigger=PropertyChanged}" Width="60"/>
-                                    <!-- 卖开卖平买开买平-->
+                                    <!-- 买卖-->
                                     <GridViewColumn x:Name="lotOfPendingHGVCH" Header=" 挂单手数" DisplayMemberBinding="{Binding PostNum, UpdateSourceTrigger=PropertyChanged}" Width="60"/>
                                     <GridViewColumn x:Name="lotOfTransactionHGVCH" Header=" 成交手数" DisplayMemberBinding="{Binding DoneNum, UpdateSourceTrigger=PropertyChanged}" Width=" 60"/>
                                     <GridViewColumn x:Name="statusOfTransactionHGVCH" Header=" 成交状态" DisplayMemberBinding="{Binding TradingState, UpdateSourceTrigger=PropertyChanged}" Width="60"/>
