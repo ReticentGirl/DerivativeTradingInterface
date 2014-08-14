@@ -193,7 +193,7 @@ namespace qiquanui
 
                 bool a_optionOrFuture = true;
 
-                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice, a_marketPrice, _isBuy, a_optionOrFuture);
+                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice, a_marketPrice, _isBuy, _tradingNum, a_optionOrFuture);
 
                 TradingOC.Add(add_td);
 

@@ -519,13 +519,28 @@ namespace qiquanui
                         r_isBuy = false;
                     }
 
-
-
-                    double r_floatingProfitAndLossRate = r_floatingProfitAndLoss / r_pd.AveragePrice;
-
                     double r_margin = SomeCalculate.caculateMargin(r_pd.InstrumentID, r_pd.TradingNum, r_isBuy, r_pd.AveragePrice);
 
+                    double r_royalty = SomeCalculate.caculateRoyalty(r_pd.InstrumentID, r_pd.TradingNum, r_isBuy, r_pd.AveragePrice);
 
+
+                    double r_floatingProfitAndLossRate = 0;
+
+                    if (Convert.ToInt32(nDr["OptionOrFuture"]) == 1)  //期货
+                    {
+                        r_floatingProfitAndLossRate = r_floatingProfitAndLoss / r_margin;
+                    }
+                    else    //期权
+                    {
+                        if (r_isBuy == true)
+                        {
+                            r_floatingProfitAndLossRate = r_floatingProfitAndLoss / r_royalty;
+                        }
+                        else
+                        {
+                            r_floatingProfitAndLossRate = r_floatingProfitAndLoss / (r_margin - Math.Abs(r_royalty));
+                        }
+                    }
 
                     PositionsOC[i].LatestPrice = r_latestPrice;
                     PositionsOC[i].FloatingProfitAndLoss = Math.Round(r_floatingProfitAndLoss, 2);

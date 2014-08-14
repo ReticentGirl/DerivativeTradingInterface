@@ -51,7 +51,7 @@ namespace qiquanui
             {
                 this.DragMove();
             }
-            else if (isWindowMax == true) ;
+            else if (isWindowMax == true);
 
         }//窗口移动
 

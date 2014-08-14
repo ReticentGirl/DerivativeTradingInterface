@@ -251,7 +251,7 @@ namespace qiquanui
             //交易类型   0 买  1 卖
             if (tradingType.Equals("买"))
                 isBuy = 1;
-            else if(tradingType.Equals("卖"))
+            else if (tradingType.Equals("卖"))
                 isBuy = 0;
         }
 
@@ -292,7 +292,7 @@ namespace qiquanui
         System.Timers.Timer historyTimer; //刷新历史记录的计时器
 
 
-        public HistoryManager(MainWindow _pwindow, PositionsManager _pm,UserManager _um)
+        public HistoryManager(MainWindow _pwindow, PositionsManager _pm, UserManager _um)
         {
             pwindow = _pwindow;
 
@@ -483,7 +483,7 @@ namespace qiquanui
                     _hd.TradingState = ALLDONE;
                     _hd.DonePrice = _hd.PostPrice;
 
-                    HistoryToHold(_hd.UserID,_hd.InstrumentID,_hd.DonePrice,_hd.DoneNum,_hd.IsBuy);
+                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);
                 }
                 else if (_hd.ClientageCondition.Equals("IOC"))
                 {
@@ -553,19 +553,25 @@ namespace qiquanui
                             }
                             else
                             {
+                                historyTimer.Stop();
+
                                 double rpRate = Math.Abs(rd.NextDouble() - 0.5);
                                 int t_num = (int)(_hd.PostNum * rpRate);    //买 Num为正
+                                int old_DoneNum = _hd.DoneNum;
                                 _hd.DoneNum += t_num;
                                 _hd.DonePrice = nowAskPrice;
                                 _hd.TradingState = POST;
 
                                 if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
                                 {
+                                    t_num = Math.Abs(_hd.PostNum)-old_DoneNum;
                                     _hd.DoneNum = _hd.PostNum;
                                     _hd.TradingState = ALLDONE;
                                 }
 
-                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice,t_num, _hd.IsBuy);   //加入持仓区
+
+                                historyTimer.Start();
                             }
 
 
@@ -610,16 +616,16 @@ namespace qiquanui
                                     }
                                     else
                                     {
-                                        
+
                                         double ipRate3 = 1 - (Math.Abs(rd.NextDouble() - 0.5));
-                                     
+
                                         _hd.DoneNum = (int)(_hd.PostNum * ipRate3);
                                         _hd.DonePrice = nowAskPrice;
                                         _hd.TradingState = SOMEDONE;
 
                                         HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                     }
-                                  
+
                                 }
                                 else           //全成
                                 {
@@ -653,19 +659,24 @@ namespace qiquanui
                             }
                             else
                             {
+                                historyTimer.Stop();
                                 double rpRate = Math.Abs(rd.NextDouble() - 0.5);
                                 int t_num = (int)(_hd.PostNum * rpRate);       //卖 Num为负
+                                int old_Num = _hd.DoneNum;
                                 _hd.DoneNum += t_num;                         //加上一个负数
                                 _hd.DonePrice = nowBidPrice;
                                 _hd.TradingState = POST;
 
                                 if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))     //两个都是负数
                                 {
+                                    t_num = -(Math.Abs(_hd.PostNum) - Math.Abs(old_Num));
                                     _hd.DoneNum = _hd.PostNum;
                                     _hd.TradingState = ALLDONE;
                                 }
 
-                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, t_num, _hd.IsBuy);   //加入持仓区
+
+                                historyTimer.Start();
                             }
 
 
@@ -712,7 +723,7 @@ namespace qiquanui
                                     else
                                     {
 
-                                        
+
                                         double ipRate3 = 1 - (Math.Abs(rd.NextDouble() - 0.5)); //让取值不会是1
                                         _hd.DoneNum = (int)(_hd.PostNum * ipRate3);
                                         _hd.DonePrice = nowBidPrice;
@@ -720,7 +731,7 @@ namespace qiquanui
 
                                         HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                     }
-                                   
+
                                 }
                                 else           //全成
                                 {
@@ -774,20 +785,25 @@ namespace qiquanui
                                 }
                                 else
                                 {
+                                    historyTimer.Stop();
                                     double rpRate = Math.Abs(rd.NextDouble() - 0.5);
                                     int t_num = (int)(_hd.PostNum * rpRate);    //买 Num为正
+                                    int old_DoneNum = _hd.DoneNum;
                                     _hd.DoneNum += t_num;
                                     _hd.DonePrice = nowAskPrice;
                                     _hd.TradingState = POST;
 
                                     if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
                                     {
+                                        t_num = Math.Abs(_hd.PostNum) - old_DoneNum;
+
                                         _hd.DoneNum = _hd.PostNum;
                                         _hd.TradingState = ALLDONE;
 
-
-                                        HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
                                     }
+                                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, t_num, _hd.IsBuy);   //加入持仓区
+                                    historyTimer.Start();
+
                                 }
 
 
@@ -816,19 +832,23 @@ namespace qiquanui
                                 }
                                 else
                                 {
+                                    historyTimer.Stop();
                                     double rpRate = Math.Abs(rd.NextDouble() - 0.5);
                                     int t_num = (int)(_hd.PostNum * rpRate);       //卖 Num为负
+                                    int old_DoneNum = _hd.DoneNum;
                                     _hd.DoneNum += t_num;                         //加上一个负数
                                     _hd.DonePrice = nowBidPrice;
                                     _hd.TradingState = POST;
 
                                     if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))     //两个都是负数
                                     {
+                                        t_num = -(Math.Abs(_hd.PostNum) - Math.Abs(old_DoneNum));
                                         _hd.DoneNum = _hd.PostNum;
                                         _hd.TradingState = ALLDONE;
                                     }
 
-                                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
+                                    HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, t_num, _hd.IsBuy);   //加入持仓区
+                                    historyTimer.Start();
                                 }
 
 
@@ -852,20 +872,24 @@ namespace qiquanui
                         }
                         else
                         {
+                            historyTimer.Stop();
                             double fbRate = Math.Abs(rd.NextDouble() - 0.5);
                             int t_num = (int)(_hd.PostNum * fbRate);
+                            int old_DoneNum = _hd.DoneNum;
                             _hd.DoneNum += t_num;
                             _hd.DonePrice = nowAskPrice;
                             _hd.TradingState = POST;
 
                             if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
                             {
+                                t_num = Math.Abs(_hd.PostNum) - Math.Abs(old_DoneNum);
                                 _hd.DoneNum = _hd.PostNum;
                                 _hd.TradingState = ALLDONE;
                             }
 
-                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
+                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, t_num, _hd.IsBuy);   //加入持仓区
 
+                            historyTimer.Start();
                         }
 
 
@@ -884,19 +908,27 @@ namespace qiquanui
                         }
                         else
                         {
+                            historyTimer.Stop();
+
                             double fsRate = Math.Abs(rd.NextDouble() - 0.5);
                             int t_num = (int)(_hd.PostNum * fsRate);
+                            int old_DoneNum = _hd.DoneNum;
                             _hd.DoneNum += t_num;
                             _hd.DonePrice = nowBidPrice;
                             _hd.TradingState = POST;
 
                             if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
                             {
+                                t_num = -(Math.Abs(_hd.PostNum) - Math.Abs(old_DoneNum));
                                 _hd.DoneNum = _hd.PostNum;
                                 _hd.TradingState = ALLDONE;
                             }
 
-                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, _hd.DoneNum, _hd.IsBuy);   //加入持仓区
+                           
+
+                            HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, t_num, _hd.IsBuy);   //加入持仓区
+
+                            historyTimer.Start();
 
                         }
 
@@ -916,40 +948,40 @@ namespace qiquanui
         //{
 
         //}
-        public void HistoryToHold(string _userID,string _insrtumentID,double _finalPrice,int _tradingNum,int _isBuy)   //提交到持仓区
+        public void HistoryToHold(string _userID, string _insrtumentID, double _finalPrice, int _tradingNum, int _isBuy)   //提交到持仓区
         {
 
-            string querySql = String.Format("SELECT * from Positions WHERE UserID='{0}' AND InstrumentID='{1}' AND IsBuy='{2}'",_userID,_insrtumentID,_isBuy);
+            string querySql = String.Format("SELECT * from Positions WHERE UserID='{0}' AND InstrumentID='{1}' AND IsBuy='{2}'", _userID, _insrtumentID, _isBuy);
 
             DataTable testForNull = null;
 
             testForNull = DataControl.QueryTable(querySql);
 
-            DataRow hasRow =null;
+            DataRow hasRow = null;
 
-            if (testForNull.Rows.Count>0)
+            if (testForNull.Rows.Count > 0)
             {
                 hasRow = testForNull.Rows[0];
             }
 
-    
-          
+
+
 
             if (hasRow != null)   //说明原来就已经买过这个东西了
             {
-                double old_averagePrice =Convert.ToDouble(hasRow["AveragePrice"]);
+                double old_averagePrice = Convert.ToDouble(hasRow["AveragePrice"]);
 
                 double old_positionAveragePrice = Convert.ToDouble(hasRow["PositionAveragePrice"]);
 
-                int old_tradingNum =Convert.ToInt32(hasRow["TradingNum"]);
+                int old_tradingNum = Convert.ToInt32(hasRow["TradingNum"]);
 
-                int new_tradingNum=old_tradingNum+_tradingNum;
+                int new_tradingNum = old_tradingNum + _tradingNum;
 
-                double new_averagePrice = (old_averagePrice * Math.Abs(old_tradingNum) + _finalPrice *Math.Abs(_tradingNum)) / Math.Abs(new_tradingNum);
+                double new_averagePrice = (old_averagePrice * Math.Abs(old_tradingNum) + _finalPrice * Math.Abs(_tradingNum)) / Math.Abs(new_tradingNum);
 
                 double new_positionAveragePrice = (old_positionAveragePrice * Math.Abs(old_tradingNum) + _finalPrice * Math.Abs(_tradingNum)) / Math.Abs(new_tradingNum);
 
-                string updateSql = String.Format("UPDATE Positions SET AveragePrice='{0}',PositionAveragePrice='{1}',TradingNum='{2}' WHERE UserID='{3}' AND InstrumentID='{4}' AND IsBuy='{5}'", new_averagePrice,new_positionAveragePrice ,new_tradingNum, _userID, _insrtumentID, _isBuy);
+                string updateSql = String.Format("UPDATE Positions SET AveragePrice='{0}',PositionAveragePrice='{1}',TradingNum='{2}' WHERE UserID='{3}' AND InstrumentID='{4}' AND IsBuy='{5}'", new_averagePrice, new_positionAveragePrice, new_tradingNum, _userID, _insrtumentID, _isBuy);
 
                 DataControl.InsertOrUpdate(updateSql);
             }
