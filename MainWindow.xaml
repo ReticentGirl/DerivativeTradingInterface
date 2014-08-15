@@ -2480,8 +2480,8 @@
                                             <DataTemplate>
                                                 <ComboBox x:Name="conditionTComboBox" SelectedIndex="{Binding ClientageCondition,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="White">
                                                     <ComboBoxItem x:Name="comboBoxItem1" Content=" ROD" Visibility="{Binding AboutROD,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Width=" 80"/>
-                                                    <ComboBoxItem Content=" FOK" HorizontalAlignment="Left" Width=" 80"/>
-                                                    <ComboBoxItem Content=" IOC" HorizontalAlignment="Left" Width=" 80"/>
+                                                    <ComboBoxItem Content=" FOK" Visibility="{Binding AboutFOK,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width=" 80"/>
+                                                    <ComboBoxItem Content=" IOC" Visibility="{Binding AboutIOC,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Width=" 80"/>
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
