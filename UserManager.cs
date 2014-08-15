@@ -499,7 +499,7 @@ namespace qiquanui
 
                 double e_finalBalance = Convert.ToDouble(userDr["FinalBalance"]);
 
-                double e_closedProfitAndLoss = Convert.ToDouble(userDr["ClosedProfitAndLoss"]);
+                double e_closedProfitAndLoss = Math.Round(Convert.ToDouble(userDr["ClosedProfitAndLoss"]),2);
 
                 double e_floatingProfitAndLoss = Convert.ToDouble(userDr["FloatingProfitAndLoss"]);
 
@@ -945,7 +945,7 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-                    new_availableCapital += (cut_marginBuy + cut_marginSell);
+                    
 
                     //////平仓盈亏
                     double old_closedProfitAndLoss = Convert.ToDouble(userDr["ClosedProfitAndLoss"]);
@@ -959,6 +959,9 @@ namespace qiquanui
 
                     string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
                     ///////////////////
+
+                    new_availableCapital += (cut_marginBuy + cut_marginSell) + (new_closedProfitAndLoss - old_closedProfitAndLoss);
+
 
                     string deleteBuySqlAndSell = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND InstrumentID='{1}'", _userID, _insrtumentID);
 
@@ -983,7 +986,7 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-                    new_availableCapital += (cut_marginBuy + cut_marginSell);
+                  
 
 
                     double old_positionAveragePrice = Convert.ToDouble(positionBuy["PositionAveragePrice"]);
@@ -1004,6 +1007,8 @@ namespace qiquanui
                     string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
                     ///////////////////
 
+
+                    new_availableCapital += (cut_marginBuy + cut_marginSell) + (new_closedProfitAndLoss - old_closedProfitAndLoss);
 
                     string updateBuySql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=1", d_num, new_positionAveragePrice, _userID, _insrtumentID);
 
@@ -1030,7 +1035,7 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-                    new_availableCapital += (cut_marginBuy + cut_marginSell);
+                   
 
 
                     double old_positionAveragePrice = Convert.ToDouble(positionSell["PositionAveragePrice"]);
@@ -1052,6 +1057,8 @@ namespace qiquanui
                     string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
                     ///////////////////
 
+
+                    new_availableCapital += (cut_marginBuy + cut_marginSell) + (new_closedProfitAndLoss - old_closedProfitAndLoss);
 
                     string updateSellSql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=0", -d_num, new_positionAveragePrice, _userID, _insrtumentID);
 
