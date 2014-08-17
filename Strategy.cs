@@ -17,6 +17,11 @@ namespace qiquanui
         // public double x { get; set; }
         // public double y { get; set; }
 
+        public XY()
+        { 
+        
+        }
+
         public XY(double _x, double _y)
         {
             x = _x;
@@ -100,14 +105,17 @@ namespace qiquanui
         //存概率点
         public ObservableCollection<YKProba> probability;
         public double ykmax;
-        public double multiplier = 1;
+        public double multiplier = 100;
         public YKType yktype;
         public string ykname;
+        public string ykgroupname;
+        public int ykstep;
+        public string title;
         //有 TotLine+1 行，最后一行 0/1 分别为期货的涨/跌
         public int[,] number;
         public int TotLine;
         public int LeftEdge, RightEdge, LeftCompute, RightCompute;
-        public double EarnRate, LoseRate, MaxEarn, MaxLose, ExpectEarn;
+        public double EarnRate, LoseRate, MaxEarn, MaxLose, ExpectEarn,Price;
         public double EDGE = 0.2;
 
         /// <summary>
@@ -116,15 +124,25 @@ namespace qiquanui
         /// <param name="totline">相当于行权价的行数</param>
         /// <param name="max">最大涨跌幅/波幅</param>
         /// <param name="type">是四种中的哪种盈亏图</param>
-        public YK(int totline, int[,] num)
+        public YK(int totline, int[,] num, string _name, string _group, double _max)
         {
             TotLine = totline;
             number = num;
+            ykname = _name;
+            ykgroupname = _group;
+            ykmax = _max;
             ykoption = YKManager.ykOption;
             ykfuture = YKManager.ykFuture;
-            ykmax = 0.2;//!
+
             LeftCompute = (int)(ykfuture[0].LastPrice * (1 - ykmax));
-            RightCompute = (int)(ykfuture[1].LastPrice * (1 + ykmax));
+            RightCompute = (int)(ykfuture[0].LastPrice * (1 + ykmax));
+            //LeftEdge = (int)((ykoption[0,0].ExercisePrice)*0.9);
+            //RightEdge = (int)((ykoption[ykoption.GetUpperBound(0)-1,0].ExercisePrice)*1.1);
+            double t=0.02;
+            LeftEdge = (int)(LeftCompute * (1-t));
+            RightEdge = (int)(RightCompute * (1 + t));
+            ykstep = (RightEdge - LeftEdge) / 1000;
+            if (ykstep == 0) ykstep = 1;
         }
 
         /// <summary>
@@ -209,41 +227,32 @@ namespace qiquanui
                 return;
             }
             points = new ObservableCollection<XY>();
-            points2 = new ObservableCollection<XY>();
-            points3 = new ObservableCollection<XY>();
+            //points2 = new ObservableCollection<XY>();
+            //points3 = new ObservableCollection<XY>();
             probability = new ObservableCollection<YKProba>();
 
-            ///计算盈亏图的折点
-            for (int i = 0; i <= ykoption.GetUpperBound(0); i++)
-                for (int j = 0; j < 4; j++)
-                    if (number[i, j] > 0)
-                    {
-                        int x = ykoption[i, j].ExercisePrice;
-                        double y = ComputePoint(x);
-                        points.Add(new XY(x, y));
-                        points2.Add(new XY(x, y));
-                        points3.Add(new XY(x, y));
-                        break;
-                    }
 
-            AddEdge((int)(LeftCompute * (1 - EDGE)), (int)(RightCompute * (1 + EDGE)), points2);
-
-            ///计算概率相关
+            
             MaxEarn = 0;
             EarnRate = 0;
             MaxLose = 0;
             LoseRate = 0;
             ExpectEarn = 0;
-            int EarnCount = 0, LoseCount = 0, ProbaCount = 0, TotCount = 0;
+            double EarnCount = 0, LoseCount = 0, ProbaCount = 0, TotCount = 0;
             double k;
-            for (int i = LeftCompute; i <= RightCompute; i++)
+            XY last=null,now;
+
+            for (int i = LeftEdge; i <= RightEdge; i+=ykstep)
             {
                 k = ComputePoint(i);
+                now = new XY((int)i, k);
+                points.Add(now);
 
-                if (YKManager.History[i] != null)
+                if (i >= LeftCompute && i <= RightCompute)
                 {
+                    ///如果在计算范围内才进行概率与收益相关计算
 
-                    int count = (int)YKManager.History[i];
+                    double count = StrategyWindow.ComputeZT((int)i,ykfuture[0].LastPrice,ykmax);
                     TotCount += count;
                     if (k > 0)
                     {
@@ -258,24 +267,26 @@ namespace qiquanui
                             MaxLose = -k;
                     }
 
-                    ExpectEarn += k * (double)count;
+                        ExpectEarn += k * (double)count;
 
-                    ProbaCount += count;
+                        ProbaCount += count;
 
+
+                    if (last!=null && (k == 0 || last.Y*now.Y<0))
+                    {
+                        YKProba p = new YKProba();
+                        if (last.Y > 0) p.positive = true;
+                        else if (last.Y < 0) p.positive = false;
+                        if (last.Y != 0)
+                        {
+                            p.x = (int)i;
+                            p.percent = ProbaCount;
+                            probability.Add(p);
+                            ProbaCount = 0;
+                        }
+                    }
+                    last = now;
                 }
-
-                if (k == 0)
-                {
-                    YKProba p = new YKProba();
-                    if (ComputePoint(i - 1) > 0) p.positive = true;
-                    else if (ComputePoint(i - 1) < 0) p.positive = false;
-                    else continue;
-                    p.x = i;
-                    p.percent = ProbaCount;
-                    probability.Add(p);
-                    ProbaCount = 0;
-                }
-
             }
 
 
@@ -292,9 +303,26 @@ namespace qiquanui
             _p.percent = ProbaCount;
             probability.Add(_p);
             for (int i = 0; i < probability.Count; i++)
+            if (i==0||i==probability.Count-1)
             {
-                probability[i].percent = Math.Round(probability[i].percent / TotCount * 100, 1);
+                probability[i].percent = Math.Round(probability[i].percent / TotCount * 0.95 +2.5, 1);
             }
+            else 
+            probability[i].percent = Math.Round(probability[i].percent / TotCount * 0.95 , 1);
+
+            //price
+            Price=0;
+            for (int i = 0; i <= ykoption.GetUpperBound(0); i++)
+                for (int j = 0; j < 4; j++)
+                    if (number[i, j] > 0)
+                    {
+                        if (j == (int)OptionType.CallBuy || j == (int)OptionType.PutBuy)
+                        Price += number[i, j] * ykoption[i, j].AskPrice;
+                        else 
+                        Price -= number[i,j] * ykoption[i,j].BidPrice;
+                    }
+            Price += number[TotLine, 0] * ykfuture[0].LastPrice;
+            Price -= number[TotLine, 0] * ykfuture[1].LastPrice;
         }
 
         //double leftx = ykfuture[0].LastPrice * (1 - ykmax);
@@ -334,15 +362,15 @@ namespace qiquanui
         public void Run()
         {
             YKManager ykm = new YKManager();
-            int tot = ykm.Initial("中金所", "沪深300", "1409", 2);
+            int tot = ykm.Initial("中金所", "沪深300", "1409");
             for (int i = 0; i < 4; i++)
             {
                 int[,] x = new int[tot + 1, 4];
                 x[0, 0] = i;
                 x[1, 1] = 4 - i;
-                YK temp = new YK(tot, x);
-                temp.ComputeYK();
-                ykm.yk[0, i] = temp;
+                //YK temp = new YK(tot, x,"单买");
+                //temp.ComputeYK();
+                //ykm.yk[0, i] = temp;
             }
             ykm.ComputeYKs(0);
         }
@@ -371,12 +399,11 @@ namespace qiquanui
         /// <param name="type"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public int Initial(string trader, string subject, string duedate, int count)
+        public int Initial(string trader, string subject, string duedate)
         {
             yk = new YK[2, 4];
 
             //得到行权价列表
-            Count = count;
             string optionname = Subject2Option(subject);
             string exercisesql = "select instrumentid,exerciseprice from staticdata where instrumentname='" + optionname + "' and duedate='" + duedate + "' order by exerciseprice,callorput ";
             DataTable list = DataControl.QueryTable(exercisesql);
@@ -393,26 +420,24 @@ namespace qiquanui
 
                 string id = (string)list.Rows[j * 2]["InstrumentID"];
                 DataRow dr = (DataRow)DataManager.All[id];
-                for (int i = 0; i < count; i++)
-                {
-                    YKCell cell = new YKCell();
-                    cell.AskPrice = (double)Math.Round((double)dr["AskPrice1"], 1);
-                    cell.BidPrice = (double)Math.Round((double)dr["BidPrice1"], 1);
-                    cell.ExercisePrice = (int)x;
-                    ykOption[j, 0] = cell;
-                    ykOption[j, 1] = cell;
-                }
+
+                YKCell cell = new YKCell();
+                cell.AskPrice = (double)Math.Round((double)dr["AskPrice1"], 1);
+                cell.BidPrice = (double)Math.Round((double)dr["BidPrice1"], 1);
+                cell.ExercisePrice = (int)x;
+                ykOption[j, 0] = cell;
+                ykOption[j, 1] = cell;
+                
+
                 id = (string)list.Rows[j * 2 + 1]["InstrumentID"];
                 dr = (DataRow)DataManager.All[id];
-                for (int i = 0; i < count; i++)
-                {
-                    YKCell cell = new YKCell();
-                    cell.AskPrice = Math.Round((double)dr["AskPrice1"], 1);
-                    cell.BidPrice = Math.Round((double)dr["BidPrice1"], 1);
-                    cell.ExercisePrice = (int)x;
-                    ykOption[j, 2] = cell;
-                    ykOption[j, 3] = cell;
-                }
+
+                cell = new YKCell();
+                cell.AskPrice = Math.Round((double)dr["AskPrice1"], 1);
+                cell.BidPrice = Math.Round((double)dr["BidPrice1"], 1);
+                cell.ExercisePrice = (int)x;
+                ykOption[j, 2] = cell;
+                ykOption[j, 3] = cell;
 
             }
 
@@ -423,11 +448,8 @@ namespace qiquanui
             string id2 = (string)list.Rows[0]["InstrumentID"];
             DataRow dr2 = (DataRow)DataManager.All[id2];
             double lastprice = Math.Round((double)dr2["LastPrice"], 1);
-            for (int i = 0; i < count; i++)
-            {
-                ykFuture[0].LastPrice = lastprice;
-                ykFuture[1].LastPrice = lastprice;
-            }
+            ykFuture[0].LastPrice = lastprice;
+            ykFuture[1].LastPrice = lastprice;
 
 
             //填充历史概率

@@ -999,7 +999,7 @@ namespace qiquanui
         
         
 
-
+        ////TopComboBox
         #region 顶端各选单逻辑
         /// <summary>
         /// 顶端各选单逻辑 CREATED BY IVES DING
@@ -1104,6 +1104,11 @@ namespace qiquanui
 
             string trader = _trader;
             subjectMatterComboBox.Items.Clear();
+            if (trader.Equals("上交所"))
+            {
+                dueDateComboBox.Items.Clear();
+                return;
+            }
             if (trader.Equals("上期所"))
             {
                 subjectMatterComboBox.Items.Add("金");
@@ -1166,6 +1171,7 @@ namespace qiquanui
                 traderComboBox.Items.Add("中金所");
                 traderComboBox.Items.Add("上期所");
                 traderComboBox.Items.Add("郑商所");
+                traderComboBox.Items.Add("上交所");
                 traderComboBox.SelectedIndex = 0;
                 type_change(type, "中金所");
 
@@ -1626,6 +1632,12 @@ namespace qiquanui
             }
             
         }
+
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            startStrategyBtn_Click(sender,e);
+        }
+
 
         private void sighInBtn_Click(object sender, RoutedEventArgs e)
         {

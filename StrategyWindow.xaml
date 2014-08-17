@@ -10,7 +10,7 @@
         
         SizeChanged="Window_SizeChanged"
         Closing="Window_Closing"
-        Title="StrategyWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF0F0D0D" Foreground="#FFA89B9B" BorderThickness="7" AllowsTransparency="True" Opacity="0.95" Left="100" Top="20" ResizeMode="CanResizeWithGrip" MinWidth="1200" MinHeight="700.5">
+        Title="StrategyWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF0F0D0D" Foreground="#FFA89B9B" BorderThickness="7" AllowsTransparency="True" Opacity="0.95" Left="100" Top="20" ResizeMode="CanResizeWithGrip" MinWidth="1200" MinHeight="700.5" Loaded="Window_Loaded_1">
 
 
 
@@ -1271,14 +1271,14 @@
         </Button>
         <!--设置区-->
         <Label x:Name="traderInStrategyPanelLabel" Content="交易商：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" RenderTransformOrigin="0.522,0.52" Background="{x:Null}" FlowDirection="LeftToRight" Margin="315,11,0,0" />
-        <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="369,13,0,0" >
+        <ComboBox x:Name="optionsTraderInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="369,13,0,0" SelectionChanged="optionsTraderInStrategyPanelComboBox_SelectionChanged" >
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem1" Content=" 上期所" HorizontalAlignment="Left" Width="80"/>
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem2" Content=" 中金所" HorizontalAlignment="Left" Width="80"/>
             <ComboBoxItem x:Name="optionsTraderInStrategyPanelComboBoxItem3" Content=" 郑商所" HorizontalAlignment="Left" Width="80"/>
 
         </ComboBox>
         <Label x:Name="nameInStrategyPanelLabel" Content="标的商品：" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FFF3EBE9" Background="{x:Null}" FlowDirection="LeftToRight" Margin="465,11,0,0" />
-        <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="529,13,0,0" >
+        <ComboBox x:Name="nameInStrategyPanelComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="#FF9198AC" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="529,13,0,0" SelectionChanged="nameInStrategyPanelComboBox_SelectionChanged" >
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="Transparent" Offset="0"/>
@@ -1290,69 +1290,16 @@
         <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="689,13,0,0" />
 
 
-        <!--概率图-->
-        <Canvas HorizontalAlignment="Right" Height="228" Margin="0,182,896,0" VerticalAlignment="Top" Width="280" Background="#FF0F0D0D" Grid.Row="1">
-            <am:LineChart x:Name="probabilityChart" Width="250" Height="200"
-					Background="#FF0F0D0D" PlotAreaBackground="#FF0F0D0D" Foreground="#FF0F0D0D"
-					PlotAreaMargin="0,21,0,0" PlotAreaBorderBrush="#FF0F0D0D"
-                      
-					BorderBrush="#FF0F0D0D" BorderThickness="1" 
-					IndicatorStroke="#880D8ECF" IndicatorBalloonForeground="Black"
-                    IsIndicatorEnabled="True"
-                    BalloonsEnabled="True"
-                      
-					ZoomOutButtonForeground="#FFFFFFFF" ZoomOutButtonHoverForeground="#FFFF0F00" 
-					ZoomOutButtonMargin="0,90,75,0" ContentMargin="0" RenderTransformOrigin="0.5,0.5">
-                <am:LineChart.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="0.23"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </am:LineChart.RenderTransform>
-                <!--图例-->
-                <am:LineChart.Legend>
-                    <am:Legend HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
-							IsGraphTogglingEnabled="True" ValuesEnabled="True" />
-                </am:LineChart.Legend>
-
-                <am:LineChart.LeftValueAxis>
-                    <am:ValueAxis StrokeThickness="0" />
-                </am:LineChart.LeftValueAxis>
-
-                <am:LineChart.CategoryAxis>
-                    <am:CategoryAxis StrokeThickness="0" />
-                </am:LineChart.CategoryAxis>
-
-                <am:LineChart.LeftValueAxisGrid>
-                    <am:ValueGrid Stroke="#08FFFFFF" />
-                </am:LineChart.LeftValueAxisGrid>
-
-                <am:LineChart.CategoryAxisGrid>
-                    <am:CategoryGrid Stroke="#08FFFFFF" />
-                </am:LineChart.CategoryAxisGrid>
-                <am:LineChart.Content >
-                    <Grid Width="640" Height="420">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                    </Grid>
-                </am:LineChart.Content>
-                <am:LineChart.Graphs >
-                    <am:LineChartGraph Name="VolatilityGraph" Height="72" Width="237" Brush="White" AreaFillOpacity="0.5" BulletType="None" IsFilled="True" AreaFill="Blue"  />
-                </am:LineChart.Graphs>
-            </am:LineChart>
-            <TextBlock TextWrapping="Wrap" Height="28" Width="136" Background="#FF0F0D0D" Canvas.Left="2" Canvas.Top="2"/>
-        </Canvas>
-        <TabControl HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="911" Height="212" Grid.Row="1" Margin="137,0,137,10">
-            <TabItem Header="特定情景收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+        <TabControl Name="ResultTab" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="1034" Height="212" Grid.Row="2" Margin="92,0,60,10">
+            <TabItem Header="特定情景收益">
                 <Grid Background="#FF221715" Margin="-3,-2,-3,-4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="groupListView" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,0,0,38">
+                    <ListView x:Name="groupListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="61,0,7,38" SelectionChanged="groupListView_SelectionChanged">
+
+                   
+
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenGGVCH" Header="" Width="50">
@@ -1362,24 +1309,24 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn x:Name="nameGGVCH" Header="策略名称" Width="80"/>
-                                <GridViewColumn x:Name="expectedRevenueGGVCH" Header="收益期望" Width="80"/>
-                                <GridViewColumn x:Name="lotGGVCH" Header="份数" Width="60">
+                                <GridViewColumn x:Name="expectedRevenueGGVCH" DisplayMemberBinding="{Binding ExpectEarn}" Header="收益期望" Width="80"/>
+                                <GridViewColumn x:Name="nameGGVCH" DisplayMemberBinding="{Binding Name}" Header="组合名称" Width="80"/>
+                                <GridViewColumn x:Name="lotGGVCH"  Header="份数" Width="60">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <local:NumericUpAndDownUserControl x:Name="lotGNUAD" Width="Auto" HorizontalAlignment="Center" Value="{Binding TradingNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="White" />
+                                            <local:NumericUpAndDownUserControl x:Name="lotGNUAD" Width="Auto" HorizontalAlignment="Center" Value="{Binding Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="White" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn x:Name="priceGGVCH" Header="价格" Width="80"/>
-                                <GridViewColumn x:Name="marginGGVCH" Header="保证金" Width="80"/>
-                                <GridViewColumn x:Name="serviceGGVCH" Header="手续费" Width="80"/>
+                                <GridViewColumn x:Name="priceGGVCH" DisplayMemberBinding="{Binding Price}" Header="价格" Width="80"/>
+                                <GridViewColumn x:Name="marginGGVCH" DisplayMemberBinding="{Binding Guarantee}" Header="保证金" Width="80"/>
+                                <GridViewColumn x:Name="serviceGGVCH" DisplayMemberBinding="{Binding Fee}" Header="手续费" Width="80"/>
                                 <!--只有卖才有-->
-                                <GridViewColumn x:Name="maxGainGGVCH" Header="最大收益" Width="80"/>
-                                <GridViewColumn x:Name="rateOfGainGGVCH" Header="收益概率" Width="80"/>
-                                <GridViewColumn x:Name="maxLossGGVCH" Header="最大损失" Width="80"/>
-                                <GridViewColumn x:Name="rateOfLossGGVCH" Header="损失概率" Width="80"/>
-                                <GridViewColumn x:Name="varGGVCH" Header="VaR" Width="60"/>
+                                <GridViewColumn x:Name="maxGainGGVCH" DisplayMemberBinding="{Binding MaxEarn}" Header="最大收益" Width="80"/>
+                                <GridViewColumn x:Name="rateOfGainGGVCH" DisplayMemberBinding="{Binding EarnRate}" Header="收益概率" Width="80"/>
+                                <GridViewColumn x:Name="maxLossGGVCH" DisplayMemberBinding="{Binding MaxLose}" Header="最大损失" Width="80"/>
+                                <GridViewColumn x:Name="rateOfLossGGVCH" DisplayMemberBinding="{Binding LoseRate}" Header="损失概率" Width="80"/>
+                                <GridViewColumn x:Name="varGGVCH" DisplayMemberBinding="{Binding VaR}" Header="VaR" Width="60"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -1394,7 +1341,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="strategyListView" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,0,0,38">
+                    <ListView x:Name="strategyListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="0,0,0,33" SelectionChanged="strategyListView_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenSGVCH" Header="" Width="50">
@@ -1404,24 +1351,25 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn x:Name="nameSGVCH" Header="策略名称" Width="80"/>
-                                <GridViewColumn x:Name="expectedRevenueSGVCH" Header="收益期望" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="nameOfStrategySGVCH" Header="策略名称" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ExpectEarn}" x:Name="expectedRevenueSGVCH" Header="收益期望" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding GroupName}" x:Name="nameSGVCH" Header="组合名称" Width="80"/>
                                 <GridViewColumn x:Name="lotSGVCH" Header="份数" Width="60">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <local:NumericUpAndDownUserControl x:Name="lotGNUAD" Width="Auto" HorizontalAlignment="Center" Value="{Binding TradingNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="White" />
+                                            <local:NumericUpAndDownUserControl x:Name="lotGNUAD" Width="Auto" HorizontalAlignment="Center" Value="{Binding Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="White" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn x:Name="priceSGVCH" Header="价格" Width="80"/>
-                                <GridViewColumn x:Name="marginSGVCH" Header="保证金" Width="80"/>
-                                <GridViewColumn x:Name="serviceSGVCH" Header="手续费" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Price}" x:Name="priceSGVCH" Header="价格" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Guarantee}" x:Name="marginSGVCH" Header="保证金" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Fee}" x:Name="serviceSGVCH" Header="手续费" Width="80"/>
                                 <!--只有卖才有-->
-                                <GridViewColumn x:Name="maxGainSGVCH" Header="最大收益" Width="80"/>
-                                <GridViewColumn x:Name="rateOfGainSGVCH" Header="收益概率" Width="80"/>
-                                <GridViewColumn x:Name="maxLossSGVCH" Header="最大损失" Width="80"/>
-                                <GridViewColumn x:Name="rateOfLossSGVCH" Header="损失概率" Width="80"/>
-                                <GridViewColumn x:Name="varSGVCH" Header="VaR" Width="60"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding MaxEarn}" x:Name="maxGainSGVCH" Header="最大收益" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding EarnRate}" x:Name="rateOfGainSGVCH" Header="收益概率" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding MaxLose}" x:Name="maxLossSGVCH" Header="最大损失" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding LoseRate}" x:Name="rateOfLossSGVCH" Header="损失概率" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding VaR}" x:Name="varSGVCH" Header="VaR" Width="60"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -1433,8 +1381,108 @@
             </TabItem>
         </TabControl>
 
-        <!--盈亏图-->
-        <Canvas HorizontalAlignment="Right" Height="228" Margin="0,0,906,420" VerticalAlignment="Bottom" Width="280" Background="#FF0F0D0D" Grid.Row="1"/>
+        <!--概率图&盈亏图-->
+        <Canvas HorizontalAlignment="Right" Height="400" Margin="0,0,835,238" VerticalAlignment="Bottom" Width="300" Background="#FF0F0D0D" Grid.Row="1">
+
+            <am:LineChart x:Name="VolatilityChart" Width="256" Height="180" Foreground="LightGray"
+                      
+					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" BalloonForeground="#FFF1A667" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Background="Transparent" Canvas.Left="25" Canvas.Top="13">
+
+                    <am:LineChart.Content >
+                        <Grid Width="640" Height="420">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </am:LineChart.Content>
+                    <am:LineChartGraph x:Name="VolatilityGraph" AreaFillOpacity="1" AreaFill="Red" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="72" IsFilled="True" Width="237"/>
+                    <am:LineChartGraph x:Name="VolatilityGraph2" AreaFillOpacity="1" AreaFill="Green" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Height="72" IsFilled="True" Width="237" Brush="#00D7D7EE"/>
+                    <am:LineChart.CategoryAxis>
+                        <am:CategoryAxis StrokeThickness="0"/>
+                    </am:LineChart.CategoryAxis>
+                    <am:LineChart.CategoryAxisGrid>
+                        <am:CategoryGrid Stroke="#08FFFFFF"/>
+                    </am:LineChart.CategoryAxisGrid>
+                    <am:LineChart.LeftValueAxisGrid>
+                        <am:ValueGrid Stroke="#08FFFFFF"/>
+                    </am:LineChart.LeftValueAxisGrid>
+                    <am:LineChart.LeftValueAxis>
+                        <am:ValueAxis StrokeThickness="0"/>
+                    </am:LineChart.LeftValueAxis>
+                </am:LineChart>
+
+            <am:LineChart x:Name="VolatilityChart2" Width="256" Height="180"
+					Background="Transparent" Foreground="#FFECECEC"
+                      
+					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="209" Canvas.Left="25" BalloonForeground="#FFF1A667" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2">
+
+                <am:LineChart.Content >
+                    <Grid Width="640" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </am:LineChart.Content>
+                <am:LineChart.CategoryAxis>
+                    <am:CategoryAxis StrokeThickness="0"/>
+                </am:LineChart.CategoryAxis>
+                <am:LineChart.CategoryAxisGrid>
+                    <am:CategoryGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.CategoryAxisGrid>
+                <am:LineChart.LeftValueAxisGrid>
+                    <am:ValueGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.LeftValueAxisGrid>
+                <am:LineChart.LeftValueAxis>
+                    <am:ValueAxis StrokeThickness="0"/>
+                </am:LineChart.LeftValueAxis>
+                <am:LineChartGraph x:Name="VolatilityGraph3" AreaFillOpacity="1" AreaFill="#FFCF6C50" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="72" IsFilled="True" Width="237"/>
+                <am:LineChartGraph x:Name="VolatilityGraph4" AreaFillOpacity="1" AreaFill="#FF68AC2F" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
+            </am:LineChart>
+            <Label Content="Label" Canvas.Left="25" Canvas.Top="12" Width="130" Background="#FF0F0D0D" Foreground="#00000000"/>
+            <Label Content="Label" Canvas.Top="209" Width="130" Background="#FF0F0D0D" Foreground="#00000000" Canvas.Left="25"/>
+
+
+
+        </Canvas>
+
+        <!--盈亏对比图-->
+        <Canvas HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="#FF0F0D0D" Grid.Row="1" Grid.RowSpan="2" Height="238" Margin="0,0,51,400" Width="303">
+
+            <am:LineChart x:Name="VolatilityChart3" Width="300" Height="200" Foreground="LightGray"
+                      
+        		BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" Canvas.Top="10" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2">
+
+                <am:LineChart.Content >
+                    <Grid Width="640" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </am:LineChart.Content>
+                <am:LineChart.CategoryAxis>
+                    <am:CategoryAxis StrokeThickness="0"/>
+                </am:LineChart.CategoryAxis>
+                <am:LineChart.CategoryAxisGrid>
+                    <am:CategoryGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.CategoryAxisGrid>
+                <am:LineChart.LeftValueAxisGrid>
+                    <am:ValueGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.LeftValueAxisGrid>
+                <am:LineChart.LeftValueAxis>
+                    <am:ValueAxis StrokeThickness="0"/>
+                </am:LineChart.LeftValueAxis>
+                <am:LineChartGraph x:Name="VolatilityGraphTemp1" AreaFillOpacity="1" AreaFill="Red" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="72" IsFilled="True" Width="237"/>
+                <am:LineChartGraph x:Name="VolatilityGraphTemp2" AreaFillOpacity="1" AreaFill="Green" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Height="72" IsFilled="True" Width="237" Brush="#00D7D7EE"/>
+
+            </am:LineChart>
+            <Label Content="Label" Canvas.Left="2" Canvas.Top="11" Width="130" Background="#FF0F0D0D" Foreground="#00000000"/>
+            <Label x:Name="LegendMask" Content="Label" Canvas.Left="81" Canvas.Top="185" Width="130" Background="#FF0F0D0D" Foreground="#00000000"/>
+
+
+        </Canvas>
 
         <Border x:Name="Border1" BorderBrush="#FFC35B04" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.RowSpan="3" >
             <Border.RenderTransform>
@@ -1627,7 +1675,7 @@
         <!--上涨-->
         <!--【上涨】特定策略-->
         <Canvas x:Name="buyAndUpCanvas" HorizontalAlignment="Left" Height="25" Margin="416,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="94" Background="#FFF98A2D">
-            <Button x:Name="buyAndUpBtn" Content="单买看涨" Height="25" Width="94" Background="{x:Null}" BorderBrush="{x:Null}"/>
+            <Button x:Name="buyAndUpBtn" Content="单买看涨" Height="25" Width="94" Background="{x:Null}" BorderBrush="{x:Null}" Click="buyAndUpBtn_Click"/>
         </Canvas>
         <Canvas x:Name="bullSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="448,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" Background="#FFF98A2D">
             <Button x:Name="bullSpreadBtn" Content="牛市差价" Height="25" Width="100" Background="{x:Null}" BorderBrush="{x:Null}"/>

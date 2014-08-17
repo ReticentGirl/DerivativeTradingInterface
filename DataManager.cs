@@ -598,7 +598,7 @@ namespace qiquanui
 
             if (box_type.Equals("期权"))
             {
-                new Test().Run();
+                //new Test().Run();
 
                 Hide();
 
