@@ -508,42 +508,6 @@ namespace qiquanui
             strategyListView.DataContext = cloc;
         }
 
-        private YK[] ComputeBuyAndUp(int Tot)
-        {
-            YK[] ans = new YK[Tot];
-
-            double _max;
-            string x = setMaxRateOfGrothTBox.Text;
-            if (x == null) _max = 0.3;
-            _max = Double.Parse(x.Trim()) / 100;
-
-            for (int i = 0; i < TotLine; i++)
-            {
-                int[,] _num = new int[TotLine + 1, 4];
-                _num[i, (int)OptionType.CallBuy] = 1;
-                YK yk = new YK(TotLine, _num, "单买看涨", "上涨", _max);
-                yk.ComputeYK();
-
-
-                for (int k = 0; k < Tot; k++)
-                    if (ans[k] == null)
-                    {
-                        ans[k] = yk;
-                        break;
-                    }
-                    else
-                        if (yk.ExpectEarn > ans[k].ExpectEarn)
-                        {
-                            for (int j = Tot - 1; j > k; j--)
-                                ans[j] = ans[j - 1];
-                            ans[k] = yk;
-                            break;
-                        }
-
-            }
-
-            return ans;
-        }
 
 
         private void RefreshTSPrice(TopStrategy ts)
@@ -591,6 +555,45 @@ namespace qiquanui
 
         }
 
+
+        private YK[] ComputeBuyAndUp(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max;
+            string x = setMaxRateOfGrothTBox.Text;
+            if (x == null) _max = 0.3;
+            _max = Double.Parse(x.Trim()) / 100;
+
+            for (int i = 0; i < TotLine; i++)
+            {
+                int[,] _num = new int[TotLine + 1, 4];
+                _num[i, (int)OptionType.CallBuy] = 1;
+                YK yk = new YK(TotLine, _num, "单买看涨", "上涨", _max);
+                yk.ComputeYK();
+
+
+                for (int k = 0; k < Tot; k++)
+                    if (ans[k] == null)
+                    {
+                        ans[k] = yk;
+                        break;
+                    }
+                    else
+                        if (yk.ExpectEarn > ans[k].ExpectEarn)
+                        {
+                            for (int j = Tot - 1; j > k; j--)
+                                ans[j] = ans[j - 1];
+                            ans[k] = yk;
+                            break;
+                        }
+
+            }
+
+            return ans;
+        }
+
+
         private void buyAndUpBtn_Click(object sender, RoutedEventArgs e)
         {
             if (Lock)
@@ -621,7 +624,11 @@ namespace qiquanui
 
         public static double ComputeZT(int x, double lastprice,double ykmax)
         {
-            double u = lastprice, o = ykmax * 100;
+            double u = lastprice, _o = ykmax * 100,o=_o;
+            if (u >= 1000) o = 3 * _o;
+            if (u >= 5000) o = 5 * _o;
+            if (u >= 10000) o = 7 * _o;
+            if (u >= 30000) o = 10 * _o;
             return 1.0 / (Math.Sqrt(2 * Math.PI) * o) * Math.Exp(-Math.Pow((x - u), 2) / (2 * (Math.Pow(o, 2))));
         }
 
@@ -636,6 +643,7 @@ namespace qiquanui
             YK yk = ykm.yk[which, no];
             int left = yk.LeftEdge, right = yk.RightEdge;
             double lastprice = yk.ykfuture[0].LastPrice;
+
 
             int now = 0;
             bool positive = yk.probability[0].positive;
@@ -744,6 +752,25 @@ namespace qiquanui
                 test.SeriesIDMemberPath = "X";
                 test.ValueMemberPath = "Y";
                 test.Title = yk.title;
+                test.LineThickness = 2;
+                ///[Style]
+                switch (i)
+                { 
+                    case 0:
+                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+                        break;
+                    case 1:
+                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
+                        break;
+                    case 2:
+                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
+                        break;
+                    case 3:
+                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
+                        break;
+
+                }
+
                 VolatilityChart3.Graphs.Add(test);
 
             }
