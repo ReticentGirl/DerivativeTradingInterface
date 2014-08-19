@@ -1290,13 +1290,13 @@
         <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="689,13,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
 
 
-        <TabControl x:Name="ResultTab" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="1034" Height="212" Grid.Row="2" Margin="92,0,60,10">
-            <TabItem Header="特定情景收益">
+        <TabControl x:Name="ResultTab" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="911" Height="212" Grid.Row="2" Margin="137,0,137,10">
+            <TabItem Header="特定情景收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                 <Grid Background="#FF221715" Margin="-3,-2,-3,-4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="groupListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="61,0,7,38" SelectionChanged="groupListView_SelectionChanged">
+                    <ListView x:Name="groupListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,0,0,38" SelectionChanged="groupListView_SelectionChanged">
 
 
 
@@ -1309,9 +1309,9 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
+                                <GridViewColumn x:Name="nameGGVCH"  DisplayMemberBinding="{Binding Name}" Header="组合名称" Width="80"/>
                                 <GridViewColumn x:Name="expectedRevenueGGVCH" DisplayMemberBinding="{Binding ExpectEarn}" Header="收益期望" Width="80"/>
-                                <GridViewColumn x:Name="nameGGVCH" DisplayMemberBinding="{Binding Name}" Header="组合名称" Width="80"/>
-                                <GridViewColumn x:Name="lotGGVCH"  Header="份数" Width="60">
+                                <GridViewColumn x:Name="lotGGVCH" Header="份数" Width="60">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <local:NumericUpAndDownUserControl x:Name="lotGNUAD" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Value="{Binding Number, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -1337,13 +1337,13 @@
                 </Grid>
             </TabItem>
             <TabItem Header="特定策略收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                <Grid Background="#FF221715" Margin="-3,-2,-3,-4">
+                <Grid Background="#FF221715" Margin="-3,-2,-5,-4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <!--这个保留我的版本 DQC-->
-                    <ListView x:Name="strategyListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="0,0,0,33" SelectionChanged="strategyListView_SelectionChanged">
+                    <ListView x:Name="strategyListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,0,0,33" SelectionChanged="strategyListView_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenSGVCH" Header="" Width="50">
@@ -1377,7 +1377,7 @@
                     </ListView>
 
                     <CheckBox x:Name="chooseAllSCheckBox" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,8,0,0"/>
-                    <Button x:Name="placeOrderSButton" Content="一键下单" Margin="0,0,10,5" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
+                    <Button x:Name="placeOrderSButton" Content="一键下单" Margin="0,0,25,10" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
 
                 </Grid>
             </TabItem>
@@ -1498,30 +1498,14 @@
 
         <!--低波动率-->
         <!--【低波动率】特定策略-->
-        <Canvas x:Name="topWideCanvas" HorizontalAlignment="Left" Height="25" Margin="689,165,0,0" Grid.Row="1" VerticalAlignment="Top" Width="81" Background="#FFF98A2D" RenderTransformOrigin="0.5,0.5">
-            <Canvas.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-17.627"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Canvas.RenderTransform>
-            <Button x:Name="topWideBtn" Content="顶部宽跨"  Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5"/>
+        <Canvas x:Name="topWideCanvas" Background="#FFF98A2D" Grid.Row="1" Height="25" HorizontalAlignment="Left" Margin="695,200,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="0">
+            <Button x:Name="topWideBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="topWideBtn_Click" Content="顶部宽跨" Height="25" RenderTransformOrigin="0.5,0.5" Width="0"/>
         </Canvas>
-        <Canvas x:Name="topCrossCanvas" HorizontalAlignment="Left" Height="25" Margin="698,194,0,0" Grid.Row="1" VerticalAlignment="Top" Width="83" Background="#FFF98A2D" RenderTransformOrigin="0.5,0.5">
-            <Canvas.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-17.627"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Canvas.RenderTransform>
-            <Button x:Name="topCrossBtn" Content="顶部跨式" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}" RenderTransformOrigin="0.5,0.5" Canvas.Left="-1"/>
+        <Canvas x:Name="topCrossCanvas" Background="#FFF98A2D" Grid.Row="1" Height="25" HorizontalAlignment="Left" Margin="709,242,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="0">
+            <Button x:Name="topCrossBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="topCrossBtn_Click" Content="顶部跨式" Height="25" RenderTransformOrigin="0.5,0.5" Width="0"/>
         </Canvas>
 
-        <Polygon x:Name="lowVolatilityPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="472,173,528,331" RenderTransformOrigin="0.5,0.5">
+        <Polygon x:Name="lowVolatilityPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="472,173,528,331" RenderTransformOrigin="0.5,0.5">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1532,13 +1516,14 @@
             </Polygon.RenderTransform>
         </Polygon>
         <!--【低波动率】设定参数-->
-        <Canvas x:Name="lowVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="604,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Background="#FFFF7400">
-            <TextBlock x:Name="miniRateOfVolatiTB" Text="最小波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="1" Foreground="Black"/>
-            <TextBox x:Name="setMiniRateOfVolatiTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="61" Canvas.Top="7" Foreground="Black" Width="44"/>
+        <Canvas x:Name="lowVolatilityCanvas" Background="#FFFF7400" Grid.Row="1" HorizontalAlignment="Left" Height="30" Margin="604,246,0,0" VerticalAlignment="Top" Width="106">
+            <TextBlock x:Name="miniRateOfVolatiTB" Text="最小波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="1" Foreground="Black" Width="59"/>
+            <TextBox x:Name="setMiniRateOfVolatiTBox" Canvas.Left="60" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="0.96" VerticalAlignment="Center" Width="35"/>
+            <TextBlock x:Name="percentLVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="96" Foreground="Black"/>
         </Canvas>
-        <Button x:Name="lowVolatilityBtn" Content="低波动率" HorizontalAlignment="Left" Margin="640,198,0,0" Grid.Row="1" VerticalAlignment="Top" Width="52" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <Button x:Name="lowVolatilityBtn" Background="#FFF26A05" BorderBrush="{x:Null}" Click="lowVolatilityBtn_Click" Content="低波动率" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="640,198,0,0" VerticalAlignment="Top" Width="52"/>
         <!--【低波动率】打开面板-->
-        <Polygon x:Name="openLowVolatilityPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="472,173,528,331" RenderTransformOrigin="0.5,0.5">
+        <Polygon x:Name="openLowVolatilityPoly" Fill="#FF333337" Grid.Row="1" Margin="472,173,528,331" MouseLeftButtonDown="openLowVolatilityPoly_MouseLeftButtonDown" Points="0,0,185,0,92.5,127.315" RenderTransformOrigin="0.5,0.5" Stroke="#FF333337">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1552,30 +1537,14 @@
 
         <!--高波动率-->
         <!--【高波动率】特定策略-->
-        <Canvas x:Name="bottomWideCanvas" HorizontalAlignment="Left" Height="26" Margin="390,164,0,0" Grid.Row="1" VerticalAlignment="Top" Width="83" Background="#FFF98A2D" RenderTransformOrigin="0.5,0.5">
-            <Canvas.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="17.627"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Canvas.RenderTransform>
-            <Button x:Name="bottomWideBtn" Content="底部宽跨"  Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Canvas x:Name="bottomWideCanvas" Background="#FFF98A2D" Grid.Row="1" HorizontalAlignment="Left" Height="25" Margin="468,200,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="0">
+            <Button x:Name="bottomWideBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bottomWideBtn_Click" Content="底部宽跨"  Height="25" Width="0"/>
         </Canvas>
-        <Canvas x:Name="bottomCrossCanvas" HorizontalAlignment="Left" Height="25" Margin="380,194,0,0" Grid.Row="1" VerticalAlignment="Top" Width="83" Background="#FFF98A2D" RenderTransformOrigin="0.5,0.5">
-            <Canvas.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="17.627"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Canvas.RenderTransform>
-            <Button x:Name="bottomCrossBtn" Content="底部跨式" Height="25" Width="81" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Canvas x:Name="bottomCrossCanvas" Background="#FFF98A2D" Grid.Row="1" HorizontalAlignment="Left" Height="25" Margin="454,242,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="0">
+            <Button x:Name="bottomCrossBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bottomCrossBtn_Click" Content="底部跨式" Height="25" Width="0"/>
         </Canvas>
 
-        <Polygon x:Name="highVolatilityPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="499,275,501,229" RenderTransformOrigin="0.5,0.5">
+        <Polygon x:Name="highVolatilityPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="499,275,501,229" RenderTransformOrigin="0.5,0.5">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1586,13 +1555,14 @@
             </Polygon.RenderTransform>
         </Polygon>
         <!--【高波动率】设定参数-->
-        <Canvas x:Name="highVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="451,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
-            <TextBlock x:Name="maxRateOfVolatiTB" Text="最大波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
-            <TextBox x:Name="setMaxRateOfVolatiTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
+        <Canvas x:Name="highVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="452,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Background="#FFFF7400">
+            <TextBlock x:Name="maxRateOfVolatiTB" Text="最大波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Foreground="Black" Width="57"/>
+            <TextBox x:Name="setMaxRateOfVolatiTBox" Canvas.Left="57" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="0.96" VerticalAlignment="Center" Width="35"/>
+            <TextBlock x:Name="percentHVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="93" Foreground="Black"/>
         </Canvas>
-        <Button x:Name="highVolatilityBtn" Content="高波动率" HorizontalAlignment="Left" Margin="470,198,0,0" Grid.Row="1" VerticalAlignment="Top" Width="53" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <Button x:Name="highVolatilityBtn" Background="#FFF26A05" BorderBrush="{x:Null}" Click="highVolatilityBtn_Click" Content="高波动率" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="470,198,0,0" VerticalAlignment="Top" Width="53"/>
         <!--【高波动率】打开面板-->
-        <Polygon x:Name="openHighVolatilityPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="499,275,501,229" RenderTransformOrigin="0.5,0.5">
+        <Polygon x:Name="openHighVolatilityPoly" Fill="#FF333337" Grid.Row="1" Margin="499,275,501,229" MouseLeftButtonDown="openHighVolatilityPoly_MouseLeftButtonDown"  Points="0,0,185,0,92.5,127.315" RenderTransformOrigin="0.5,0.5" Stroke="#FF333337">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1605,12 +1575,12 @@
 
         <!--无风险套利-->
         <!--【无风险套利】特定策略-->
-        <Ellipse x:Name="conversionArbitrageEllipse" Fill="#FFF6852B" HorizontalAlignment="Left" Height="47" Margin="470,84,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46"/>
-        <Ellipse x:Name="multiSubjectMatterEllipse" Fill="#FFF6852B" HorizontalAlignment="Left" Height="47" Margin="524,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46"/>
-        <Ellipse x:Name="boxArbitrageEllipse" Fill="#FFF6852B" HorizontalAlignment="Left" Height="47" Margin="589,55,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46"/>
-        <Ellipse x:Name="convexityArbitrageEllipse" Fill="#FFF6852B" HorizontalAlignment="Left" Height="47" Margin="642,84,0,0" Grid.Row="1" VerticalAlignment="Top" Width="46"/>
+        <Ellipse x:Name="conversionArbitrageEllipse" Fill="#FFF6852B" Grid.Row="1" Height="0" HorizontalAlignment="Left" Margin="470,84,0,0" MouseLeftButtonDown="conversionArbitrageEllipse_MouseLeftButtonDown" VerticalAlignment="Top" Visibility="Collapsed" Width="0"/>
+        <Ellipse x:Name="multiSubjectMatterEllipse" Fill="#FFF6852B" Grid.Row="1" Height="0" HorizontalAlignment="Left" Margin="524,55,0,0" MouseLeftButtonDown="multiSubjectMatterEllipse_MouseLeftButtonDown" VerticalAlignment="Top" Visibility="Collapsed" Width="0"/>
+        <Ellipse x:Name="boxArbitrageEllipse" Fill="#FFF6852B" Grid.Row="1" Height="0" HorizontalAlignment="Left" Margin="589,55,0,0" MouseLeftButtonDown="boxArbitrageEllipse_MouseLeftButtonDown" VerticalAlignment="Top" Visibility="Collapsed" Width="0"/>
+        <Ellipse x:Name="convexityArbitrageEllipse" Fill="#FFF6852B" Grid.Row="1" Height="0" HorizontalAlignment="Left" Margin="642,84,0,0" MouseLeftButtonDown="convexityArbitrageEllipse_MouseLeftButtonDown" VerticalAlignment="Top" Visibility="Collapsed" Width="0"/>
 
-        <Polygon x:Name="risklessArbiPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="449,236,551,268" RenderTransformOrigin="0.5,0.5">
+        <Polygon x:Name="risklessArbiPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="449,236,551,268" RenderTransformOrigin="0.5,0.5">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1621,9 +1591,9 @@
             </Polygon.RenderTransform>
         </Polygon>
         <!--【无风险套利】设定参数-->
-        <Button x:Name="risklessArbiBtn" Content="无风险套利" HorizontalAlignment="Left" Margin="544,160,0,0" Grid.Row="1" VerticalAlignment="Top" Width="71" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <Button x:Name="risklessArbiBtn" Background="#FFF26A05" BorderBrush="{x:Null}" Click="risklessArbiBtn_Click" Content="无风险套利" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="544,160,0,0" VerticalAlignment="Top" Width="71"/>
         <!--【无风险套利】打开面板-->
-        <Polygon x:Name="openRisklessArbiPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="449,236,551,268" RenderTransformOrigin="0.5,0.5">
+        <Polygon x:Name="openRisklessArbiPoly" Fill="#FF333337" Grid.Row="1" Margin="449,236,551,268" MouseLeftButtonDown="openRisklessArbiPoly_MouseLeftButtonDown" Points="0,0,185,0,92.5,127.315" RenderTransformOrigin="0.5,0.5" Stroke="#FF333337">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1637,14 +1607,14 @@
 
         <!--下跌-->
         <!--【下跌】特定策略-->
-        <Canvas x:Name="buyAndDownpCanvas" HorizontalAlignment="Left" Height="25" Margin="652,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="94" Background="#FFF98A2D">
-            <Button x:Name="buyAndDownBtn" Content="单买看跌"  Height="25" Width="94" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Canvas x:Name="buyAndDownCanvas" HorizontalAlignment="Left" Height="25" Margin="652,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0" Background="#FFF98A2D">
+            <Button x:Name="buyAndDownBtn"  Background="{x:Null}" BorderBrush="{x:Null}" Click="buyAndDownBtn_Click" Content="单买看跌"  Height="25" Width="0"/>
         </Canvas>
-        <Canvas x:Name="bearSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="611,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" Background="#FFF98A2D">
-            <Button x:Name="bearSpreadBtn" Content="熊市差价" Height="25" Width="100" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Canvas x:Name="bearSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="611,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0" Background="#FFF98A2D">
+            <Button x:Name="bearSpreadBtn"  Background="{x:Null}" BorderBrush="{x:Null}" Click="bearSpreadBtn_Click" Content="熊市差价" Height="25" Width="0"/>
         </Canvas>
 
-        <Polygon x:Name="downPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="536,175,464,329" RenderTransformOrigin="0.5,0.5">
+        <Polygon x:Name="downPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="536,175,464,329" RenderTransformOrigin="0.5,0.5">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1656,12 +1626,13 @@
         </Polygon>
         <!--【下跌】设定参数-->
         <Canvas x:Name="downCanvas" HorizontalAlignment="Left" Height="30" Margin="583,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
-            <TextBlock x:Name="maxRateOfDecreTB" Text="最大跌幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
-            <TextBox x:Name="setMaxRateOfDecreTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
+            <TextBlock x:Name="maxRateOfDecreTB" Text="最大跌幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black" Width="56"/>
+            <TextBox x:Name="setMaxRateOfDecreTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="59" Canvas.Top="6" Foreground="Black" Width="35"/>
+            <TextBlock x:Name="percentDownTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="94" Foreground="Black"/>
         </Canvas>
-        <Button Content="下  跌" HorizontalAlignment="Left" Margin="592,347,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}"/>
+        <Button Content="下  跌" Background="#FFF26A05" BorderBrush="{x:Null}" Click="Button_Click" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="592,347,0,0" VerticalAlignment="Top" Width="50"/>
         <!--【下跌】打开面板-->
-        <Polygon x:Name="openDownPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Fill="#FFF46E05" Margin="536,175,464,329" RenderTransformOrigin="0.5,0.5">
+        <Polygon x:Name="openDownPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FF333337" Margin="536,175,464,329" MouseLeftButtonDown="openDownPoly_MouseLeftButtonDown"  RenderTransformOrigin="0.5,0.5" Stroke="#FF333337">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1674,14 +1645,23 @@
 
         <!--上涨-->
         <!--【上涨】特定策略-->
-        <Canvas x:Name="buyAndUpCanvas" HorizontalAlignment="Left" Height="25" Margin="416,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="94" Background="#FFF98A2D">
-            <Button x:Name="buyAndUpBtn" Content="单买看涨" Height="25" Width="94" Background="{x:Null}" BorderBrush="{x:Null}" Click="buyAndUpBtn_Click"/>
+        <Canvas x:Name="buyAndUpCanvas" HorizontalAlignment="Left" Height="25" Margin="510,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0" Background="#FFF6852B">
+            <Button x:Name="buyAndUpBtn" Background="{x:Null}" BorderBrush="{x:Null}" Canvas.Left="0" Click="buyAndUpBtn_Click" Content="单买看涨" Height="25" Width="0" RenderTransformOrigin="0.5,0.5">
+                <!--<Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform x:Name="buyAndUpSkewTransform" AngleX="15"/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>-->
+            </Button>
         </Canvas>
-        <Canvas x:Name="bullSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="448,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100" Background="#FFF98A2D">
-            <Button x:Name="bullSpreadBtn" Content="牛市差价" Height="25" Width="100" Background="{x:Null}" BorderBrush="{x:Null}"/>
+        <Canvas x:Name="bullSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="550,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0" Background="#FFF6852B">
+            <Button x:Name="bullSpreadBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bullSpreadBtn_Click" Content="牛市差价" Height="25" Width="0" RenderTransformOrigin="0.5,0.5"/>
         </Canvas>
 
-        <Polygon x:Name="upPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Margin="553,239,447,265" RenderTransformOrigin="0.5,0.5" Fill="#FFF46E05">
+        <Polygon x:Name="upPoly" Fill="#FFF46E05" Grid.Row="1" Margin="553,239,447,265" Points="0,0,185,0,92.5,127.315" RenderTransformOrigin="0.5,0.5">
 
             <Polygon.RenderTransform>
                 <TransformGroup>
@@ -1696,14 +1676,14 @@
         <!--【上涨】设定参数-->
         <Canvas x:Name="upCanvas" HorizontalAlignment="Left" Height="30" Margin="469,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
             <TextBlock x:Name="maxRateOfGrothTB" Text="最大涨幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
+            <TextBox x:Name="setMaxRateOfGrothTBox" Canvas.Left="63" Canvas.Top="7" Foreground="Black" HorizontalAlignment="Center" Text="10" VerticalAlignment="Center" Width="35"/>
+            <TextBlock x:Name="percentUpTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="8" Canvas.Left="98" Foreground="Black"/>
 
-            <!-- 这个保留10 DQC-->
-            <TextBox x:Name="setMaxRateOfGrothTBox" Text="10"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="64" Canvas.Top="7" Foreground="Black" Width="44"/>
         </Canvas>
         <Button x:Name="upBtn" Content="上  涨" HorizontalAlignment="Left" Margin="521,347,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="35" Background="#FFF26A05" BorderBrush="{x:Null}" Click="upBtn_Click"/>
 
         <!--【上涨】打开面板-->
-        <Polygon x:Name="openUpPoly" Points="0,0 185,0 92.5,127.315" Grid.Row="1" Margin="553,239,447,265" RenderTransformOrigin="0.5,0.5" Fill="#FFF46E05" MouseLeftButtonDown="openUpPoly_MouseLeftButtonDown" Visibility="Hidden">
+        <Polygon x:Name="openUpPoly" Fill="#FF333337" Grid.Row="1" Margin="553,239,447,265"  MouseLeftButtonDown="openUpPoly_MouseLeftButtonDown" Points="0,0,185,0,92.5,127.315" RenderTransformOrigin="0.5,0.5" Stroke="#FF333337">
             <Polygon.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
