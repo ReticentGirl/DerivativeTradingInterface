@@ -278,6 +278,12 @@ namespace qiquanui
     {
         public ObservableCollection<HistoryData> HistoryOC = new ObservableCollection<HistoryData>();
 
+        public ObservableCollection<HistoryData> HistoryFutureOC = new ObservableCollection<HistoryData>();
+
+        public ObservableCollection<HistoryData> HistoryOptionOC = new ObservableCollection<HistoryData>();
+
+        public ObservableCollection<HistoryData> HistoryNullOC = new ObservableCollection<HistoryData>();
+
         MainWindow pwindow;    //主窗体指针
 
         PositionsManager h_pm; //持仓指针
@@ -330,19 +336,43 @@ namespace qiquanui
             string _clientageType
             )
         {
-            TurnOver();
-            HistoryOC.Add(new HistoryData(_instrumentID, _tradingTime, _tradingType, _postNum, _doneNum, _tradingState, _postPrice, _donePrice, _timeLimit, _userID, _clientageCondition, _optionOrFuture, _clientageType));
-            TurnOver();
+
+           // TurnOver(HistoryOC);
+           // TurnOver(HistoryOptionOC);
+           // TurnOver(HistoryFutureOC);
+
+
+            HistoryData a_hd = new HistoryData(_instrumentID, _tradingTime, _tradingType, _postNum, _doneNum, _tradingState, _postPrice, _donePrice, _timeLimit, _userID, _clientageCondition, _optionOrFuture, _clientageType);
+          
+
+            HistoryOC.Add(a_hd);
+
+            if (a_hd.OptionOrFuture == false)
+            {
+              
+                HistoryOptionOC.Add(a_hd);
+             
+            }
+            else if (a_hd.OptionOrFuture == true)
+            {
+              
+                HistoryFutureOC.Add(a_hd);
+                
+            }
+
+            //TurnOver(HistoryOC);
+           // TurnOver(HistoryOptionOC);
+            // TurnOver(HistoryFutureOC);
         }
 
 
-        public void TurnOver()
+        public void TurnOver(ObservableCollection<HistoryData> t_OC)
         {
-            for (int i = 0; i < HistoryOC.Count() / 2; i++)
+            for (int i = 0; i < t_OC.Count() / 2; i++)
             {
-                HistoryData head_hd = HistoryOC[i];
+                HistoryData head_hd = t_OC[i];
 
-                HistoryData tail_hd = HistoryOC[HistoryOC.Count() - 1 - i];
+                HistoryData tail_hd = t_OC[t_OC.Count() - 1 - i];
 
                 //HistoryData temp_hd = head_hd;
 
@@ -564,12 +594,12 @@ namespace qiquanui
 
                                 if (Math.Abs(_hd.DoneNum) >= Math.Abs(_hd.PostNum))
                                 {
-                                    t_num = Math.Abs(_hd.PostNum)-old_DoneNum;
+                                    t_num = Math.Abs(_hd.PostNum) - old_DoneNum;
                                     _hd.DoneNum = _hd.PostNum;
                                     _hd.TradingState = ALLDONE;
                                 }
 
-                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice,t_num, _hd.IsBuy);   //加入持仓区
+                                HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, t_num, _hd.IsBuy);   //加入持仓区
 
                                 historyTimer.Start();
                             }
@@ -924,7 +954,7 @@ namespace qiquanui
                                 _hd.TradingState = ALLDONE;
                             }
 
-                           
+
 
                             HistoryToHold(_hd.UserID, _hd.InstrumentID, _hd.DonePrice, t_num, _hd.IsBuy);   //加入持仓区
 
@@ -1009,6 +1039,52 @@ namespace qiquanui
 
             h_um.UserManagerHandleInHistory(_userID, _insrtumentID, _finalPrice, _tradingNum, _isBuy);
 
+        }
+
+
+        public void OnShowOption()
+        {
+            //HistoryOptionOC.Clear();
+
+            //for (int i = 0; i < HistoryOC.Count(); i++)
+            //{
+            //    HistoryData f_hd = HistoryOC[i];
+
+            //    if (f_hd.OptionOrFuture == false)
+            //    {
+            //        HistoryOptionOC.Add(f_hd);
+            //    }
+            //}
+
+            pwindow.historyListView.ItemsSource = HistoryOptionOC;
+
+        }
+
+        public void OnShowFuture()
+        {
+            //HistoryFutureOC.Clear();
+
+            //for (int i = 0; i < HistoryOC.Count(); i++)
+            //{
+            //    HistoryData f_hd = HistoryOC[i];
+
+            //    if (f_hd.OptionOrFuture == true)
+            //    {
+            //        HistoryOptionOC.Add(f_hd);
+            //    }
+            //}
+
+            pwindow.historyListView.ItemsSource = HistoryFutureOC;
+        }
+
+        public void OnShowAll()
+        {
+            pwindow.historyListView.ItemsSource = HistoryOC;
+        }
+
+        public void OnShowNull()
+        {
+            pwindow.historyListView.ItemsSource = HistoryNullOC;
         }
 
 

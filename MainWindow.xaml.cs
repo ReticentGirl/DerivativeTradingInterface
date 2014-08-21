@@ -35,8 +35,8 @@ namespace qiquanui
     public partial class MainWindow : Window
     {
 
-         DataManager dm;
-         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper;
+        DataManager dm;
+        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper;
 
 
         TradingManager otm;   //维护交易区的指针
@@ -49,7 +49,7 @@ namespace qiquanui
 
         PositionsManager pm;   //维护持仓区
 
-         private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
+        private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
 
 
 
@@ -90,14 +90,14 @@ namespace qiquanui
             //tradingthread.start();
             //new  Thread(new ThreadStart(ctpStart)).Start();
             //窗口最大化时显示任务栏
-            
+
 
 
             InitializeComponent();
 
             otm = new TradingManager(this);
 
-       
+
 
             bip = new BasicInforAndPromptManager(this, dm, otm);
 
@@ -105,7 +105,7 @@ namespace qiquanui
 
             pm = new PositionsManager(this, um, otm);
 
-            hm = new HistoryManager(this, pm,um);
+            hm = new HistoryManager(this, pm, um);
 
             um.GetPositonManagerPoint(pm);
 
@@ -181,7 +181,7 @@ namespace qiquanui
 
             typeComboBox.SelectedIndex = 0;
             typeInStrategyPanelComboBox.SelectedIndex = 1;
-            
+
         }
 
         //protected override void OnExit(ExitEventArgs e)
@@ -196,20 +196,20 @@ namespace qiquanui
             {
                 this.DragMove();
             }
-            else if (isWindowMax == true);
+            else if (isWindowMax == true) ;
 
         }//窗口移动
 
 
         private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            MaxButton_Click_1(null,null);
+            MaxButton_Click_1(null, null);
         } //双击标题栏最大化、还原
         private void MinButton_Click_1(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
         } //最小化窗口按钮
-        
+
         Rect rcnormal;//定义一个全局rect记录还原状态下窗口的位置和大小。
         bool isWindowMax = false;
         private void MaxButton_Click_1(object sender, RoutedEventArgs e)
@@ -223,17 +223,17 @@ namespace qiquanui
                 maxButton.Style = Resources["normalSty"] as Style;
                 this.Opacity = 1;
                 Border1.Visibility = Visibility.Hidden;
-                
-                
+
+
                 Rect rc = SystemParameters.WorkArea;//获取工作区大小
                 this.Left = 0;//设置位置
                 this.Top = 0;
-                
-                
+
+
                 this.Width = rc.Width;
                 this.Height = rc.Height;
                 isWindowMax = true;
-                
+
             }
             else if (isWindowMax == true)
             {
@@ -247,24 +247,24 @@ namespace qiquanui
                 this.Left = 50;
                 this.Top = 50;
                 this.Opacity = 0.95;
-                
+
                 Border1.Visibility = Visibility.Visible;
                 isWindowMax = false;
-               
+
             }
 
         } //最大化窗口按钮
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
-          
+
             this.Close();
-            
+
         }//关闭窗口按钮
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+
             if (!closeStoryBoardCompleted)
             {
                 closeAnimation1 = new DoubleAnimation();
@@ -291,7 +291,7 @@ namespace qiquanui
 
         private bool ResizeControl()
         {
-            
+
 
             optionsMarketTitleGridwper = TopCanvasButtomGridwper = TopCanvas1wper = Grid1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w));
             profitListViewwper = userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = tradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
@@ -353,9 +353,9 @@ namespace qiquanui
                 MaxButton_Click_1(null, null);
             }
 
-                ResizeControl();
-            
-            
+            ResizeControl();
+
+
         } //拉伸窗口调用ResizeControl()
 
 
@@ -386,17 +386,17 @@ namespace qiquanui
 
         private void optionsMarketTitleGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-          //  optionsMarketTitleGridStoryboard_Leave.Begin(this);
+            //  optionsMarketTitleGridStoryboard_Leave.Begin(this);
         } //鼠标离开期权对应标的物行情区，区域亮度还原
 
         private void basicInforAndPromptGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-          //  basicInforAndPromptGridStoryboard.Begin(this);
+            //  basicInforAndPromptGridStoryboard.Begin(this);
         }
 
         private void basicInforAndPromptGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-          //  basicInforAndPromptGridStoryboard_Leave.Begin(this);
+            //  basicInforAndPromptGridStoryboard_Leave.Begin(this);
         }
 
         private void futuresComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -426,7 +426,7 @@ namespace qiquanui
         } //行情区，“衍生品种类”选择“期权”，显示“标的商品”、cvx指数、期权行情，隐藏期货行情
         private void TopCanvasButtomGrid_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-           // TopCanvasButtomGridStoryboard.Begin(this);
+            // TopCanvasButtomGridStoryboard.Begin(this);
         }
 
         private void TopCanvasButtomGrid_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -436,7 +436,7 @@ namespace qiquanui
         }
         private void strategyOfOptionsCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-          //  strategyOfOptionsCanvasStoryboard.Begin(this);
+            //  strategyOfOptionsCanvasStoryboard.Begin(this);
         }
 
         private void strategyOfOptionsCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -446,7 +446,7 @@ namespace qiquanui
 
         private void strategyOfFuturesCanvas_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-           // strategyOfFuturesCanvasStoryboard.Begin(this);
+            // strategyOfFuturesCanvasStoryboard.Begin(this);
         }
 
         private void strategyOfFuturesCanvas_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -633,7 +633,7 @@ namespace qiquanui
                 Canvas2.BeginAnimation(Canvas.WidthProperty, animate1);
                 canvas2Storyboard.Begin(this);
                 RightImage.Source = new BitmapImage(new Uri("Resources/right.png", UriKind.Relative));
-                
+
                 darkRectangleShow();
 
 
@@ -727,7 +727,7 @@ namespace qiquanui
             this.WindowState = WindowState.Minimized;
             CloseLeftCanvas();
             CloseRightCanvas();
-            
+
 
         } //策略实验室，点击“开始分析”
 
@@ -777,7 +777,7 @@ namespace qiquanui
                             case 1:
                                 orderTradingType = "卖";
                                 break;
-                           
+
                         }
 
 
@@ -936,7 +936,7 @@ namespace qiquanui
 
 
 
-        
+
         private void tradingListView_SelectionChanged(object sender, SelectionChangedEventArgs e)    //交易区窗口选择列改变事件
         {
             //System.Windows.MessageBox.Show("change");
@@ -946,7 +946,7 @@ namespace qiquanui
             {
                 bip.getSelectedItemPoint(selectedItem);
             }
-            
+
 
             /*
             if (selectedItem != null)
@@ -993,11 +993,11 @@ namespace qiquanui
             }
 
            */
-             
+
 
         }
-        
-        
+
+
 
         ////TopComboBox
         #region 顶端各选单逻辑
@@ -1201,14 +1201,14 @@ namespace qiquanui
                 {
                     case 0:
                         otd.IsBuy = true;
-                        
+
                         otd.TradingNum = Math.Abs(old_tradingNum);
                         break;
                     case 1:
                         otd.IsBuy = false;
                         otd.TradingNum = -Math.Abs(old_tradingNum);
                         break;
-                 
+
                 }
 
                 otd.TypeChangeCount += 1;
@@ -1262,7 +1262,7 @@ namespace qiquanui
             int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
 
             string userID = this.userComboBox.Text;
-            BuyOrSellForButtonForOption(exercisePrice,userID, "看涨", false, false);
+            BuyOrSellForButtonForOption(exercisePrice, userID, "看涨", false, false);
 
         }
 
@@ -1611,7 +1611,7 @@ namespace qiquanui
 
         }
 
-    
+
         private void chooseAllCheckBox_Click(object sender, RoutedEventArgs e)     //交易区 全选 勾选
         {
             System.Windows.Controls.CheckBox all_selected = sender as System.Windows.Controls.CheckBox;
@@ -1621,7 +1621,7 @@ namespace qiquanui
                 for (int i = 0; i < otm.TradingOC.Count(); i++)
                 {
                     otm.TradingOC[i].IfChooseOTGVCH = true;
-               }
+                }
             }
             else if (all_selected.IsChecked == false)
             {
@@ -1630,12 +1630,12 @@ namespace qiquanui
                     otm.TradingOC[i].IfChooseOTGVCH = false;
                 }
             }
-            
+
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            startStrategyBtn_Click(sender,e);
+            startStrategyBtn_Click(sender, e);
         }
 
 
@@ -1660,7 +1660,100 @@ namespace qiquanui
             pm.HandleCloseOut();
         }
 
-       
+        private void optionsCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.optionsCheckBox.IsChecked == true && this.futuresCheckBox.IsChecked == true)
+            {
+                hm.OnShowAll();
+            }
+            else if (this.optionsCheckBox.IsChecked == true && this.futuresCheckBox.IsChecked == false)
+            {
+                hm.OnShowOption();
+            }
+            else if (this.optionsCheckBox.IsChecked == false && this.futuresCheckBox.IsChecked == true)
+            {
+                hm.OnShowFuture();
+            }
+            else if (this.optionsCheckBox.IsChecked == false && this.futuresCheckBox.IsChecked == false)
+            {
+                hm.OnShowNull();
+            }
+        }
+
+        private void futuresCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.optionsCheckBox.IsChecked == true && this.futuresCheckBox.IsChecked == true)
+            {
+                hm.OnShowAll();
+            }
+            else if (this.optionsCheckBox.IsChecked == true && this.futuresCheckBox.IsChecked == false)
+            {
+                hm.OnShowOption();
+            }
+            else if (this.optionsCheckBox.IsChecked == false && this.futuresCheckBox.IsChecked == true)
+            {
+                hm.OnShowFuture();
+            }
+            else if (this.optionsCheckBox.IsChecked == false && this.futuresCheckBox.IsChecked == false)
+            {
+                hm.OnShowNull();
+            }
+        }
+
+        private void futuresHDCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (futuresHDCheckBox.IsChecked == true && optionsHDCheckBox.IsChecked == true)
+            {
+                pm.OnShowAll();
+            }
+            else if (futuresHDCheckBox.IsChecked == true && optionsHDCheckBox.IsChecked == false)
+            {
+                pm.OnShowFuture();
+            }
+            else if (futuresHDCheckBox.IsChecked == false && optionsHDCheckBox.IsChecked == true)
+            {
+                pm.OnShowOption();
+            }
+            else if (futuresHDCheckBox.IsChecked == false && optionsHDCheckBox.IsChecked == false)
+            {
+                pm.OnShowNull();
+            }
+        }
+
+        private void optionsHDCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (futuresHDCheckBox.IsChecked == true && optionsHDCheckBox.IsChecked == true)
+            {
+                pm.OnShowAll();
+            }
+            else if (futuresHDCheckBox.IsChecked == true && optionsHDCheckBox.IsChecked == false)
+            {
+                pm.OnShowFuture();
+            }
+            else if (futuresHDCheckBox.IsChecked == false && optionsHDCheckBox.IsChecked == true)
+            {
+                pm.OnShowOption();
+            }
+            else if (futuresHDCheckBox.IsChecked == false && optionsHDCheckBox.IsChecked == false)
+            {
+                pm.OnShowNull();
+            }
+
+        }
+
+        private void setUserStatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            um.userCount--;    //为了初始化的时候有问题设置的
+
+            if (um.userCount < 0)
+            {
+                um.UserLogOut();
+            }
+
+        }
+
+
 
 
 

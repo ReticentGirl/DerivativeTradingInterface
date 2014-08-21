@@ -19,7 +19,7 @@ namespace qiquanui
         private string userMail;
         private string openCompany;   //开户公司
 
-        private int userState;
+        private int userState;     //0 登出  1登入
 
         private double openingBalance;   //4、	期初结存
         private double finalBalance;    //5、	期末结存
@@ -363,6 +363,8 @@ namespace qiquanui
 
         public static Hashtable userHash = new Hashtable(100);
 
+        public int userCount = 0;
+
         public UserManager(MainWindow _pwindow)
         {
             pWindow = _pwindow;
@@ -453,8 +455,10 @@ namespace qiquanui
         {
             userHash.Clear();
 
-            string sql = String.Format("select * from User");
+            string sql = String.Format("select * from User WHERE IsLogin=1");
             DataTable dt = DataControl.QueryTable(sql);
+
+            userCount = dt.Rows.Count;
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -499,7 +503,7 @@ namespace qiquanui
 
                 double e_finalBalance = Convert.ToDouble(userDr["FinalBalance"]);
 
-                double e_closedProfitAndLoss = Math.Round(Convert.ToDouble(userDr["ClosedProfitAndLoss"]),2);
+                double e_closedProfitAndLoss = Math.Round(Convert.ToDouble(userDr["ClosedProfitAndLoss"]), 2);
 
                 double e_floatingProfitAndLoss = Convert.ToDouble(userDr["FloatingProfitAndLoss"]);
 
@@ -651,7 +655,7 @@ namespace qiquanui
                             }
                             else if (d_isBuy == 0)  //卖
                             {
-                                d_floatingProfitAndLoss = (d_averagePrice -d_latestPrice) * Math.Abs(d_tradingNum) * d_instrumentMultiplier;
+                                d_floatingProfitAndLoss = (d_averagePrice - d_latestPrice) * Math.Abs(d_tradingNum) * d_instrumentMultiplier;
                             }
 
 
@@ -713,13 +717,13 @@ namespace qiquanui
                     if (r_upo.BuyOrSell.Equals("买"))   //买
                     {
                         r_floatingProfitAndLoss = (r_latestPrice - r_upo.AveragePrice) * Math.Abs(r_upo.TradingNum) * r_instrumentMultiplier;
-                        
+
                         r_isBuy = true;
                     }
                     else if (r_upo.BuyOrSell.Equals("卖"))
                     {
 
-                        r_floatingProfitAndLoss = (r_upo.AveragePrice-r_latestPrice) * Math.Abs(r_upo.TradingNum) * r_instrumentMultiplier;
+                        r_floatingProfitAndLoss = (r_upo.AveragePrice - r_latestPrice) * Math.Abs(r_upo.TradingNum) * r_instrumentMultiplier;
 
                         r_isBuy = false;
                     }
@@ -945,12 +949,14 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-                    
+
 
                     //////平仓盈亏
                     double old_closedProfitAndLoss = Convert.ToDouble(userDr["ClosedProfitAndLoss"]);
 
                     DataRow firstOne = testForCloseOutTable.Rows[0];
+
+
 
                     DataRow secondOne = testForCloseOutTable.Rows[1];
 
@@ -960,7 +966,9 @@ namespace qiquanui
                     string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
                     ///////////////////
 
-                    new_availableCapital += (cut_marginBuy + cut_marginSell) + (new_closedProfitAndLoss - old_closedProfitAndLoss);
+
+
+                    new_availableCapital += (cut_marginBuy + cut_marginSell);
 
 
                     string deleteBuySqlAndSell = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND InstrumentID='{1}'", _userID, _insrtumentID);
@@ -986,7 +994,7 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-                  
+
 
 
                     double old_positionAveragePrice = Convert.ToDouble(positionBuy["PositionAveragePrice"]);
@@ -1008,7 +1016,7 @@ namespace qiquanui
                     ///////////////////
 
 
-                    new_availableCapital += (cut_marginBuy + cut_marginSell) + (new_closedProfitAndLoss - old_closedProfitAndLoss);
+                    new_availableCapital += (cut_marginBuy + cut_marginSell);
 
                     string updateBuySql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=1", d_num, new_positionAveragePrice, _userID, _insrtumentID);
 
@@ -1035,7 +1043,7 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-                   
+
 
 
                     double old_positionAveragePrice = Convert.ToDouble(positionSell["PositionAveragePrice"]);
@@ -1058,7 +1066,7 @@ namespace qiquanui
                     ///////////////////
 
 
-                    new_availableCapital += (cut_marginBuy + cut_marginSell) + (new_closedProfitAndLoss - old_closedProfitAndLoss);
+                    new_availableCapital += (cut_marginBuy + cut_marginSell);
 
                     string updateSellSql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=0", -d_num, new_positionAveragePrice, _userID, _insrtumentID);
 
@@ -1122,6 +1130,47 @@ namespace qiquanui
 
                 DataControl.InsertOrUpdate(updateSql);
             }
+        }
+
+
+        public void UserLogOut()
+        {
+
+            for (int i = 0; i < UserOC.Count(); i++)
+            {
+                if (UserOC[i].UserState == 0)    //登出
+                {
+                    double new_finalBalance = UserOC[i].AvailableCapital + UserOC[i].UsedMargin;
+
+                    double staticFloatingProfitAndLoss = 0;
+
+                    for (int j = 0; j < UserOC[i].UserPositionsOC.Count(); j++)
+                    {
+                        string s_instrumentID = UserOC[i].UserPositionsOC[j].InstrumentID;
+
+                        DataRow nDr = (DataRow)DataManager.All[s_instrumentID];
+
+                        double closePrice = Convert.ToDouble(nDr["ClosePrice"]);
+
+                        double eachStaticFloating = UserOC[i].UserPositionsOC[j].AveragePrice - closePrice;
+
+                        staticFloatingProfitAndLoss += eachStaticFloating;
+                    }
+
+                    string updateSql = String.Format("UPDATE User SET FinalBalance='{0}',FloatingProfitAndLoss='{1}',IsLogin=0 WHERE UserID='{2}'", new_finalBalance, staticFloatingProfitAndLoss, UserOC[i].UserID);
+
+                    DataControl.InsertOrUpdate(updateSql);
+                }
+
+
+
+            }
+
+
+            GetInfoFromDBToHash();
+            GetInfoFromHashToOC();
+            GetPositionsFromDBToUserPositions();
+
         }
 
 

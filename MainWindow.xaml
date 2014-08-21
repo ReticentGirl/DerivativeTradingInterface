@@ -2553,8 +2553,8 @@
                         <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="analyseBtn" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="closeOutBtn_Click"/>
-                        <CheckBox x:Name="optionsHDCheckBox" Content="仅显示期权交易明细" HorizontalAlignment="Left" Margin="160,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
-                        <CheckBox x:Name="futuresHDCheckBox" Content="仅显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                        <CheckBox x:Name="optionsHDCheckBox" Content="显示期权交易明细" IsChecked="True" HorizontalAlignment="Left" Margin="160,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsHDCheckBox_Click"/>
+                        <CheckBox x:Name="futuresHDCheckBox" Content="显示期货交易明细"  IsChecked="True" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresHDCheckBox_Click"/>
 
                     </Grid>
                 </TabItem>
@@ -2592,8 +2592,8 @@
                         </ListView>
 
                         <Button x:Name="cancelOrderBtn" Content="撤单" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,21,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="cancelOrderBtn_Click" />
-                        <CheckBox x:Name="optionsCheckBox" Content="仅显示期权交易明细" HorizontalAlignment="Left" Margin="159,0,0,4" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
-                        <CheckBox x:Name="futuresCheckBox" Content="仅显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom"/>
+                        <CheckBox x:Name="optionsCheckBox" Content="显示期权交易明细" HorizontalAlignment="Left" Margin="159,0,0,4" IsChecked="True" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsCheckBox_Click"/>
+                        <CheckBox x:Name="futuresCheckBox" Content="显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4"  IsChecked="True"  VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresCheckBox_Click"/>
                         <Button x:Name="pickUserBtn" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,110,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
 
                     </Grid>
@@ -2613,7 +2613,7 @@
                                     <GridViewColumn x:Name="statusOfUserUMGVCH" Header=" 登录状态"  Width=" 70">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox x:Name="setUserStatusComboBox" SelectedIndex="{Binding UserState,UpdateSourceTrigger=PropertyChanged}" Width="Auto">
+                                                <ComboBox x:Name="setUserStatusComboBox"  SelectedIndex="{Binding UserState,UpdateSourceTrigger=PropertyChanged}" Width="Auto" SelectionChanged="setUserStatusComboBox_SelectionChanged">
                                                     <ComboBoxItem x:Name="logout" Content="登出" HorizontalContentAlignment="Left"/>
                                                     <ComboBoxItem x:Name="login" Content="登录" HorizontalContentAlignment="Left"/>
                                                 </ComboBox>

@@ -242,6 +242,13 @@ namespace qiquanui
     {
         public ObservableCollection<PositionsData> PositionsOC = new ObservableCollection<PositionsData>();
 
+        public ObservableCollection<PositionsData> PositionsOptionOC = new ObservableCollection<PositionsData>();
+
+        public ObservableCollection<PositionsData> PositionsFutureOC = new ObservableCollection<PositionsData>();
+
+        public ObservableCollection<PositionsData> PositionsNullOC = new ObservableCollection<PositionsData>();
+
+
         MainWindow pWindow;    //主窗体指针
 
         UserManager p_um;
@@ -475,9 +482,53 @@ namespace qiquanui
             }
 
 
+            GetInfoFromPositionsOCToPositionsOptionOCOrPositionsFutureOC();
 
         }
 
+
+        public void GetInfoFromPositionsOCToPositionsOptionOCOrPositionsFutureOC()
+        {
+
+            GetInfoFromUserToOCCallBack dd;
+            if (System.Threading.Thread.CurrentThread != pWindow.Dispatcher.Thread)
+            {
+                dd = new GetInfoFromUserToOCCallBack(GetInfoFromPositionsOCToPositionsOptionOCOrPositionsFutureOC);
+                pWindow.Dispatcher.Invoke(dd, new object[] { });
+            }
+            else
+            {
+                PositionsOptionOC.Clear(); //先清理了
+                PositionsFutureOC.Clear();
+
+                for (int i = 0; i < PositionsOC.Count(); i++)
+                {
+                    PositionsData g_pd = PositionsOC[i];
+
+                    DataRow nDr = (DataRow)DataManager.All[g_pd.InstrumentID];
+
+                    int i_OptionOrFuture = Convert.ToInt32(nDr["OptionOrFuture"]);
+
+                    if (i_OptionOrFuture == 0)
+                    {
+                        PositionsOptionOC.Add(g_pd);
+                    }
+                    else if (i_OptionOrFuture == 1)
+                    {
+                        PositionsFutureOC.Add(g_pd);
+                    }
+
+                }
+
+
+            }
+        
+          
+            
+
+
+         
+        }
 
 
         public void Refresh()
@@ -599,6 +650,28 @@ namespace qiquanui
 
             }
 
+        }
+
+
+        public void OnShowAll()
+        {
+            pWindow.holdDetailListView.ItemsSource = PositionsOC;
+        }
+
+
+        public void OnShowOption()
+        {
+            pWindow.holdDetailListView.ItemsSource = PositionsOptionOC;
+        }
+
+        public void OnShowFuture()
+        {
+            pWindow.holdDetailListView.ItemsSource = PositionsFutureOC;
+        }
+
+        public void OnShowNull()
+        {
+            pWindow.holdDetailListView.ItemsSource = PositionsNullOC;
         }
 
 
