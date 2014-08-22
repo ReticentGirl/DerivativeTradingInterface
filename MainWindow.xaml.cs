@@ -39,7 +39,7 @@ namespace qiquanui
         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper;
 
 
-        TradingManager otm;   //维护交易区的指针
+        public static TradingManager otm;   //维护交易区的指针
 
         HistoryManager hm;  //维护历史记录区的指针
 
@@ -758,7 +758,7 @@ namespace qiquanui
                 {
 
                     TradingData otd = (TradingData)tradingListView.Items[i];
-                    if (otd.IfChooseOTGVCH == true)
+                    if (otd.IfChooseOTGVCH == true&&otd.TradingNum!=0)
                     {
 
                         string orderUserID = otd.UserID;   //投资账户
@@ -1591,6 +1591,7 @@ namespace qiquanui
 
         private void accuracyTTextBox_TextChanged(object sender, TextChangedEventArgs e)     //交易区 精确度 数值变化响应
         {
+            MainWindow.otm.LimitTradingNum();
             for (int i = 0; i < otm.TradingOC.Count(); i++)
             {
                 TradingData c_td = otm.TradingOC[i];
@@ -1752,6 +1753,15 @@ namespace qiquanui
             }
 
         }
+
+        private void arithmeticProgressionTTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            MainWindow.otm.LimitTradingNum();
+        }
+
+
+
+
 
 
 

@@ -240,6 +240,54 @@ namespace qiquanui
                 }
             }
         }
+
+
+
+
+        public void LimitTradingNum()
+        {
+            for (int i = 0; i < TradingOC.Count(); i++)
+            {
+                TradingData l_td = TradingOC[i];
+                int canBuy = SomeCalculate.calculateCanBuyNum(l_td, TradingOC);
+                if (l_td.IsBuy == true)
+                {
+                    if (l_td.TradingNum > canBuy)
+                    {
+                        l_td.TradingNum = canBuy;
+                    }
+                }
+                else
+                {
+                    if (Math.Abs(l_td.TradingNum) > canBuy)
+                    {
+                        l_td.TradingNum = -canBuy;
+                    }
+                }
+            }
+        }
+
+
+
+        public void changeBuyOrSellByTradingNum()
+        {
+            for (int i = 0; i < TradingOC.Count(); i++)
+            {
+                TradingData l_td = TradingOC[i];
+
+                if (l_td.TradingNum > 0 && l_td.IsBuy != true)
+                {
+                    l_td.TradingType = 0;
+                }
+
+                if (l_td.TradingNum < 0 && l_td.IsBuy != false)
+                {
+                    l_td.TradingType = 1;
+                }
+            }
+
+        }
+
         
         /*
         public void TurnOver()

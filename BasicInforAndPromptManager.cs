@@ -270,7 +270,7 @@ namespace qiquanui
 
                 TimeSpan sp_dueDate = dt_dueDate - b_dm.now;
 
-                double i_dueDate = Math.Round(sp_dueDate.TotalDays, 1);
+                double i_dueDate = (int)sp_dueDate.TotalDays;
 
                 // System.Windows.MessageBox.Show(i_dueDate.ToString());
 

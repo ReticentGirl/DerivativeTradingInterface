@@ -207,6 +207,10 @@ namespace qiquanui
 
             double otherCostOfMargin = 0;
             double otherCostOfRoyalty = 0;
+            double otherCostOfFees = 0;
+
+            double myCostOfGradientCost = 0;
+            double otherCostOfGradientCost = 0;
 
             DataRow uDr = (DataRow)UserManager.userHash[_seTd.UserID];
 
@@ -216,47 +220,57 @@ namespace qiquanui
             {
                 if (_tradingOC[i].IsBuy == _seTd.IsBuy && _tradingOC[i].UserID.Equals(_seTd.UserID) && _tradingOC[i].InstrumentID.Equals(_seTd.InstrumentID))
                 {
-
+                    myCostOfGradientCost = SomeCalculate.calculateGradientCost(_seTd);
                 }
                 else
                 {
                     if (_tradingOC[i].OptionOrFuture == true)   //期货
                     {
-                        if (_tradingOC[i].ClientageType==0)
+                        if (_tradingOC[i].ClientageType == 0)
                         {
                             otherCostOfMargin += caculateMargin(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, _tradingOC[i].MarketPrice);
+                            otherCostOfGradientCost += SomeCalculate.calculateGradientCost(_tradingOC[i]);
+                            otherCostOfFees += SomeCalculate.calculateFees(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].MarketPrice);
                         }
-                        else if (_tradingOC[i].ClientageType==1)
+                        else if (_tradingOC[i].ClientageType == 1)
                         {
                             otherCostOfMargin += caculateMargin(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, Convert.ToDouble(_tradingOC[i].ClientagePrice));
+                            otherCostOfGradientCost += SomeCalculate.calculateGradientCost(_tradingOC[i]);
+                            otherCostOfFees += SomeCalculate.calculateFees(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, Convert.ToDouble(_tradingOC[i].ClientagePrice));
                         }
 
                     }
                     else if (_tradingOC[i].OptionOrFuture == false)   //期权
                     {
-                           //扣权利金  或者获得 权利金
+                        //扣权利金  或者获得 权利金
                         {
-                            if (_tradingOC[i].ClientageType==0)
+                            if (_tradingOC[i].ClientageType == 0)
                             {
                                 otherCostOfRoyalty += caculateRoyalty(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, _tradingOC[i].MarketPrice);
-
+                                otherCostOfGradientCost += SomeCalculate.calculateGradientCost(_tradingOC[i]);
+                                otherCostOfFees += SomeCalculate.calculateFees(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].MarketPrice);
                             }
-                            else if (_tradingOC[i].ClientageType==1)
+                            else if (_tradingOC[i].ClientageType == 1)
                             {
                                 otherCostOfRoyalty += caculateRoyalty(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, Convert.ToDouble(_tradingOC[i].ClientagePrice));
-
+                                otherCostOfGradientCost += SomeCalculate.calculateGradientCost(_tradingOC[i]);
+                                otherCostOfFees += SomeCalculate.calculateFees(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, Convert.ToDouble(_tradingOC[i].ClientagePrice));
                             }
 
                         }
-                       if (_tradingOC[i].IsBuy == false)  //保证金
+                        if (_tradingOC[i].IsBuy == false)  //保证金
                         {
-                            if (_tradingOC[i].ClientageType==0)
+                            if (_tradingOC[i].ClientageType == 0)
                             {
                                 otherCostOfMargin += caculateMargin(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, _tradingOC[i].MarketPrice);
+                                otherCostOfGradientCost += SomeCalculate.calculateGradientCost(_tradingOC[i]);
+                                otherCostOfFees += SomeCalculate.calculateFees(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].MarketPrice);
                             }
-                            else if (_tradingOC[i].ClientageType==1)
+                            else if (_tradingOC[i].ClientageType == 1)
                             {
                                 otherCostOfMargin += caculateMargin(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, _tradingOC[i].IsBuy, Convert.ToDouble(_tradingOC[i].ClientagePrice));
+                                otherCostOfGradientCost += SomeCalculate.calculateGradientCost(_tradingOC[i]);
+                                otherCostOfFees += SomeCalculate.calculateFees(_tradingOC[i].InstrumentID, _tradingOC[i].TradingNum, Convert.ToDouble(_tradingOC[i].ClientagePrice));
                             }
                         }
                     }
@@ -268,49 +282,131 @@ namespace qiquanui
             if (_seTd.OptionOrFuture == true)
             {
                 double eachMargin = 0;
-                if (_seTd.ClientageType==0)
+                double eachFee = 0;
+                if (_seTd.ClientageType == 0)
                 {
                     eachMargin = SomeCalculate.caculateMargin(_seTd.InstrumentID, 1, _seTd.IsBuy, _seTd.MarketPrice);
+                    eachFee = SomeCalculate.calculateFees(_seTd.InstrumentID, 1, _seTd.MarketPrice);
                 }
-                else if (_seTd.ClientageType==1)
+                else if (_seTd.ClientageType == 1)
                 {
                     eachMargin = SomeCalculate.caculateMargin(_seTd.InstrumentID, 1, _seTd.IsBuy, Convert.ToDouble(_seTd.ClientagePrice));
+                    eachFee = SomeCalculate.calculateFees(_seTd.InstrumentID, 1, Convert.ToDouble(_seTd.ClientagePrice));
                 }
-                canBuyNum = (int)((seAvailable - otherCostOfMargin - otherCostOfRoyalty) / eachMargin);
+                canBuyNum = (int)((seAvailable - otherCostOfMargin - otherCostOfRoyalty - otherCostOfFees - otherCostOfGradientCost - myCostOfGradientCost) / (eachMargin + eachFee));
 
             }
             else if (_seTd.OptionOrFuture == false)
             {
-                if (_seTd.IsBuy==true)
+                if (_seTd.IsBuy == true)
                 {
-                    double eachRoyalty=0;
-                    if (_seTd.ClientageType==0)
+                    double eachRoyalty = 0;
+                    double eachFee = 0;
+                    if (_seTd.ClientageType == 0)
                     {
                         eachRoyalty = SomeCalculate.caculateRoyalty(_seTd.InstrumentID, 1, _seTd.IsBuy, _seTd.MarketPrice);
+                        eachFee = SomeCalculate.calculateFees(_seTd.InstrumentID, 1, _seTd.MarketPrice);
                     }
-                    else if (_seTd.ClientageType==1)
+                    else if (_seTd.ClientageType == 1)
                     {
-                        eachRoyalty = SomeCalculate.caculateRoyalty(_seTd.InstrumentID, 1, _seTd.IsBuy,Convert.ToDouble(_seTd.ClientagePrice));
+                        eachRoyalty = SomeCalculate.caculateRoyalty(_seTd.InstrumentID, 1, _seTd.IsBuy, Convert.ToDouble(_seTd.ClientagePrice));
+                        eachFee = SomeCalculate.calculateFees(_seTd.InstrumentID, 1, Convert.ToDouble(_seTd.ClientagePrice));
                     }
 
-                    canBuyNum = (int)((seAvailable - otherCostOfMargin - otherCostOfRoyalty)/eachRoyalty);
+                    canBuyNum = (int)((seAvailable - otherCostOfMargin - otherCostOfRoyalty - otherCostOfFees - otherCostOfGradientCost - myCostOfGradientCost) / (eachRoyalty + eachFee));
                 }
                 else if (_seTd.IsBuy == false)
                 {
-                    double eachMargin=0;
-                    if (_seTd.ClientageType==0)
+                    double eachMargin = 0;
+                    double eachFee = 0;
+                    if (_seTd.ClientageType == 0)
                     {
                         eachMargin = SomeCalculate.caculateMargin(_seTd.InstrumentID, 1, _seTd.IsBuy, _seTd.MarketPrice);
+                        eachFee = SomeCalculate.calculateFees(_seTd.InstrumentID, 1, _seTd.MarketPrice);
                     }
-                    else if (_seTd.ClientageType==1)
+                    else if (_seTd.ClientageType == 1)
                     {
                         eachMargin = SomeCalculate.caculateMargin(_seTd.InstrumentID, 1, _seTd.IsBuy, Convert.ToDouble(_seTd.ClientagePrice));
+                        eachFee = SomeCalculate.calculateFees(_seTd.InstrumentID, 1, Convert.ToDouble(_seTd.ClientagePrice));
                     }
-                    canBuyNum =(int) ((seAvailable - otherCostOfMargin - otherCostOfRoyalty) / eachMargin);
+                    canBuyNum = (int)((seAvailable - otherCostOfMargin - otherCostOfRoyalty-otherCostOfFees-otherCostOfGradientCost-myCostOfGradientCost) / (eachMargin+eachFee));
                 }
             }
 
             return canBuyNum;
+        }
+
+
+
+
+        public static double calculateGradientCost(TradingData _td)
+        {
+            if (_td.IsSetGradient == true)   //如果设置了等差
+            {
+                double g_cost = 0;
+                double orderFinalPrice = 0;
+                if (_td.ClientageType == 0)   //市价
+                    orderFinalPrice = _td.MarketPrice;
+                else if (_td.ClientageType == 1)   //限价
+                    orderFinalPrice = Convert.ToDouble(_td.ClientagePrice);
+
+
+                for (int count = 1; count <= 2; count++)
+                {
+                    if (_td.IsBuy == true)
+                    {
+                        int g_tradingNum = _td.TradingNum - count * _td.ArithmeticProgression;
+
+                        if (g_tradingNum > 0)
+                        {
+                            double gp_clientagePrice = orderFinalPrice + count * _td.Accuracy;    //正的
+                            double gn_clientagePrice = orderFinalPrice - count * _td.Accuracy;    //负的
+
+                            double gpb_Margin_cost = SomeCalculate.caculateMargin(_td.InstrumentID, g_tradingNum, _td.IsBuy, gp_clientagePrice);
+                            double gpb_Royalty_cost = SomeCalculate.caculateRoyalty(_td.InstrumentID, g_tradingNum, _td.IsBuy, gp_clientagePrice);
+                            double gpb_Fee_cost = SomeCalculate.calculateFees(_td.InstrumentID, g_tradingNum, gp_clientagePrice);
+
+                            double gnb_Margin_cost = SomeCalculate.caculateMargin(_td.InstrumentID, g_tradingNum, _td.IsBuy, gn_clientagePrice);
+                            double gnb_Royalty_cost = SomeCalculate.caculateRoyalty(_td.InstrumentID, g_tradingNum, _td.IsBuy, gn_clientagePrice);
+                            double gnb_Fee_cost = SomeCalculate.calculateFees(_td.InstrumentID, g_tradingNum, gn_clientagePrice);
+
+                            g_cost += gpb_Margin_cost + gpb_Royalty_cost + gpb_Fee_cost + gnb_Margin_cost + gnb_Royalty_cost + gnb_Fee_cost;
+
+                        }
+
+
+                    }
+                    else if (_td.IsBuy == false)
+                    {
+                        int g_tradingNum = _td.TradingNum + count * _td.ArithmeticProgression;
+
+                        if (g_tradingNum < 0)
+                        {
+                            double gp_clientagePrice = orderFinalPrice + count * _td.Accuracy;    //正的
+                            double gn_clientagePrice = orderFinalPrice - count * _td.Accuracy;    //负的
+
+                            double gps_Margin_cost = SomeCalculate.caculateMargin(_td.InstrumentID, g_tradingNum, _td.IsBuy, gp_clientagePrice);
+                            double gps_Royalty_cost = SomeCalculate.caculateRoyalty(_td.InstrumentID, g_tradingNum, _td.IsBuy, gp_clientagePrice);
+                            double gps_Fee_cost = SomeCalculate.calculateFees(_td.InstrumentID, g_tradingNum, gp_clientagePrice);
+
+                            double gns_Margin_cost = SomeCalculate.caculateMargin(_td.InstrumentID, g_tradingNum, _td.IsBuy, gn_clientagePrice);
+                            double gns_Royalty_cost = SomeCalculate.caculateRoyalty(_td.InstrumentID, g_tradingNum, _td.IsBuy, gn_clientagePrice);
+                            double gns_Fee_cost = SomeCalculate.calculateFees(_td.InstrumentID, g_tradingNum, gn_clientagePrice);
+
+                            g_cost += gps_Margin_cost + gps_Royalty_cost + gps_Fee_cost + gns_Margin_cost + gns_Royalty_cost + gns_Fee_cost;
+
+                        }
+                    }
+                }
+
+
+                return g_cost;
+            }
+            else
+            {
+                return 0;
+            }
+         
         }
 
     }

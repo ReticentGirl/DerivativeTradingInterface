@@ -2453,7 +2453,7 @@
                                     <GridViewColumn x:Name="lotTGVCH" Header=" 交易手数" Width="60">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <local:NumericUpAndDownUserControl x:Name="lotTNUAD" Width="Auto" HorizontalAlignment="Center" Value="{Binding Path=TradingNum,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="White" />
+                                                <local:NumericUpAndDownUserControl x:Name="lotTNUAD" Width="Auto" HorizontalAlignment="Center" Value="{Binding Path=TradingNum,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="White"  />
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
@@ -2503,7 +2503,7 @@
                                     <GridViewColumn x:Name="arithmeticProgressionTGVCH" Header="手数等差 " Width=" 50">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
-                                                <TextBox x:Name="arithmeticProgressionTTextBox" IsEnabled="{Binding IsSetGradient,Mode=OneWay}"  Text="{Binding ArithmeticProgression,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width=" 50" Style="{StaticResource textboxStyle}" Height="23" Foreground="White"/>
+                                                <TextBox x:Name="arithmeticProgressionTTextBox" IsEnabled="{Binding IsSetGradient,Mode=OneWay}"  Text="{Binding ArithmeticProgression,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width=" 50" Style="{StaticResource textboxStyle}" Height="23" Foreground="White" TextChanged="arithmeticProgressionTTextBox_TextChanged"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

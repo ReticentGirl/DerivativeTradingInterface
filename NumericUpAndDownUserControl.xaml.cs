@@ -50,6 +50,7 @@ namespace qiquanui
 
 		private void value_TextChanged(object sender, TextChangedEventArgs e)
 		{
+
 			var tb = (TextBox)sender;
             //bool test = _numMatch.IsMatch(tb.Text);
             if (!_numMatch.IsMatch(tb.Text))
@@ -62,6 +63,11 @@ namespace qiquanui
                 Value = Maximum;
 
 			RaiseEvent(new RoutedEventArgs(ValueChangedEvent));
+
+
+            MainWindow.otm.LimitTradingNum();
+            MainWindow.otm.changeBuyOrSellByTradingNum();
+
 		}
 
 		private void Increase_Click(object sender, RoutedEventArgs e)
