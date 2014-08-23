@@ -1790,6 +1790,12 @@ namespace qiquanui
         {
             MainWindow.otm.LimitTradingNum();
         }
+
+        private void pickUserBtn_Click(object sender, RoutedEventArgs e)
+        {
+            PickUserWindow pickUserWindow = new PickUserWindow();
+            pickUserWindow.Show();
+        }//历史记录区，点击“筛选账户”，弹出“筛选账户”界面
         
 
         

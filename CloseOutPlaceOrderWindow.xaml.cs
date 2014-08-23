@@ -19,10 +19,10 @@ namespace qiquanui
     /// </summary>
     public partial class CloseOutPlaceOrderWindow : Window
     {
-        TradingManager otm;   //维护交易区的指针
         public CloseOutPlaceOrderWindow()
         {
             InitializeComponent();
+
         }
         
         bool isWindowMax = false;
@@ -78,57 +78,57 @@ namespace qiquanui
         private void typeOfTradingTComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)    //对买 卖 ComboBox 写动态 0 买  1 卖
         {
 
-            for (int i = 0; i < tradingListView.Items.Count; i++)
-            {
-                TradingData otd = (TradingData)tradingListView.Items[i];
+            //for (int i = 0; i < tradingListView.Items.Count; i++)
+            //{
+            //    TradingData otd = (TradingData)tradingListView.Items[i];
 
-                bool becomeSame = false;   //改变了之后有相同的
+            //    bool becomeSame = false;   //改变了之后有相同的
 
-                int old_tradingNum = otd.TradingNum;
+            //    int old_tradingNum = otd.TradingNum;
 
-                switch (otd.TradingType)
-                {
-                    case 0:
-                        otd.IsBuy = true;
+            //    switch (otd.TradingType)
+            //    {
+            //        case 0:
+            //            otd.IsBuy = true;
 
-                        otd.TradingNum = Math.Abs(old_tradingNum);
-                        break;
-                    case 1:
-                        otd.IsBuy = false;
-                        otd.TradingNum = -Math.Abs(old_tradingNum);
-                        break;
+            //            otd.TradingNum = Math.Abs(old_tradingNum);
+            //            break;
+            //        case 1:
+            //            otd.IsBuy = false;
+            //            otd.TradingNum = -Math.Abs(old_tradingNum);
+            //            break;
 
-                }
+            //    }
 
-                otd.TypeChangeCount += 1;
+            //    otd.TypeChangeCount += 1;
 
-                if (otd.TypeChangeCount > 1)   //如果已经不是第一次改变，那就要判断是否有重复
-                {
-                    if (otd.OptionOrFuture == false)  //如果是期权
-                    {
-                        if (otm.TradingOC.Count() > 0)    //判断是否有相同的
-                            for (int j = 0; j < otm.TradingOC.Count(); j++)
-                            {
-                                TradingData td = otm.TradingOC[j];
-                                if (td.UserID == otd.UserID && td.InstrumentID == otd.InstrumentID && Convert.ToDouble(td.ExercisePrice) == Convert.ToDouble(otd.ExercisePrice) && td.IsBuy == otd.IsBuy &&
-                                    td.CallOrPut.Equals(otd.CallOrPut) && td.OptionOrFuture == otd.OptionOrFuture && i != j)
-                                    becomeSame = true;
-                            }
-                    }
-                    else if (otd.OptionOrFuture == true)  //如果是期货
-                    {
-                        if (otm.TradingOC.Count() > 0)    //判断是否有相同的
-                            for (int j = 0; j < otm.TradingOC.Count(); j++)
-                            {
-                                TradingData td = otm.TradingOC[j];
+            //    if (otd.TypeChangeCount > 1)   //如果已经不是第一次改变，那就要判断是否有重复
+            //    {
+            //        if (otd.OptionOrFuture == false)  //如果是期权
+            //        {
+            //            if (otm.TradingOC.Count() > 0)    //判断是否有相同的
+            //                for (int j = 0; j < otm.TradingOC.Count(); j++)
+            //                {
+            //                    TradingData td = otm.TradingOC[j];
+            //                    if (td.UserID == otd.UserID && td.InstrumentID == otd.InstrumentID && Convert.ToDouble(td.ExercisePrice) == Convert.ToDouble(otd.ExercisePrice) && td.IsBuy == otd.IsBuy &&
+            //                        td.CallOrPut.Equals(otd.CallOrPut) && td.OptionOrFuture == otd.OptionOrFuture && i != j)
+            //                        becomeSame = true;
+            //                }
+            //        }
+            //        else if (otd.OptionOrFuture == true)  //如果是期货
+            //        {
+            //            if (otm.TradingOC.Count() > 0)    //判断是否有相同的
+            //                for (int j = 0; j < otm.TradingOC.Count(); j++)
+            //                {
+            //                    TradingData td = otm.TradingOC[j];
 
-                                if (td.InstrumentID.Equals(otd.InstrumentID) && td.IsBuy == otd.IsBuy && td.OptionOrFuture == otd.OptionOrFuture && i != j)
-                                {
-                                    becomeSame = true;
-                                }
+            //                    if (td.InstrumentID.Equals(otd.InstrumentID) && td.IsBuy == otd.IsBuy && td.OptionOrFuture == otd.OptionOrFuture && i != j)
+            //                    {
+            //                        becomeSame = true;
+            //                    }
 
-                            }
-                    }
+            //                }
+            //        }
                 }
 
 
