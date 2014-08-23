@@ -86,6 +86,9 @@
     </ApplicationDefinition>
     <Compile Include="BasicInforAndPromptManager.cs" />
     <Compile Include="ChartControl.cs" />
+    <Compile Include="CloseOutPlaceOrderWindow.xaml.cs">
+      <DependentUpon>CloseOutPlaceOrderWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DataControl.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="DynamicData.cs" />
@@ -113,6 +116,10 @@
       <DependentUpon>StrategyWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserManager.cs" />
+    <Page Include="CloseOutPlaceOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

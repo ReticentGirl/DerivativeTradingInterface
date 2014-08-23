@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="qiquanui.MainWindow"
-        xmlns:my="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" 
+        xmlns:my="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"    
         xmlns:local="clr-namespace:qiquanui"
         SizeChanged="Window_SizeChanged"
         Closing="Window_Closing"
@@ -2410,7 +2410,7 @@
             </Grid.ColumnDefinitions>
 
             <TabControl x:Name="multipleTabControl" HorizontalAlignment="Left" Height="273" VerticalAlignment="Top" Width="914" BorderBrush="{x:Null}" Background="{x:Null}" Margin="0,-35,0,0">
-                <TabItem x:Name="tradingTabItem" Header="交易区" Foreground="White"  Style="{StaticResource TabItemStyle}" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,9,2,-13">
+                <TabItem x:Name="tradingTabItem" Foreground="White" Header="交易区" Margin="-2,9,2,-13" PreviewMouseLeftButtonDown="tradingTabItem_PreviewMouseLeftButtonDown" Style="{StaticResource TabItemStyle}">
 
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
@@ -2445,7 +2445,7 @@
                                                 <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="White" SelectionChanged="typeOfTradingTComboBox_SelectionChanged">
                                                     <ComboBoxItem Content="买" HorizontalContentAlignment="Left" Width="70"/>
                                                     <ComboBoxItem Content="卖" HorizontalContentAlignment="Left" Width="70"/>
-                                                   
+
                                                 </ComboBox>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
@@ -2518,7 +2518,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem x:Name="holdDetailTabItem" Header="持仓" Background="White" Style="{StaticResource TabItemStyle}" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0" Margin="-2,9,2,-13">
+                <TabItem x:Name="holdDetailTabItem" Foreground="White" Header="持仓" Margin="-2,9,2,-13" Style="{StaticResource TabItemStyle}" PreviewMouseLeftButtonDown="holdDetailTabItem_PreviewMouseLeftButtonDown">
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -2527,7 +2527,7 @@
                         <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,10,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn x:Name="ifChooseHDGVCH" Header="勾选" Width="50">
+                                    <GridViewColumn x:Name="ifChooseHDGVCH" Header="" Width="50">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <CheckBox x:Name="ifChooseHDCheckBox" IsChecked="{Binding IsChoose,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -2550,25 +2550,26 @@
                             </ListView.View>
                         </ListView>
 
+                        <CheckBox x:Name="chooseAllHDCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
                         <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
                         <Button x:Name="analyseBtn" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
-                        <Button x:Name="closeOutBtn" Content="平仓" Width="75" HorizontalAlignment="Right" Margin="0,0,199,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="closeOutBtn_Click"/>
+                        <Button x:Name="closeOutBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Click="closeOutBtn_Click" Content="平仓" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,0,199,4" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="75"/>
                         <CheckBox x:Name="optionsHDCheckBox" Content="显示期权交易明细" IsChecked="True" HorizontalAlignment="Left" Margin="160,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsHDCheckBox_Click"/>
                         <CheckBox x:Name="futuresHDCheckBox" Content="显示期货交易明细"  IsChecked="True" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresHDCheckBox_Click"/>
 
                     </Grid>
                 </TabItem>
 
-                <TabItem x:Name="historyTabItem" Header="历史记录" Foreground="White"  Style="{StaticResource TabItemStyle}" Margin="-2,9,2,-13">
+                <TabItem x:Name="historyTabItem" Foreground="White" Header="历史记录" Margin="-2,9,2,-13" PreviewMouseLeftButtonDown="historyTabItem_PreviewMouseLeftButtonDown" Style="{StaticResource TabItemStyle}">
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="914"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,-3,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
+                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
                             <ListView.View>
                                 <GridView>
-                                    <GridViewColumn x:Name="ifChoose" Header="勾选" Width="50">
+                                    <GridViewColumn x:Name="ifChoose" Header="" Width="50">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <CheckBox x:Name="ifChooseHCheckBox" IsChecked="{Binding HIfChoose,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -2595,12 +2596,13 @@
                         <CheckBox x:Name="optionsCheckBox" Content="显示期权交易明细" HorizontalAlignment="Left" Margin="159,0,0,4" IsChecked="True" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsCheckBox_Click"/>
                         <CheckBox x:Name="futuresCheckBox" Content="显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4"  IsChecked="True"  VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresCheckBox_Click"/>
                         <Button x:Name="pickUserBtn" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,110,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
+                        <CheckBox x:Name="chooseAllHCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
 
                     </Grid>
                 </TabItem>
 
-                <TabItem x:Name="userManageTabItem" Header="账户管理" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,9,2,-13">
-                    <Grid Margin="-3,0,-3,-5">
+                <TabItem x:Name="userManageTabItem" Foreground="White" Header="账户管理" Margin="-2,9,2,-13" PreviewMouseLeftButtonDown="userManageTabItem_PreviewMouseLeftButtonDown" Style="{StaticResource TabItemStyle}">
+                    <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
@@ -2609,7 +2611,7 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userIDUMGVCH" Header=" 账户号" DisplayMemberBinding="{Binding UserID,UpdateSourceTrigger=PropertyChanged}" Width=" 100"/>
-                                   
+
                                     <GridViewColumn x:Name="statusOfUserUMGVCH" Header=" 登录状态"  Width=" 70">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -2638,9 +2640,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <Button x:Name="addUserBtn" Content="添加账户" HorizontalAlignment="Right" Height="21" Margin="0,0,18,4" VerticalAlignment="Bottom" Width="82" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Style="{StaticResource darkButton}" Padding="1" HorizontalContentAlignment="Right" FlowDirection="RightToLeft"/>
-                        <Button x:Name="sighInBtn" Content="注册账户" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="80" Margin="18,0,0,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="sighInBtn_Click"/>
-
+                        <Button x:Name="sighInBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Click="sighInBtn_Click" Content="注册账户" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,0,21,4" RenderTransformOrigin="0.488,0.619" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="80"/>
 
                     </Grid>
                 </TabItem>
@@ -2671,7 +2671,7 @@
             </TabControl>
         </Grid>
         <!--基本信息及动态提示区-->
-        <Grid x:Name="basicInforAndPromptGrid" HorizontalAlignment="Right" Height="245" Margin="0,0,29,21" VerticalAlignment="Bottom" Width="213" Background="#FF22242B" MouseEnter="basicInforAndPromptGrid_MouseEnter" MouseLeave="basicInforAndPromptGrid_MouseLeave">
+        <Grid x:Name="basicInforAndPromptGrid" Background="#FF22242B" HorizontalAlignment="Right" Height="245" Margin="0,0,29,21" MouseEnter="basicInforAndPromptGrid_MouseEnter" MouseLeave="basicInforAndPromptGrid_MouseLeave" VerticalAlignment="Bottom" Visibility="Visible" Width="213">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -2701,6 +2701,19 @@
             <TextBlock x:Name="showMaxLotBIPTextBlock" Text="{Binding MaxTradeNum,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" Margin="5,76,-1,-13" Foreground="#FFBCBDCB"/>
         </Grid>
         <Button x:Name="darkRectangle" HorizontalAlignment="Left" Margin="29,38,0,0" VerticalAlignment="Top" Width="1127" Height="627" Style="{StaticResource darkRectangleStyle}"  Visibility="Hidden" Click="darkRectangle_Click"/>
+        <!--添加账户区-->
+        <Canvas x:Name="addUserCanvas" Background="#FF22242B" HorizontalAlignment="Right" Height="245" Margin="0,0,29,21" VerticalAlignment="Bottom" Visibility="Collapsed" Width="213">
+            <Label Canvas.Left="10" Canvas.Top="10" Height="57" MaxWidth="193">
+                <TextBlock Foreground="#FFB5B8BD" Text="       通过添加多个账户，可以在软件内各账户间随时切换交易，方便管理" TextWrapping="Wrap"/>
+            </Label>
+            <TextBlock Foreground="#FFE6E8EC" Canvas.Left="27" Canvas.Top="96" Text="帐号：" TextWrapping="Wrap"/>
+            <TextBox x:Name="userIDAUTB" Canvas.Left="68" Canvas.Top="92" Height="23" Text="TextBox" TextWrapping="Wrap" VerticalContentAlignment="Center" Width="120"/>
+            <TextBlock Foreground="#FFE6E8EC" Canvas.Left="27" Canvas.Top="133" Text="密码：" TextWrapping="Wrap"/>
+            <TextBox x:Name="passwordAUTB" Canvas.Left="68" Canvas.Top="129" Height="23" Text="TextBox" TextWrapping="Wrap" VerticalContentAlignment="Center" Width="120"/>
+            <Button x:Name="resetAUBtn" Click="resetAUBtn_Click" Content="重置" Background="#FF4D5166" BorderBrush="{x:Null}" Canvas.Left="27" Canvas.Top="216" Style="{StaticResource darkButton}" Width="45"/>
+            <Button x:Name="addUserBtn" Background="#FF4D5166" BorderBrush="{x:Null}" Canvas.Left="68" Canvas.Top="170" Content="添加账户" FlowDirection="RightToLeft" Foreground="White" Height="21" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Padding="1" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="82"/>
+
+        </Canvas>
 
         <!--策略实验室伸缩面板-->
         <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519"  ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft">
@@ -2785,16 +2798,7 @@
 
 
         <StatusBar x:Name="statusBar1" HorizontalAlignment="Left" Height="20" VerticalAlignment="Bottom" Width="1185" Background="#FF007ACC" Margin="0,0,0,1"/>
-        <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10">
-            <Border.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Border.RenderTransform>
-        </Border>
+        <Border x:Name="Border1" BorderBrush="#FF007ACC" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10"/>
 
 
 

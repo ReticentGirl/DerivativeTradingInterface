@@ -1659,6 +1659,8 @@ namespace qiquanui
         private void closeOutBtn_Click(object sender, RoutedEventArgs e)    //平仓按钮 
         {
             pm.HandleCloseOut();
+            CloseOutPlaceOrderWindow closeOutPlaceOrderWindow = new CloseOutPlaceOrderWindow();
+            closeOutPlaceOrderWindow.Show();
         }
 
         private void optionsCheckBox_Click(object sender, RoutedEventArgs e)
@@ -1754,11 +1756,45 @@ namespace qiquanui
 
         }
 
-        private void arithmeticProgressionTTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void tradingTabItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            basicInforAndPromptGrid.Visibility = Visibility.Visible;
+            addUserCanvas.Visibility = Visibility.Collapsed;
+        }//点击“交易区”，基本信息及动态提示区显示
+
+        private void holdDetailTabItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            basicInforAndPromptGrid.Visibility = Visibility.Collapsed;
+            addUserCanvas.Visibility = Visibility.Collapsed;
+        }//点击“持仓”，基本信息及动态提示区隐藏
+
+        private void historyTabItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            basicInforAndPromptGrid.Visibility = Visibility.Collapsed;
+            addUserCanvas.Visibility = Visibility.Collapsed;
+        }//点击“历史记录”，基本信息及动态提示区隐藏
+
+        private void userManageTabItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            basicInforAndPromptGrid.Visibility = Visibility.Collapsed;
+            addUserCanvas.Visibility = Visibility.Visible;
+        }//点击“账户管理”，添加账户区显示，其余隐藏
+
+        private void resetAUBtn_Click(object sender, RoutedEventArgs e)
+        {
+            userIDAUTB.Clear();
+            passwordAUTB.Clear();
+        }//添加账户区，点击“重置”按钮
+
+		private void arithmeticProgressionTTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             MainWindow.otm.LimitTradingNum();
         }
+        
 
+        
+
+        
 
 
 
