@@ -129,66 +129,66 @@ namespace qiquanui
 
             //                }
             //        }
-                }
+            //    }
 
 
 
-                if (becomeSame == true)
-                {
-                    otm.TradingOC.RemoveAt(i);
-                }
+                //if (becomeSame == true)
+                //{
+                //    otm.TradingOC.RemoveAt(i);
+                //}
 
 
 
-            }
+            
 
         }
 
         private void formOfClientageTComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)   //交易区 市价 限价 ComboBOX 变换调用的函数
         {
             //System.Windows.MessageBox.Show("123");
-            for (int i = 0; i < otm.TradingOC.Count(); i++)
-            {
-                TradingData cTd = otm.TradingOC[i];
-                if (cTd.OptionOrFuture == true)  //如果是期货
-                {
-                    cTd.AboutFOK = Visibility.Collapsed;
-                    cTd.AboutIOC = Visibility.Collapsed;
-                    cTd.AboutROD = Visibility.Visible;
-                    if (cTd.ClientageType == 0) //市价
-                    {
-                        cTd.ClientagePrice = "-";
-                        cTd.IsEnableOfClientagePrice = false;
-                    }
-                    else if (cTd.ClientageType == 1)    //限价
-                    {
-                        cTd.ClientagePrice = cTd.MarketPrice.ToString();
-                        cTd.IsEnableOfClientagePrice = true;
-                    }
-                }
-                else     //如果是期权
-                {
-                    if (cTd.ClientageType == 0) //市价
-                    {
-                        cTd.AboutFOK = Visibility.Visible;
-                        cTd.AboutIOC = Visibility.Visible;
-                        cTd.AboutROD = Visibility.Collapsed;
+            //for (int i = 0; i < otm.TradingOC.Count(); i++)
+            //{
+            //    TradingData cTd = otm.TradingOC[i];
+            //    if (cTd.OptionOrFuture == true)  //如果是期货
+            //    {
+            //        cTd.AboutFOK = Visibility.Collapsed;
+            //        cTd.AboutIOC = Visibility.Collapsed;
+            //        cTd.AboutROD = Visibility.Visible;
+            //        if (cTd.ClientageType == 0) //市价
+            //        {
+            //            cTd.ClientagePrice = "-";
+            //            cTd.IsEnableOfClientagePrice = false;
+            //        }
+            //        else if (cTd.ClientageType == 1)    //限价
+            //        {
+            //            cTd.ClientagePrice = cTd.MarketPrice.ToString();
+            //            cTd.IsEnableOfClientagePrice = true;
+            //        }
+            //    }
+            //    else     //如果是期权
+            //    {
+            //        if (cTd.ClientageType == 0) //市价
+            //        {
+            //            cTd.AboutFOK = Visibility.Visible;
+            //            cTd.AboutIOC = Visibility.Visible;
+            //            cTd.AboutROD = Visibility.Collapsed;
 
-                        cTd.ClientagePrice = "-";
-                        cTd.IsEnableOfClientagePrice = false;
-                    }
-                    else if (cTd.ClientageType == 1)    //限价
-                    {
-                        cTd.AboutFOK = Visibility.Visible;
-                        cTd.AboutIOC = Visibility.Visible;
-                        cTd.AboutROD = Visibility.Visible;
+            //            cTd.ClientagePrice = "-";
+            //            cTd.IsEnableOfClientagePrice = false;
+            //        }
+            //        else if (cTd.ClientageType == 1)    //限价
+            //        {
+            //            cTd.AboutFOK = Visibility.Visible;
+            //            cTd.AboutIOC = Visibility.Visible;
+            //            cTd.AboutROD = Visibility.Visible;
 
-                        cTd.ClientagePrice = cTd.MarketPrice.ToString();
-                        cTd.IsEnableOfClientagePrice = true;
-                    }
+            //            cTd.ClientagePrice = cTd.MarketPrice.ToString();
+            //            cTd.IsEnableOfClientagePrice = true;
+            //        }
 
-                }
-            }
+            //    }
+            //}
         }
     }
 }
