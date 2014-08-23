@@ -1343,7 +1343,8 @@
                     </Grid.ColumnDefinitions>
 
                     <!--这个保留我的版本 DQC-->
-                    <ListView x:Name="strategyListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,0,0,33" SelectionChanged="strategyListView_SelectionChanged">
+                    <!--看注释啊亲 不要再显示滚动条了好吗 DQC-->
+                    <ListView x:Name="strategyListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="0,0,0,33" SelectionChanged="strategyListView_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenSGVCH" Header="" Width="50">
@@ -1377,7 +1378,7 @@
                     </ListView>
 
                     <CheckBox x:Name="chooseAllSCheckBox" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,8,0,0"/>
-                    <Button x:Name="placeOrderSButton" Content="一键下单" Margin="0,0,25,10" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
+                    <Button x:Name="placeOrderSButton" Content="一键下单" Margin="0,0,10,9" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
 
                 </Grid>
             </TabItem>
@@ -1518,7 +1519,7 @@
         <!--【低波动率】设定参数-->
         <Canvas x:Name="lowVolatilityCanvas" Background="#FFFF7400" Grid.Row="1" HorizontalAlignment="Left" Height="30" Margin="604,246,0,0" VerticalAlignment="Top" Width="106">
             <TextBlock x:Name="miniRateOfVolatiTB" Text="最小波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="1" Foreground="Black" Width="59"/>
-            <TextBox x:Name="setMiniRateOfVolatiTBox" Canvas.Left="60" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="0.96" VerticalAlignment="Center" Width="35"/>
+            <TextBox x:Name="setMiniRateOfVolatiTBox" Canvas.Left="60" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="10" VerticalAlignment="Center" Width="35"/>
             <TextBlock x:Name="percentLVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="96" Foreground="Black"/>
         </Canvas>
         <Button x:Name="lowVolatilityBtn" Background="#FFF26A05" BorderBrush="{x:Null}" Click="lowVolatilityBtn_Click" Content="低波动率" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="640,198,0,0" VerticalAlignment="Top" Width="52"/>
@@ -1557,7 +1558,7 @@
         <!--【高波动率】设定参数-->
         <Canvas x:Name="highVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="452,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Background="#FFFF7400">
             <TextBlock x:Name="maxRateOfVolatiTB" Text="最大波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Foreground="Black" Width="57"/>
-            <TextBox x:Name="setMaxRateOfVolatiTBox" Canvas.Left="57" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="0.96" VerticalAlignment="Center" Width="35"/>
+            <TextBox x:Name="setMaxRateOfVolatiTBox" Canvas.Left="57" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="10" VerticalAlignment="Center" Width="35"/>
             <TextBlock x:Name="percentHVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="93" Foreground="Black"/>
         </Canvas>
         <Button x:Name="highVolatilityBtn" Background="#FFF26A05" BorderBrush="{x:Null}" Click="highVolatilityBtn_Click" Content="高波动率" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="470,198,0,0" VerticalAlignment="Top" Width="53"/>
@@ -1627,7 +1628,7 @@
         <!--【下跌】设定参数-->
         <Canvas x:Name="downCanvas" HorizontalAlignment="Left" Height="30" Margin="583,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FFFF7400">
             <TextBlock x:Name="maxRateOfDecreTB" Text="最大跌幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black" Width="56"/>
-            <TextBox x:Name="setMaxRateOfDecreTBox" Text="0.96"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="59" Canvas.Top="6" Foreground="Black" Width="35"/>
+            <TextBox x:Name="setMaxRateOfDecreTBox" Text="10"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="59" Canvas.Top="6" Foreground="Black" Width="35"/>
             <TextBlock x:Name="percentDownTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="94" Foreground="Black"/>
         </Canvas>
         <Button Content="下  跌" Background="#FFF26A05" BorderBrush="{x:Null}" Click="Button_Click" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="592,347,0,0" VerticalAlignment="Top" Width="50"/>

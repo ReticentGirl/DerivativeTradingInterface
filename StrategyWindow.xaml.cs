@@ -332,6 +332,9 @@ namespace qiquanui
             // groupCanvasStoryboard_Leave.Begin(this);
         }
 
+
+
+        #region 上涨
         private void openUpPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //鼠标点击，隐藏上涨遮盖面板
@@ -401,7 +404,146 @@ namespace qiquanui
             buyAndUpBtn.BeginAnimation(Button.WidthProperty, shorten);
             bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
 
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            qjoc.Clear();
+            int no = 2;
+            int which = 0;
+            YK[] res = ComputeUpSituation(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = res[i].ykname;
+
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = which;
+
+            groupListView.SelectedIndex = 0;
+
+            Lock = false;
+
+
         }//点击“上涨”按钮
+
+
+        /// <summary>
+        /// 计算上涨情景
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeUpSituation(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            ans[0] = ComputeBuyAndUp(1)[0];
+            ans[1] = ComputeBull(1)[0];
+
+            return ans;
+        }
+
+
+
+
+        /// <summary>
+        /// 计算单支看涨
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeBuyAndUp(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max = GetRateText(setMaxRateOfGrothTBox);
+
+
+            for (int i = 0; i < TotLine; i++)
+            {
+                //填充
+                int[,] _num = new int[TotLine + 1, 4];
+                _num[i, (int)OptionType.CallBuy] = 1;
+                //计算盈亏数据
+                YK yk = new YK(TotLine, _num, "单买看涨", "上涨", _max);
+                yk.ComputeYK();
+                //排序
+                SortYKAnswer(ans, yk, Tot);
+            }
+
+            return ans;
+        }
+
+
+        /// <summary>
+        /// 计算牛市差价
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeBull(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max = GetRateText(setMaxRateOfGrothTBox);
+
+            //看涨牛市
+            for (int i=0;i<TotLine-1;i++)
+                for (int j = i + 1; j < TotLine; j++)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    _num[i, (int)OptionType.CallBuy] = 1;
+                    _num[j, (int)OptionType.CallSell] = 1;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "看涨组成的牛市", "上涨", _max);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+            //看跌牛市
+            for (int i = 0; i < TotLine - 1; i++)
+                for (int j = i + 1; j < TotLine; j++)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    _num[i, (int)OptionType.PutBuy] = 1;
+                    _num[j, (int)OptionType.PutSell] = 1;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "看跌组成的牛市", "上涨", _max);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+            //2比1牛市差价
+            for (int i = 0; i < TotLine - 1; i++)
+                for (int j = i + 1; j < TotLine; j++)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    _num[i, (int)OptionType.CallSell] = 1;
+                    _num[j, (int)OptionType.CallBuy] = 2;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "2比1牛市差价", "上涨", _max);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+            return ans;
+        }
+
+        
+
 
         private void buyAndUpBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -454,14 +596,21 @@ namespace qiquanui
                 ykm.yk[1, i].title = "Top " + (i + 1);
             }
 
-            binding(1, no);
+            BindingForOC(1, no);
             BindingForCharts(1, no);
 
             ResultTab.SelectedIndex = 1;
 
             strategyListView.SelectedIndex = 0;
+
             Lock = false;
         }//点击“单买看涨”按钮
+
+
+
+
+
+
 
         private void bullSpreadBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -497,7 +646,44 @@ namespace qiquanui
             buyAndUpBtn.BeginAnimation(Button.WidthProperty, shorten);
             bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
 
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeBull(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+            Lock = false;
+
+
+
+
         }//点击“牛市差价”按钮
+
+
+        #endregion
+
+
+
+        #region 下跌
 
         private void openDownPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -539,6 +725,37 @@ namespace qiquanui
             bearSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             buyAndDownBtn.BeginAnimation(Button.WidthProperty, shorten);
             bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in DownSituation");
+                return;
+            }
+            else Lock = true;
+
+            qjoc.Clear();
+            int no = 2;
+            int which = 0;
+            YK[] res = ComputeDownSituation(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = res[i].ykname;
+
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = which;
+
+            groupListView.SelectedIndex = 0;
+
+            Lock = false;
+
+
         }//点击“下跌”按钮      
 
         private void buyAndDownBtn_Click(object sender, RoutedEventArgs e)
@@ -560,6 +777,35 @@ namespace qiquanui
             bearSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             buyAndDownBtn.BeginAnimation(Button.WidthProperty, shorten);
             bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            YK[] res = ComputeBuyAndDown(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[1, i] = res[i];
+                ykm.yk[1, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(1, no);
+            BindingForCharts(1, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+            Lock = false;
+
+
+
         }//点击“单买看跌”按钮
 
         private void bearSpreadBtn_Click(object sender, RoutedEventArgs e)
@@ -581,7 +827,149 @@ namespace qiquanui
             bearSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             buyAndDownBtn.BeginAnimation(Button.WidthProperty, shorten);
             bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+
+            ///熊市差价计算
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            YK[] res = ComputeBear(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[1, i] = res[i];
+                ykm.yk[1, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(1, no);
+            BindingForCharts(1, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+            Lock = false;
+
+
+
         }//点击“熊市差价”按钮
+
+        /// <summary>
+        /// 计算下跌情景
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeDownSituation(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            ans[0] = ComputeBuyAndDown(1)[0];
+            ans[1] = ComputeBear(1)[0];
+
+            return ans;
+        }
+
+
+
+
+        /// <summary>
+        /// 计算单支看跌
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeBuyAndDown(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max = GetRateText(setMaxRateOfDecreTBox);
+
+
+            for (int i = 0; i < TotLine; i++)
+            {
+                //填充
+                int[,] _num = new int[TotLine + 1, 4];
+                _num[i, (int)OptionType.PutBuy] = 1;
+                //计算盈亏数据
+                YK yk = new YK(TotLine, _num, "单买看跌", "下跌", _max);
+                yk.ComputeYK();
+                //排序
+                SortYKAnswer(ans, yk, Tot);
+            }
+
+            return ans;
+        }
+
+
+        /// <summary>
+        /// 计算熊市差价
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeBear(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max = GetRateText(setMaxRateOfDecreTBox);
+
+            //看涨熊市
+            for (int i = 0; i < TotLine - 1; i++)
+                for (int j = i + 1; j < TotLine; j++)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    _num[i, (int)OptionType.CallSell] = 1;
+                    _num[j, (int)OptionType.CallBuy] = 1;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "看涨组成的熊市", "下跌", _max);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+            //看跌熊市
+            for (int i = 0; i < TotLine - 1; i++)
+                for (int j = i + 1; j < TotLine; j++)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    _num[i, (int)OptionType.PutSell] = 1;
+                    _num[j, (int)OptionType.PutBuy] = 1;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "看跌组成的熊市", "下跌", _max);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+            //2比1熊市差价
+            for (int i = 0; i < TotLine - 1; i++)
+                for (int j = i + 1; j < TotLine; j++)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    _num[i, (int)OptionType.PutSell] = 1;
+                    _num[j, (int)OptionType.PutBuy] = 2;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "2比1熊市差价", "下跌", _max);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+            return ans;
+        }
+
+
+        #endregion
+
+
+
+        #region 高波动率
 
         private void openHighVolatilityPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -651,6 +1039,37 @@ namespace qiquanui
             bottomWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             bottomWideBtn.BeginAnimation(Button.WidthProperty, shorten);
             bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            qjoc.Clear();
+            int no = 2;
+            int which = 0;
+            YK[] res = ComputeHighWaveSituation(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = res[i].ykname;
+
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = which;
+
+            groupListView.SelectedIndex = 0;
+
+            Lock = false;
+
+
         }//点击“高波动率”按钮
 
         private void bottomWideBtn_Click(object sender, RoutedEventArgs e)
@@ -686,6 +1105,35 @@ namespace qiquanui
             bottomWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             bottomWideBtn.BeginAnimation(Button.WidthProperty, shorten);
             bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeBottomWide(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+            Lock = false;
+
+
+
         }//点击“底部宽跨”按钮
 
         private void bottomCrossBtn_Click(object sender, RoutedEventArgs e)
@@ -721,7 +1169,124 @@ namespace qiquanui
             bottomWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             bottomWideBtn.BeginAnimation(Button.WidthProperty, shorten);
             bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeBottomSharp(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+            Lock = false;
+
+
         }//点击“底部跨式”按钮
+
+
+        /// <summary>
+        /// 计算高波动率情景
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeHighWaveSituation(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            ans[0] = ComputeBottomWide(1)[0];
+            ans[1] = ComputeBottomSharp(1)[0];
+
+            return ans;
+        }
+
+
+
+
+        /// <summary>
+        /// 计算底部宽跨
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeBottomWide(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max = GetRateText(setMaxRateOfVolatiTBox);
+
+
+            for (int i = 0; i < TotLine; i++)
+                for (int j = 0; j < TotLine; j++)
+                    if (i != j)
+                    {
+                        //填充
+                        int[,] _num = new int[TotLine + 1, 4];
+                        _num[i, (int)OptionType.CallBuy] = 1;
+                        _num[j, (int)OptionType.PutBuy] = 1;
+                        //计算盈亏数据
+                        YK yk = new YK(TotLine, _num, "底部宽跨", "高波动率", _max);
+                        yk.ComputeYK();
+                        //排序
+                        SortYKAnswer(ans, yk, Tot);
+                    }
+
+            return ans;
+        }
+
+
+        /// <summary>
+        /// 计算底部跨式
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeBottomSharp(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max = GetRateText(setMaxRateOfVolatiTBox);
+
+
+            for (int i = 0; i < TotLine; i++)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    _num[i, (int)OptionType.CallBuy] = 1;
+                    _num[i, (int)OptionType.PutBuy] = 1;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "底部跨式", "高波动率", _max);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+            return ans;
+        }
+
+
+
+
+        #endregion
+        
+
+
+        #region 低波动率
+
 
         private void openLowVolatilityPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -763,6 +1328,37 @@ namespace qiquanui
             topWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             topWideBtn.BeginAnimation(Button.WidthProperty, shorten);
             topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            qjoc.Clear();
+            int no = 2;
+            int which = 0;
+            YK[] res = ComputeLowWaveSituation(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = res[i].ykname;
+
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = which;
+
+            groupListView.SelectedIndex = 0;
+
+            Lock = false;
+
+
         }//点击“低波动率”按钮
 
         private void topWideBtn_Click(object sender, RoutedEventArgs e)
@@ -784,6 +1380,35 @@ namespace qiquanui
             topWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             topWideBtn.BeginAnimation(Button.WidthProperty, shorten);
             topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeTopWide(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+            Lock = false;
+
+
         }//点击“顶部宽跨”按钮
 
         private void topCrossBtn_Click(object sender, RoutedEventArgs e)
@@ -805,7 +1430,121 @@ namespace qiquanui
             topWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
             topWideBtn.BeginAnimation(Button.WidthProperty, shorten);
             topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeTopSharp(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+            Lock = false;
+
+
         }//点击“顶部跨式”按钮
+
+        /// <summary>
+        /// 计算高波动率情景
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeLowWaveSituation(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            ans[0] = ComputeTopWide(1)[0];
+            ans[1] = ComputeTopSharp(1)[0];
+
+            return ans;
+        }
+
+
+
+
+        /// <summary>
+        /// 计算底部宽跨
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeTopWide(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max = GetRateText(setMiniRateOfVolatiTBox);
+
+
+            for (int i = 0; i < TotLine; i++)
+                for (int j = 0; j < TotLine; j++)
+                    if (i != j)
+                    {
+                        //填充
+                        int[,] _num = new int[TotLine + 1, 4];
+                        _num[i, (int)OptionType.CallSell] = 1;
+                        _num[j, (int)OptionType.PutSell] = 1;
+                        //计算盈亏数据
+                        YK yk = new YK(TotLine, _num, "顶部宽跨", "低波动率", _max);
+                        yk.ComputeYK();
+                        //排序
+                        SortYKAnswer(ans, yk, Tot);
+                    }
+
+            return ans;
+        }
+
+
+        /// <summary>
+        /// 计算底部跨式
+        /// </summary>
+        /// <param name="Tot"></param>
+        /// <returns></returns>
+        private YK[] ComputeTopSharp(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            double _max = GetRateText(setMiniRateOfVolatiTBox);
+
+
+            for (int i = 0; i < TotLine; i++)
+            {
+                //填充
+                int[,] _num = new int[TotLine + 1, 4];
+                _num[i, (int)OptionType.CallSell] = 1;
+                _num[i, (int)OptionType.PutSell] = 1;
+                //计算盈亏数据
+                YK yk = new YK(TotLine, _num, "顶部跨式", "低波动率", _max);
+                yk.ComputeYK();
+                //排序
+                SortYKAnswer(ans, yk, Tot);
+            }
+
+            return ans;
+        }
+
+
+        #endregion
+
+
+
+
+        #region 无风险套利
 
         private void openRisklessArbiPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -861,6 +1600,7 @@ namespace qiquanui
             convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, grow);
 
         }//选择“无风险套利”面板
+
 
         private void risklessArbiBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -1132,6 +1872,10 @@ namespace qiquanui
             convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
         }//点击“凸性套利”按钮
 
+
+        #endregion
+
+
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
             initialing = true;
@@ -1313,13 +2057,19 @@ namespace qiquanui
             ts.Price = (number * ts.pricePer).ToString("f1");
         }
 
-        private void binding(int which, int num)
+        /// <summary>
+        /// 将ykm中的数据绑定到两个列表
+        /// </summary>
+        /// <param name="which"></param>
+        /// <param name="num"></param>
+        private void BindingForOC(int which, int num)
         {
             ObservableCollection<TopStrategy> oc;
             if (which == 0)
                 oc = qjoc;
             else
                 oc = cloc;
+            oc.Clear();
             TopStrategy ts;
 
             for (int i = 0; i < num; i++)
@@ -1346,46 +2096,16 @@ namespace qiquanui
         }
 
 
-        private YK[] ComputeBuyAndUp(int Tot)
-        {
-            YK[] ans = new YK[Tot];
-
-            double _max;
-            string x = setMaxRateOfGrothTBox.Text;
-            if (x == null) _max = 0.3;
-            _max = Double.Parse(x.Trim()) / 100;
-
-            for (int i = 0; i < TotLine; i++)
-            {
-                int[,] _num = new int[TotLine + 1, 4];
-                _num[i, (int)OptionType.CallBuy] = 1;
-                YK yk = new YK(TotLine, _num, "单买看涨", "上涨", _max);
-                yk.ComputeYK();
-
-
-                for (int k = 0; k < Tot; k++)
-                    if (ans[k] == null)
-                    {
-                        ans[k] = yk;
-                        break;
-                    }
-                    else
-                        if (yk.ExpectEarn > ans[k].ExpectEarn)
-                        {
-                            for (int j = Tot - 1; j > k; j--)
-                                ans[j] = ans[j - 1];
-                            ans[k] = yk;
-                            break;
-                        }
-
-            }
-
-            return ans;
-        }
 
 
 
-
+        /// <summary>
+        /// 计算正态值
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="lastprice"></param>
+        /// <param name="ykmax"></param>
+        /// <returns></returns>
         public static double ComputeZT(int x, double lastprice,double ykmax)
         {
             double u = lastprice, _o = ykmax * 100,o=_o;
@@ -1396,6 +2116,11 @@ namespace qiquanui
             return 1.0 / (Math.Sqrt(2 * Math.PI) * o) * Math.Exp(-Math.Pow((x - u), 2) / (2 * (Math.Pow(o, 2))));
         }
 
+        /// <summary>
+        /// 绘制盈亏图和概率图
+        /// </summary>
+        /// <param name="which"></param>
+        /// <param name="no"></param>
         public void BindingForChart(int which,int no)
         {
             ObservableCollection<XY> data = new ObservableCollection<XY>();
@@ -1485,7 +2210,11 @@ namespace qiquanui
 
         }
 
-
+        /// <summary>
+        /// 绘制盈亏对比图
+        /// </summary>
+        /// <param name="which"></param>
+        /// <param name="count"></param>
         public void BindingForCharts(int which, int count)
         {
             LegendMask.Visibility = Visibility.Hidden;
@@ -1546,7 +2275,8 @@ namespace qiquanui
         private void groupListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0) return;
-           
+            int no =  groupListView.Items.IndexOf(e.AddedItems[0]);
+            BindingForChart(0, no);
         }
 
         private void strategyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1555,6 +2285,47 @@ namespace qiquanui
             int no=strategyListView.Items.IndexOf(e.AddedItems[0]);
             BindingForChart(1, no);
         }
+
+        /// <summary>
+        /// 得到用户输入的关于最大幅度的百分数
+        /// </summary>
+        /// <param name="tb">该TextBox的指针</param>
+        /// <returns></returns>
+        private double GetRateText(TextBox tb)
+        {
+            double _max;
+            string x = tb.Text;
+            if (x == null || x.Equals("")) _max = 0.3;
+            else _max = Double.Parse(x.Trim()) / 100;
+            return _max;
+        }
+
+
+        /// <summary>
+        /// 根据yk.ExpectEarn将其插入ans中，取前Tot位
+        /// </summary>
+        /// <param name="ans"></param>
+        /// <param name="yk"></param>
+        /// <param name="Tot"></param>
+        private void SortYKAnswer(YK[] ans, YK yk, int Tot)
+        {
+            //排序
+            for (int k = 0; k < Tot; k++)
+                if (ans[k] == null)
+                {
+                    ans[k] = yk;
+                    break;
+                }
+                else
+                    if (yk.ExpectEarn > ans[k].ExpectEarn)
+                    {
+                        for (int j = Tot - 1; j > k; j--)
+                            ans[j] = ans[j - 1];
+                        ans[k] = yk;
+                        break;
+                    }
+        }
+
 
 
     }
