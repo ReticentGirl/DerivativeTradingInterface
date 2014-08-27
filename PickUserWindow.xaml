@@ -943,7 +943,7 @@
                     <GridViewColumn x:Name="ifChooseGVCH" Header="" Width="50" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox x:Name="ifChooseCheckBox" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IfChooseOTGVCH, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Height="23"/>
+                                <CheckBox x:Name="ifChooseCheckBox"  HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsChoose, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Height="23"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -953,7 +953,7 @@
             </ListView.View>
         </ListView>
         <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="21,46,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
-        <Button x:Name="OKBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Content="确认" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,157,19,0" VerticalAlignment="Top" Width="75" Style="{StaticResource darkButton}"/>
+        <Button x:Name="OKBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Content="确认" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,157,19,0" VerticalAlignment="Top" Width="75" Style="{StaticResource darkButton}" Click="OKBtn_Click"/>
         <Label Canvas.Left="10" Canvas.Top="10" MaxWidth="193" Margin="170,40,10,62">
             <TextBlock Foreground="#FFB5B8BD" Text="        未被选中的账户历史交易记录将不出现在列表中" TextWrapping="Wrap"/>
         </Label>

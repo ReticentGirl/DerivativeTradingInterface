@@ -359,15 +359,19 @@ namespace qiquanui
 
         PositionsManager u_pm;
 
+        PickUpUserManager u_puum;
+
         System.Timers.Timer userTimer;
 
         public static Hashtable userHash = new Hashtable(100);
 
         public int userCount = 0;
 
-        public UserManager(MainWindow _pwindow)
+        public UserManager(MainWindow _pwindow, PickUpUserManager _u_puum)
         {
             pWindow = _pwindow;
+
+            u_puum = _u_puum;
 
             pWindow.userManageListView.ItemsSource = UserOC;
 
@@ -561,6 +565,7 @@ namespace qiquanui
             else
             {
                 initUserCombobox(pWindow);   //初始化程序上方的 投资账户ComBoBox
+                initPickUpUser(u_puum);
             }
 
 
@@ -583,6 +588,39 @@ namespace qiquanui
             }
 
             _pw.userComboBox.SelectedIndex = old_selectedIndex;
+
+        }
+
+        public void initPickUpUser(PickUpUserManager _puud)     //初始化历史记录账户筛选
+        {
+            ObservableCollection<PickUpUserData> tempPickUpUserOC = new ObservableCollection<PickUpUserData>();
+
+            for (int i = 0; i < PickUpUserManager.PickUpUserOC.Count; i++)
+            {
+                bool t_isChoose = PickUpUserManager.PickUpUserOC[i].IsChoose;
+                string t_userID = PickUpUserManager.PickUpUserOC[i].UserID;
+
+                tempPickUpUserOC.Add(new PickUpUserData(t_isChoose, t_userID));
+            }
+            
+            PickUpUserManager.PickUpUserOC.Clear();
+
+            for (int i = 0; i < UserOC.Count(); i++)
+            {
+                string eachUserID = UserOC[i].UserID;
+
+                _puud.OnAddPickUpUserDara(true, eachUserID);
+
+            }
+
+            for (int i = 0; i < PickUpUserManager.PickUpUserOC.Count; i++)
+            {
+                for (int j = 0; j < tempPickUpUserOC.Count; j++)
+                {
+                    if (PickUpUserManager.PickUpUserOC[i].UserID.Equals(tempPickUpUserOC[j].UserID))
+                        PickUpUserManager.PickUpUserOC[i].IsChoose = tempPickUpUserOC[j].IsChoose;
+                }
+            }
 
         }
 
@@ -1172,6 +1210,84 @@ namespace qiquanui
             GetPositionsFromDBToUserPositions();
 
         }
+
+
+        public bool UserLogOut(MainWindow _pWindow)
+        {
+            string add_userID = _pWindow.userIDAUTB.Text;
+
+            string add_passWord = _pWindow.passwordAUTB.Password;
+
+            bool isHave=false;    //看是否已经登录
+
+            for (int i = 0; i < UserOC.Count; i++)
+            {
+                if (UserOC[i].UserID.Equals(add_userID))
+                    isHave = true;
+            }
+
+
+            if (isHave == false)
+            {
+                string querySql = String.Format("SELECT * FROM User WHERE UserID='{0}' AND UserPassWord={1}", add_userID, add_passWord);
+
+                DataTable usersDT = DataControl.QueryTable(querySql);
+
+                if (usersDT.Rows.Count > 0)
+                {
+
+                    string updateSql = String.Format("UPDATE User SET IsLogin=1 WHERE UserID='{0}'", add_userID);
+
+                    DataControl.InsertOrUpdate(updateSql);
+
+                    this.initOpeningBalance();   //一定要放在um pm 初始化之后
+
+                    MainWindow.pm.initPositionAveragePrice();
+
+
+                    GetInfoFromDBToHash();
+                    GetInfoFromHashToOC();
+                    GetPositionsFromDBToUserPositions();
+
+
+
+                    _pWindow.addUserErrorWarn.Visibility = System.Windows.Visibility.Hidden;
+
+                    _pWindow.userIDAUTB.Text = null;
+
+                    _pWindow.passwordAUTB.Password = null;
+
+                    return true;
+                }
+                else
+                {
+                    _pWindow.addUserErrorWarn.Text = "账号不存在或者密码不正确！";
+
+                    _pWindow.addUserErrorWarn.Visibility = System.Windows.Visibility.Visible;
+
+                    _pWindow.userIDAUTB.Text = null;
+
+                    _pWindow.passwordAUTB.Password = null;
+
+                    return false;
+                }
+            }
+            else
+            {
+                _pWindow.addUserErrorWarn.Text = "账号已登录，无法重复登录！";
+
+                _pWindow.addUserErrorWarn.Visibility = System.Windows.Visibility.Visible;
+
+                _pWindow.userIDAUTB.Text = null;
+
+                _pWindow.passwordAUTB.Password = null;
+
+                return false;
+            }
+
+            
+        }
+        
 
 
 

@@ -89,6 +89,7 @@
     <Compile Include="CloseOutPlaceOrderWindow.xaml.cs">
       <DependentUpon>CloseOutPlaceOrderWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CloseOutPlaceOrderWindowManager.cs" />
     <Compile Include="DataControl.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="DynamicData.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="NumericUpAndDownUserControl.xaml.cs">
       <DependentUpon>NumericUpAndDownUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PickUpUserManager.cs" />
     <Compile Include="PickUserWindow.xaml.cs">
       <DependentUpon>PickUserWindow.xaml</DependentUpon>
     </Compile>

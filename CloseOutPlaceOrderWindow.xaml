@@ -881,18 +881,15 @@
                 <GridView>
                     <GridViewColumn x:Name="userTGVCH" Header="投资账户" DisplayMemberBinding="{Binding UserID}" Width="80"/>
                     <GridViewColumn x:Name="nameOTGVCH" Header="交易代码 "  DisplayMemberBinding="{Binding InstrumentID}" Width="110"/>
-                    <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" DisplayMemberBinding="{Binding TradingType}"  Width="60">
-                        <GridViewColumn.CellTemplate >
+                    <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" DisplayMemberBinding="{Binding S_tradingType}"  Width="60" />
+                    <GridViewColumn x:Name="lotTGVCH" Header=" 交易手数" Width="60">
+                        <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox x:Name="typeOfTradingTComboBox" SelectedIndex="{Binding TradingType, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="White" SelectionChanged="typeOfTradingTComboBox_SelectionChanged">
-                                    <ComboBoxItem Content="买" HorizontalContentAlignment="Left" Width="70"/>
-                                    <ComboBoxItem Content="卖" HorizontalContentAlignment="Left" Width="70"/>
-                                </ComboBox>
+                                <local:NumericUpAndDownUserControl x:Name="lotTNUAD" Width="Auto" HorizontalAlignment="Center" Value="{Binding Path=TradingNum,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Foreground="White"  />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn x:Name="lotTGVCH" Header=" 交易手数" DisplayMemberBinding="{Binding TradingNum}" Width="60"/>
-                    <GridViewColumn x:Name="formOfClientageTGVCH" Header="委托方式" DisplayMemberBinding="{Binding FinalPrice}" Width="60">
+                    <GridViewColumn x:Name="formOfClientageTGVCH" Header="委托方式"  Width="60">
                         <GridViewColumn.CellTemplate >
                             <DataTemplate>
                                 <ComboBox x:Name="formOfClientageTComboBox" SelectedIndex="{Binding ClientageType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource CboCommomStyle}" Height="23" Foreground="White" SelectionChanged="formOfClientageTComboBox_SelectionChanged">
@@ -915,8 +912,8 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,187,10,0" VerticalAlignment="Top" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel" Style="{StaticResource darkButton}"/>
-        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,187,99,0" VerticalAlignment="Top" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Style="{StaticResource darkButton}"/>
+        <Button x:Name="cancleBtn" Content="取消" HorizontalAlignment="Right" Margin="0,187,10,0" VerticalAlignment="Top" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" ToolTip="cancel" Style="{StaticResource darkButton}" Click="cancleBtn_Click"/>
+        <Button x:Name="OKBtn" Content="确认" HorizontalAlignment="Right" Margin="0,187,99,0" VerticalAlignment="Top" Width="75" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Style="{StaticResource darkButton}" Click="OKBtn_Click"/>
 
     </Grid>
 </Window>

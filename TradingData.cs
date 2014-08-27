@@ -42,12 +42,25 @@ namespace qiquanui
 
         private bool isEnableOfClientagePrice;    //委托价格是否可用
 
+        private string s_tradingType;    //为平仓界面写的
+
         Visibility aboutROD ;
 
         Visibility aboutFOK;
 
         Visibility aboutIOC;
 
+
+           public string S_tradingType
+        {
+            get { return s_tradingType; }
+            set
+            {
+
+                s_tradingType = value;
+                OnPropertyChanged("S_tradingType");
+            }
+        }
 
         public bool IsEnableOfClientagePrice
         {
@@ -435,6 +448,37 @@ namespace qiquanui
              isEnableOfClientagePrice = false;
             
              typeChangeCount = 0;  
+         }
+
+
+        ////////////////给平仓界面用的构造函数
+         public TradingData(
+                                  string _userID,
+                                  string _instrumentID,
+                                  string _s_tradingType,
+                                  int _tradingNum,
+                                  int _clientageType,
+                                  string _clientagePrice,
+                                  double _marketPrice
+                               )
+         {
+             userID = _userID;
+             instrumentID = _instrumentID;
+             s_tradingType = _s_tradingType;
+             tradingNum = _tradingNum;
+             clientageType = _clientageType;
+             clientagePrice = _clientagePrice;
+             marketPrice = _marketPrice;
+
+
+
+             //////不用到的在这里初始化
+
+             ifChooseOTGVCH = true;
+
+             isEnableOfClientagePrice = false;
+
+             typeChangeCount = 0;
          }
 
 

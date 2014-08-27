@@ -35,19 +35,21 @@ namespace qiquanui
     public partial class MainWindow : Window
     {
 
-        DataManager dm;
+        public static DataManager dm;
         private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper;
 
 
         public static TradingManager otm;   //维护交易区的指针
 
-        HistoryManager hm;  //维护历史记录区的指针
+        public HistoryManager hm;  //维护历史记录区的指针
 
         BasicInforAndPromptManager bip;   //维护基本信息和提示的指针
 
         UserManager um;
 
-        PositionsManager pm;   //维护持仓区
+        PickUpUserManager puum;
+
+        public static PositionsManager pm;   //维护持仓区
 
         private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
 
@@ -101,7 +103,9 @@ namespace qiquanui
 
             bip = new BasicInforAndPromptManager(this, dm, otm);
 
-            um = new UserManager(this);
+            puum = new PickUpUserManager();
+
+            um = new UserManager(this, puum);
 
             pm = new PositionsManager(this, um, otm);
 
@@ -758,7 +762,7 @@ namespace qiquanui
                 {
 
                     TradingData otd = (TradingData)tradingListView.Items[i];
-                    if (otd.IfChooseOTGVCH == true&&otd.TradingNum!=0)
+                    if (otd.IfChooseOTGVCH == true && otd.TradingNum != 0)
                     {
 
                         string orderUserID = otd.UserID;   //投资账户
@@ -1658,8 +1662,10 @@ namespace qiquanui
 
         private void closeOutBtn_Click(object sender, RoutedEventArgs e)    //平仓按钮 
         {
-            pm.HandleCloseOut();
-            CloseOutPlaceOrderWindow closeOutPlaceOrderWindow = new CloseOutPlaceOrderWindow();
+            //pm.HandleCloseOut();
+            CloseOutPlaceOrderWindow closeOutPlaceOrderWindow = new CloseOutPlaceOrderWindow(this);
+            CloseOutPlaceOrderWindow.copowm.HandleCloseOut();
+
             closeOutPlaceOrderWindow.Show();
         }
 
@@ -1786,21 +1792,76 @@ namespace qiquanui
             passwordAUTB.Clear();
         }//添加账户区，点击“重置”按钮
 
-		private void arithmeticProgressionTTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void arithmeticProgressionTTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             MainWindow.otm.LimitTradingNum();
         }
 
         private void pickUserBtn_Click(object sender, RoutedEventArgs e)
         {
-            PickUserWindow pickUserWindow = new PickUserWindow();
+            PickUserWindow pickUserWindow = new PickUserWindow(this);
+
+            pickUserWindow.pickUserListView.ItemsSource = PickUpUserManager.PickUpUserOC; 
+
             pickUserWindow.Show();
+        }
+
+        private void addUserBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool b_Login = um.UserLogOut(this);
+
+        }
+
+        private void chooseAllHDCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Controls.CheckBox all_selected = sender as System.Windows.Controls.CheckBox;
+
+
+            if (all_selected.IsChecked == true)
+            {
+                for (int i = 0; i < pm.PositionsOC.Count(); i++)
+                {
+                    pm.PositionsOC[i].IsChoose = true;
+                }
+
+                for (int i = 0; i < pm.PositionsOptionOC.Count(); i++)
+                {
+                    pm.PositionsOptionOC[i].IsChoose = true;
+                }
+
+                for (int i = 0; i < pm.PositionsFutureOC.Count(); i++)
+                {
+                    pm.PositionsFutureOC[i].IsChoose = true;
+                }
+
+            }
+            else if (all_selected.IsChecked == false)
+            {
+                for (int i = 0; i < pm.PositionsOC.Count(); i++)
+                {
+                    pm.PositionsOC[i].IsChoose = false;
+                }
+
+                for (int i = 0; i < pm.PositionsOptionOC.Count(); i++)
+                {
+                    pm.PositionsOptionOC[i].IsChoose = false;
+                }
+
+                for (int i = 0; i < pm.PositionsFutureOC.Count(); i++)
+                {
+                    pm.PositionsFutureOC[i].IsChoose = false;
+                }
+            }
+
+
+
+
         }//历史记录区，点击“筛选账户”，弹出“筛选账户”界面
-        
 
-        
 
-        
+
+
+
 
 
 

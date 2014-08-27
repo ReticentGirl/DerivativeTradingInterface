@@ -19,10 +19,15 @@ namespace qiquanui
     /// </summary>
     public partial class CloseOutPlaceOrderWindow : Window
     {
-        public CloseOutPlaceOrderWindow()
-        {
-            InitializeComponent();
+        public static CloseOutPlaceOrderWindowManager copowm;
 
+        public MainWindow pWindow;
+
+        public CloseOutPlaceOrderWindow(MainWindow _pWindow)
+        {
+            pWindow = _pWindow;
+            InitializeComponent();
+            copowm = new CloseOutPlaceOrderWindowManager(this,pWindow);
         }
         
         bool isWindowMax = false;
@@ -75,120 +80,59 @@ namespace qiquanui
             }
         } //窗口关闭效果
 
-        private void typeOfTradingTComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)    //对买 卖 ComboBox 写动态 0 买  1 卖
-        {
-
-            //for (int i = 0; i < tradingListView.Items.Count; i++)
-            //{
-            //    TradingData otd = (TradingData)tradingListView.Items[i];
-
-            //    bool becomeSame = false;   //改变了之后有相同的
-
-            //    int old_tradingNum = otd.TradingNum;
-
-            //    switch (otd.TradingType)
-            //    {
-            //        case 0:
-            //            otd.IsBuy = true;
-
-            //            otd.TradingNum = Math.Abs(old_tradingNum);
-            //            break;
-            //        case 1:
-            //            otd.IsBuy = false;
-            //            otd.TradingNum = -Math.Abs(old_tradingNum);
-            //            break;
-
-            //    }
-
-            //    otd.TypeChangeCount += 1;
-
-            //    if (otd.TypeChangeCount > 1)   //如果已经不是第一次改变，那就要判断是否有重复
-            //    {
-            //        if (otd.OptionOrFuture == false)  //如果是期权
-            //        {
-            //            if (otm.TradingOC.Count() > 0)    //判断是否有相同的
-            //                for (int j = 0; j < otm.TradingOC.Count(); j++)
-            //                {
-            //                    TradingData td = otm.TradingOC[j];
-            //                    if (td.UserID == otd.UserID && td.InstrumentID == otd.InstrumentID && Convert.ToDouble(td.ExercisePrice) == Convert.ToDouble(otd.ExercisePrice) && td.IsBuy == otd.IsBuy &&
-            //                        td.CallOrPut.Equals(otd.CallOrPut) && td.OptionOrFuture == otd.OptionOrFuture && i != j)
-            //                        becomeSame = true;
-            //                }
-            //        }
-            //        else if (otd.OptionOrFuture == true)  //如果是期货
-            //        {
-            //            if (otm.TradingOC.Count() > 0)    //判断是否有相同的
-            //                for (int j = 0; j < otm.TradingOC.Count(); j++)
-            //                {
-            //                    TradingData td = otm.TradingOC[j];
-
-            //                    if (td.InstrumentID.Equals(otd.InstrumentID) && td.IsBuy == otd.IsBuy && td.OptionOrFuture == otd.OptionOrFuture && i != j)
-            //                    {
-            //                        becomeSame = true;
-            //                    }
-
-            //                }
-            //        }
-            //    }
-
-
-
-                //if (becomeSame == true)
-                //{
-                //    otm.TradingOC.RemoveAt(i);
-                //}
-
-
-
-            
-
-        }
+       
 
         private void formOfClientageTComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)   //交易区 市价 限价 ComboBOX 变换调用的函数
         {
-            //System.Windows.MessageBox.Show("123");
-            //for (int i = 0; i < otm.TradingOC.Count(); i++)
-            //{
-            //    TradingData cTd = otm.TradingOC[i];
-            //    if (cTd.OptionOrFuture == true)  //如果是期货
-            //    {
-            //        cTd.AboutFOK = Visibility.Collapsed;
-            //        cTd.AboutIOC = Visibility.Collapsed;
-            //        cTd.AboutROD = Visibility.Visible;
-            //        if (cTd.ClientageType == 0) //市价
-            //        {
-            //            cTd.ClientagePrice = "-";
-            //            cTd.IsEnableOfClientagePrice = false;
-            //        }
-            //        else if (cTd.ClientageType == 1)    //限价
-            //        {
-            //            cTd.ClientagePrice = cTd.MarketPrice.ToString();
-            //            cTd.IsEnableOfClientagePrice = true;
-            //        }
-            //    }
-            //    else     //如果是期权
-            //    {
-            //        if (cTd.ClientageType == 0) //市价
-            //        {
-            //            cTd.AboutFOK = Visibility.Visible;
-            //            cTd.AboutIOC = Visibility.Visible;
-            //            cTd.AboutROD = Visibility.Collapsed;
 
-            //            cTd.ClientagePrice = "-";
-            //            cTd.IsEnableOfClientagePrice = false;
-            //        }
-            //        else if (cTd.ClientageType == 1)    //限价
-            //        {
-            //            cTd.AboutFOK = Visibility.Visible;
-            //            cTd.AboutIOC = Visibility.Visible;
-            //            cTd.AboutROD = Visibility.Visible;
 
-            //            cTd.ClientagePrice = cTd.MarketPrice.ToString();
-            //            cTd.IsEnableOfClientagePrice = true;
-            //        }
+            for (int i = 0; i < copowm.CloseOutPlaceOrderWindowOC.Count; i++)
+            {
+                TradingData i_td = copowm.CloseOutPlaceOrderWindowOC[i];
+                if (i_td.ClientageType == 0)
+                {
+                    i_td.ClientagePrice = "-";
+                    i_td.IsEnableOfClientagePrice = false;
+                }
+                else
+                {
+                    i_td.ClientagePrice = i_td.MarketPrice.ToString();
+                    i_td.IsEnableOfClientagePrice = true;
+                }
+            }
+           
+        }
 
-            //    }
-            //}
+        private void cancleBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OKBtn_Click(object sender, RoutedEventArgs e)    //确定按钮
+        {
+            copowm.CloseOutOCToHistory();
+
+            if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == true)
+            {
+                pWindow.hm.OnShowAll();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == false)
+            {
+                pWindow.hm.OnShowOption();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == false && pWindow.futuresCheckBox.IsChecked == true)
+            {
+                pWindow.hm.OnShowFuture();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == false && pWindow.futuresCheckBox.IsChecked == false)
+            {
+                pWindow.hm.OnShowNull();
+            }
+
+
+            pWindow.historyTabItem.IsSelected = true;
+
+            this.Close();
         }
     }
 }

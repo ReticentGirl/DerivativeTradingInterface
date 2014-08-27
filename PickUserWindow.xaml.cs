@@ -19,9 +19,11 @@ namespace qiquanui
     /// </summary>
     public partial class PickUserWindow : Window
     {
+        MainWindow pWindow;
 
-        public PickUserWindow()
+        public PickUserWindow(MainWindow _pWindow)
         {
+            pWindow = _pWindow;
             InitializeComponent();
         }
 
@@ -43,7 +45,22 @@ namespace qiquanui
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
-
+            if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == true)
+            {
+                pWindow.hm.OnShowAll();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == false)
+            {
+                pWindow.hm.OnShowOption();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == false && pWindow.futuresCheckBox.IsChecked == true)
+            {
+                pWindow.hm.OnShowFuture();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == false && pWindow.futuresCheckBox.IsChecked == false)
+            {
+                pWindow.hm.OnShowNull();
+            }
             this.Close();
 
         }//关闭窗口按钮
@@ -78,6 +95,27 @@ namespace qiquanui
         {
            
 
+        }
+
+        private void OKBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == true)
+            {
+                pWindow.hm.OnShowAll();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == false)
+            {
+                pWindow.hm.OnShowOption();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == false && pWindow.futuresCheckBox.IsChecked == true)
+            {
+                pWindow.hm.OnShowFuture();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == false && pWindow.futuresCheckBox.IsChecked == false)
+            {
+                pWindow.hm.OnShowNull();
+            }
+            this.Close();
         }//全选
     }
 }

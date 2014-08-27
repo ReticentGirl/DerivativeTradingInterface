@@ -284,6 +284,8 @@ namespace qiquanui
 
         public ObservableCollection<HistoryData> HistoryNullOC = new ObservableCollection<HistoryData>();
 
+
+
         MainWindow pwindow;    //主窗体指针
 
         PositionsManager h_pm; //持仓指针
@@ -337,31 +339,31 @@ namespace qiquanui
             )
         {
 
-           // TurnOver(HistoryOC);
-           // TurnOver(HistoryOptionOC);
-           // TurnOver(HistoryFutureOC);
+            // TurnOver(HistoryOC);
+            // TurnOver(HistoryOptionOC);
+            // TurnOver(HistoryFutureOC);
 
 
             HistoryData a_hd = new HistoryData(_instrumentID, _tradingTime, _tradingType, _postNum, _doneNum, _tradingState, _postPrice, _donePrice, _timeLimit, _userID, _clientageCondition, _optionOrFuture, _clientageType);
-          
+
 
             HistoryOC.Add(a_hd);
 
             if (a_hd.OptionOrFuture == false)
             {
-              
+
                 HistoryOptionOC.Add(a_hd);
-             
+
             }
             else if (a_hd.OptionOrFuture == true)
             {
-              
+
                 HistoryFutureOC.Add(a_hd);
-                
+
             }
 
             //TurnOver(HistoryOC);
-           // TurnOver(HistoryOptionOC);
+            // TurnOver(HistoryOptionOC);
             // TurnOver(HistoryFutureOC);
         }
 
@@ -1042,50 +1044,58 @@ namespace qiquanui
         }
 
 
+        delegate void HistoryShowCallBack();
+
         public void OnShowOption()
         {
-            //HistoryOptionOC.Clear();
 
-            //for (int i = 0; i < HistoryOC.Count(); i++)
-            //{
-            //    HistoryData f_hd = HistoryOC[i];
+            ObservableCollection<HistoryData> HistoryShowOC = new ObservableCollection<HistoryData>();
 
-            //    if (f_hd.OptionOrFuture == false)
-            //    {
-            //        HistoryOptionOC.Add(f_hd);
-            //    }
-            //}
-
-            pwindow.historyListView.ItemsSource = HistoryOptionOC;
+            for (int i = 0; i < HistoryOptionOC.Count; i++)
+            {
+                if (PickUpUserManager.isChooseUser(HistoryOptionOC[i].UserID) == true)
+                    HistoryShowOC.Add(HistoryOptionOC[i]);
+            }
+            pwindow.historyListView.ItemsSource = HistoryShowOC;
 
         }
 
         public void OnShowFuture()
         {
-            //HistoryFutureOC.Clear();
 
-            //for (int i = 0; i < HistoryOC.Count(); i++)
-            //{
-            //    HistoryData f_hd = HistoryOC[i];
+            ObservableCollection<HistoryData> HistoryShowOC = new ObservableCollection<HistoryData>();
 
-            //    if (f_hd.OptionOrFuture == true)
-            //    {
-            //        HistoryOptionOC.Add(f_hd);
-            //    }
-            //}
+            for (int i = 0; i < HistoryFutureOC.Count; i++)
+            {
+                if (PickUpUserManager.isChooseUser(HistoryFutureOC[i].UserID) == true)
+                    HistoryShowOC.Add(HistoryFutureOC[i]);
+            }
+            pwindow.historyListView.ItemsSource = HistoryShowOC;
 
-            pwindow.historyListView.ItemsSource = HistoryFutureOC;
         }
 
         public void OnShowAll()
         {
-            pwindow.historyListView.ItemsSource = HistoryOC;
+
+            ObservableCollection<HistoryData> HistoryShowOC = new ObservableCollection<HistoryData>();
+
+            for (int i = 0; i < HistoryOC.Count; i++)
+            {
+                if (PickUpUserManager.isChooseUser(HistoryOC[i].UserID) == true)
+                    HistoryShowOC.Add(HistoryOC[i]);
+            }
+            pwindow.historyListView.ItemsSource = HistoryShowOC;
+
         }
 
         public void OnShowNull()
         {
+
             pwindow.historyListView.ItemsSource = HistoryNullOC;
         }
+
+
+
 
 
 

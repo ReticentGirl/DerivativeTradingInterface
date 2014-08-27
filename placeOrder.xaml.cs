@@ -118,7 +118,28 @@ namespace qiquanui
             //System.Windows.MessageBox.Show("123");
             OrderToHistory();
             cleanTrading();
+
+            if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == true)
+            {
+                pWindow.hm.OnShowAll();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == false)
+            {
+                pWindow.hm.OnShowOption();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == false && pWindow.futuresCheckBox.IsChecked == true)
+            {
+                pWindow.hm.OnShowFuture();
+            }
+            else if (pWindow.optionsCheckBox.IsChecked == false && pWindow.futuresCheckBox.IsChecked == false)
+            {
+                pWindow.hm.OnShowNull();
+            }
+
+            
             pWindow.historyTabItem.IsSelected = true;
+
+
             //pWindow.historyListView.Visibility = Visibility.Visible;
 
 

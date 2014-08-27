@@ -2414,10 +2414,11 @@
 
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="82"/>
+                            <ColumnDefinition Width="832"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,10,0,0" SelectionChanged="tradingListView_SelectionChanged">
+                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,10,0,0" SelectionChanged="tradingListView_SelectionChanged" Grid.ColumnSpan="2">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseTGVCH" Header="" Width="50" >
@@ -2512,19 +2513,22 @@
                         </ListView>
 
                         <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
-                        <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
-                        <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click"/>
-                        <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="addSubjectMatter_Click"/>
+                        <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click" Grid.Column="1"/>
+                        <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click" Grid.ColumnSpan="2"/>
+                        <Button x:Name="addSubjectMatter" Content="加入标的商品" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="addSubjectMatter_Click" Grid.Column="1"/>
                     </Grid>
                 </TabItem>
 
                 <TabItem x:Name="holdDetailTabItem" Foreground="White" Header="持仓" Margin="-2,9,2,-13" Style="{StaticResource TabItemStyle}" PreviewMouseLeftButtonDown="holdDetailTabItem_PreviewMouseLeftButtonDown">
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="7"/>
+                            <ColumnDefinition Width="4"/>
+                            <ColumnDefinition Width="4"/>
+                            <ColumnDefinition Width="899"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,10,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                        <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,10,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="4">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseHDGVCH" Header="" Width="50">
@@ -2550,12 +2554,12 @@
                             </ListView.View>
                         </ListView>
 
-                        <CheckBox x:Name="chooseAllHDCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
-                        <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
-                        <Button x:Name="analyseBtn" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21"/>
-                        <Button x:Name="closeOutBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Click="closeOutBtn_Click" Content="平仓" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,0,199,4" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="75"/>
-                        <CheckBox x:Name="optionsHDCheckBox" Content="显示期权交易明细" IsChecked="True" HorizontalAlignment="Left" Margin="160,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsHDCheckBox_Click"/>
-                        <CheckBox x:Name="futuresHDCheckBox" Content="显示期货交易明细"  IsChecked="True" HorizontalAlignment="Left" Margin="10,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresHDCheckBox_Click"/>
+                        <CheckBox x:Name="chooseAllHDCheckBox" Content="" HorizontalAlignment="Left" IsChecked="False" Margin="1,17,0,214" Click="chooseAllHDCheckBox_Click" Grid.Column="3"/>
+                        <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="3"/>
+                        <Button x:Name="analyseBtn" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="3"/>
+                        <Button x:Name="closeOutBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Click="closeOutBtn_Click" Content="平仓" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,0,199,4" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="75" Grid.Column="3"/>
+                        <CheckBox x:Name="optionsHDCheckBox" Content="显示期权交易明细" IsChecked="True" HorizontalAlignment="Left" Margin="145,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsHDCheckBox_Click" Grid.Column="3"/>
+                        <CheckBox x:Name="futuresHDCheckBox" Content="显示期货交易明细"  IsChecked="True" HorizontalAlignment="Left" Margin="3,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresHDCheckBox_Click" Grid.ColumnSpan="3" Grid.Column="1"/>
 
                     </Grid>
                 </TabItem>
@@ -2563,10 +2567,11 @@
                 <TabItem x:Name="historyTabItem" Foreground="White" Header="历史记录" Margin="-2,9,2,-13" PreviewMouseLeftButtonDown="historyTabItem_PreviewMouseLeftButtonDown" Style="{StaticResource TabItemStyle}">
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="914"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="899"/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
+                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White" Grid.ColumnSpan="2">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChoose" Header="" Width="50">
@@ -2592,11 +2597,11 @@
                             </ListView.View>
                         </ListView>
 
-                        <Button x:Name="cancelOrderBtn" Content="撤单" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,21,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="cancelOrderBtn_Click" />
-                        <CheckBox x:Name="optionsCheckBox" Content="显示期权交易明细" HorizontalAlignment="Left" Margin="159,0,0,4" IsChecked="True" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsCheckBox_Click"/>
-                        <CheckBox x:Name="futuresCheckBox" Content="显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4"  IsChecked="True"  VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresCheckBox_Click"/>
-                        <Button x:Name="pickUserBtn" Click="pickUserBtn_Click" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,110,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
-                        <CheckBox x:Name="chooseAllHCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
+                        <Button x:Name="cancelOrderBtn" Content="撤单" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,21,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="cancelOrderBtn_Click" Grid.Column="1" />
+                        <CheckBox x:Name="optionsCheckBox" Content="显示期权交易明细" HorizontalAlignment="Left" Margin="144,0,0,4" IsChecked="True" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsCheckBox_Click" Grid.Column="1"/>
+                        <CheckBox x:Name="futuresCheckBox" Content="显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4"  IsChecked="True"  VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresCheckBox_Click" Grid.ColumnSpan="2"/>
+                        <Button x:Name="pickUserBtn" Click="pickUserBtn_Click" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,110,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="1" />
+                        <CheckBox x:Name="chooseAllHCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="1,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click" Grid.Column="1"/>
 
                     </Grid>
                 </TabItem>
@@ -2706,12 +2711,15 @@
             <Label Canvas.Left="10" Canvas.Top="10" Height="57" MaxWidth="193">
                 <TextBlock Foreground="#FFB5B8BD" Text="       通过添加多个账户，可以在软件内各账户间随时切换交易，方便管理" TextWrapping="Wrap"/>
             </Label>
+            <Label Canvas.Left="20" Canvas.Top="65" Height="57" MaxWidth="193">
+                <TextBlock Name="addUserErrorWarn" Foreground="Red"   Visibility="Hidden" TextWrapping="Wrap"/>
+            </Label>
             <TextBlock Foreground="#FFE6E8EC" Canvas.Left="27" Canvas.Top="96" Text="帐号：" TextWrapping="Wrap"/>
-            <TextBox x:Name="userIDAUTB" Canvas.Left="68" Canvas.Top="92" Height="23" Text="TextBox" TextWrapping="Wrap" VerticalContentAlignment="Center" Width="120"/>
+            <TextBox x:Name="userIDAUTB" Canvas.Left="68" Canvas.Top="92" Height="23"  TextWrapping="Wrap" VerticalContentAlignment="Center" Width="120"/>
             <TextBlock Foreground="#FFE6E8EC" Canvas.Left="27" Canvas.Top="133" Text="密码：" TextWrapping="Wrap"/>
-            <TextBox x:Name="passwordAUTB" Canvas.Left="68" Canvas.Top="129" Height="23" Text="TextBox" TextWrapping="Wrap" VerticalContentAlignment="Center" Width="120"/>
+            <PasswordBox x:Name="passwordAUTB" Canvas.Left="68" Canvas.Top="129" Height="23"   VerticalContentAlignment="Center" Width="120"/>
             <Button x:Name="resetAUBtn" Click="resetAUBtn_Click" Content="重置" Background="#FF4D5166" BorderBrush="{x:Null}" Canvas.Left="27" Canvas.Top="216" Style="{StaticResource darkButton}" Width="45"/>
-            <Button x:Name="addUserBtn" Background="#FF4D5166" BorderBrush="{x:Null}" Canvas.Left="68" Canvas.Top="170" Content="添加账户" FlowDirection="RightToLeft" Foreground="White" Height="21" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Padding="1" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="82"/>
+            <Button x:Name="addUserBtn" Background="#FF4D5166" BorderBrush="{x:Null}" Canvas.Left="68" Canvas.Top="170" Content="添加账户" FlowDirection="RightToLeft" Foreground="White" Height="21" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Padding="1" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="82" Click="addUserBtn_Click"/>
 
         </Canvas>
 
