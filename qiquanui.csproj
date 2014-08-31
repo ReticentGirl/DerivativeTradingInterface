@@ -114,6 +114,9 @@
     </Compile>
     <Compile Include="SomeCalculate.cs" />
     <Compile Include="Strategy.cs" />
+    <Compile Include="ArbitrageWindow.xaml.cs">
+      <DependentUpon>ArbitrageWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="TradingData.cs" />
     <Compile Include="TradingManager.cs" />
     <Compile Include="StaticData.cs" />
@@ -154,6 +157,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SignInWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ArbitrageWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

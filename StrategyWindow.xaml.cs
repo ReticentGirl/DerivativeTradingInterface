@@ -296,8 +296,6 @@ namespace qiquanui
             pwindow.WindowState = WindowState.Normal;
             pwindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
             this.Close();
-
-
         }
         private void closeWindow_Completed(object sender, EventArgs e)
         {

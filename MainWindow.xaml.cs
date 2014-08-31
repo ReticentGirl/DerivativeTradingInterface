@@ -184,7 +184,6 @@ namespace qiquanui
             basicInforAndPromptGridStoryboard_Leave = (Storyboard)this.FindResource("basicInforAndPromptGridAnimate_Leave");
 
             typeComboBox.SelectedIndex = 0;
-            typeInStrategyPanelComboBox.SelectedIndex = 1;
 
         }
 
@@ -668,72 +667,23 @@ namespace qiquanui
 
 
 
-        private void predictComboBoxItem_Selected(object sender, RoutedEventArgs e)
-        {
-            maxAmountOfUpAndDownLabel.Visibility = Visibility.Visible;
-            maxAmountOfUpAndDownTextBox.Visibility = Visibility.Visible;
-            startStrategyBtn.IsEnabled = true;
-            volatilityLabel.Visibility = Visibility.Hidden;
-            volatilityComboBox.Visibility = Visibility.Hidden;
-        } //策略实验室，“情景选择”选择“上涨”，显示“最高涨跌幅”，隐藏“波动率”
-
-        private void predictComboBoxItem2_Selected(object sender, RoutedEventArgs e)
-        {
-            maxAmountOfUpAndDownLabel.Visibility = Visibility.Visible;
-            maxAmountOfUpAndDownTextBox.Visibility = Visibility.Visible;
-            startStrategyBtn.IsEnabled = true;
-            volatilityLabel.Visibility = Visibility.Hidden;
-            volatilityComboBox.Visibility = Visibility.Hidden;
-        } //策略实验室，“情景选择”选择“下跌”，显示“最高涨跌幅”，隐藏“波动率”
-
-        private void predictComboBoxItem3_Selected(object sender, RoutedEventArgs e)
-        {
-            maxAmountOfUpAndDownLabel.Visibility = Visibility.Hidden;
-            maxAmountOfUpAndDownTextBox.Visibility = Visibility.Hidden;
-            volatilityLabel.Visibility = Visibility.Visible;
-            volatilityComboBox.Visibility = Visibility.Visible;
-            startStrategyBtn.IsEnabled = true;
-        } //策略实验室，“情景选择”选择“波动”，隐藏“最高涨跌幅”，显示“波动率”
-
-        private void predictComboBoxItem4_Selected(object sender, RoutedEventArgs e)
-        {
-            maxAmountOfUpAndDownLabel.Visibility = Visibility.Hidden;
-            maxAmountOfUpAndDownTextBox.Visibility = Visibility.Hidden;
-            volatilityLabel.Visibility = Visibility.Hidden;
-            volatilityComboBox.Visibility = Visibility.Hidden;
-            strategyAndProfitTabItem.Visibility = Visibility.Visible;
-            CloseLeftCanvas();
-            strategyAndProfitTabItem.IsSelected = true;
-            startStrategyBtn.IsEnabled = false;
-        } //策略实验室，“情景选择”选择“与标的物组合”，隐藏“最高涨跌幅”、“波动率”
+        
 
         private void optionsMarketListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
         {
 
         }
 
-        private void futuresInStrategyPanelComboBoxItem_Selected(object sender, RoutedEventArgs e)
-        {
-            strategyOfOptionsCanvas.Visibility = Visibility.Hidden;
-            strategyOfFuturesCanvas.Visibility = Visibility.Visible;
-        } //策略实验室，“衍生品种类”选择期货，展开相关控件
-
-        private void optionsInStrategyPanelComboBoxItem_Selected(object sender, RoutedEventArgs e)
-        {
-            strategyOfOptionsCanvas.Visibility = Visibility.Visible;
-            strategyOfFuturesCanvas.Visibility = Visibility.Hidden;
-        } //策略实验室，“衍生品种类”选择期权，展开相关控件
-
-        private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
-        {
-            StrategyWindow strategyWindow = new StrategyWindow(this);
-            strategyWindow.Show();
-            this.WindowState = WindowState.Minimized;
-            CloseLeftCanvas();
-            CloseRightCanvas();
+        //private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
+        //{
+        //    StrategyWindow strategyWindow = new StrategyWindow(this);
+        //    strategyWindow.Show();
+        //    this.WindowState = WindowState.Minimized;
+        //    CloseLeftCanvas();
+        //    CloseRightCanvas();
 
 
-        } //策略实验室，点击“开始分析”
+        //} //策略实验室，点击“开始分析”
 
         //private void marketPriceOTCBI_Selected(object sender, RoutedEventArgs e)
         //{
@@ -1640,7 +1590,7 @@ namespace qiquanui
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            startStrategyBtn_Click(sender, e);
+            strategyButton_Click(sender, e);
         }
 
 
@@ -1857,6 +1807,24 @@ namespace qiquanui
 
 
         }//历史记录区，点击“筛选账户”，弹出“筛选账户”界面
+
+        private void strategyButton_Click(object sender, RoutedEventArgs e)
+        {
+            StrategyWindow strategyWindow = new StrategyWindow(this);
+            strategyWindow.Show();
+            this.WindowState = WindowState.Minimized;
+            CloseLeftCanvas();
+            CloseRightCanvas();
+        }
+
+        private void arbitragyButton_Click(object sender, RoutedEventArgs e)
+        {
+            ArbitrageWindow arbitrageWindow = new ArbitrageWindow(this);
+            arbitrageWindow.Show();
+            this.WindowState = WindowState.Minimized;
+            CloseLeftCanvas();
+            CloseRightCanvas();
+        }
 
 
 
