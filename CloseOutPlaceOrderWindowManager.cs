@@ -193,7 +193,7 @@ namespace qiquanui
 
                 string oInstrumentID = i_Td.InstrumentID;
 
-                string oTradingTime = MainWindow.dm.now.ToString();
+                string oTradingTime = DataManager.now.ToString();
 
                 string oTradingType = i_Td.S_tradingType;
 

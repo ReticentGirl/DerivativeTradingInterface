@@ -56,6 +56,9 @@
     <Reference Include="amcharts.windows">
       <HintPath>.\amcharts.windows.dll</HintPath>
     </Reference>
+    <Reference Include="AmCharts.Windows.Stock">
+      <HintPath>.\AmCharts.Windows.Stock.dll</HintPath>
+    </Reference>
     <Reference Include="CTP">
       <HintPath>.\CTP.dll</HintPath>
     </Reference>
@@ -123,6 +126,7 @@
     <Compile Include="StrategyWindow.xaml.cs">
       <DependentUpon>StrategyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Trend.cs" />
     <Compile Include="UserManager.cs" />
     <Page Include="CloseOutPlaceOrderWindow.xaml">
       <SubType>Designer</SubType>

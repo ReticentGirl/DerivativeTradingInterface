@@ -16,6 +16,8 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using AmCharts.Windows.Core;
 using AmCharts.Windows.Line;
+using System.Threading;
+using System.Timers;
 
 namespace qiquanui
 {
@@ -45,7 +47,7 @@ namespace qiquanui
         private string loseRate;
         public double loseRatePer;
 
-
+        public int LineNo { get; set; }
         public string GroupName
         {
             get { return groupName; }
@@ -197,7 +199,7 @@ namespace qiquanui
             {
                 this.DragMove();
             }
-            else if (isWindowMax == true);
+            else if (isWindowMax == true) ;
 
         }//窗口移动
 
@@ -296,6 +298,8 @@ namespace qiquanui
             pwindow.WindowState = WindowState.Normal;
             pwindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
             this.Close();
+
+
         }
         private void closeWindow_Completed(object sender, EventArgs e)
         {
@@ -349,7 +353,7 @@ namespace qiquanui
             buyAndUpMove.To = new Thickness(408, 355, 0, 0);
             buyAndUpMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
             buyAndUpCanvas.BeginAnimation(Canvas.MarginProperty, buyAndUpMove);
-            
+
             //牛市差价Canvas移出
             ThicknessAnimation bullSpreadMove = new ThicknessAnimation();
             bullSpreadMove.From = new Thickness(550, 385, 0, 0);
@@ -391,7 +395,7 @@ namespace qiquanui
             bullSpreadMove.To = new Thickness(550, 385, 0, 0);
             bullSpreadMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
             bullSpreadCanvas.BeginAnimation(Canvas.MarginProperty, bullSpreadMove);
-            
+
             //Canvas、button缩回
             DoubleAnimation shorten = new DoubleAnimation();
             shorten.From = 102;
@@ -403,6 +407,15 @@ namespace qiquanui
             bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+            qjocPresent = StrategyType.Up;
+            nowPresent = qjocPresent;
+            new Thread(new ThreadStart(UpRefresh)).Start();
+
+        }//点击“上涨”按钮
+
+
+        private void UpRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -410,9 +423,10 @@ namespace qiquanui
             }
             else Lock = true;
 
-            qjoc.Clear();
             int no = 2;
             int which = 0;
+
+
             YK[] res = ComputeUpSituation(no);
 
             for (int i = 0; i < no; i++)
@@ -425,14 +439,38 @@ namespace qiquanui
             BindingForOC(which, no);
             BindingForCharts(which, no);
 
-            ResultTab.SelectedIndex = which;
 
-            groupListView.SelectedIndex = 0;
+            ResultTab_Thread(which);
+
 
             Lock = false;
+        }
 
 
-        }//点击“上涨”按钮
+
+        delegate void ResultTabCallBack(int which);
+        private void ResultTab_Thread(int which)
+        {
+
+            ResultTabCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new ResultTabCallBack(ResultTab_Thread);
+                pwindow.Dispatcher.Invoke(d, new object[] { which });
+            }
+            else
+            {
+
+
+                ResultTab.SelectedIndex = which;
+
+                if (which == 0)
+                    groupListView.SelectedIndex = 0;
+                if (which == 1)
+                    strategyListView.SelectedIndex = 0;
+            }
+        }
+
 
 
         /// <summary>
@@ -452,7 +490,7 @@ namespace qiquanui
 
 
 
-
+        double MaxRange;
         /// <summary>
         /// 计算单支看涨
         /// </summary>
@@ -462,7 +500,7 @@ namespace qiquanui
         {
             YK[] ans = new YK[Tot];
 
-            double _max = GetRateText(setMaxRateOfGrothTBox);
+            GetRateText(setMaxRateOfGrothTBox);
 
 
             for (int i = 0; i < TotLine; i++)
@@ -471,7 +509,7 @@ namespace qiquanui
                 int[,] _num = new int[TotLine + 1, 4];
                 _num[i, (int)OptionType.CallBuy] = 1;
                 //计算盈亏数据
-                YK yk = new YK(TotLine, _num, "单买看涨", "上涨", _max);
+                YK yk = new YK(TotLine, _num, "单买看涨", "上涨", MaxRange);
                 yk.ComputeYK();
                 //排序
                 SortYKAnswer(ans, yk, Tot);
@@ -490,10 +528,10 @@ namespace qiquanui
         {
             YK[] ans = new YK[Tot];
 
-            double _max = GetRateText(setMaxRateOfGrothTBox);
+            GetRateText(setMaxRateOfGrothTBox);
 
             //看涨牛市
-            for (int i=0;i<TotLine-1;i++)
+            for (int i = 0; i < TotLine - 1; i++)
                 for (int j = i + 1; j < TotLine; j++)
                 {
                     //填充
@@ -501,7 +539,7 @@ namespace qiquanui
                     _num[i, (int)OptionType.CallBuy] = 1;
                     _num[j, (int)OptionType.CallSell] = 1;
                     //计算盈亏数据
-                    YK yk = new YK(TotLine, _num, "看涨组成的牛市", "上涨", _max);
+                    YK yk = new YK(TotLine, _num, "看涨组成的牛市", "上涨", MaxRange);
                     yk.ComputeYK();
                     //排序
                     SortYKAnswer(ans, yk, Tot);
@@ -516,7 +554,7 @@ namespace qiquanui
                     _num[i, (int)OptionType.PutBuy] = 1;
                     _num[j, (int)OptionType.PutSell] = 1;
                     //计算盈亏数据
-                    YK yk = new YK(TotLine, _num, "看跌组成的牛市", "上涨", _max);
+                    YK yk = new YK(TotLine, _num, "看跌组成的牛市", "上涨", MaxRange);
                     yk.ComputeYK();
                     //排序
                     SortYKAnswer(ans, yk, Tot);
@@ -531,7 +569,7 @@ namespace qiquanui
                     _num[i, (int)OptionType.CallSell] = 1;
                     _num[j, (int)OptionType.CallBuy] = 2;
                     //计算盈亏数据
-                    YK yk = new YK(TotLine, _num, "2比1牛市差价", "上涨", _max);
+                    YK yk = new YK(TotLine, _num, "2比1牛市差价", "上涨", MaxRange);
                     yk.ComputeYK();
                     //排序
                     SortYKAnswer(ans, yk, Tot);
@@ -540,7 +578,7 @@ namespace qiquanui
             return ans;
         }
 
-        
+
 
 
         private void buyAndUpBtn_Click(object sender, RoutedEventArgs e)
@@ -577,7 +615,14 @@ namespace qiquanui
             buyAndUpBtn.BeginAnimation(Button.WidthProperty, shorten);
             bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
 
-			if (Lock)
+            UpSingleRefresh();
+        }//点击“单买看涨”按钮
+
+
+
+        private void UpSingleRefresh()
+        {
+            if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
                 return;
@@ -601,12 +646,11 @@ namespace qiquanui
 
             strategyListView.SelectedIndex = 0;
 
+            clocPresent = StrategyType.UpSingle;
+
             Lock = false;
-        }//点击“单买看涨”按钮
 
-
-
-
+        }
 
 
 
@@ -645,6 +689,15 @@ namespace qiquanui
             bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+
+            UpBullRefresh();
+
+
+        }//点击“牛市差价”按钮
+
+
+        private void UpBullRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -669,12 +722,14 @@ namespace qiquanui
             ResultTab.SelectedIndex = 1;
 
             strategyListView.SelectedIndex = 0;
+
+
+            clocPresent = StrategyType.UpBull;
+
+
             Lock = false;
 
-
-
-
-        }//点击“牛市差价”按钮
+        }
 
 
         #endregion
@@ -725,6 +780,12 @@ namespace qiquanui
             bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+            DownRefresh();
+
+        }//点击“下跌”按钮      
+
+        private void DownRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in DownSituation");
@@ -751,10 +812,13 @@ namespace qiquanui
 
             groupListView.SelectedIndex = 0;
 
+            qjocPresent = StrategyType.Down;
+
+
             Lock = false;
 
+        }
 
-        }//点击“下跌”按钮      
 
         private void buyAndDownBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -777,6 +841,13 @@ namespace qiquanui
             bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+
+            DownSingleRefresh();
+
+        }//点击“单买看跌”按钮
+
+        private void DownSingleRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -800,11 +871,14 @@ namespace qiquanui
             ResultTab.SelectedIndex = 1;
 
             strategyListView.SelectedIndex = 0;
+
+
+            clocPresent = StrategyType.DownSingle;
+
+
             Lock = false;
+        }
 
-
-
-        }//点击“单买看跌”按钮
 
         private void bearSpreadBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -827,7 +901,14 @@ namespace qiquanui
             bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
-            ///熊市差价计算
+            DownBearRefresh();
+
+
+        }//点击“熊市差价”按钮
+
+
+        private void DownBearRefresh()
+        {             ///熊市差价计算
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -851,11 +932,13 @@ namespace qiquanui
             ResultTab.SelectedIndex = 1;
 
             strategyListView.SelectedIndex = 0;
+
+            clocPresent = StrategyType.DownBear;
+
+
             Lock = false;
+        }
 
-
-
-        }//点击“熊市差价”按钮
 
         /// <summary>
         /// 计算下跌情景
@@ -884,7 +967,7 @@ namespace qiquanui
         {
             YK[] ans = new YK[Tot];
 
-            double _max = GetRateText(setMaxRateOfDecreTBox);
+            GetRateText(setMaxRateOfDecreTBox);
 
 
             for (int i = 0; i < TotLine; i++)
@@ -893,7 +976,7 @@ namespace qiquanui
                 int[,] _num = new int[TotLine + 1, 4];
                 _num[i, (int)OptionType.PutBuy] = 1;
                 //计算盈亏数据
-                YK yk = new YK(TotLine, _num, "单买看跌", "下跌", _max);
+                YK yk = new YK(TotLine, _num, "单买看跌", "下跌", MaxRange);
                 yk.ComputeYK();
                 //排序
                 SortYKAnswer(ans, yk, Tot);
@@ -912,7 +995,7 @@ namespace qiquanui
         {
             YK[] ans = new YK[Tot];
 
-            double _max = GetRateText(setMaxRateOfDecreTBox);
+            GetRateText(setMaxRateOfDecreTBox);
 
             //看涨熊市
             for (int i = 0; i < TotLine - 1; i++)
@@ -923,7 +1006,7 @@ namespace qiquanui
                     _num[i, (int)OptionType.CallSell] = 1;
                     _num[j, (int)OptionType.CallBuy] = 1;
                     //计算盈亏数据
-                    YK yk = new YK(TotLine, _num, "看涨组成的熊市", "下跌", _max);
+                    YK yk = new YK(TotLine, _num, "看涨组成的熊市", "下跌", MaxRange);
                     yk.ComputeYK();
                     //排序
                     SortYKAnswer(ans, yk, Tot);
@@ -938,7 +1021,7 @@ namespace qiquanui
                     _num[i, (int)OptionType.PutSell] = 1;
                     _num[j, (int)OptionType.PutBuy] = 1;
                     //计算盈亏数据
-                    YK yk = new YK(TotLine, _num, "看跌组成的熊市", "下跌", _max);
+                    YK yk = new YK(TotLine, _num, "看跌组成的熊市", "下跌", MaxRange);
                     yk.ComputeYK();
                     //排序
                     SortYKAnswer(ans, yk, Tot);
@@ -953,7 +1036,7 @@ namespace qiquanui
                     _num[i, (int)OptionType.PutSell] = 1;
                     _num[j, (int)OptionType.PutBuy] = 2;
                     //计算盈亏数据
-                    YK yk = new YK(TotLine, _num, "2比1熊市差价", "下跌", _max);
+                    YK yk = new YK(TotLine, _num, "2比1熊市差价", "下跌", MaxRange);
                     yk.ComputeYK();
                     //排序
                     SortYKAnswer(ans, yk, Tot);
@@ -998,7 +1081,7 @@ namespace qiquanui
             extend.From = 0;
             extend.To = 102;
             extend.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomWideCanvas.BeginAnimation(Canvas.WidthProperty,extend);
+            bottomWideCanvas.BeginAnimation(Canvas.WidthProperty, extend);
             bottomCrossCanvas.BeginAnimation(Canvas.WidthProperty, extend);
             bottomCrossBtn.BeginAnimation(Button.WidthProperty, extend);
             bottomWideBtn.BeginAnimation(Button.WidthProperty, extend);
@@ -1039,6 +1122,12 @@ namespace qiquanui
             bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+            HighRefresh();
+
+        }//点击“高波动率”按钮
+
+        private void HighRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -1065,10 +1154,12 @@ namespace qiquanui
 
             groupListView.SelectedIndex = 0;
 
+
+            qjocPresent = StrategyType.High;
+
+
             Lock = false;
-
-
-        }//点击“高波动率”按钮
+        }
 
         private void bottomWideBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -1104,6 +1195,13 @@ namespace qiquanui
             bottomWideBtn.BeginAnimation(Button.WidthProperty, shorten);
             bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
 
+
+            HighWideRefresh();
+
+        }//点击“底部宽跨”按钮
+
+        private void HighWideRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -1128,11 +1226,16 @@ namespace qiquanui
             ResultTab.SelectedIndex = 1;
 
             strategyListView.SelectedIndex = 0;
+
+
+            clocPresent = StrategyType.HighWide;
+
+
             Lock = false;
 
 
+        }
 
-        }//点击“底部宽跨”按钮
 
         private void bottomCrossBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -1169,6 +1272,12 @@ namespace qiquanui
             bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+            HighSharpRefresh();
+
+        }//点击“底部跨式”按钮
+
+        private void HighSharpRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -1193,10 +1302,13 @@ namespace qiquanui
             ResultTab.SelectedIndex = 1;
 
             strategyListView.SelectedIndex = 0;
+
+
+            clocPresent = StrategyType.HighSharp;
+
+
             Lock = false;
-
-
-        }//点击“底部跨式”按钮
+        }
 
 
         /// <summary>
@@ -1226,7 +1338,7 @@ namespace qiquanui
         {
             YK[] ans = new YK[Tot];
 
-            double _max = GetRateText(setMaxRateOfVolatiTBox);
+            GetRateText(setMaxRateOfVolatiTBox);
 
 
             for (int i = 0; i < TotLine; i++)
@@ -1238,7 +1350,7 @@ namespace qiquanui
                         _num[i, (int)OptionType.CallBuy] = 1;
                         _num[j, (int)OptionType.PutBuy] = 1;
                         //计算盈亏数据
-                        YK yk = new YK(TotLine, _num, "底部宽跨", "高波动率", _max);
+                        YK yk = new YK(TotLine, _num, "底部宽跨", "高波动率", MaxRange);
                         yk.ComputeYK();
                         //排序
                         SortYKAnswer(ans, yk, Tot);
@@ -1257,21 +1369,21 @@ namespace qiquanui
         {
             YK[] ans = new YK[Tot];
 
-            double _max = GetRateText(setMaxRateOfVolatiTBox);
+            GetRateText(setMaxRateOfVolatiTBox);
 
 
             for (int i = 0; i < TotLine; i++)
-                {
-                    //填充
-                    int[,] _num = new int[TotLine + 1, 4];
-                    _num[i, (int)OptionType.CallBuy] = 1;
-                    _num[i, (int)OptionType.PutBuy] = 1;
-                    //计算盈亏数据
-                    YK yk = new YK(TotLine, _num, "底部跨式", "高波动率", _max);
-                    yk.ComputeYK();
-                    //排序
-                    SortYKAnswer(ans, yk, Tot);
-                }
+            {
+                //填充
+                int[,] _num = new int[TotLine + 1, 4];
+                _num[i, (int)OptionType.CallBuy] = 1;
+                _num[i, (int)OptionType.PutBuy] = 1;
+                //计算盈亏数据
+                YK yk = new YK(TotLine, _num, "底部跨式", "高波动率", MaxRange);
+                yk.ComputeYK();
+                //排序
+                SortYKAnswer(ans, yk, Tot);
+            }
 
             return ans;
         }
@@ -1280,7 +1392,7 @@ namespace qiquanui
 
 
         #endregion
-        
+
 
 
         #region 低波动率
@@ -1328,6 +1440,12 @@ namespace qiquanui
             topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+            LowRefresh();
+
+        }//点击“低波动率”按钮
+
+        private void LowRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -1354,10 +1472,12 @@ namespace qiquanui
 
             groupListView.SelectedIndex = 0;
 
+            qjocPresent = StrategyType.Low;
+
+
             Lock = false;
+        }
 
-
-        }//点击“低波动率”按钮
 
         private void topWideBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -1380,6 +1500,14 @@ namespace qiquanui
             topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+            LowWideRefresh();
+
+
+        }//点击“顶部宽跨”按钮
+
+
+        private void LowWideRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -1404,10 +1532,13 @@ namespace qiquanui
             ResultTab.SelectedIndex = 1;
 
             strategyListView.SelectedIndex = 0;
+
+            clocPresent = StrategyType.LowWide;
+
+
             Lock = false;
+        }
 
-
-        }//点击“顶部宽跨”按钮
 
         private void topCrossBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -1430,6 +1561,13 @@ namespace qiquanui
             topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
 
 
+            LowSharpRefresh();
+
+        }//点击“顶部跨式”按钮
+
+
+        private void LowSharpRefresh()
+        {
             if (Lock)
             {
                 Console.WriteLine("Locked while in buyAndUpBtn_Click");
@@ -1454,10 +1592,14 @@ namespace qiquanui
             ResultTab.SelectedIndex = 1;
 
             strategyListView.SelectedIndex = 0;
+
+            clocPresent = StrategyType.LowSharp;
+
+
             Lock = false;
 
+        }
 
-        }//点击“顶部跨式”按钮
 
         /// <summary>
         /// 计算高波动率情景
@@ -1486,7 +1628,7 @@ namespace qiquanui
         {
             YK[] ans = new YK[Tot];
 
-            double _max = GetRateText(setMiniRateOfVolatiTBox);
+            GetRateText(setMiniRateOfVolatiTBox);
 
 
             for (int i = 0; i < TotLine; i++)
@@ -1498,7 +1640,7 @@ namespace qiquanui
                         _num[i, (int)OptionType.CallSell] = 1;
                         _num[j, (int)OptionType.PutSell] = 1;
                         //计算盈亏数据
-                        YK yk = new YK(TotLine, _num, "顶部宽跨", "低波动率", _max);
+                        YK yk = new YK(TotLine, _num, "顶部宽跨", "低波动率", MaxRange);
                         yk.ComputeYK();
                         //排序
                         SortYKAnswer(ans, yk, Tot);
@@ -1517,7 +1659,7 @@ namespace qiquanui
         {
             YK[] ans = new YK[Tot];
 
-            double _max = GetRateText(setMiniRateOfVolatiTBox);
+            GetRateText(setMiniRateOfVolatiTBox);
 
 
             for (int i = 0; i < TotLine; i++)
@@ -1527,7 +1669,7 @@ namespace qiquanui
                 _num[i, (int)OptionType.CallSell] = 1;
                 _num[i, (int)OptionType.PutSell] = 1;
                 //计算盈亏数据
-                YK yk = new YK(TotLine, _num, "顶部跨式", "低波动率", _max);
+                YK yk = new YK(TotLine, _num, "顶部跨式", "低波动率", MaxRange);
                 yk.ComputeYK();
                 //排序
                 SortYKAnswer(ans, yk, Tot);
@@ -1652,6 +1794,9 @@ namespace qiquanui
             boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+
+            NoRefresh();
+
         }//点击“无风险套利”面板
 
         private void conversionArbitrageEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -1706,6 +1851,8 @@ namespace qiquanui
             boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+
+            NoCARefresh();
         }//点击“转换套利”按钮
 
         private void multiSubjectMatterEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -1760,6 +1907,8 @@ namespace qiquanui
             boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+
+            NoMSMRefresh();
         }//点击“组合标的”按钮
 
         private void boxArbitrageEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -1814,6 +1963,8 @@ namespace qiquanui
             boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+
+            NoBARefresh();
         }//点击“箱型套利”按钮
 
         private void convexityArbitrageEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -1868,7 +2019,483 @@ namespace qiquanui
             boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
             convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+
+            NoCA2Refresh();
         }//点击“凸性套利”按钮
+
+
+        private void NoRefresh()
+        {
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            int no = 4;
+            int which = 0;
+            YK[] res = ComputeNoSituation(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = res[i].ykname;
+
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = which;
+
+            groupListView.SelectedIndex = 0;
+
+            qjocPresent = StrategyType.NoRisk;
+
+
+            Lock = false;
+
+        }
+
+        private void NoCARefresh()
+        {
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeNoCA(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+
+            clocPresent = StrategyType.NoCA;
+
+
+            Lock = false;
+
+        }
+
+        private void NoMSMRefresh()
+        {
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in NoMSMR");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeNoMSM(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+
+            clocPresent = StrategyType.NoMSM;
+
+
+            Lock = false;
+
+        }
+
+        private void NoBARefresh()
+        {
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeNoBA(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+
+            clocPresent = StrategyType.NoBA;
+
+
+            Lock = false;
+
+        }
+
+        private void NoCA2Refresh()
+        {
+            if (Lock)
+            {
+                Console.WriteLine("Locked while in buyAndUpBtn_Click");
+                return;
+            }
+            else Lock = true;
+
+            cloc.Clear();
+            int no = 4;
+            int which = 1;
+            YK[] res = ComputeNoCA2(no);
+
+            for (int i = 0; i < no; i++)
+            {
+                ykm.yk[which, i] = res[i];
+                ykm.yk[which, i].title = "Top " + (i + 1);
+            }
+
+            BindingForOC(which, no);
+            BindingForCharts(which, no);
+
+            ResultTab.SelectedIndex = 1;
+
+            strategyListView.SelectedIndex = 0;
+
+            clocPresent = StrategyType.NoCA2;
+
+
+            Lock = false;
+
+        }
+
+
+        private YK[] ComputeNoSituation(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            ans[0] = ComputeNoCA(1)[0];
+            ans[1] = ComputeNoMSM(1)[0];
+            ans[2] = ComputeNoBA(1)[0];
+            ans[3] = ComputeNoCA2(1)[0];
+
+            return ans;
+        }
+
+        double NoRiskRateDefault=0.2;
+        private YK[] ComputeNoCA(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            //GetRateText(setMiniRateOfVolatiTBox);
+            MaxRange = NoRiskRateDefault;
+            string subject = nameInStrategyPanelComboBox.Text.Trim();
+
+            for (int i = 0; i < TotLine; i++)
+            {
+                double c, k, p, s0;
+                c = YKManager.ykOption[i, 0].BidPrice;
+                k = YKManager.ykOption[i, 0].ExercisePrice;
+                p = YKManager.ykOption[i, 2].AskPrice;
+                s0 = YKManager.ykFuture[0].AskPrice;
+                //if (c + k - p - s0 > 0)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                    {
+                        _num[i, (int)OptionType.CallBuy] = 3;
+                        _num[i, (int)OptionType.PutSell] = 3;
+                    }
+                    else
+                    {
+                        _num[i, (int)OptionType.CallBuy] = 1;
+                        _num[i, (int)OptionType.PutSell] = 1;
+                    }
+                    _num[TotLine, 1] = 1;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "转换套利", "无风险套利", MaxRange);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+                c = YKManager.ykOption[i, 0].AskPrice;
+                k = YKManager.ykOption[i, 0].ExercisePrice;
+                p = YKManager.ykOption[i, 2].BidPrice;
+                s0 = YKManager.ykFuture[0].BidPrice;
+                //if (p+s0-c-k > 0)
+                {
+                    //填充
+                    int[,] _num = new int[TotLine + 1, 4];
+                    if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                    {
+                        _num[i, (int)OptionType.CallSell] = 3;
+                        _num[i, (int)OptionType.PutBuy] = 3;
+                    }
+                    else
+                    {
+                        _num[i, (int)OptionType.CallSell] = 1;
+                        _num[i, (int)OptionType.PutBuy] = 1;
+                    }
+                    _num[TotLine, 0] = 1;
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "转换套利", "无风险套利", MaxRange);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+                }
+
+
+            }
+
+            return ans;
+        }
+
+        private YK[] ComputeNoMSM(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            //GetRateText(setMiniRateOfVolatiTBox);
+            MaxRange = NoRiskRateDefault;
+            string subject = nameInStrategyPanelComboBox.Text.Trim();
+
+            for (int i = 0; i < TotLine; i++)
+            {
+                double c, k, p, s0;
+                c = YKManager.ykOption[i, 0].BidPrice;
+                k = YKManager.ykOption[i, 0].ExercisePrice;
+                p = YKManager.ykOption[i, 2].AskPrice;
+                s0 = YKManager.ykFuture[0].AskPrice;
+                //填充  A：买入一份看涨，卖出一份标的；
+                int[,] _num = new int[TotLine + 1, 4];
+                if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                {
+                    _num[i, (int)OptionType.CallBuy] = 3;
+                }
+                else
+                {
+                    _num[i, (int)OptionType.CallBuy] = 1;
+                }
+                _num[TotLine, 1] = 1;
+                //计算盈亏数据
+                YK yk = new YK(TotLine, _num, "组合标的", "无风险套利", MaxRange);
+                yk.ComputeYK();
+                //排序
+                SortYKAnswer(ans, yk, Tot);
+
+
+                //填充 B：买入一份看跌，买入一份标的
+                _num = new int[TotLine + 1, 4];
+                if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                {
+                    _num[i, (int)OptionType.PutBuy] = 3;
+                }
+                else
+                {
+                    _num[i, (int)OptionType.PutBuy] = 1;
+                }
+                _num[TotLine, 0] = 1;
+                //计算盈亏数据
+                yk = new YK(TotLine, _num, "组合标的", "无风险套利", MaxRange);
+                yk.ComputeYK();
+                //排序
+                SortYKAnswer(ans, yk, Tot);
+
+
+            }
+
+            return ans;
+        }
+
+        private YK[] ComputeNoBA(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            //GetRateText(setMiniRateOfVolatiTBox);
+            MaxRange = NoRiskRateDefault;
+
+            string subject = nameInStrategyPanelComboBox.Text.Trim();
+
+            for (int i = 0; i < TotLine - 1; i++)
+                for (int j = i + 1; j < TotLine; j++)
+                {
+                    //填充  A：买入b和α 卖出a和β
+
+                    int[,] _num = new int[TotLine + 1, 4];
+                    if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                    {
+                        _num[j, (int)OptionType.CallBuy] = 1;
+                        _num[i, (int)OptionType.PutBuy] = 1;
+                        _num[i, (int)OptionType.CallSell] = 1;
+                        _num[j, (int)OptionType.PutSell] = 1;
+
+                    }
+                    else
+                    {
+                        _num[j, (int)OptionType.CallBuy] = 1;
+                        _num[i, (int)OptionType.PutBuy] = 1;
+                        _num[i, (int)OptionType.CallSell] = 1;
+                        _num[j, (int)OptionType.PutSell] = 1;
+
+                    }
+                    //计算盈亏数据
+                    YK yk = new YK(TotLine, _num, "箱型套利", "无风险套利", MaxRange);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+
+
+                    //填充 B：买入一份看跌，买入一份标的
+                    _num = new int[TotLine + 1, 4];
+                    if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                    {
+                        _num[i, (int)OptionType.CallBuy] = 1;
+                        _num[j, (int)OptionType.PutBuy] = 1;
+                        _num[j, (int)OptionType.CallSell] = 1;
+                        _num[i, (int)OptionType.PutSell] = 1;
+
+                    }
+                    else
+                    {
+                        _num[i, (int)OptionType.CallBuy] = 1;
+                        _num[j, (int)OptionType.PutBuy] = 1;
+                        _num[j, (int)OptionType.CallSell] = 1;
+                        _num[i, (int)OptionType.PutSell] = 1;
+
+                    }
+                    //计算盈亏数据
+                    yk = new YK(TotLine, _num, "箱型套利", "无风险套利", MaxRange);
+                    yk.ComputeYK();
+                    //排序
+                    SortYKAnswer(ans, yk, Tot);
+
+
+                }
+
+            return ans;
+        }
+
+
+
+
+        private int ZhanZhuan(int n1, int n2)
+        {
+            int m, n, r = 0;
+            m = n1;
+            n = n2;
+            while (n != 0)
+            {
+                r = m % n;
+                m = n;
+                n = r;
+            }
+            //Console.WriteLine("辗转相除法：" + n1 + " " + n2 + " " + n);
+            return m;
+
+        }
+
+        private YK[] ComputeNoCA2(int Tot)
+        {
+            YK[] ans = new YK[Tot];
+
+            //GetRateText(setMiniRateOfVolatiTBox);//!
+            MaxRange = NoRiskRateDefault;
+
+            string subject = nameInStrategyPanelComboBox.Text.Trim();
+
+            for (int i = 0; i < TotLine - 2; i++)
+                for (int j = i + 1; j < TotLine - 1; j++)
+                    for (int k = j + 1; k < TotLine; k++)
+                    {
+                        int k1, k2, k3;
+                        k1 = YKManager.ykOption[i, 0].ExercisePrice;
+                        k2 = YKManager.ykOption[j, 0].ExercisePrice;
+                        k3 = YKManager.ykOption[k, 0].ExercisePrice;
+                        int n1, n2, n3;
+                        n1 = k3 - k2;
+                        n2 = k3 - k1;
+                        n3 = k2 - k1;
+                        int gys = ZhanZhuan(ZhanZhuan(n1, n2), n3);
+                        n1 = n1 / gys;
+                        n2 /= gys;
+                        n3 /= gys;
+                        //填充  A：
+                        int[,] _num = new int[TotLine + 1, 4];
+                        if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                        {
+                            _num[j, (int)OptionType.CallBuy] = n2 * 1;
+                            _num[i, (int)OptionType.CallSell] = n1 * 1;
+                            _num[k, (int)OptionType.CallSell] = n3 * 1;
+
+                        }
+                        else
+                        {
+                            _num[j, (int)OptionType.CallBuy] = n2;
+                            _num[i, (int)OptionType.CallSell] = n1;
+                            _num[k, (int)OptionType.CallSell] = n3;
+                        }
+                        //计算盈亏数据
+                        YK yk = new YK(TotLine, _num, "凸性套利", "无风险套利", MaxRange);
+                        yk.ComputeYK();
+                        //排序
+                        SortYKAnswer(ans, yk, Tot);
+
+
+                        //填充 B：
+                        _num = new int[TotLine + 1, 4];
+                        if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                        {
+                            _num[j, (int)OptionType.CallSell] = n2 * 1;
+                            _num[i, (int)OptionType.CallBuy] = n1 * 1;
+                            _num[k, (int)OptionType.CallBuy] = n3 * 1;
+
+                        }
+                        else
+                        {
+                            _num[j, (int)OptionType.CallSell] = n2;
+                            _num[i, (int)OptionType.CallBuy] = n1;
+                            _num[k, (int)OptionType.CallBuy] = n3;
+                        }
+
+                        //计算盈亏数据
+                        yk = new YK(TotLine, _num, "凸性套利", "无风险套利", MaxRange);
+                        yk.ComputeYK();
+                        //排序
+                        SortYKAnswer(ans, yk, Tot);
+
+
+                    }
+
+            return ans;
+        }
+
+
 
 
         #endregion
@@ -1912,10 +2539,15 @@ namespace qiquanui
             if (dueDateComboBox.SelectedIndex == -1)
                 dueDateComboBox.SelectedIndex = 0;
 
+
+
+
             StrategyInitial();
             initialing = false;
+
         }
 
+        LineChartGraph temp1, temp2;
         public string Trader, Subject, Duedate;
         delegate void VoidCallBack();
         public void GetChoice()
@@ -2038,18 +2670,98 @@ namespace qiquanui
             qjoc = new ObservableCollection<TopStrategy>();
             groupListView.DataContext = qjoc;
             strategyListView.DataContext = cloc;
+            qjocPresent = StrategyType.No;
+            clocPresent = StrategyType.No;
+            //LegendMask.Visibility = Visibility.Visible;
+            VolatilityChart.Visibility = Visibility.Hidden;
+            VolatilityChart2.Visibility = Visibility.Hidden;
+            VolatilityChart3.Visibility = Visibility.Hidden;
+
+            ///走势图初始化
+            stockChart.Charts[0].Collapse();
+            DateTime present = DataManager.now;
+            present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+            stockChart.StartDate = present;
+            new Thread(new ThreadStart(TrendInitial)).Start();
+            timer = new System.Timers.Timer(60000);
+            timer.Elapsed += new ElapsedEventHandler(refreshTrend);
+            timer.Start();//每分钟刷新一次走势图
+
         }
+
+        private void TrendInitial()
+        {
+            trm = new Trend();
+            trm.initial(YKManager.SubjectID);
+            TrendInitialCallBack(trm);
+        }//初始化走势图（载入历史数据）
+
+        Trend trm;
+        System.Timers.Timer timer;
+        delegate void trendInitialCallBack(Trend tr);
+        private void TrendInitialCallBack(Trend tr)
+        {
+            trendInitialCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new trendInitialCallBack(TrendInitialCallBack);
+                pwindow.Dispatcher.Invoke(d, new object[] { tr });
+            }
+            else
+            {
+                stockSet1.ItemsSource = tr.Data;
+            }
+        }//走势图数据绑定
+
+
+        delegate void RefreshCallBack(object sender, ElapsedEventArgs e);
+        private void refreshTrend(object sender, ElapsedEventArgs e)
+        {
+            RefreshCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new RefreshCallBack(refreshTrend);
+                pwindow.Dispatcher.Invoke(d, new object[] { sender, e });
+            }
+            else
+            {
+
+                DataRow row = (DataRow)DataManager.All[YKManager.SubjectID];
+                double _open = Math.Round((double)row["OpenPrice"], 1);
+                double _close = Math.Round((double)row["LastPrice"], 1);
+                double _high = Math.Round((double)row["HighestPrice"], 1);
+                double _low = Math.Round((double)row["LowestPrice"], 1);
+                double _volume = Math.Round((double)row["OpenInterest"],1);
+                DateTime present = DataManager.now;
+                present = new DateTime(present.Year, present.Month, present.Day, present.Hour, present.Minute, 0);
+                trm.Data.Add(new StockInfo
+               {
+                   date = present,
+                   open = _open,
+                   high = _high,
+                   low = _low,
+                   close = _close,
+                   volume = _volume
+               });
+                stockChart.Scroll(1);
+            }
+
+        }//每分钟刷新一次走势图
+
+
+
+
 
 
 
         private void RefreshTSPrice(TopStrategy ts)
         {
             int number = ts.Number;
-            ts.EarnRate = (number * ts.earnRatePer).ToString("f1") + "%";
+            ts.EarnRate = (1 * ts.earnRatePer).ToString("f1") + "%";
             ts.ExpectEarn = (number * ts.expectEarnPer).ToString("n0");
             ts.Fee = (number * ts.feePer).ToString("f1");
             ts.Guarantee = (number * ts.guaranteePer).ToString("n0");
-            ts.LoseRate = (number * ts.loseRatePer).ToString("f1") + "%";
+            ts.LoseRate = (1 * ts.loseRatePer).ToString("f1") + "%";
             ts.MaxEarn = (number * ts.maxEarnPer).ToString("n0");
             ts.MaxLose = (number * ts.maxLosePer).ToString("n0");
             ts.Price = (number * ts.pricePer).ToString("f1");
@@ -2060,37 +2772,71 @@ namespace qiquanui
         /// </summary>
         /// <param name="which"></param>
         /// <param name="num"></param>
+
+        delegate void BindingOCCallBack(int which, int num);
         private void BindingForOC(int which, int num)
         {
-            ObservableCollection<TopStrategy> oc;
-            if (which == 0)
-                oc = qjoc;
-            else
-                oc = cloc;
-            oc.Clear();
-            TopStrategy ts;
 
-            for (int i = 0; i < num; i++)
+            BindingOCCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
             {
-                ts = new TopStrategy();
-                ts.earnRatePer = ykm.yk[which, i].EarnRate;
-                ts.expectEarnPer = ykm.yk[which, i].ExpectEarn;
-                ts.feePer = 0;//!
-                ts.guaranteePer = 0;
-                ts.loseRatePer = ykm.yk[which, i].LoseRate;
-                ts.maxEarnPer = ykm.yk[which, i].MaxEarn;
-                ts.maxLosePer = ykm.yk[which, i].MaxLose;
-                ts.Name = ykm.yk[which, i].ykname;
-                ts.GroupName = ykm.yk[which, i].ykgroupname;
-                ts.Number = 1;
-                ts.pricePer = ykm.yk[which, i].Price;
-                ts.VaR = "0";
-                RefreshTSPrice(ts);
-
-                oc.Add(ts);
+                d = new BindingOCCallBack(BindingForOC);
+                pwindow.Dispatcher.Invoke(d, new object[] { which, num });
             }
+            else
+            {
+
+                ObservableCollection<TopStrategy> oc;
+                if (which == 0)
+                    oc = qjoc;
+                else
+                    oc = cloc;
+                TopStrategy ts;
+
+                for (int i = 0; i < num; i++)
+                {
+                    if (i >= oc.Count) ts = new TopStrategy();
+                    else ts = oc[i];
+                    ts.earnRatePer = ykm.yk[which, i].EarnRate;
+                    ts.expectEarnPer = ykm.yk[which, i].ExpectEarn;
+                    ts.feePer = 0;//!
+                    //计算购买一手时的手续费
+                    foreach (OrderUnit item in ykm.yk[which,i].OrderList)
+                    {
+                        if (item.Number > 0)
+                            ts.feePer += SomeCalculate.calculateFees(item.InstrumentID, item.Number, item.AskPrice);
+                        else
+                            ts.feePer += SomeCalculate.calculateFees(item.InstrumentID, item.Number, item.BidPrice);
+                    }
 
 
+                    ts.guaranteePer = 0;
+                    foreach (OrderUnit item in ykm.yk[which, i].OrderList)
+                    {
+                        if (item.Number > 0)
+                            ts.guaranteePer += SomeCalculate.caculateMargin(item.InstrumentID, item.Number, true,item.AskPrice);
+                        else
+                            ts.guaranteePer += SomeCalculate.caculateMargin(item.InstrumentID, item.Number, false,item.BidPrice);
+                     }
+
+
+                    ts.loseRatePer = ykm.yk[which, i].LoseRate;
+                    ts.maxEarnPer = ykm.yk[which, i].MaxEarn;
+                    ts.maxLosePer = ykm.yk[which, i].MaxLose;
+                    ts.Name = ykm.yk[which, i].ykname;
+                    ts.GroupName = ykm.yk[which, i].ykgroupname;
+                    ts.Number = 1;
+                    ts.pricePer = ykm.yk[which, i].Price;
+                    ts.VaR = "0";
+                    ts.LineNo = i;
+                    RefreshTSPrice(ts);
+
+                    if (i >= oc.Count) oc.Add(ts);
+                }
+
+                for (int i = num; i < oc.Count; i++)
+                    oc.RemoveAt(i);
+            }
         }
 
 
@@ -2104,9 +2850,9 @@ namespace qiquanui
         /// <param name="lastprice"></param>
         /// <param name="ykmax"></param>
         /// <returns></returns>
-        public static double ComputeZT(int x, double lastprice,double ykmax)
+        public static double ComputeZT(int x, double lastprice, double ykmax)
         {
-            double u = lastprice, _o = ykmax * 100,o=_o;
+            double u = lastprice, _o = ykmax * 100, o = _o;
             if (u >= 1000) o = 3 * _o;
             if (u >= 5000) o = 5 * _o;
             if (u >= 10000) o = 7 * _o;
@@ -2119,93 +2865,105 @@ namespace qiquanui
         /// </summary>
         /// <param name="which"></param>
         /// <param name="no"></param>
-        public void BindingForChart(int which,int no)
+        public void BindingForChart(int which, int no)
         {
-            ObservableCollection<XY> data = new ObservableCollection<XY>();
-            ObservableCollection<XY> data2 = new ObservableCollection<XY>();
-            ObservableCollection<XY> data3 = new ObservableCollection<XY>();
-            ObservableCollection<XY> data4 = new ObservableCollection<XY>();
 
-            ObservableCollection<XY> coor = new ObservableCollection<XY>();
-            YK yk = ykm.yk[which, no];
-            int left = yk.LeftEdge, right = yk.RightEdge;
-            double lastprice = yk.ykfuture[0].LastPrice;
-
-
-            int now = 0;
-            bool positive = yk.probability[0].positive;
-            for (int j = left; j <= right; j+= yk.ykstep)
+            BindingOCCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
             {
-                //概率图
-                double tempX = (int)j;
-                double tempY = StrategyWindow.ComputeZT((int)j,lastprice,yk.ykmax);
-                
-                coor.Add(new XY() { X = tempX, Y = tempY });
-                if ((int)j == yk.probability[now].x)
-                {
-                    Console.WriteLine(yk.probability[now].percent);
-                    positive = yk.probability[now + 1].positive;
-                    now++;
-                    data.Add(new XY() { X = tempX, Y = tempY });
-                    data2.Add(new XY() { X = tempX, Y = tempY });
-                }
-                else if (positive)
-                    data.Add(new XY() { X = tempX, Y = tempY });
-                else
-                    data2.Add(new XY() { X = tempX, Y = tempY });
-
-                //盈亏图
-                tempX = (int) j;
-                XY point = yk.points[(int)((j - left)/yk.ykstep)];
-                if (point.Y == 0)
-                {
-                    data3.Add(point);
-                    data4.Add(point);
-                }
-                else if (point.Y > 0)
-                    data3.Add(point);
-                else
-                    data4.Add(point);
+                d = new BindingOCCallBack(BindingForChart);
+                pwindow.Dispatcher.Invoke(d, new object[] { which, no });
             }
+            else
+            {
+                VolatilityChart.Visibility = Visibility.Visible;
+                VolatilityChart2.Visibility = Visibility.Visible;
 
-            System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
+                ObservableCollection<XY> data = new ObservableCollection<XY>();
+                ObservableCollection<XY> data2 = new ObservableCollection<XY>();
+                ObservableCollection<XY> data3 = new ObservableCollection<XY>();
+                ObservableCollection<XY> data4 = new ObservableCollection<XY>();
 
-            System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
-            System.Windows.Data.Binding dataBinding2 = new System.Windows.Data.Binding();   //数据绑定
-            System.Windows.Data.Binding dataBinding3 = new System.Windows.Data.Binding();   //数据绑定
-            System.Windows.Data.Binding dataBinding4 = new System.Windows.Data.Binding();   //数据绑定
-
-            coorBinding.Source = coor;
-
-            dataBinding.Source = data;
-            dataBinding2.Source = data2;
-            dataBinding3.Source = data3;
-            dataBinding4.Source = data4;
-
-            this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
-            this.VolatilityChart.IDMemberPath = "X";
-
-            this.VolatilityGraph.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
-            this.VolatilityGraph.SeriesIDMemberPath = "X";
-            this.VolatilityGraph.ValueMemberPath = "Y";
-
-            this.VolatilityGraph2.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding2);
-            this.VolatilityGraph2.SeriesIDMemberPath = "X";
-            this.VolatilityGraph2.ValueMemberPath = "Y";
+                ObservableCollection<XY> coor = new ObservableCollection<XY>();
+                YK yk = ykm.yk[which, no];
+                int left = yk.LeftEdge, right = yk.RightEdge;
+                double lastprice = yk.ykfuture[0].LastPrice;
 
 
-            this.VolatilityChart2.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
-            this.VolatilityChart2.IDMemberPath = "X";
+                int now = 0;
+                bool positive = yk.probability[0].positive;
+                for (int j = left; j <= right; j += yk.ykstep)
+                {
+                    //概率图
+                    double tempX = (int)j;
+                    double tempY = StrategyWindow.ComputeZT((int)j, lastprice, yk.ykmax);
 
-            this.VolatilityGraph3.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding3);
-            this.VolatilityGraph3.SeriesIDMemberPath = "X";
-            this.VolatilityGraph3.ValueMemberPath = "Y";
+                    coor.Add(new XY() { X = tempX, Y = tempY });
+                    if ((int)j == yk.probability[now].x)
+                    {
+                        Console.WriteLine(yk.probability[now].percent);
+                        positive = yk.probability[now + 1].positive;
+                        now++;
+                        data.Add(new XY() { X = tempX, Y = tempY });
+                        data2.Add(new XY() { X = tempX, Y = tempY });
+                    }
+                    else if (positive)
+                        data.Add(new XY() { X = tempX, Y = tempY });
+                    else
+                        data2.Add(new XY() { X = tempX, Y = tempY });
 
-            this.VolatilityGraph4.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding4);
-            this.VolatilityGraph4.SeriesIDMemberPath = "X";
-            this.VolatilityGraph4.ValueMemberPath = "Y";
+                    //盈亏图
+                    tempX = (int)j;
+                    XY point = yk.points[(int)((j - left) / yk.ykstep)];
+                    if (point.Y == 0)
+                    {
+                        data3.Add(point);
+                        data4.Add(point);
+                    }
+                    else if (point.Y > 0)
+                        data3.Add(point);
+                    else
+                        data4.Add(point);
+                }
+
+                System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
+
+                System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
+                System.Windows.Data.Binding dataBinding2 = new System.Windows.Data.Binding();   //数据绑定
+                System.Windows.Data.Binding dataBinding3 = new System.Windows.Data.Binding();   //数据绑定
+                System.Windows.Data.Binding dataBinding4 = new System.Windows.Data.Binding();   //数据绑定
+
+                coorBinding.Source = coor;
+
+                dataBinding.Source = data;
+                dataBinding2.Source = data2;
+                dataBinding3.Source = data3;
+                dataBinding4.Source = data4;
+
+                this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                this.VolatilityChart.IDMemberPath = "X";
+
+                this.VolatilityGraph.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+                this.VolatilityGraph.SeriesIDMemberPath = "X";
+                this.VolatilityGraph.ValueMemberPath = "Y";
+
+                this.VolatilityGraph2.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding2);
+                this.VolatilityGraph2.SeriesIDMemberPath = "X";
+                this.VolatilityGraph2.ValueMemberPath = "Y";
 
 
+                this.VolatilityChart2.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                this.VolatilityChart2.IDMemberPath = "X";
+
+                this.VolatilityGraph3.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding3);
+                this.VolatilityGraph3.SeriesIDMemberPath = "X";
+                this.VolatilityGraph3.ValueMemberPath = "Y";
+
+                this.VolatilityGraph4.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding4);
+                this.VolatilityGraph4.SeriesIDMemberPath = "X";
+                this.VolatilityGraph4.ValueMemberPath = "Y";
+
+            }
         }
 
         /// <summary>
@@ -2215,57 +2973,68 @@ namespace qiquanui
         /// <param name="count"></param>
         public void BindingForCharts(int which, int count)
         {
-            LegendMask.Visibility = Visibility.Hidden;
-            ObservableCollection<XY> data = new ObservableCollection<XY>();
-            ObservableCollection<XY> data2 = new ObservableCollection<XY>();
 
-            ObservableCollection<XY> coor = new ObservableCollection<XY>();
-            coor = ykm.yk[which, 0].points;
-            System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
-            coorBinding.Source = coor;
-            VolatilityChart3.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
-            VolatilityChart3.IDMemberPath = "X";
-            VolatilityChart3.Graphs.Clear();
-
-            for (int i = 0; i < count; i++)
+            BindingOCCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
             {
-                YK yk = ykm.yk[which, i];
+                d = new BindingOCCallBack(BindingForCharts);
+                pwindow.Dispatcher.Invoke(d, new object[] { which, count });
+            }
+            else
+            {
 
-                data = yk.points;
+                VolatilityChart3.Visibility = Visibility.Visible;
+                LegendMask.Visibility = Visibility.Hidden;
+                ObservableCollection<XY> data = new ObservableCollection<XY>();
+                ObservableCollection<XY> data2 = new ObservableCollection<XY>();
 
-                System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
+                ObservableCollection<XY> coor = new ObservableCollection<XY>();
+                coor = ykm.yk[which, 0].points;
+                System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
+                coorBinding.Source = coor;
+                VolatilityChart3.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                VolatilityChart3.IDMemberPath = "X";
+                VolatilityChart3.Graphs.Clear();
 
-                dataBinding.Source = data;
+                for (int i = 0; i < count; i++)
+                {
+                    YK yk = ykm.yk[which, i];
 
-                LineChartGraph test = new LineChartGraph();
+                    data = yk.points;
 
-                test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
-                test.SeriesIDMemberPath = "X";
-                test.ValueMemberPath = "Y";
-                test.Title = yk.title;
-                test.LineThickness = 2;
-                ///[Style]
-                switch (i)
-                { 
-                    case 0:
-                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
-                        break;
-                    case 1:
-                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
-                        break;
-                    case 2:
-                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
-                        break;
-                    case 3:
-                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
-                        break;
+                    System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
+
+                    dataBinding.Source = data;
+
+                    LineChartGraph test = new LineChartGraph();
+
+                    test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+                    test.SeriesIDMemberPath = "X";
+                    test.ValueMemberPath = "Y";
+                    test.Title = yk.title;
+                    test.LineThickness = 2;
+                    ///[Style]
+                    switch (i)
+                    {
+                        case 0:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+                            break;
+                        case 1:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
+                            break;
+                        case 2:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
+                            break;
+                        case 3:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
+                            break;
+
+                    }
+
+                    VolatilityChart3.Graphs.Add(test);
 
                 }
-
-                VolatilityChart3.Graphs.Add(test);
-
             }
-
 
         }
 
@@ -2273,14 +3042,14 @@ namespace qiquanui
         private void groupListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0) return;
-            int no =  groupListView.Items.IndexOf(e.AddedItems[0]);
+            int no = groupListView.Items.IndexOf(e.AddedItems[0]);
             BindingForChart(0, no);
         }
 
         private void strategyListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0) return;
-            int no=strategyListView.Items.IndexOf(e.AddedItems[0]);
+            int no = strategyListView.Items.IndexOf(e.AddedItems[0]);
             BindingForChart(1, no);
         }
 
@@ -2289,13 +3058,25 @@ namespace qiquanui
         /// </summary>
         /// <param name="tb">该TextBox的指针</param>
         /// <returns></returns>
-        private double GetRateText(TextBox tb)
+        delegate void RateTextCallBack(TextBox tb);
+        private void GetRateText(TextBox tb)
         {
-            double _max;
-            string x = tb.Text;
-            if (x == null || x.Equals("")) _max = 0.3;
-            else _max = Double.Parse(x.Trim()) / 100;
-            return _max;
+
+            RateTextCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new RateTextCallBack(GetRateText);
+                pwindow.Dispatcher.Invoke(d, new object[] { tb });
+            }
+            else
+            {
+                double _max;
+                string x = tb.Text;
+                if (x == null || x.Equals("")) _max = 0.3;
+                else _max = Double.Parse(x.Trim()) / 100;
+
+                MaxRange = _max;
+            }
         }
 
 
@@ -2323,6 +3104,136 @@ namespace qiquanui
                         break;
                     }
         }
+
+
+        public enum StrategyType : int { No, Up, UpSingle, UpBull, Down, DownSingle, DownBear, High, HighSharp, HighWide, Low, LowSharp, LowWide, NoRisk, NoCA, NoMSM, NoBA, NoCA2 };
+        public StrategyType nowPresent;
+        public StrategyType qjocPresent;
+        public StrategyType clocPresent;
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ykm.Initial(optionsTraderInStrategyPanelComboBox.Text.Trim(), nameInStrategyPanelComboBox.Text.Trim(), dueDateComboBox.Text.Trim());
+            if (ResultTab.SelectedIndex == 0)
+                nowPresent = qjocPresent;
+            else nowPresent = clocPresent;
+            switch (nowPresent)
+            {
+                case StrategyType.Up:
+                    UpRefresh();
+                    break;
+                case StrategyType.UpSingle:
+                    UpSingleRefresh();
+                    break;
+                case StrategyType.UpBull:
+                    UpBullRefresh();
+                    break;
+                case StrategyType.Down:
+                    DownRefresh();
+                    break;
+                case StrategyType.DownSingle:
+                    DownSingleRefresh();
+                    break;
+                case StrategyType.DownBear:
+                    DownBearRefresh();
+                    break;
+                case StrategyType.High:
+                    HighRefresh();
+                    break;
+                case StrategyType.HighWide:
+                    HighWideRefresh();
+                    break;
+                case StrategyType.HighSharp:
+                    HighSharpRefresh();
+                    break;
+                case StrategyType.Low:
+                    LowRefresh();
+                    break;
+                case StrategyType.LowWide:
+                    LowWideRefresh();
+                    break;
+                case StrategyType.LowSharp:
+                    LowSharpRefresh();
+                    break;
+                case StrategyType.NoRisk:
+                    NoRefresh();
+                    break;
+                case StrategyType.NoCA:
+                    NoCA2Refresh();
+                    break;
+                case StrategyType.NoMSM:
+                    NoMSMRefresh();
+                    break;
+                case StrategyType.NoCA2:
+                    NoCA2Refresh();
+                    break;
+                case StrategyType.NoBA:
+                    NoBARefresh();
+                    break;
+
+            }
+        }
+
+        private void lotGNUAD_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            int selectedLineNo = Convert.ToInt32(((sender as qiquanui.NumericUpAndDownUserControl).Tag).ToString());    //获取行号
+            if (qjoc[selectedLineNo].Number <= 0) qjoc[selectedLineNo].Number = 1;
+            else 
+            RefreshTSPrice(qjoc[selectedLineNo]);
+        }
+
+        private void lotSNUAD_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            int selectedLineNo = Convert.ToInt32(((sender as qiquanui.NumericUpAndDownUserControl).Tag).ToString());    //获取行号
+            if (cloc[selectedLineNo].Number <= 0) cloc[selectedLineNo].Number = 1;
+            else 
+            RefreshTSPrice(cloc[selectedLineNo]);
+        }
+
+        private void VolatilityChart_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void placeOrderGButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = groupListView.SelectedIndex;
+            if (index < 0) return;
+            List<OrderUnit> l=ykm.yk[0,index].OrderList;
+            foreach (OrderUnit item in l)
+            {
+                bool buy=true;
+                item.Number *= qjoc[index].Number;
+                if (item.Number>0) buy=true;
+                else {
+                    buy=false;
+                    item.Number*=-1;
+                }
+                MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number);
+            }
+        }
+
+        private void placeOrderSButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = strategyListView.SelectedIndex;
+            if (index < 0) return;
+            List<OrderUnit> l = ykm.yk[1, index].OrderList;
+            foreach (OrderUnit item in l)
+            {
+                bool buy = true;
+                item.Number *= cloc[index].Number;
+                if (item.Number > 0) buy = true;
+                else
+                {
+                    buy = false;
+                    item.Number *= -1;
+                }
+                MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number);
+            }
+
+        }
+
+
+
+
 
 
 

@@ -173,7 +173,7 @@ namespace qiquanui
 
                 string oInstrumentID = pOrder.InstrumentID;
 
-                string oTradingTime = porder_dm.now.ToString();
+                string oTradingTime = DataManager.now.ToString();
 
                 string oTradingType = pOrder.TradingType;
 

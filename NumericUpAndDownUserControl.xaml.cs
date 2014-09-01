@@ -65,12 +65,12 @@ namespace qiquanui
 			RaiseEvent(new RoutedEventArgs(ValueChangedEvent));
 
 
-            MainWindow.otm.LimitTradingNum();     //交易区
-            MainWindow.otm.changeBuyOrSellByTradingNum();
+            //MainWindow.otm.LimitTradingNum();     //交易区
+            //MainWindow.otm.changeBuyOrSellByTradingNum();
 
-            //平仓界面
-            CloseOutPlaceOrderWindow.copowm.LimitTradingNum();
-            CloseOutPlaceOrderWindow.copowm.changeBuyOrSellByTradingNum();
+            ////平仓界面
+            //CloseOutPlaceOrderWindow.copowm.LimitTradingNum();
+            //CloseOutPlaceOrderWindow.copowm.changeBuyOrSellByTradingNum();
 
 		}
 

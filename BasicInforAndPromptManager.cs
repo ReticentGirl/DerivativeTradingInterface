@@ -268,7 +268,7 @@ namespace qiquanui
 
                 DateTime dt_dueDate = DateTime.ParseExact(se_dueDate, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture);
 
-                TimeSpan sp_dueDate = dt_dueDate - b_dm.now;
+                TimeSpan sp_dueDate = dt_dueDate - DataManager.now;
 
                 double i_dueDate = (int)sp_dueDate.TotalDays;
 

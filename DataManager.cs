@@ -385,7 +385,7 @@ namespace qiquanui
     {
         System.Timers.Timer timer;
         MainWindow pwindow;
-        public DateTime now;
+        public static DateTime now;
         public ObservableCollection<option> ObservableObj = new ObservableCollection<option>();
         private ObservableCollection<option> ObservableObj2 = new ObservableCollection<option>();
         public ObservableCollection<future> ObservableOb = new ObservableCollection<future>();
@@ -455,6 +455,15 @@ namespace qiquanui
                 string _id = (string)_dt.Rows[i]["InstrumentID"];
                 All[_id] = _dt.Rows[i];
             }
+            
+                All["上证50指数"] = All["IH1409"];
+                ((DataRow)All["上证50指数"])["InstrumentID"] = "上证50指数";
+            
+            
+                All["沪深300指数"] = All["IF1409"];
+                ((DataRow)All["沪深300指数"])["InstrumentID"] = "沪深300指数";
+            
+
         }
 
         public DataManager(MainWindow window)
@@ -512,11 +521,6 @@ namespace qiquanui
         /// <param name="e"></param>
         public void OnTimedEvent2()
         {
-            //Console.WriteLine("Timer elapsed! now=" + now+"  "+now.Millisecond+"  z");
-
-            //timer_z.Stop();
-            //timer.Stop();
-
             if (now >= lastupdate.AddMinutes(1)) prepare();
             if (pt >= dtall.Rows.Count)
             {
@@ -537,6 +541,16 @@ namespace qiquanui
                 string _instrumentid = (string)dtall.Rows[pt]["InstrumentID"];
                 All[_instrumentid] = dtall.Rows[pt];
 
+                if (_instrumentid.Equals("IH1409"))
+                {
+                    All["上证50指数"] = dtall.Rows[pt];
+                    ((DataRow)All["上证50指数"])["InstrumentID"] = "上证50指数";
+                }
+                if (_instrumentid.Equals("IF1409"))
+                {
+                    All["沪深300指数"] = dtall.Rows[pt];
+                    ((DataRow)All["沪深300指数"])["InstrumentID"] = "沪深300指数";
+                }
                 ///倘若是
                 //string _instrumentname = (string)dtall.Rows[pt]["InstrumentName"];
                 //string _duedate = (string)dtall.Rows[pt]["DueDate"];
