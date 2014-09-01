@@ -1,11 +1,11 @@
-﻿<Window
+﻿<Window x:Class="qiquanui.StrategyWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
        
         xmlns:my="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
         xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" 
         xmlns:local="clr-namespace:qiquanui"
-        xmlns:am="http://schemas.amcharts.com/charts/wpf/2009/xaml" x:Class="qiquanui.StrategyWindow"
+        xmlns:am="http://schemas.amcharts.com/charts/wpf/2009/xaml"
         xmlns:ams="http://schemas.amcharts.com/stock/wpf/2009/xaml"
         
         SizeChanged="Window_SizeChanged"
@@ -1296,10 +1296,8 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    <!--ListView的ScrollBar.Visibility要设置为hidden，这样只对右边的项列宽造成影响，否则在调整项列宽时，会对左边的数据项列宽也产生影响-->
                     <ListView x:Name="groupListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="0,0,0.4,28.8" SelectionChanged="groupListView_SelectionChanged">
-
-
-
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenGGVCH" Header="" Width="50">
@@ -1386,7 +1384,7 @@
 
         <!--概率图&盈亏图-->
         <Canvas HorizontalAlignment="Right" Height="400" Margin="0,0,835,238" VerticalAlignment="Bottom" Width="300" Background="#FF0F0D0D" Grid.Row="1">
-            
+
             <am:LineChart x:Name="VolatilityChart" Width="256" Height="180" Foreground="LightGray"
                       
 					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" Canvas.Left="25" Canvas.Top="13" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" MouseDown="VolatilityChart_MouseDown">
@@ -1485,8 +1483,8 @@
 
         </Canvas>
 
-        
-            <ams:StockChart Name="stockChart" Grid.Row="1" Margin="759,231.6,39.6,198.4" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00">
+
+        <ams:StockChart Name="stockChart" Grid.Row="1" Margin="759,231.6,39.6,198.4" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00">
             <ams:StockChart.DataSets>
                 <ams:DataSet Name="stockSet1" Brush="#7f8da9"
                                 
@@ -1499,7 +1497,7 @@
                 <!--ItemsSource="{Binding Data}"-->
             </ams:StockChart.DataSets>
 
-            
+
             <!--走势图-->
             <ams:StockChart.Charts>
 
