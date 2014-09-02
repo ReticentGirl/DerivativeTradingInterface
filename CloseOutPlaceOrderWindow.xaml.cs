@@ -134,5 +134,12 @@ namespace qiquanui
 
             this.Close();
         }
+
+        private void lotTNUAD_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            //平仓界面
+            CloseOutPlaceOrderWindow.copowm.LimitTradingNum();
+            CloseOutPlaceOrderWindow.copowm.changeBuyOrSellByTradingNum();
+        }
     }
 }

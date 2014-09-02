@@ -44,14 +44,14 @@ namespace qiquanui
 
         private string s_tradingType;    //为平仓界面写的
 
-        Visibility aboutROD ;
+        Visibility aboutROD;
 
         Visibility aboutFOK;
 
         Visibility aboutIOC;
 
 
-           public string S_tradingType
+        public string S_tradingType
         {
             get { return s_tradingType; }
             set
@@ -107,7 +107,7 @@ namespace qiquanui
             }
         }
 
-     
+
         public int TypeChangeCount
         {
             get { return typeChangeCount; }
@@ -125,9 +125,9 @@ namespace qiquanui
             get { return ifChooseOTGVCH; }
             set
             {
-               
+
                 ifChooseOTGVCH = value;
-                OnPropertyChanged("IfChooseOTGVCH"); 
+                OnPropertyChanged("IfChooseOTGVCH");
             }
         }
 
@@ -135,8 +135,10 @@ namespace qiquanui
         public string UserID
         {
             get { return userID; }
-            set { userID = value;
-            OnPropertyChanged("UserID"); 
+            set
+            {
+                userID = value;
+                OnPropertyChanged("UserID");
             }
         }
 
@@ -144,40 +146,50 @@ namespace qiquanui
         public string InstrumentID
         {
             get { return instrumentID; }
-            set { instrumentID = value;
-                  OnPropertyChanged("InstrumentID"); 
-                 }
+            set
+            {
+                instrumentID = value;
+                OnPropertyChanged("InstrumentID");
+            }
         }
 
         public string CallOrPut
         {
             get { return callOrPut; }
-            set { callOrPut = value;
-                  OnPropertyChanged("CallOrPut");        
-                }
+            set
+            {
+                callOrPut = value;
+                OnPropertyChanged("CallOrPut");
+            }
         }
 
         public string ExercisePrice
         {
             get { return exercisePrice; }
-            set { exercisePrice = value;
-                  OnPropertyChanged("ExercisePrice"); 
-                }
+            set
+            {
+                exercisePrice = value;
+                OnPropertyChanged("ExercisePrice");
+            }
         }
 
         public int TradingType
         {
             get { return tradingType; }
-            set { tradingType = value;
-                  OnPropertyChanged("TradingType");
+            set
+            {
+                tradingType = value;
+                OnPropertyChanged("TradingType");
             }
         }
 
         public int TradingNum
         {
             get { return tradingNum; }
-            set { tradingNum = value;
-            OnPropertyChanged("TradingNum");
+            set
+            {
+                tradingNum = value;
+                OnPropertyChanged("TradingNum");
             }
         }
 
@@ -186,8 +198,10 @@ namespace qiquanui
         public int ClientageType
         {
             get { return clientageType; }
-            set { clientageType = value;
-            OnPropertyChanged("ClientageType");
+            set
+            {
+                clientageType = value;
+                OnPropertyChanged("ClientageType");
             }
         }
 
@@ -195,8 +209,10 @@ namespace qiquanui
         public string ClientagePrice
         {
             get { return clientagePrice; }
-            set { clientagePrice = value;
-            OnPropertyChanged("ClientagePrice");
+            set
+            {
+                clientagePrice = value;
+                OnPropertyChanged("ClientagePrice");
             }
         }
 
@@ -205,32 +221,40 @@ namespace qiquanui
         public double MarketPrice
         {
             get { return marketPrice; }
-            set { marketPrice = value;
-                  OnPropertyChanged("MarketPrice"); 
-                }
+            set
+            {
+                marketPrice = value;
+                OnPropertyChanged("MarketPrice");
+            }
         }
 
         public int ClientageCondition
         {
             get { return clientageCondition; }
-            set { clientageCondition = value;
-            OnPropertyChanged("ClientageCondition"); 
+            set
+            {
+                clientageCondition = value;
+                OnPropertyChanged("ClientageCondition");
             }
         }
 
         public bool IsSetGradient
         {
             get { return isSetGradient; }
-            set { isSetGradient = value;
-            OnPropertyChanged("IsSetGradient"); 
+            set
+            {
+                isSetGradient = value;
+                OnPropertyChanged("IsSetGradient");
             }
         }
 
         public double Accuracy
         {
             get { return accuracy; }
-            set { accuracy = value;
-            OnPropertyChanged("Accuracy"); 
+            set
+            {
+                accuracy = value;
+                OnPropertyChanged("Accuracy");
             }
         }
 
@@ -238,8 +262,10 @@ namespace qiquanui
         public int ArithmeticProgression
         {
             get { return arithmeticProgression; }
-            set { arithmeticProgression = value;
-            OnPropertyChanged("ArithmeticProgression"); 
+            set
+            {
+                arithmeticProgression = value;
+                OnPropertyChanged("ArithmeticProgression");
             }
         }
 
@@ -265,237 +291,308 @@ namespace qiquanui
         }
 
 
-       
-         public TradingData()
+
+        public TradingData()
         { }
 
-         public TradingData(
-                                  string _userID,
-                                  string _instrumentID,   
-                                  string _callOrPut,
-                                  string _exercisePrice,   
-                                  double _marketPrice,   
-                                  bool _isBuy, 
-                                  bool _optionOrFuture                             
-                               )
-         {
-              userID = _userID;
-              instrumentID = _instrumentID;
-              callOrPut = _callOrPut;  
-              exercisePrice = _exercisePrice;
-              marketPrice = _marketPrice;
-
-              clientagePrice = "-";   //将委托价默认"-"
-
-              isBuy = _isBuy;
-
-              optionOrFuture = _optionOrFuture;
-
-             ///不用到的在这里初始化
-             ///
-
-
-              isEnableOfClientagePrice = false;
-              
-              ifChooseOTGVCH = true;
-
-              if (_isBuy == true)
-              {
-                  tradingType = 0;  //初始化为买
-                  tradingNum = 1;
-
-              }
-              else
-              {
-                  tradingNum = -1;
-                  tradingType = 1;
-              }
-
-
-              if (optionOrFuture == false)    //如果是期权
-              {
-                  clientageCondition = 2;  //默认为 IOC
-
-                  aboutROD = Visibility.Collapsed;   //又因为是市价 所有 没有ROD
-
-              }
-              else    //期货默认为ROD
-              {
-                  clientageCondition = 0;
-
-                  aboutFOK = Visibility.Collapsed;    //期货没有这两个
-                  aboutIOC = Visibility.Collapsed;
-              }
-
-              
-
-              typeChangeCount = 0;
-
-         }
-
-
-         public TradingData(
-                                  string _userID,
-                                  string _instrumentID,
-                                  string _callOrPut,
-                                  string _exercisePrice,
-                                  double _marketPrice,
-                                  bool _isBuy,
-                                  int _tradingNum,
-                                  bool _optionOrFuture
-                               )
-         {
-             userID = _userID;
-             instrumentID = _instrumentID;
-             callOrPut = _callOrPut;
-             exercisePrice = _exercisePrice;
-             marketPrice = _marketPrice;
-
-             clientagePrice = "-";   //将委托价默认"-"
-
-             isBuy = _isBuy;
-
-             optionOrFuture = _optionOrFuture;
-
-             ///不用到的在这里初始化
-             ///
-
-
-             isEnableOfClientagePrice = false;
-
-             ifChooseOTGVCH = true;
-
-             if (_isBuy == true)
-             {
-                 tradingType = 0;  //初始化为买
-                 tradingNum = Math.Abs(_tradingNum);
-                 //tradingNum = 10;
-
-             }
-             else
-             {
-                
-                 tradingType = 1;
-                 tradingNum = -Math.Abs(_tradingNum);
-                // tradingNum = 10;
-             }
-
-
-             if (optionOrFuture == false)    //如果是期权
-             {
-                 clientageCondition = 2;  //默认为 IOC
-
-                 aboutROD = Visibility.Collapsed;   //又因为是市价 所有 没有ROD
-
-             }
-             else    //期货默认为ROD
-             {
-                 clientageCondition = 0;
-
-                 aboutFOK = Visibility.Collapsed;    //期货没有这两个
-                 aboutIOC = Visibility.Collapsed;
-             }
-
-
-
-             typeChangeCount = 0;
-
-         }
-
-
-
-         public TradingData(
+        public TradingData(
                                  string _userID,
                                  string _instrumentID,
                                  string _callOrPut,
                                  string _exercisePrice,
-                                 int _tradingType,
-                                 int _tradingNum,
-                                 int _clientageType,
-                                 string _clientagePrice,
                                  double _marketPrice,
-                                 int _clientageCondition,
-                                 bool _isSetGradient,
-                                 double _accuracy,
-                                 int _arithmeticProgression, 
                                  bool _isBuy,
-                                 bool _optionOrFuture                                 
+                                 bool _optionOrFuture
                               )
-         {
-             userID = _userID;
-             instrumentID = _instrumentID;
-             callOrPut = _callOrPut;
-             exercisePrice = _exercisePrice;
-             tradingType = _tradingType;
-             tradingNum = _tradingNum;
-             clientageType = _clientageType;
-             clientagePrice = _clientagePrice;
-             marketPrice = _marketPrice;
-             clientageCondition = _clientageCondition;
-             isSetGradient = _isSetGradient;
-             accuracy = _accuracy;
-             arithmeticProgression = _arithmeticProgression;
+        {
+            userID = _userID;
+            instrumentID = _instrumentID;
+            callOrPut = _callOrPut;
+            exercisePrice = _exercisePrice;
+            marketPrice = _marketPrice;
 
-             isBuy = _isBuy;
+            clientagePrice = "-";   //将委托价默认"-"
 
-             optionOrFuture = _optionOrFuture;
+            isBuy = _isBuy;
+
+            optionOrFuture = _optionOrFuture;
+
+            ///不用到的在这里初始化
+            ///
 
 
-             //////不用到的在这里初始化
-            
-             ifChooseOTGVCH = true;
+            isEnableOfClientagePrice = false;
 
-             isEnableOfClientagePrice = false;
-            
-             typeChangeCount = 0;  
-         }
+            ifChooseOTGVCH = true;
+
+            if (_isBuy == true)
+            {
+                tradingType = 0;  //初始化为买
+                tradingNum = 1;
+
+            }
+            else
+            {
+                tradingNum = -1;
+                tradingType = 1;
+            }
+
+
+            if (optionOrFuture == false)    //如果是期权
+            {
+                clientageCondition = 2;  //默认为 IOC
+
+                aboutROD = Visibility.Collapsed;   //又因为是市价 所有 没有ROD
+
+            }
+            else    //期货默认为ROD
+            {
+                clientageCondition = 0;
+
+                aboutFOK = Visibility.Collapsed;    //期货没有这两个
+                aboutIOC = Visibility.Collapsed;
+            }
+
+
+
+            typeChangeCount = 0;
+
+        }
+
+
+        public TradingData(
+                                 string _userID,
+                                 string _instrumentID,
+                                 string _callOrPut,
+                                 string _exercisePrice,
+                                 double _marketPrice,
+                                 bool _isBuy,
+                                 bool _optionOrFuture,
+                                 int _tradingNum
+                              )
+        {
+            userID = _userID;
+            instrumentID = _instrumentID;
+            callOrPut = _callOrPut;
+            exercisePrice = _exercisePrice;
+            marketPrice = _marketPrice;
+
+            clientagePrice = "-";   //将委托价默认"-"
+
+            isBuy = _isBuy;
+
+            optionOrFuture = _optionOrFuture;
+
+            ///不用到的在这里初始化
+            ///
+
+
+            isEnableOfClientagePrice = false;
+
+            ifChooseOTGVCH = true;
+
+            if (_isBuy == true)
+            {
+                tradingType = 0;  //初始化为买
+               
+
+            }
+            else
+            {
+               
+                tradingType = 1;
+            }
+
+
+            tradingNum = _tradingNum;
+
+            if (optionOrFuture == false)    //如果是期权
+            {
+                clientageCondition = 2;  //默认为 IOC
+
+                aboutROD = Visibility.Collapsed;   //又因为是市价 所有 没有ROD
+
+            }
+            else    //期货默认为ROD
+            {
+                clientageCondition = 0;
+
+                aboutFOK = Visibility.Collapsed;    //期货没有这两个
+                aboutIOC = Visibility.Collapsed;
+            }
+
+
+
+            typeChangeCount = 0;
+
+        }
+
+
+
+
+
+        public TradingData(
+                                 string _userID,
+                                 string _instrumentID,
+                                 string _callOrPut,
+                                 string _exercisePrice,
+                                 double _marketPrice,
+                                 bool _isBuy,
+                                 int _tradingNum,
+                                 bool _optionOrFuture
+                              )
+        {
+            userID = _userID;
+            instrumentID = _instrumentID;
+            callOrPut = _callOrPut;
+            exercisePrice = _exercisePrice;
+            marketPrice = _marketPrice;
+
+            clientagePrice = "-";   //将委托价默认"-"
+
+            isBuy = _isBuy;
+
+            optionOrFuture = _optionOrFuture;
+
+            ///不用到的在这里初始化
+            ///
+
+
+            isEnableOfClientagePrice = false;
+
+            ifChooseOTGVCH = true;
+
+            if (_isBuy == true)
+            {
+                tradingType = 0;  //初始化为买
+                tradingNum = Math.Abs(_tradingNum);
+                //tradingNum = 10;
+
+            }
+            else
+            {
+
+                tradingType = 1;
+                tradingNum = -Math.Abs(_tradingNum);
+                // tradingNum = 10;
+            }
+
+
+            if (optionOrFuture == false)    //如果是期权
+            {
+                clientageCondition = 2;  //默认为 IOC
+
+                aboutROD = Visibility.Collapsed;   //又因为是市价 所有 没有ROD
+
+            }
+            else    //期货默认为ROD
+            {
+                clientageCondition = 0;
+
+                aboutFOK = Visibility.Collapsed;    //期货没有这两个
+                aboutIOC = Visibility.Collapsed;
+            }
+
+
+
+            typeChangeCount = 0;
+
+        }
+
+
+
+        public TradingData(
+                                string _userID,
+                                string _instrumentID,
+                                string _callOrPut,
+                                string _exercisePrice,
+                                int _tradingType,
+                                int _tradingNum,
+                                int _clientageType,
+                                string _clientagePrice,
+                                double _marketPrice,
+                                int _clientageCondition,
+                                bool _isSetGradient,
+                                double _accuracy,
+                                int _arithmeticProgression,
+                                bool _isBuy,
+                                bool _optionOrFuture
+                             )
+        {
+            userID = _userID;
+            instrumentID = _instrumentID;
+            callOrPut = _callOrPut;
+            exercisePrice = _exercisePrice;
+            tradingType = _tradingType;
+            tradingNum = _tradingNum;
+            clientageType = _clientageType;
+            clientagePrice = _clientagePrice;
+            marketPrice = _marketPrice;
+            clientageCondition = _clientageCondition;
+            isSetGradient = _isSetGradient;
+            accuracy = _accuracy;
+            arithmeticProgression = _arithmeticProgression;
+
+            isBuy = _isBuy;
+
+            optionOrFuture = _optionOrFuture;
+
+
+            //////不用到的在这里初始化
+
+            ifChooseOTGVCH = true;
+
+            isEnableOfClientagePrice = false;
+
+            typeChangeCount = 0;
+        }
 
 
         ////////////////给平仓界面用的构造函数
-         public TradingData(
-                                  string _userID,
-                                  string _instrumentID,
-                                  string _s_tradingType,
-                                  int _tradingNum,
-                                  int _clientageType,
-                                  string _clientagePrice,
-                                  double _marketPrice
-                               )
-         {
-             userID = _userID;
-             instrumentID = _instrumentID;
-             s_tradingType = _s_tradingType;
-             tradingNum = _tradingNum;
-             clientageType = _clientageType;
-             clientagePrice = _clientagePrice;
-             marketPrice = _marketPrice;
+        public TradingData(
+                                 string _userID,
+                                 string _instrumentID,
+                                 string _s_tradingType,
+                                 int _tradingNum,
+                                 int _clientageType,
+                                 string _clientagePrice,
+                                 double _marketPrice
+                              )
+        {
+            userID = _userID;
+            instrumentID = _instrumentID;
+            s_tradingType = _s_tradingType;
+            tradingNum = _tradingNum;
+            clientageType = _clientageType;
+            clientagePrice = _clientagePrice;
+            marketPrice = _marketPrice;
 
 
 
-             //////不用到的在这里初始化
+            //////不用到的在这里初始化
 
-             ifChooseOTGVCH = true;
+            ifChooseOTGVCH = true;
 
-             isEnableOfClientagePrice = false;
+            isEnableOfClientagePrice = false;
 
-             typeChangeCount = 0;
-         }
+            typeChangeCount = 0;
+        }
 
 
-         #region INotifyPropertyChanged 成员
+        #region INotifyPropertyChanged 成员
 
-         public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-         void OnPropertyChanged(string name)
-         {
-             if (PropertyChanged != null)
-                 this.PropertyChanged(this, new PropertyChangedEventArgs(name));
-         }  
+        void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
 
-       
-        
 
-         #endregion
+
+
+        #endregion
 
 
     }

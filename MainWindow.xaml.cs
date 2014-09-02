@@ -1806,6 +1806,12 @@ namespace qiquanui
 
 
 
+        }
+
+        private void lotTNUAD_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            MainWindow.otm.LimitTradingNum();     //交易区
+            MainWindow.otm.changeBuyOrSellByTradingNum();
         }//历史记录区，点击“筛选账户”，弹出“筛选账户”界面
 
         private void strategyButton_Click(object sender, RoutedEventArgs e)

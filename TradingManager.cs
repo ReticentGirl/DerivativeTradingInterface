@@ -61,7 +61,7 @@ namespace qiquanui
         }
 
 
-        public void AddTrading(string _instrumentID, bool _isBuy, int _TradingNum)
+        public void AddTrading(string _instrumentID, bool _isBuy, int _tradingNum)
         {
             string a_userID = pwindow.userComboBox.Text;
 
@@ -97,7 +97,7 @@ namespace qiquanui
 
                 bool a_optionOrFuture = false;   //期权
 
-                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice.ToString(),a_marketPrice, _isBuy,a_optionOrFuture);
+                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice.ToString(), a_marketPrice, _isBuy, a_optionOrFuture, _tradingNum);
 
                 TradingOC.Add(add_td);
 
