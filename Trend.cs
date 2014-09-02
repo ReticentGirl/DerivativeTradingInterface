@@ -70,7 +70,17 @@ namespace qiquanui
                     };
                 }
                 else if (last != null)
-                    last.date = present;
+                {
+                    last = new StockInfo
+                    {
+                        date = present,
+                        open = last.open,
+                        high = last.high,
+                        low = last.low,
+                        close = last.close,
+                        volume = last.volume
+                    };
+                }
                 if (last != null)
                     Data.Add(last);
 
@@ -82,11 +92,39 @@ namespace qiquanui
                     present = present.AddDays(1);
                     present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
                 }
+                //Console.WriteLine(present);
             }
             while (!present.Equals(end));
 
 
         }
+
+        public void initial(ObservableCollection<StockInfo> oc1,ObservableCollection<StockInfo> oc2)
+        {
+            Data = new ObservableCollection<StockInfo>();
+            int i1=0, i2=0;
+            while (i1<oc1.Count && i2<oc2.Count)  {
+                if (oc1[i1].date < oc2[i2].date)
+                    i1++;
+                else
+                    if (oc1[i1].date > oc2[i2].date)
+                        i2++;
+                    else
+                        break;
+            }
+            while (i1 < oc1.Count && i2 < oc2.Count)
+            {
+                StockInfo si1 = oc1[i1];
+                StockInfo si2 = oc2[i2];
+                StockInfo si3 = new StockInfo();
+                si3.date = si1.date;
+                si3.close = si1.close - si2.close;
+                Data.Add(si3);
+                i1++;
+                i2++;
+            }
+        }
+
     }
 
 

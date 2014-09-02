@@ -666,6 +666,10 @@ namespace qiquanui
                 if (dt2.Rows.Count == 1)
                 {
                     string optionid = (string)dt2.Rows[0][0];
+                    if (optionid.Substring(0, 2).Equals("IH"))
+                        optionid = "上证50指数";
+                    if (optionid.Substring(0, 2).Equals("IF"))
+                        optionid = "沪深300指数";
                     ObservableOb2 = new ObservableCollection<future>();
                     future _fu = new future();
                     _fu.instrumentid = optionid;
@@ -734,7 +738,7 @@ namespace qiquanui
 
         string SetTextAndColor(int i, int j, string news, string olds, double preClose)
         {
-            if (news.Length > MaxLength || news.Equals("正无穷大"))
+            if (news.Length > MaxLength || news.Equals("正无穷大") || news.Equals("-"))
             {
                 ob_no2[i, j] = 7;
                 return "-";
@@ -1062,10 +1066,15 @@ namespace qiquanui
 
             //3
             new_string = Math.Round((double)_dr["BidPrice1"], 1).ToString("f1");
+            if (_fu.InstrumentID.Equals("上证50指数")||_fu.InstrumentID.Equals("沪深300指数") )
+             new_string="-";
             _fu.BidPrice1 = SetTextAndColor(tot_line, 3, new_string, _fu.BidPrice1, preClose);
 
             //4
             new_string = Math.Round((double)_dr["AskPrice1"], 1).ToString("f1");
+            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数"))
+                new_string = "-";
+
             _fu.AskPrice1 = SetTextAndColor(tot_line, 4, new_string, _fu.AskPrice1, preClose);
 
             //5
@@ -1090,6 +1099,9 @@ namespace qiquanui
                 new_string = new_string.Insert(6, "/");
                 new_string = new_string.Insert(4, "/");
             }
+            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数"))
+                new_string = "-";
+
             _fu.LastDate = new_string;
             if (first) SetColor(tot_line, 8, 7);
 

@@ -2539,14 +2539,21 @@ namespace qiquanui
             if (dueDateComboBox.SelectedIndex == -1)
                 dueDateComboBox.SelectedIndex = 0;
 
-
-
+            labels = new Label[10];
+            for (int i = 0; i < 10; i++)
+            {
+                labels[i] = new Label();
+                labels[i].Foreground = Brushes.White;
+                LeftChartsCanvas.Children.Add(labels[i]);
+                labels[i].Visibility = Visibility.Hidden;
+            }
 
             StrategyInitial();
             initialing = false;
 
         }
 
+        Label[] labels;
         LineChartGraph temp1, temp2;
         public string Trader, Subject, Duedate;
         delegate void VoidCallBack();
@@ -2676,6 +2683,8 @@ namespace qiquanui
             VolatilityChart.Visibility = Visibility.Hidden;
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
+            for (int i = 0; i < labels.Length; i++)
+                labels[i].Visibility = Visibility.Hidden;
 
             ///走势图初始化
             stockChart.Charts[0].Collapse();
@@ -2753,7 +2762,10 @@ namespace qiquanui
 
 
 
-
+        /// <summary>
+        /// 当份数改变时刷新价格等数据
+        /// </summary>
+        /// <param name="ts"></param>
         private void RefreshTSPrice(TopStrategy ts)
         {
             int number = ts.Number;
@@ -2963,6 +2975,33 @@ namespace qiquanui
                 this.VolatilityGraph4.SeriesIDMemberPath = "X";
                 this.VolatilityGraph4.ValueMemberPath = "Y";
 
+                //设置概率标签
+                for (int i = 0; i < yk.probability.Count; i++)
+                {
+                    Label temp = labels[i];
+                    //[style]
+                    temp.Content = yk.probability[i].percent+"%";
+                    temp.FontSize = 14;
+
+                    if (yk.probability[i].positive)
+                        temp.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFCB2525"));
+                    else
+                        temp.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF25CB5A"));
+                    int l = 0, r = 0;
+                    if (i==0) 
+                        l=yk.LeftEdge;
+                    else
+                        l=yk.probability[i-1].x;
+                    if (i==yk.probability.Count-1)
+                        r=yk.RightEdge;
+                    else
+                        r=yk.probability[i].x;
+                    temp.Margin=new Thickness(25-25+1.0*((l+r)/2-yk.LeftEdge)/(yk.RightEdge-yk.LeftEdge)*256,10,0,0);
+                    temp.Visibility = Visibility.Visible;
+
+                }
+                for (int i = yk.probability.Count; i < 10; i++)
+                    labels[i].Visibility = Visibility.Hidden;
             }
         }
 
@@ -3105,7 +3144,7 @@ namespace qiquanui
                     }
         }
 
-
+        //刷新按钮
         public enum StrategyType : int { No, Up, UpSingle, UpBull, Down, DownSingle, DownBear, High, HighSharp, HighWide, Low, LowSharp, LowWide, NoRisk, NoCA, NoMSM, NoBA, NoCA2 };
         public StrategyType nowPresent;
         public StrategyType qjocPresent;
@@ -3173,6 +3212,7 @@ namespace qiquanui
             }
         }
 
+        //份数改变
         private void lotGNUAD_ValueChanged(object sender, RoutedEventArgs e)
         {
             int selectedLineNo = Convert.ToInt32(((sender as qiquanui.NumericUpAndDownUserControl).Tag).ToString());    //获取行号
@@ -3189,10 +3229,13 @@ namespace qiquanui
             RefreshTSPrice(cloc[selectedLineNo]);
         }
 
+
         private void VolatilityChart_MouseDown(object sender, MouseButtonEventArgs e)
         {
         }
 
+
+        //下单
         private void placeOrderGButton_Click(object sender, RoutedEventArgs e)
         {
             int index = groupListView.SelectedIndex;

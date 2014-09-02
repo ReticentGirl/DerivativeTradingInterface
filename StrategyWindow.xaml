@@ -1383,8 +1383,8 @@
         </TabControl>
 
         <!--概率图&盈亏图-->
-        <Canvas HorizontalAlignment="Right" Height="400" Margin="0,0,835,238" VerticalAlignment="Bottom" Width="300" Background="#FF0F0D0D" Grid.Row="1">
-
+        <Canvas x:Name="LeftChartsCanvas" HorizontalAlignment="Right" Height="400" Margin="0,0,835,238" VerticalAlignment="Bottom" Width="300" Grid.Row="1">
+            
             <am:LineChart x:Name="VolatilityChart" Width="256" Height="180" Foreground="LightGray"
                       
 					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" Canvas.Left="25" Canvas.Top="13" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" MouseDown="VolatilityChart_MouseDown">

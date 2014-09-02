@@ -309,16 +309,20 @@ namespace qiquanui
             YKProba _p = new YKProba();
             if (ComputePoint(RightCompute) > 0) _p.positive = true;
             else if (ComputePoint(RightCompute) < 0) _p.positive = false;
+            //最后一段概率右端点是无穷大
             _p.x = -1;
             _p.percent = ProbaCount;
             probability.Add(_p);
             for (int i = 0; i < probability.Count; i++)
                 if (i == 0 || i == probability.Count - 1)
                 {
-                    probability[i].percent = Math.Round(probability[i].percent / TotCount * 0.95 + 2.5, 1);
+                    if (probability.Count==1)
+                        probability[i].percent = Math.Round(probability[i].percent / TotCount * 95 + 5, 1);
+                    else
+                    probability[i].percent = Math.Round(probability[i].percent / TotCount * 95 + 2.5, 1);
                 }
                 else
-                    probability[i].percent = Math.Round(probability[i].percent / TotCount * 0.95, 1);
+                    probability[i].percent = Math.Round(probability[i].percent / TotCount * 95, 1);
 
             //price
             Price = 0;
