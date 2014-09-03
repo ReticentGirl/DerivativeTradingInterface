@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:qiquanui"
         xmlns:my="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+        xmlns:am="http://schemas.amcharts.com/charts/wpf/2009/xaml"
         Closing="Window_Closing"
         SizeChanged="Window_SizeChanged"
        
@@ -1187,7 +1188,7 @@
 
             <TextBlock x:Name="confidenceLevelCompoTB" Text="置信水平：" Grid.Column="0" Margin="16,9,0,133" VerticalAlignment="Center" Height="16" Grid.Row="1" Foreground="White"/>
             <TextBox x:Name="setConfidenceLevelCompoTBox" Grid.Column="0" Margin="76,5,25,129" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource textboxStyle}" Foreground="White"/>
-            <Button x:Name="okCompoBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="42,35,41,103" Grid.Row="1" Height="20" Style="{StaticResource darkButton}" Background="#FF363338" BorderBrush="{x:Null}"/>
+            <Button x:Name="okCompoBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="42,35,41,103" Grid.Row="1" Height="20" Style="{StaticResource darkButton}" Background="#FF363338" BorderBrush="{x:Null}" Click="okCompoBtn_Click"/>
 
             <TextBlock Text="当前组合：" Grid.Column="1" Grid.Row="0" Margin="10,10,563,91" Foreground="White"/>
             <Grid x:Name="compoGrid" Grid.Column="1" Grid.Row="0" Margin="50,33,40,30" MouseEnter="compoGrid_MouseEnter" MouseLeave="compoGrid_MouseLeave">
@@ -1212,7 +1213,7 @@
                 <TextBlock x:Name="gammaCompoGTB" Text="Gamma" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="1" Grid.Row="0" />
                 <TextBlock x:Name="thetaCompoGTB" Text="Theta" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="2" Grid.Row="0" />
+                <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="2" Grid.Row="0" Height="29" VerticalAlignment="Top" />
                 <TextBlock x:Name="vegaCompoGTB" Text="Vega" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,2,0,1" Grid.Column="3" Grid.Row="0" />
                 <TextBlock x:Name="rhoCompoGTB" Text="Rho" Grid.Column="4" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
@@ -1224,20 +1225,29 @@
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="2" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="3" Grid.Row="1" />
                 <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="4" Grid.Row="1" />
-                <Border BorderBrush="#FF4F4857" BorderThickness="1,0,2,2" Grid.Column="5" Grid.Row="1" />
+                <Border BorderBrush="#FF4F4857" BorderThickness="1,0,0,2" Grid.Column="5" Grid.Row="1" />
+                <Border BorderBrush="#FF4F4857" BorderThickness="1,0,2,2" Grid.Column="6" Grid.Row="1" />
+                <TextBlock x:Name="showDeltaTB" Text="{Binding ComDelta, UpdateSourceTrigger=PropertyChanged}" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="showGammaTB" Text="{Binding ComGamma, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="showThetaTB" Text="{Binding ComTheta, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="showVegaTB" Text="{Binding ComVega, UpdateSourceTrigger=PropertyChanged}"  Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <TextBlock x:Name="showRhoTB" Text="{Binding ComRho, UpdateSourceTrigger=PropertyChanged}" Grid.Column="4" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!--<TextBlock x:Name="showRateTB" Text="{Binding ComDelta, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+                <TextBlock x:Name="showVarTB" Text="{Binding ComVar, UpdateSourceTrigger=PropertyChanged}" Grid.Column="5" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
 
-            <ListView x:Name="optionsRiskLV" Grid.Column="1" Grid.Row="1" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
+            <ListView x:Name="optionsRiskLV" Grid.Column="1" Grid.Row="1" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White" SelectionChanged="optionsRiskLV_SelectionChanged">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn x:Name="instrumentIDORGVCH" Header="交易代码" Width="110"/>
-                        <GridViewColumn x:Name="deltaORGVCH" Header="Delta" Width="60"/>
-                        <GridViewColumn x:Name="gammaORGVCH" Header="Gamma" Width="60"/>
-                        <GridViewColumn x:Name="thetaORGVCH" Header="Theta" Width="60"/>
-                        <GridViewColumn x:Name="VegaORGVCH" Header="Vega" Width="60"/>
-                        <GridViewColumn x:Name="rhoORGVCH" Header="Rho" Width="60"/>
-                        <GridViewColumn x:Name="rateORGVCH" Header="隐波率" Width="60"/>
-                        <GridViewColumn x:Name="varORGVCH" Header="Var" Width="60"/>
+                       
+                        <GridViewColumn x:Name="instrumentIDORGVCH" Header="交易代码" DisplayMemberBinding="{Binding InstrumentID}" Width="110"/>
+                        <GridViewColumn x:Name="deltaORGVCH" Header="Delta" DisplayMemberBinding="{Binding SingleDelta}" Width="60"/>
+                        <GridViewColumn x:Name="gammaORGVCH" Header="Gamma" DisplayMemberBinding="{Binding SingleGamma}" Width="60"/>
+                        <GridViewColumn x:Name="thetaORGVCH" Header="Theta" DisplayMemberBinding="{Binding SingleTheta}" Width="60"/>
+                        <GridViewColumn x:Name="VegaORGVCH" Header="Vega" DisplayMemberBinding="{Binding SingleVega}" Width="60"/>
+                        <GridViewColumn x:Name="rhoORGVCH" Header="Rho" DisplayMemberBinding="{Binding SingleRho}" Width="60"/>
+                        <GridViewColumn x:Name="rateORGVCH" Header="隐波率" DisplayMemberBinding="{Binding SingleVol}" Width="60"/>
+                        <GridViewColumn x:Name="varORGVCH" Header="Var" DisplayMemberBinding="{Binding SingleVar}" Width="60"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -1258,7 +1268,7 @@
 
             <TextBlock x:Name="confidenceLevelRecomTB" Text="置信水平：" Grid.Column="0" Grid.RowSpan="2" Margin="16,0,0,0" VerticalAlignment="Center" Foreground="White"/>
             <TextBox x:Name="setConfidenceLevelRecomTBox" Width="50" Grid.Column="0" Grid.RowSpan="2" Margin="50,0,0,0" VerticalAlignment="Center" Style="{StaticResource textboxStyle}" Foreground="White"/>
-            <Button x:Name="okRecomBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="43,148,40,91" Height="20" Style="{StaticResource darkButton}" Background="#FF252327" BorderBrush="{x:Null}"/>
+            <Button x:Name="okRecomBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="43,148,40,91" Height="20" Style="{StaticResource darkButton}" Background="#FF252327" BorderBrush="{x:Null}" Click="okRecomBtn_Click"/>
 
             <TextBlock x:Name="recomTB" Text="基于VaR值的最优对冲策略：" Grid.Column="1" Grid.Row="0" Margin="10,10,472,238" Foreground="White"/>
             <ListView x:Name="recomLV" Grid.Column="1" Grid.Row="0" Margin="0,43,0,36" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
@@ -1271,22 +1281,22 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn x:Name="instrumentIDRGVCH" Header="交易代码" Width="110"/>
-                        <GridViewColumn x:Name="typeRGCH" Header="交易类型" Width="60"/>
-                        <GridViewColumn x:Name="lotRGCH" Header="交易手数" Width="60">
+                        <GridViewColumn x:Name="instrumentIDRGVCH" Header="交易代码" DisplayMemberBinding="{Binding InstrumentID}" Width="110"/>
+                        <GridViewColumn x:Name="typeRGCH" Header="交易类型"  DisplayMemberBinding="{Binding SBuyOrSell}" Width="60"/>
+                        <GridViewColumn x:Name="lotRGCH" Header="交易手数" DisplayMemberBinding="{Binding TradingNum}" Width="60">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <local:NumericUpAndDownUserControl x:Name="lotTNUAD" Width="Auto" HorizontalAlignment="Center"   Value="{Binding Path=TradingNum,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn x:Name="deltaRGVCH" Header="Delta" Width="60"/>
-                        <GridViewColumn x:Name="gammaRGVCH" Header="Gamma" Width="60"/>
-                        <GridViewColumn x:Name="thetaRGVCH" Header="Theta" Width="60"/>
-                        <GridViewColumn x:Name="VegaRGVCH" Header="Vega" Width="60"/>
-                        <GridViewColumn x:Name="rhoRGVCH" Header="Rho" Width="60"/>
-                        <GridViewColumn x:Name="rateRGVCH" Header="隐波率" Width="60"/>
-                        <GridViewColumn x:Name="varRGVCH" Header="Var" Width="60"/>
+                        <GridViewColumn x:Name="deltaRGVCH" Header="Delta" DisplayMemberBinding="{Binding SingleDelta}" Width="60"/>
+                        <GridViewColumn x:Name="gammaRGVCH" Header="Gamma" DisplayMemberBinding="{Binding SingleGamma}" Width="60"/>
+                        <GridViewColumn x:Name="thetaRGVCH" Header="Theta" DisplayMemberBinding="{Binding SingleTheta}" Width="60"/>
+                        <GridViewColumn x:Name="VegaRGVCH" Header="Vega" DisplayMemberBinding="{Binding SingleVega}" Width="60"/>
+                        <GridViewColumn x:Name="rhoRGVCH" Header="Rho" DisplayMemberBinding="{Binding SingleRho}" Width="60"/>
+                        <GridViewColumn x:Name="rateRGVCH" Header="隐波率" DisplayMemberBinding="{Binding SingleVol}" Width="60"/>
+                        <GridViewColumn x:Name="varRGVCH" Header="Var" DisplayMemberBinding="{Binding SingleVar}" Width="60"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -1317,6 +1327,61 @@
         <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Right" VerticalAlignment="Bottom" Foreground="White" Background="{x:Null}" Margin="0,0,105,333" Height="26" />
 
         <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" SelectedIndex="0"  Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="0,0,20,333" Style="{StaticResource CboCommomStyle}"/>
+        <Canvas HorizontalAlignment="Left" Height="266" Margin="843,390,0,0" VerticalAlignment="Top" Width="312">
+            <am:LineChart x:Name="VolatilityChart" Width="312" Height="256"
+                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="10" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2">
+					<!--Background="#001DB2DE" PlotAreaBackground="Wheat" Foreground="LightGray"
+					 PlotAreaMargin="0,21,0,0" PlotAreaBorderBrush="#555555"
+                      
+					BorderBrush="#00000000" BorderThickness="0" 
+					IndicatorStroke="#880D8ECF" IndicatorBalloonForeground="Black"
+                    IsIndicatorEnabled="True"
+                    BalloonsEnabled="True"
+                      
+					ZoomOutButtonForeground="#FFFFFFFF" ZoomOutButtonHoverForeground="#FF5EB1E0" 
+					ZoomOutButtonMargin="0,90,75,0" ConnectOverGaps="True">-->
+
+                <am:LineChart.Legend>
+                    <am:Legend HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
+							IsGraphTogglingEnabled="True" ValuesEnabled="True"/>
+                </am:LineChart.Legend>
+
+                <am:LineChart.LeftValueAxis>
+                    <am:ValueAxis StrokeThickness="0" />
+                </am:LineChart.LeftValueAxis>
+
+                <am:LineChart.CategoryAxis>
+                    <am:CategoryAxis StrokeThickness="0" />
+                </am:LineChart.CategoryAxis>
+
+                <am:LineChart.LeftValueAxisGrid>
+                    <am:ValueGrid Stroke="#08FFFFFF" />
+                </am:LineChart.LeftValueAxisGrid>
+
+                <am:LineChart.CategoryAxisGrid>
+                    <am:CategoryGrid Stroke="#08FFFFFF" />
+                </am:LineChart.CategoryAxisGrid>
+                <am:LineChart.Content >
+                    <Grid Width="640" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </am:LineChart.Content>
+                <!--<am:LineChart.Graphs >
+                    <am:LineChartGraph Name="VolatilityGraph" Height="184" Width="312" Brush="White" AreaFillOpacity="0.5" BulletType="None" IsFilled="True" AreaFill="Blue"  />
+                </am:LineChart.Graphs>-->
+                <am:LineChartGraph x:Name="VolatilityGraphTemp1" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="72" IsFilled="True" Width="237"/>
+                <am:LineChartGraph x:Name="VolatilityGraphTemp2" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
+
+            <!--</am:LineChart>-->
+
+            </am:LineChart>
+            <Label Content="" Height="33" Width="135" Background="#FF120D13"/>
+            <!--<Label Content="Label" Canvas.Left="246" Canvas.Top="56"/>-->
+            <Label x:Name="gougou" Canvas.Top="240" Width="70" Background="#FF120D13" Height="26"/>
+        </Canvas>
 
         </Grid>
 </Window>

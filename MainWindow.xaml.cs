@@ -609,6 +609,16 @@ namespace qiquanui
                 openRightCanvas();
 
                 RiskWindow riskWindow = new RiskWindow(this);
+                RiskLabManager rm = new RiskLabManager(otm, riskWindow); //风险实验室
+                for (int i = 0; i < otm.TradingOC.Count(); i++) //显示组合单支期权的希腊值
+                {
+                    TradingData td = otm.TradingOC[i];
+                    rm.GetData(td.InstrumentID, td.CallOrPut, td.TradingType, td.TradingNum);
+                }
+                rm.Com();
+
+                riskWindow.getRM(rm);
+
                 riskWindow.Show();
                 this.WindowState = WindowState.Minimized;
 
