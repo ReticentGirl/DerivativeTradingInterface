@@ -1443,13 +1443,15 @@
             </am:LineChart>
             <Label Content="Label" Canvas.Left="25" Canvas.Top="13" Width="130" Background="#FF120D13" Foreground="#00000000" Height="22"/>
             <Label Content="Label" Canvas.Top="209" Width="130" Background="#FF120D13" Foreground="#00000000" Canvas.Left="25" Height="22"/>
+            <Button x:Name="ZoomInGL" Content="+" Canvas.Left="269" Canvas.Top="16" Width="21" Click="ZoomInGL_Click"/>
+            <Button x:Name="ZoomInYK" Content="+" Canvas.Left="269" Canvas.Top="222" Width="21" Click="ZoomInYK_Click"/>
 
 
 
         </Canvas>
 
         <!--盈亏对比图-->
-        <Canvas HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Grid.RowSpan="2" Height="238" Margin="0,0,51,400" Width="303" Background="#00C160EE">
+        <Canvas HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Height="238" Margin="0,0,50.6,400.4" Width="303" Background="#00C160EE">
 
             <am:LineChart x:Name="VolatilityChart3" Width="300" Height="200" Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="10" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2">
 
@@ -1479,10 +1481,12 @@
             </am:LineChart>
             <Label Content="Label" Canvas.Left="2" Canvas.Top="11" Width="130" Background="#FF120D13" Foreground="#00000000"/>
             <Label x:Name="LegendMask" Content="Label" Canvas.Left="81" Canvas.Top="185" Width="130" Background="#FF120D13" Foreground="#00000000"/>
+            <Button x:Name="ZoomInYKs" Content="+" Canvas.Left="279" Width="21" Click="ZoomInYKs_Click"/>
 
 
         </Canvas>
 
+        <Button x:Name="ZoomInZS" Content="+" Canvas.Left="269" Canvas.Top="222" Width="21" Margin="1140,214.6,24.6,415.4" Grid.Row="1" RenderTransformOrigin="0.505,0.511" Click="ZoomInZS_Click"/>
 
         <ams:StockChart Name="stockChart" Grid.Row="1" Margin="759,231.6,39.6,198.4" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00">
             <ams:StockChart.DataSets>

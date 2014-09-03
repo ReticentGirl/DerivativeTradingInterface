@@ -10,7 +10,7 @@
         
         SizeChanged="Window_SizeChanged"
         Closing="Window_Closing"
-        Title="ChartWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF120D13" Foreground="#FFB3A9B6" BorderThickness="7" AllowsTransparency="True" Opacity="0.95" Left="100" Top="20" ResizeMode="CanResizeWithGrip" MinWidth="1200" MinHeight="700.5">
+        Title="ChartWindow" Height="700.5" Width="1200" WindowStyle="None" Background="#FF120D13" Foreground="#FFB3A9B6" BorderThickness="7" AllowsTransparency="True" Opacity="0.95" Left="100" Top="20" ResizeMode="CanResizeWithGrip" MinWidth="1200" MinHeight="700.5" Loaded="Window_Loaded_1">
 
 
 
@@ -1279,7 +1279,234 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
+        
+        
+        
+        <Canvas x:Name="GLCanvas" HorizontalAlignment="Right" Height="614" Margin="0,0,68.6,10.4" VerticalAlignment="Bottom" Width="1065" Grid.Row="1">
+            <am:LineChart x:Name="VolatilityChart" Width="1000" Height="600" Foreground="LightGray"
+                      
+					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" Canvas.Left="25" Canvas.Top="13" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" >
 
+                <am:LineChart.Content >
+                    <Grid Width="640" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </am:LineChart.Content>
+                <am:LineChart.CategoryAxis>
+                    <am:CategoryAxis StrokeThickness="0"/>
+                </am:LineChart.CategoryAxis>
+                <am:LineChart.CategoryAxisGrid>
+                    <am:CategoryGrid Stroke="#02FFFFFF"/>
+                </am:LineChart.CategoryAxisGrid>
+                <am:LineChart.LeftValueAxisGrid>
+                    <am:ValueGrid Stroke="#02FFFFFF"/>
+                </am:LineChart.LeftValueAxisGrid>
+                <am:LineChart.LeftValueAxis>
+                    <am:ValueAxis StrokeThickness="0"/>
+                </am:LineChart.LeftValueAxis>
+                <am:LineChartGraph x:Name="VolatilityGraph" AreaFillOpacity="1" AreaFill="#FFD46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
+                <am:LineChartGraph x:Name="VolatilityGraph2" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
+            </am:LineChart>
+            <Label Content="Label" Canvas.Left="25" Canvas.Top="13" Width="130" Background="#FF120D13" Foreground="#00000000" Height="22"/>
+
+
+        </Canvas>
+
+        <Canvas x:Name="YKCanvas" HorizontalAlignment="Right" Height="614" Margin="0,0,64.6,20.4" VerticalAlignment="Bottom" Width="1065" Grid.Row="1">
+
+            <am:LineChart x:Name="VolatilityChart2" Height="564"
+					Background="Transparent" Foreground="#FFECECEC"
+                      Visibility="Visible"
+					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="22" Canvas.Left="33" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Grid.Row="1" Width="1002">
+
+                <am:LineChart.Content >
+                    <Grid Width="640" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </am:LineChart.Content>
+                <am:LineChart.CategoryAxis>
+                    <am:CategoryAxis StrokeThickness="0"/>
+                </am:LineChart.CategoryAxis>
+                <am:LineChart.CategoryAxisGrid>
+                    <am:CategoryGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.CategoryAxisGrid>
+                <am:LineChart.LeftValueAxisGrid>
+                    <am:ValueGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.LeftValueAxisGrid>
+                <am:LineChart.LeftValueAxis>
+                    <am:ValueAxis StrokeThickness="0"/>
+                </am:LineChart.LeftValueAxis>
+                <am:LineChartGraph x:Name="VolatilityGraph3" AreaFillOpacity="1" AreaFill="#FFD46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
+                <am:LineChartGraph x:Name="VolatilityGraph4" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
+            </am:LineChart>
+            <Label Content="Label" Canvas.Left="33" Canvas.Top="22" Width="130" Background="#FF120D13" Foreground="#00000000" Height="22"/>
+
+        </Canvas>
+
+        <Canvas x:Name="YKsCanvas" HorizontalAlignment="Right" Height="614" Margin="0,0,64.6,29.4" VerticalAlignment="Bottom" Width="1065" Grid.Row="1">
+
+            <am:LineChart x:Name="VolatilityChart3" Width="982" Height="527" Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="37" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Canvas.Left="40">
+
+                <am:LineChart.Content >
+                    <Grid Width="640" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </am:LineChart.Content>
+                <am:LineChart.CategoryAxis>
+                    <am:CategoryAxis StrokeThickness="0"/>
+                </am:LineChart.CategoryAxis>
+                <am:LineChart.CategoryAxisGrid>
+                    <am:CategoryGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.CategoryAxisGrid>
+                <am:LineChart.LeftValueAxisGrid>
+                    <am:ValueGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.LeftValueAxisGrid>
+                <am:LineChart.LeftValueAxis>
+                    <am:ValueAxis StrokeThickness="0"/>
+                </am:LineChart.LeftValueAxis>
+                <am:LineChartGraph x:Name="VolatilityGraphTemp1" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="72" IsFilled="True" Width="237"/>
+                <am:LineChartGraph x:Name="VolatilityGraphTemp2" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
+
+            </am:LineChart>
+            <Label Content="Label" Canvas.Left="40" Canvas.Top="36" Width="130" Background="#FF120D13" Foreground="#00000000"/>
+            <Label x:Name="LegendMask" Content="Label" Canvas.Left="460" Canvas.Top="544" Width="130" Background="#FF120D13" Foreground="#00000000"/>
+
+
+        </Canvas>
+
+        <Canvas x:Name="ZSCanvas" HorizontalAlignment="Right" Height="614" Margin="0,0,68.6,24.4" VerticalAlignment="Bottom" Width="1065" Grid.Row="1">
+
+            <ams:StockChart Name="stockChart" Grid.Row="1" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Height="514" Canvas.Left="80" RenderTransformOrigin="0.5,0.5" Canvas.Top="49" Width="907">
+                <ams:StockChart.DataSets>
+                    <ams:DataSet Name="stockSet1" Brush="#7f8da9"
+                                
+                                DateMemberPath="date"
+                                OpenMemberPath="open" HighMemberPath="high"
+                                LowMemberPath="low" CloseMemberPath="close"
+                                ValueMemberPath="close" VolumeMemberPath="volume"
+                             
+                                />
+                    <!--ItemsSource="{Binding Data}"-->
+                </ams:StockChart.DataSets>
+
+
+                <!--走势图-->
+                <ams:StockChart.Charts>
+
+                    <ams:Chart Title="价格" GridHeight="2*" Background="#00000000">
+                        <ams:Chart.Graphs>
+                            <ams:Graph GraphType="Line" 
+                                    NegativeBrush="Green" PositiveBrush="Red" 
+                                    LegendItemType="Ohlc" LegendPeriodItemType="Ohlc"
+                                    CursorBrush="Blue" CursorSize="6" 
+                                    IsFilled="True" 
+                                   />
+
+                        </ams:Chart.Graphs>
+
+                        <ams:Chart.DateTimeAxis>
+                            <ams:DateTimeAxis ValuesForeground="#90000000" StrokeThickness="0" TickLength="0" 
+                                            />
+                        </ams:Chart.DateTimeAxis>
+
+                        <ams:Chart.LeftValueAxis>
+                            <ams:ValueAxis ValuesForeground="#90000000"
+                                StrokeThickness="0" TickLength="0" />
+                        </ams:Chart.LeftValueAxis>
+
+                        <ams:Chart.Legend>
+                            <ams:Legend
+                            PositiveValueForeground="Red" NegativeValueForeground="Green"
+                            IsDateVisible="True" Background="#00000000"/>
+                        </ams:Chart.Legend>
+                    </ams:Chart>
+
+
+                    <ams:Chart Title="价格" GridHeight="2*" Background="#00000000">
+                        <ams:Chart.Graphs>
+                            <ams:Graph GraphType="Line" 
+                                    NegativeBrush="Green" PositiveBrush="Red" 
+                                    LegendItemType="Ohlc" LegendPeriodItemType="Ohlc"
+                                    CursorBrush="Blue" CursorSize="6" 
+                                    IsFilled="True" 
+                                   />
+                            <!--<ams:Graph GraphType="Column" 
+                                    NegativeBrush="Green" PositiveBrush="Red" 
+                                    LegendItemType="None" LegendPeriodItemType="None"
+                                    CursorBrush="Blue" CursorSize="6" />-->
+
+                        </ams:Chart.Graphs>
+
+                        <ams:Chart.DateTimeAxis>
+                            <ams:DateTimeAxis Name="timeAxis" ValuesForeground="#90000000" StrokeThickness="0" TickLength="0" 
+                                            />
+                        </ams:Chart.DateTimeAxis>
+
+                        <ams:Chart.LeftValueAxis>
+                            <ams:ValueAxis ValuesForeground="#90000000"
+                                StrokeThickness="0" TickLength="0" />
+                        </ams:Chart.LeftValueAxis>
+
+                        <ams:Chart.Legend>
+                            <ams:Legend
+                            PositiveValueForeground="Red" NegativeValueForeground="Green"
+                            IsDateVisible="True" Background="#00000000"/>
+                        </ams:Chart.Legend>
+                    </ams:Chart>
+                    <!--成交量的Chart-->
+                    <ams:Chart Title="成交量">
+                        <ams:Chart.Graphs>
+                            <ams:Graph GraphType="Column"
+                                    LegendItemType="Value" LegendPeriodItemType="Value"
+                                    DataField="Volume" PeriodValue="Sum"
+                                    CursorBrush="Yellow" CursorSize="6"
+                                    />
+                        </ams:Chart.Graphs>
+
+                        <ams:Chart.DateTimeAxis>
+                            <ams:DateTimeAxis ValuesEnabled="False" StrokeThickness="0" />
+                        </ams:Chart.DateTimeAxis>
+
+                        <ams:Chart.LeftValueAxis>
+                            <ams:ValueAxis ValuesForeground="#90000000"
+                                StrokeThickness="0" TickLength="0"
+                                />
+                        </ams:Chart.LeftValueAxis>
+
+                        <ams:Chart.Legend>
+                            <ams:Legend PositiveValueForeground="Red" NegativeValueForeground="Green" />
+                        </ams:Chart.Legend>
+                    </ams:Chart>
+
+
+                </ams:StockChart.Charts>
+
+                <!--<ams:StockChart.PeriodSelector>
+                <ams:PeriodSelector CustomPeriodLabelText="自定义间隔:" PresetPeriodLabelText="缩放:"
+                                Margin="0,5,0,0"
+                                >
+                    <ams:PeriodSelector.PresetPeriods>
+                        <ams:PresetPeriodButton Interval="Day" Quantity="10" ToolTipService.ToolTip="10天" Content="10天" />
+                        <ams:PresetPeriodButton Interval="Month" Quantity="1" ToolTipService.ToolTip="1个月" Content="1月" />
+                        <ams:PresetPeriodButton Interval="Month" Quantity="3" ToolTipService.ToolTip="3个月" Content="3月" />
+                        <ams:PresetPeriodButton Interval="Year" Quantity="1" ToolTipService.ToolTip="1年" Content="1年" />
+                        <ams:PresetPeriodButton Interval="Year" Quantity="3" ToolTipService.ToolTip="3年" Content="3年" />
+                        <ams:PresetPeriodButton Quantity="NaN" ToolTipService.ToolTip="所有数据" Content="最大" />
+                    </ams:PeriodSelector.PresetPeriods>
+                </ams:PeriodSelector>
+            </ams:StockChart.PeriodSelector>-->
+            </ams:StockChart>
+
+        </Canvas>
 
 
     </Grid>

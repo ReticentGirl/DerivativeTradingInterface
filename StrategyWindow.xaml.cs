@@ -18,6 +18,9 @@ using AmCharts.Windows.Core;
 using AmCharts.Windows.Line;
 using System.Threading;
 using System.Timers;
+using MathWorks.MATLAB.NET.Arrays;
+using MathWorks.MATLAB.NET.Utility;
+using RiskControl;
 
 namespace qiquanui
 {
@@ -2698,10 +2701,12 @@ namespace qiquanui
 
         }
 
+
         private void TrendInitial()
         {
             trm = new Trend();
             trm.initial(YKManager.SubjectID);
+            BindingStockData = trm.Data;
             TrendInitialCallBack(trm);
         }//初始化走势图（载入历史数据）
 
@@ -2839,7 +2844,8 @@ namespace qiquanui
                     ts.GroupName = ykm.yk[which, i].ykgroupname;
                     ts.Number = 1;
                     ts.pricePer = ykm.yk[which, i].Price;
-                    ts.VaR = "0";
+                    WHICH = which;
+                    new Thread(new ThreadStart(setVAR)).Start();
                     ts.LineNo = i;
                     RefreshTSPrice(ts);
 
@@ -2850,7 +2856,7 @@ namespace qiquanui
                     oc.RemoveAt(i);
             }
         }
-
+        static int WHICH = 0;
 
 
 
@@ -2944,6 +2950,13 @@ namespace qiquanui
                 System.Windows.Data.Binding dataBinding2 = new System.Windows.Data.Binding();   //数据绑定
                 System.Windows.Data.Binding dataBinding3 = new System.Windows.Data.Binding();   //数据绑定
                 System.Windows.Data.Binding dataBinding4 = new System.Windows.Data.Binding();   //数据绑定
+                Bindings[0] = coorBinding;
+                Bindings[1] = dataBinding;
+                Bindings[2] = dataBinding2;
+                Bindings[3] = dataBinding3;
+                Bindings[4] = dataBinding4;
+
+
 
                 coorBinding.Source = coor;
 
@@ -3004,7 +3017,6 @@ namespace qiquanui
                     labels[i].Visibility = Visibility.Hidden;
             }
         }
-
         /// <summary>
         /// 绘制盈亏对比图
         /// </summary>
@@ -3021,6 +3033,8 @@ namespace qiquanui
             }
             else
             {
+                BindingCount = count;
+                BindingTitles = new string[BindingCount];
 
                 VolatilityChart3.Visibility = Visibility.Visible;
                 LegendMask.Visibility = Visibility.Hidden;
@@ -3030,6 +3044,7 @@ namespace qiquanui
                 ObservableCollection<XY> coor = new ObservableCollection<XY>();
                 coor = ykm.yk[which, 0].points;
                 System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
+                Bindings[5] = coorBinding;
                 coorBinding.Source = coor;
                 VolatilityChart3.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
                 VolatilityChart3.IDMemberPath = "X";
@@ -3042,6 +3057,8 @@ namespace qiquanui
                     data = yk.points;
 
                     System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
+                    Bindings[5 + i] = dataBinding;
+                    BindingTitles[i] = yk.title;
 
                     dataBinding.Source = data;
 
@@ -3252,6 +3269,8 @@ namespace qiquanui
                 }
                 MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number);
             }
+            //this.WindowState = WindowState.Minimized;
+            pwindow.WindowState = WindowState.Normal;
         }
 
         private void placeOrderSButton_Click(object sender, RoutedEventArgs e)
@@ -3271,6 +3290,100 @@ namespace qiquanui
                 }
                 MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number);
             }
+            //this.WindowState = WindowState.Minimized;
+            pwindow.WindowState = WindowState.Normal;
+        }
+
+
+        private void setVAR()
+        {
+            int which = WHICH;
+            ObservableCollection<TopStrategy> oc;
+            if (which==0) 
+                oc=qjoc;
+            else 
+                oc=cloc;
+            for (int no = 0; no < oc.Count; no++)
+            {
+                int count = ykm.yk[which, no].OrderList.Count;
+                string[] ids = new string[count];
+                int[] nums = new int[count];
+                for (int i = 0; i < count; i++)
+                {
+                    ids[i] = ykm.yk[which, no].OrderList[i].InstrumentID;
+                    nums[i] = Math.Abs(ykm.yk[which, no].OrderList[i].Number);
+                }
+                double res = VarCom(count, ids, nums);
+    
+                oc[no].VaR = "" + res;
+                
+            }
+        }
+
+        //计算VAR
+        public double VarCom(int nCount, string[] InstrumentName, int[] Num, double dCov = 0.995)
+        //cov是置信度0—1  风险实验室是用户自己输入的  程一豪说一般0.995
+        //nConut是组合一共有多少支期权
+        //组合每支期权合约数组
+        //购买的每支期权多少份
+        {/*
+            MWCellArray InputNum = new MWCellArray(1, nCount);
+            MWCellArray InputID = new MWCellArray(1, nCount);
+            for (int i = 0; i < nCount; i++)
+            {
+                InputNum[i + 1] = Num[i];
+                InputID[i + 1] = "'" + InstrumentName[i] + "'";
+            }
+            RiskControl.Class1 output1 = new Class1();
+            MWNumericArray x0 = (MWNumericArray)output1.VaR(InputID, InputNum, nCount, dCov);
+            double ComVar = Math.Round((double)x0, 3);
+            return ComVar;*/
+            return 0;
+        }
+
+
+        Binding[] Bindings = new Binding[10];
+        //0~4概率盈亏 5~9盈亏对比
+        int BindingCount = 0;
+        string[] BindingTitles;
+        //盈亏图条数
+        public ObservableCollection<StockInfo> BindingStockData { get; set; }
+        //走势图
+
+
+        private void ZoomInGL_Click(object sender, RoutedEventArgs e)
+        {
+            ChartWindow.CHARTTYPE = 0;
+            ChartWindow.Bindings = this.Bindings;
+            ChartWindow cw = new ChartWindow(pwindow);
+            cw.Show();
+        }
+
+        private void ZoomInYK_Click(object sender, RoutedEventArgs e)
+        {
+            ChartWindow.CHARTTYPE = 1;
+            ChartWindow.Bindings = this.Bindings;
+            ChartWindow cw = new ChartWindow(pwindow);
+            cw.Show();
+        }
+
+        private void ZoomInYKs_Click(object sender, RoutedEventArgs e)
+        {
+            ChartWindow.CHARTTYPE = 2;
+            ChartWindow.Bindings = this.Bindings;
+            ChartWindow.BindingCount = this.BindingCount;
+            ChartWindow.BindingTitles = this.BindingTitles;
+            ChartWindow cw = new ChartWindow(pwindow);
+            cw.Show();
+
+        }
+
+        private void ZoomInZS_Click(object sender, RoutedEventArgs e)
+        {
+            ChartWindow.CHARTTYPE = 3;
+            ChartWindow.BindingStockData = this.BindingStockData;
+            ChartWindow cw = new ChartWindow(pwindow);
+            cw.Show();
 
         }
 

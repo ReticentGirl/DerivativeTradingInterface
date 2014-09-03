@@ -64,6 +64,7 @@
     </Reference>
     <Reference Include="MWArray, Version=2.14.0.0, Culture=neutral, PublicKeyToken=e1d84a0da19db86f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+    <Reference Include="MWArray">
       <HintPath>.\MWArray.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
@@ -96,6 +97,9 @@
     </ApplicationDefinition>
     <Compile Include="BasicInforAndPromptManager.cs" />
     <Compile Include="ChartControl.cs" />
+    <Compile Include="ChartWindow.xaml.cs">
+      <DependentUpon>ChartWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CloseOutPlaceOrderWindow.xaml.cs">
       <DependentUpon>CloseOutPlaceOrderWindow.xaml</DependentUpon>
     </Compile>
@@ -137,6 +141,10 @@
     </Compile>
     <Compile Include="Trend.cs" />
     <Compile Include="UserManager.cs" />
+    <Page Include="ChartWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="CloseOutPlaceOrderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

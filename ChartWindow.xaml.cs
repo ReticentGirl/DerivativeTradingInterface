@@ -18,6 +18,7 @@ using AmCharts.Windows.Core;
 using AmCharts.Windows.Line;
 using System.Threading;
 using System.Timers;
+using AmCharts.Windows;
 
 namespace qiquanui
 {
@@ -31,7 +32,7 @@ namespace qiquanui
 
         private double windowShadowControlWidth;//窗口阴影控制宽度，有阴影时为0，无阴影时为7
 
-
+        public static int CHARTTYPE = 0;
         MainWindow pwindow;
         public ChartWindow(MainWindow _pWindow)
         {
@@ -150,8 +151,8 @@ namespace qiquanui
         private DoubleAnimation closeAnimation1;
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
-            pwindow.WindowState = WindowState.Normal;
-            pwindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
+            //pwindow.WindowState = WindowState.Normal;
+            //pwindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
             this.Close();
 
 
@@ -189,10 +190,147 @@ namespace qiquanui
             // groupCanvasStoryboard_Leave.Begin(this);
         }
 
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            stockChart.Charts[0].Collapse();
+            switch (CHARTTYPE)
+            {
+                case 0:
+                    ChartGL();
+                    break;
+                case 1:
+                    ChartYK();
+                    break;
+                case 2:
+                    ChartYKs();
+                    break;
+                case 3:
+                    ChartZS();
+                    break;
+            }
+        }
 
 
+        public static Binding[] Bindings;
+        public static int BindingCount;
+        public static string[] BindingTitles;
+        public static ObservableCollection<StockInfo> BindingStockData { get; set; }
 
 
+        private void ChartGL()
+        {
+            if (Bindings[0] == null || Bindings[1] == null || Bindings[2] == null)
+                return;
+            VolatilityChart2.Visibility = Visibility.Hidden;
+            VolatilityChart3.Visibility = Visibility.Hidden;
+            stockChart.Visibility = Visibility.Hidden;
+
+            this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, Bindings[0]);
+            this.VolatilityChart.IDMemberPath = "X";
+
+            this.VolatilityGraph.SetBinding(SerialGraph.DataItemsSourceProperty, Bindings[1]);
+            this.VolatilityGraph.SeriesIDMemberPath = "X";
+            this.VolatilityGraph.ValueMemberPath = "Y";
+
+            this.VolatilityGraph2.SetBinding(SerialGraph.DataItemsSourceProperty, Bindings[2]);
+            this.VolatilityGraph2.SeriesIDMemberPath = "X";
+            this.VolatilityGraph2.ValueMemberPath = "Y";
+
+        }
+
+        private void ChartYK()
+        {
+            VolatilityChart.Visibility = Visibility.Hidden;
+            LegendMask.Visibility = Visibility.Hidden;
+            VolatilityChart3.Visibility = Visibility.Hidden;
+            stockChart.Visibility = Visibility.Hidden;
+
+            if (Bindings[0] == null || Bindings[3] == null || Bindings[4] == null)
+                return;
+
+            this.VolatilityChart2.SetBinding(SerialChart.SeriesSourceProperty, Bindings[0]);
+            this.VolatilityChart2.IDMemberPath = "X";
+
+            this.VolatilityGraph3.SetBinding(SerialGraph.DataItemsSourceProperty, Bindings[3]);
+            this.VolatilityGraph3.SeriesIDMemberPath = "X";
+            this.VolatilityGraph3.ValueMemberPath = "Y";
+
+            this.VolatilityGraph4.SetBinding(SerialGraph.DataItemsSourceProperty, Bindings[4]);
+            this.VolatilityGraph4.SeriesIDMemberPath = "X";
+            this.VolatilityGraph4.ValueMemberPath = "Y";
+
+        }
+
+        private void ChartYKs()
+        {
+
+            VolatilityChart2.Visibility = Visibility.Hidden;
+            VolatilityChart.Visibility = Visibility.Hidden;
+            stockChart.Visibility = Visibility.Hidden;
+            if (Bindings[5] == null )
+                return;
+            for (int i=6;i<6+BindingCount;i++)
+                if (Bindings[i] == null)
+                    return;
+
+
+                VolatilityChart3.Visibility = Visibility.Visible;
+
+                VolatilityChart3.SetBinding(SerialChart.SeriesSourceProperty, Bindings[5]);
+                VolatilityChart3.IDMemberPath = "X";
+                VolatilityChart3.Graphs.Clear();
+                LegendMask.Visibility = Visibility.Hidden;
+
+
+            for (int i=0;i<BindingCount;i++)
+            {
+                    LineChartGraph test = new LineChartGraph();
+
+                    test.SetBinding(SerialGraph.DataItemsSourceProperty, Bindings[5+i]);
+                    test.SeriesIDMemberPath = "X";
+                    test.ValueMemberPath = "Y";
+                    test.Title = BindingTitles[i];
+                    test.LineThickness = 2;
+                    ///[Style]
+                    switch (i)
+                    {
+                        case 0:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+                            break;
+                        case 1:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
+                            break;
+                        case 2:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
+                            break;
+                        case 3:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
+                            break;
+
+                    }
+
+                    VolatilityChart3.Graphs.Add(test);
+
+                }
+        }
+
+
+        private void ChartZS()
+        {
+            VolatilityChart2.Visibility = Visibility.Hidden;
+            VolatilityChart3.Visibility = Visibility.Hidden;
+            VolatilityChart.Visibility = Visibility.Hidden;
+            if (BindingStockData == null)
+                return;
+
+            stockChart.Charts[0].Collapse();
+            DateTime present = DataManager.now;
+            present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+            stockChart.StartDate = present;
+
+            stockSet1.ItemsSource = BindingStockData;
+
+        }
 
 
 
