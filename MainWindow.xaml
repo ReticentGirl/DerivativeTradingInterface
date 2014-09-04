@@ -12,7 +12,7 @@
         Closing="Window_Closing"
     
     
-        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1190" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1">
+        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1190" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1" WindowState="Maximized">
     <Window.Resources>
 
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
@@ -2043,7 +2043,7 @@
 
                 </Grid>
 
-                <ListView x:Name="futuresMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"  Height="326" Width="1127"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="White">
+                <ListView x:Name="futuresMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"  Height="326" MaxWidth="903" Width="903"  Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="30" Visibility="Hidden" Foreground="White">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="instrumentIDFMGVCH" DisplayMemberBinding="{Binding InstrumentID}" Header=" 合约代码" Width=" 100" />
@@ -2187,7 +2187,7 @@
                     </ListView.View>
                 </ListView>
 
-                <ListView x:Name="subjectMatterMarketGrid" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"   Height="61" Canvas.Top="30" MinWidth="882" Width="1127" Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" FlowDirection="LeftToRight" Foreground="White">
+                <ListView x:Name="subjectMatterMarketGrid" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}"   Height="61" Canvas.Top="30" MaxWidth="903" Width="903" Background="#FF292932" BorderBrush="{x:Null}" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource futureListViewStyle}"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" FlowDirection="LeftToRight" Foreground="White">
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
 
@@ -2215,7 +2215,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="SMMG4"  Header=" 买价" Width=" 100">
+                            <GridViewColumn x:Name="SMMG4"  Header=" 买价" Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Label x:Name="SMMGLab4" Content="{Binding BidPrice1}" MinWidth="60" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -2223,7 +2223,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="SMMG5"  Header=" 卖价" Width=" 100">
+                            <GridViewColumn x:Name="SMMG5"  Header=" 卖价" Width=" 80">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Label x:Name="SMMGLab5" Content="{Binding AskPrice1}" MinWidth="60" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -2231,7 +2231,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="SMMG6"  Header=" 最高价" Width=" 100">
+                            <GridViewColumn x:Name="SMMG6"  Header=" 最高价" Width=" 90">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Label x:Name="SMMGLab6" Content="{Binding HighestPrice}" MinWidth="60" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -2239,7 +2239,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="SMMG7"  Header=" 最低价" Width=" 100">
+                            <GridViewColumn x:Name="SMMG7"  Header=" 最低价" Width=" 90">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Label x:Name="SMMGLab7" Content="{Binding LowestPrice}" MinWidth="60" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -2247,7 +2247,7 @@
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
 
-                            <GridViewColumn x:Name="SMMG8"  Header=" 成交量" Width=" 100">
+                            <GridViewColumn x:Name="SMMG8"  Header=" 成交量" Width=" 90">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Label x:Name="SMMGLab8" Content="{Binding OpenInterest}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
@@ -2276,8 +2276,8 @@
                     </ListView.View>
 
                 </ListView>
-                <Border x:Name="titileBorder4" BorderBrush="#FF7B7F95" BorderThickness="0,2,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" Width="903" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="91" >
-                    <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" Width="903" FlowDirection="LeftToRight" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Canvas.Top="100" RenderTransformOrigin="0.5,0.5" MouseEnter="optionsMarketTitleGrid_MouseEnter" MouseLeave="optionsMarketTitleGrid_MouseLeave" Margin="0" VerticalAlignment="Top" >
+                <Border x:Name="titileBorder4" BorderBrush="#FF7B7F95" BorderThickness="0,2,0,0" Grid.Column="2" Height="25" VerticalAlignment="Stretch" MaxWidth="903" Width="903" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="True" AllowDrop="True" ClipToBounds="True" HorizontalAlignment="Left" Canvas.Top="91" >
+                    <Grid x:Name="optionsMarketTitleGrid" Style="{StaticResource optionsMarketTitleBorder}" MaxWidth="903" Width="903" FlowDirection="LeftToRight" MaxHeight="25" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Canvas.Top="100" RenderTransformOrigin="0.5,0.5" MouseEnter="optionsMarketTitleGrid_MouseEnter" MouseLeave="optionsMarketTitleGrid_MouseLeave" Margin="0" VerticalAlignment="Top" >
 
                         <Grid.RenderTransform>
                             <TransformGroup>
@@ -2302,7 +2302,7 @@
                         <TextBlock Text=" 看跌" TextAlignment="Center" Grid.Row=" 0" Grid.Column="1" Padding="0,4,0,0" MaxWidth="400" MaxHeight="25" Foreground="White" Grid.ColumnSpan="2" Margin="79,-1,31,1" FontSize="14" FontWeight="Bold"/>
                     </Grid>
                 </Border>
-                <ListView x:Name="optionsMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Height="240" Width="903" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,1,1" Foreground="White" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="116" >
+                <ListView x:Name="optionsMarketListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Height="240" MaxWidth="903" Width="903" VerticalAlignment="Top" HorizontalAlignment="Left" Background="{x:Null}" BorderBrush="#FF666C89" BorderThickness="0,0,1,1" Foreground="White" Style="{StaticResource futureListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" FlowDirection="LeftToRight" Canvas.Top="116" >
                     <ListView.View>
                         <GridView AllowsColumnReorder="True">
                             <GridViewColumn x:Name="bidPriceROMGVCH" Header=" 买价" Width="80">
@@ -2393,26 +2393,25 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <!--走势图-->
-                <Canvas x:Name="trendChartCanvas" HorizontalAlignment="Left" Height="265" VerticalAlignment="Top" Width="224" Canvas.Left="903" Canvas.Top="91">
-                    <!--这里放走势图-->
-                </Canvas>
-                <!--盈亏图&概率图-->
-                <TabControl HorizontalAlignment="Left" Height="265" VerticalAlignment="Top" Width="224" Canvas.Left="903" Canvas.Top="91" Background="{x:Null}" BorderBrush="{x:Null}">
-                    <TabItem Header="盈亏图" Margin="0,0,-6,-6" Style="{StaticResource TabItemStyle}" Foreground="#FFF2F4F8">
-                        <Grid Background="#FF0C0E16">
-                            <Border BorderBrush="#FF0072C4" BorderThickness="1,3,1,1" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="218"/>
 
+                <!--走势图&盈亏图&概率图-->
+                <TabControl x:Name="chartTabControl" HorizontalAlignment="Left" Height="326" VerticalAlignment="Top" Width="224" Canvas.Left="903" Canvas.Top="30" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <TabItem Header="走势图" Margin="0,0,-6,-6" Style="{StaticResource TabItemStyle}" Foreground="#FFF2F4F8">
+                        <Grid x:Name="trendChartGrid" Background="#FF0C0E16">
+                            <!--走势图-->
+                        </Grid>
+                    </TabItem>
+
+                    <TabItem Header="盈亏图/概率图" Margin="8,0,-14,-6" Style="{StaticResource TabItemStyle}" Foreground="#FFF2F4F8">
+                        <Grid x:Name="probaAndProfitChartGrid" Background="#FF0C0E16">
+                            <!--这里放概率图-->
                             <!--这里放盈亏图-->
                         </Grid>
                     </TabItem>
-                    <TabItem Header="概率图" Margin="8,0,-14,-6" Style="{StaticResource TabItemStyle}" Foreground="#FFF2F4F8">
-                        <Grid Background="#FF0C0E16">
-                            <Border BorderBrush="#FF0072C4" BorderThickness="1,3,1,1" HorizontalAlignment="Left" Height="238" VerticalAlignment="Top" Width="218"/>
-                            <!--这里放概率图-->
-                        </Grid>
-                    </TabItem>
+
                 </TabControl>
+                <Border x:Name="chartBorder" BorderBrush="#FF0072C4" BorderThickness="1,3,1,1" HorizontalAlignment="Left" Height="301" VerticalAlignment="Top" Width="224" Canvas.Left="903" Canvas.Top="55"/>
+
             </Canvas>
 
         </Grid>
@@ -2427,11 +2426,10 @@
 
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="82"/>
-                            <ColumnDefinition Width="832"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="tradingListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0"  IsSynchronizedWithCurrentItem="False" ScrollViewer.VerticalScrollBarVisibility="Visible" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,10,0,0" SelectionChanged="tradingListView_SelectionChanged" Grid.ColumnSpan="2">
+                        <ListView x:Name="tradingListView" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Foreground="White" Height="211" HorizontalAlignment="Left"  IsSynchronizedWithCurrentItem="False" Margin="0,10,0,0" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" SelectionChanged="tradingListView_SelectionChanged" Style="{StaticResource ListViewStyle}" VerticalAlignment="Top" Width="914">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChooseTGVCH" Header="" Width="50" >
@@ -2526,19 +2524,16 @@
                         </ListView>
 
                         <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
-                        <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click" Grid.Column="1"/>
-                        <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click" Grid.ColumnSpan="2"/>
-                        <Button x:Name="addSubjectMatter" Content="加入标的期货" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="addSubjectMatter_Click" Grid.Column="1"/>
+                        <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
+                        <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click"/>
+                        <Button x:Name="addSubjectMatter" Content="加入标的期货" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="addSubjectMatter_Click"/>
                     </Grid>
                 </TabItem>
 
                 <TabItem x:Name="holdDetailTabItem" Foreground="White" Header="持仓" Margin="-2,9,2,-13" Style="{StaticResource TabItemStyle}" PreviewMouseLeftButtonDown="holdDetailTabItem_PreviewMouseLeftButtonDown">
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="7"/>
-                            <ColumnDefinition Width="4"/>
-                            <ColumnDefinition Width="4"/>
-                            <ColumnDefinition Width="899"/>
+                            <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
                         <ListView x:Name="holdDetailListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" BorderBrush="#FF0176C9" Background="{x:Null}" BorderThickness="0,3,0,0" Foreground="White" Margin="0,10,0,0" UseLayoutRounding="True"  Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Grid.ColumnSpan="4">
@@ -2580,11 +2575,10 @@
                 <TabItem x:Name="historyTabItem" Foreground="White" Header="历史记录" Margin="-2,9,2,-13" PreviewMouseLeftButtonDown="historyTabItem_PreviewMouseLeftButtonDown" Style="{StaticResource TabItemStyle}">
                     <Grid Margin="-3,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="15"/>
-                            <ColumnDefinition Width="899"/>
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White" Grid.ColumnSpan="2">
+                        <ListView x:Name="historyListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914" Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" Style="{StaticResource ListViewStyle}" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Foreground="White">
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="ifChoose" Header="" Width="50">
@@ -2610,11 +2604,11 @@
                             </ListView.View>
                         </ListView>
 
-                        <Button x:Name="cancelOrderBtn" Content="撤单" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,21,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="cancelOrderBtn_Click" Grid.Column="1" />
-                        <CheckBox x:Name="optionsCheckBox" Content="显示期权交易明细" HorizontalAlignment="Left" Margin="144,0,0,4" IsChecked="True" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsCheckBox_Click" Grid.Column="1"/>
-                        <CheckBox x:Name="futuresCheckBox" Content="显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4"  IsChecked="True"  VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresCheckBox_Click" Grid.ColumnSpan="2"/>
-                        <Button x:Name="pickUserBtn" Click="pickUserBtn_Click" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,110,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="1" />
-                        <CheckBox x:Name="chooseAllHCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="1,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click" Grid.Column="1"/>
+                        <Button x:Name="cancelOrderBtn" Content="撤单" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,21,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="cancelOrderBtn_Click" />
+                        <CheckBox x:Name="optionsCheckBox" Content="显示期权交易明细" HorizontalAlignment="Left" Margin="159,0,0,4" IsChecked="True" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsCheckBox_Click"/>
+                        <CheckBox x:Name="futuresCheckBox" Content="显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4"  IsChecked="True"  VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresCheckBox_Click"/>
+                        <Button x:Name="pickUserBtn" Click="pickUserBtn_Click" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,110,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
+                        <CheckBox x:Name="chooseAllHCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
 
                     </Grid>
                 </TabItem>
@@ -2625,7 +2619,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <ListView x:Name="userManageListView" HorizontalAlignment="Left" Height="211" VerticalAlignment="Top" Width="914"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="0,10,0,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" Foreground="White">
+                        <ListView x:Name="userManageListView"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Foreground="White" Height="211" HorizontalAlignment="Left" Margin="0,10,0,0" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" VerticalAlignment="Top" Width="914" >
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="userIDUMGVCH" Header=" 账户号" DisplayMemberBinding="{Binding UserID,UpdateSourceTrigger=PropertyChanged}" Width=" 100"/>

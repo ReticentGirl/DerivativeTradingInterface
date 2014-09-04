@@ -36,7 +36,7 @@ namespace qiquanui
     {
 
         public static DataManager dm;
-        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper;
+        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper, chartTabControlw, chartTabControlh, chartTabControlwper, chartTabControlhper, chartBorderh;
 
 
         public static TradingManager otm;   //维护交易区的指针
@@ -154,7 +154,13 @@ namespace qiquanui
             darkRectanglew = darkRectangle.Width;
             darkRectangleh = darkRectangle.Height;
 
-            windowShadowControlWidth = 0;
+            windowShadowControlWidth = 7;
+
+            chartTabControlw = chartTabControl.Width;
+            chartTabControlh = chartTabControl.Height;
+
+            chartBorderh = chartBorder.Height;
+
 
             //初始化伸缩面板动画
             grid1Storyboard = (Storyboard)this.FindResource("grid1Animate");
@@ -296,13 +302,18 @@ namespace qiquanui
         {
 
 
-            optionsMarketTitleGridwper = TopCanvasButtomGridwper = TopCanvas1wper = Grid1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w)) / (originalWidth - (originalWidth - list1w));
+            optionsMarketTitleGridwper = TopCanvasButtomGridwper = TopCanvas1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w - chartTabControlw)) / (originalWidth - (originalWidth - list1w - chartTabControlw));
             profitListViewwper = userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = tradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
             list1hper = (this.Height - (originalHeight - list1h)) / (originalHeight - (originalHeight - list1h));
             optionsMarketListViewhper = (this.Height - (originalHeight - optionsMarketListViewh)) / (originalHeight - (originalHeight - optionsMarketListViewh));
             TopCanvas1hper = Grid1hper = grid3hper = (this.Height - (originalHeight - Grid1h)) / (originalHeight - (originalHeight - Grid1h));
             titileBorder4wper = (this.Width - (originalWidth - titileBorder4w)) / (originalWidth - (originalWidth - titileBorder4w));
             subjectMatterMarketGridwper = (this.Width - (originalWidth - subjectMatterMarketGridw)) / (originalWidth - (originalWidth - subjectMatterMarketGridw));
+            Grid1wper = (this.Width - (originalWidth - Grid1w)) / (originalWidth - (originalWidth - Grid1w));
+
+            chartTabControlwper = (this.Width - (originalWidth - chartTabControlw)) / (originalWidth - (originalWidth - chartTabControlw));
+            chartTabControlhper = (this.Height - (originalHeight - chartTabControlh)) / (originalHeight - (originalHeight - chartTabControlh));
+
 
 
             darkRectanglewper = (this.Width - (originalWidth - darkRectanglew)) / (originalWidth - (originalWidth - darkRectanglew));
@@ -311,10 +322,13 @@ namespace qiquanui
             statusBar1wper = this.Width / originalWidth;
             canvas2hper = canvas1hper = (this.Height - (originalHeight - canvas1h)) / (originalHeight - (originalHeight - canvas1h));
 
-
+            chartTabControl.Width =  chartTabControlw * chartTabControlwper + 2 * windowShadowControlWidth;
+            chartTabControl.Height = chartTabControlh * chartTabControlhper + 2 * windowShadowControlWidth;
+            chartBorder.Height = chartBorderh * chartTabControlhper + 2 * windowShadowControlWidth + 5;
+            chartBorder.Width = chartTabControl.Width ;
             Border1.Height = this.Height - 14.0 + 2 * windowShadowControlWidth;
             Border1.Width = this.Width - 14.0 + 2 * windowShadowControlWidth;
-            Grid1.Width = futuresMarketListView.Width = list1w * list1wper + 2 * windowShadowControlWidth;
+            Grid1.Width = Grid1w * Grid1wper + 2 * windowShadowControlWidth;
             futuresMarketListView.Height = list1h * list1hper + 2 * windowShadowControlWidth;
             Grid1.Height = Grid1h * Grid1hper + 2 * windowShadowControlWidth;
             historyListView.Width = historyListVieww * historyListViewwper + 2 * windowShadowControlWidth;
@@ -345,6 +359,11 @@ namespace qiquanui
             Canvas1Border1.Height = Canvas1.Height + 2 * windowShadowControlWidth;
 
             Canvas2Border1.Height = Canvas2.Height + 2 * windowShadowControlWidth;
+
+            
+           
+
+
 
             return true;
         } //拉伸窗口时改变各个控件大小
