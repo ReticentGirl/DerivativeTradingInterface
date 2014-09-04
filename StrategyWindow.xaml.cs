@@ -2675,7 +2675,7 @@ namespace qiquanui
             if (trader.Equals("") || duedata.Equals("") || subject.Equals(""))
                 return;
 
-            TotLine = ykm.Initial(optionsTraderInStrategyPanelComboBox.Text.Trim(), nameInStrategyPanelComboBox.Text.Trim(), dueDateComboBox.Text.Trim());
+            TotLine = ykm.Initial( nameInStrategyPanelComboBox.Text.Trim(), dueDateComboBox.Text.Trim());
             cloc = new ObservableCollection<TopStrategy>();
             qjoc = new ObservableCollection<TopStrategy>();
             groupListView.DataContext = qjoc;
@@ -2686,6 +2686,10 @@ namespace qiquanui
             VolatilityChart.Visibility = Visibility.Hidden;
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
+            ZoomInGL.Visibility = Visibility.Hidden;
+            ZoomInYK.Visibility = Visibility.Hidden;
+            ZoomInYKs.Visibility = Visibility.Hidden;
+
             for (int i = 0; i < labels.Length; i++)
                 labels[i].Visibility = Visibility.Hidden;
 
@@ -2719,7 +2723,7 @@ namespace qiquanui
             if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
             {
                 d = new trendInitialCallBack(TrendInitialCallBack);
-                pwindow.Dispatcher.Invoke(d, new object[] { tr });
+                this.Dispatcher.Invoke(d, new object[] { tr });
             }
             else
             {
@@ -2896,6 +2900,8 @@ namespace qiquanui
             {
                 VolatilityChart.Visibility = Visibility.Visible;
                 VolatilityChart2.Visibility = Visibility.Visible;
+                ZoomInGL.Visibility = Visibility.Visible;
+                ZoomInYK.Visibility = Visibility.Visible;
 
                 ObservableCollection<XY> data = new ObservableCollection<XY>();
                 ObservableCollection<XY> data2 = new ObservableCollection<XY>();
@@ -3035,7 +3041,7 @@ namespace qiquanui
             {
                 BindingCount = count;
                 BindingTitles = new string[BindingCount];
-
+                ZoomInYKs.Visibility = Visibility.Visible;
                 VolatilityChart3.Visibility = Visibility.Visible;
                 LegendMask.Visibility = Visibility.Hidden;
                 ObservableCollection<XY> data = new ObservableCollection<XY>();
@@ -3057,7 +3063,7 @@ namespace qiquanui
                     data = yk.points;
 
                     System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
-                    Bindings[5 + i] = dataBinding;
+                    Bindings[6 + i] = dataBinding;
                     BindingTitles[i] = yk.title;
 
                     dataBinding.Source = data;
@@ -3168,7 +3174,7 @@ namespace qiquanui
         public StrategyType clocPresent;
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            ykm.Initial(optionsTraderInStrategyPanelComboBox.Text.Trim(), nameInStrategyPanelComboBox.Text.Trim(), dueDateComboBox.Text.Trim());
+            ykm.Initial( nameInStrategyPanelComboBox.Text.Trim(), dueDateComboBox.Text.Trim());
             if (ResultTab.SelectedIndex == 0)
                 nowPresent = qjocPresent;
             else nowPresent = clocPresent;

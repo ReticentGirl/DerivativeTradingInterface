@@ -23,6 +23,8 @@ using System.Data.Common;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Threading;
+using System.Collections;
+using AmCharts.Windows.Core;
 
 
 namespace qiquanui
@@ -322,10 +324,10 @@ namespace qiquanui
             statusBar1wper = this.Width / originalWidth;
             canvas2hper = canvas1hper = (this.Height - (originalHeight - canvas1h)) / (originalHeight - (originalHeight - canvas1h));
 
-            chartTabControl.Width =  chartTabControlw * chartTabControlwper + 2 * windowShadowControlWidth;
+            chartTabControl.Width = chartTabControlw * chartTabControlwper + 2 * windowShadowControlWidth;
             chartTabControl.Height = chartTabControlh * chartTabControlhper + 2 * windowShadowControlWidth;
             chartBorder.Height = chartBorderh * chartTabControlhper + 2 * windowShadowControlWidth + 5;
-            chartBorder.Width = chartTabControl.Width ;
+            chartBorder.Width = chartTabControl.Width;
             Border1.Height = this.Height - 14.0 + 2 * windowShadowControlWidth;
             Border1.Width = this.Width - 14.0 + 2 * windowShadowControlWidth;
             Grid1.Width = Grid1w * Grid1wper + 2 * windowShadowControlWidth;
@@ -360,8 +362,8 @@ namespace qiquanui
 
             Canvas2Border1.Height = Canvas2.Height + 2 * windowShadowControlWidth;
 
-            
-           
+
+
 
 
 
@@ -696,7 +698,7 @@ namespace qiquanui
 
 
 
-        
+
 
         private void optionsMarketListView_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
         {
@@ -1619,7 +1621,22 @@ namespace qiquanui
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            strategyButton_Click(sender, e);
+            labels = new System.Windows.Controls.Label[10];
+            for (int i = 0; i < 10; i++)
+            {
+                labels[i] = new System.Windows.Controls.Label();
+                labels[i].Foreground = Brushes.White;
+                probaAndProfitChartCanvas.Children.Add(labels[i]);
+                labels[i].Visibility = Visibility.Hidden;
+            }
+
+            stockChart.Charts[0].Collapse();
+            stockChart2.Charts[0].Collapse();
+            DateTime present = DataManager.now;
+            present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+            stockChart.StartDate = present;
+            stockChart2.StartDate = present;
+            //strategyButton_Click(sender, e);
         }
 
 
@@ -1780,7 +1797,7 @@ namespace qiquanui
         {
             PickUserWindow pickUserWindow = new PickUserWindow(this);
 
-            pickUserWindow.pickUserListView.ItemsSource = PickUpUserManager.PickUpUserOC; 
+            pickUserWindow.pickUserListView.ItemsSource = PickUpUserManager.PickUpUserOC;
 
             pickUserWindow.Show();
         }
@@ -1852,6 +1869,8 @@ namespace qiquanui
             CloseRightCanvas();
         }
 
+
+
         private void arbitragyButton_Click(object sender, RoutedEventArgs e)
         {
             ArbitrageWindow arbitrageWindow = new ArbitrageWindow(this);
@@ -1861,28 +1880,595 @@ namespace qiquanui
             CloseRightCanvas();
         }
 
+        //盈亏分析
+
+        private void analyseBtn2_Click(object sender, RoutedEventArgs e)
+        {
+            string futurename = null, duedate = null;
+            int[,] num = new int[100, 4];
+            int tot = 0;
+            Hashtable ht = new Hashtable(100);
+            for (int i = 0; i < pm.PositionsOC.Count; i++)
+                if (pm.PositionsOC[i].IsChoose)
+                {
+                    string sql = "SELECT instrumentname,instrumenttype,duedate,exerciseprice,callorput  FROM staticdata where instrumentid='" + pm.PositionsOC[i].InstrumentID + "'";
+                    DataTable dt = DataControl.QueryTable(sql);
+                    if (dt.Rows.Count == 0)
+                    {
+                        //!这里加入错误提示
+                        Console.WriteLine("No such instrument:" + pm.PositionsOC[i].InstrumentID);
+                        return;
+                    }
+                    else if (((string)dt.Rows[0]["InstrumentType"]).Equals("期货"))
+                    {
+                        if (futurename == null)
+                        {
+                            //初始化
+                            futurename = (string)dt.Rows[0]["InstrumentName"];
+                            duedate = (string)dt.Rows[0]["DueDate"];
+                            string optionname = YKManager.Future2Option(futurename);
+                            string sql2 = "select exerciseprice from staticdata where instrumentname='" + optionname + "' and duedate='" + duedate + "' and callorput=0 order by exerciseprice";
+                            DataTable dt2 = DataControl.QueryTable(sql2);
+                            tot = dt2.Rows.Count;
+                            for (int j = 0; j < tot; j++)
+                            {
+                                double exerciseprice = (double)dt2.Rows[j]["ExercisePrice"];
+                                ht[(int)exerciseprice] = j;
+                            }
+
+                            //填充
+                            if (pm.PositionsOC[i].TradingNum > 0)
+                                num[tot, 0] = pm.PositionsOC[i].TradingNum;
+                            else
+                                num[tot, 1] = Math.Abs(pm.PositionsOC[i].TradingNum);
+
+                        }
+                        else
+                        {
+                            string _futurename = (string)dt.Rows[0]["InstrumentName"];
+                            string _duedate = (string)dt.Rows[0]["DueDate"];
+                            if (_futurename.Equals(futurename) && _duedate.Equals(duedate))
+                            {
+                                if (pm.PositionsOC[i].TradingNum > 0)
+                                    num[tot, 0] = pm.PositionsOC[i].TradingNum;
+                                else
+                                    num[tot, 1] = Math.Abs(pm.PositionsOC[i].TradingNum);
+
+                            }
+                            else
+                            {
+                                //!这里加入错误提示
+                                Console.WriteLine("Not the same subject!");
+                                return;
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+                        if (futurename == null)
+                        {
+                            string optionname = (string)dt.Rows[0]["InstrumentName"];
+                            duedate = (string)dt.Rows[0]["DueDate"];
+                            futurename = YKManager.Option2Future(optionname);
+                            string sql2 = "select exerciseprice from staticdata where instrumentname='" + optionname + "' and duedate='" + duedate + "' and callorput=0 order by exerciseprice";
+                            DataTable dt2 = DataControl.QueryTable(sql2);
+                            tot = dt2.Rows.Count;
+                            for (int j = 0; j < tot; j++)
+                            {
+                                double exerciseprice = (double)dt2.Rows[j]["ExercisePrice"];
+                                ht[(int)exerciseprice] = j;
+                            }
+
+                            //填充
+                            double exercise = (double)dt.Rows[0]["ExercisePrice"];
+                            int lineno = (int)ht[(int)exercise];
+                            bool put = (bool)dt.Rows[0]["CallOrPut"];
+                            int number = pm.PositionsOC[i].TradingNum;
+                            if (!put && number > 0)
+                                num[lineno, (int)OptionType.CallBuy] = number;
+                            if (!put && number < 0)
+                                num[lineno, (int)OptionType.CallSell] = -number;
+                            if (put && number > 0)
+                                num[lineno, (int)OptionType.PutBuy] = number;
+                            if (put && number < 0)
+                                num[lineno, (int)OptionType.PutSell] = -number;
+
+
+                        }
+                        else
+                        {
+                            string optionname = (string)dt.Rows[0]["InstrumentName"];
+                            string _futurename = YKManager.Option2Future(optionname);
+                            string _duedate = (string)dt.Rows[0]["DueDate"];
+                            if (_futurename.Equals(futurename) && _duedate.Equals(duedate))
+                            {
+                                //填充
+                                double exercise = (double)dt.Rows[0]["ExercisePrice"];
+                                int lineno = (int)ht[(int)exercise];
+                                bool put = (bool)dt.Rows[0]["CallOrPut"];
+                                int number = pm.PositionsOC[i].TradingNum;
+                                if (!put && number > 0)
+                                    num[lineno, (int)OptionType.CallBuy] = number;
+                                if (!put && number < 0)
+                                    num[lineno, (int)OptionType.CallSell] = -number;
+                                if (put && number > 0)
+                                    num[lineno, (int)OptionType.PutBuy] = number;
+                                if (put && number < 0)
+                                    num[lineno, (int)OptionType.PutSell] = -number;
+                            }
+                            else
+                            {
+                                //!这里加入错误提示
+                                Console.WriteLine("Not the same subject!");
+                                return;
+                            }
+                        }
+                    }
+                }
+            if (futurename!=null && duedate!=null && tot!=0)
+            BindingForChart(futurename, duedate, tot, num);
+
+        }
+
+        private void analyseBtn1_Click(object sender, RoutedEventArgs e)
+        {
+            string futurename = null, duedate = null;
+            int[,] num = new int[100, 4];
+            int tot = 0;
+            Hashtable ht = new Hashtable(100);
+            for (int i = 0; i < otm.TradingOC.Count; i++)
+                if (otm.TradingOC[i].IfChooseOTGVCH)
+                {
+                    string sql = "SELECT instrumentname,instrumenttype,duedate,exerciseprice,callorput  FROM staticdata where instrumentid='" + otm.TradingOC[i].InstrumentID + "'";
+                    DataTable dt = DataControl.QueryTable(sql);
+                    if (dt.Rows.Count == 0)
+                    {
+                        //!这里加入错误提示
+                        Console.WriteLine("No such instrument:" + otm.TradingOC[i].InstrumentID);
+                        return;
+                    }
+                    else if (((string)dt.Rows[0]["InstrumentType"]).Equals("期货"))
+                    {
+                        if (futurename == null)
+                        {
+                            //初始化
+                            futurename = (string)dt.Rows[0]["InstrumentName"];
+                            duedate = (string)dt.Rows[0]["DueDate"];
+                            string optionname = YKManager.Future2Option(futurename);
+                            string sql2 = "select exerciseprice from staticdata where instrumentname='" + optionname + "' and duedate='" + duedate + "' and callorput=0 order by exerciseprice";
+                            DataTable dt2 = DataControl.QueryTable(sql2);
+                            tot = dt2.Rows.Count;
+                            for (int j = 0; j < tot; j++)
+                            {
+                                double exerciseprice = (double)dt2.Rows[j]["ExercisePrice"];
+                                ht[(int)exerciseprice] = j;
+                            }
+
+                            //填充
+                            if (otm.TradingOC[i].TradingNum > 0)
+                                num[tot, 0] = otm.TradingOC[i].TradingNum;
+                            else
+                                num[tot, 1] = Math.Abs(otm.TradingOC[i].TradingNum);
+
+                        }
+                        else
+                        {
+                            string _futurename = (string)dt.Rows[0]["InstrumentName"];
+                            string _duedate = (string)dt.Rows[0]["DueDate"];
+                            if (_futurename.Equals(futurename)&& _duedate.Equals(duedate))
+                            {
+                                if (otm.TradingOC[i].TradingNum > 0)
+                                    num[tot, 0] = otm.TradingOC[i].TradingNum;
+                                else
+                                    num[tot, 1] = Math.Abs(otm.TradingOC[i].TradingNum);
+
+                            }
+                            else
+                            {
+                                //!这里加入错误提示
+                                Console.WriteLine("Not the same subject!");
+                                return;
+                            }
+                        }
+
+
+                    }
+                    else
+                    {
+                        if (futurename == null)
+                        {
+                            string optionname = (string)dt.Rows[0]["InstrumentName"];
+                            duedate = (string)dt.Rows[0]["DueDate"];
+                            futurename = YKManager.Option2Future(optionname);
+                            string sql2 = "select exerciseprice from staticdata where instrumentname='" + optionname + "' and duedate='" + duedate + "' and callorput=0 order by exerciseprice";
+                            DataTable dt2 = DataControl.QueryTable(sql2);
+                            tot = dt2.Rows.Count;
+                            for (int j = 0; j < tot; j++)
+                            {
+                                double exerciseprice = (double)dt2.Rows[j]["ExercisePrice"];
+                                ht[(int)exerciseprice] = j;
+                            }
+
+                            //填充
+                            double exercise = (double)dt.Rows[0]["ExercisePrice"];
+                            int lineno = (int)ht[(int)exercise];
+                            bool put = (bool)dt.Rows[0]["CallOrPut"];
+                            int number = otm.TradingOC[i].TradingNum;
+                            if (!put && number > 0)
+                                num[lineno, (int)OptionType.CallBuy] = number;
+                            if (!put && number < 0)
+                                num[lineno, (int)OptionType.CallSell] = -number;
+                            if (put && number > 0)
+                                num[lineno, (int)OptionType.PutBuy] = number;
+                            if (put && number < 0)
+                                num[lineno, (int)OptionType.PutSell] = -number;
+
+
+                        }
+                        else
+                        {
+                            string optionname = (string)dt.Rows[0]["InstrumentName"];
+                            string _futurename = YKManager.Option2Future(optionname);
+                            string _duedate = (string)dt.Rows[0]["DueDate"];
+                            if (_futurename.Equals(futurename) && _duedate.Equals(duedate))
+                            {
+                                //填充
+                                double exercise = (double)dt.Rows[0]["ExercisePrice"];
+                                int lineno = (int)ht[(int)exercise];
+                                bool put = (bool)dt.Rows[0]["CallOrPut"];
+                                int number = otm.TradingOC[i].TradingNum;
+                                if (!put && number > 0)
+                                    num[lineno, (int)OptionType.CallBuy] = number;
+                                if (!put && number < 0)
+                                    num[lineno, (int)OptionType.CallSell] = -number;
+                                if (put && number > 0)
+                                    num[lineno, (int)OptionType.PutBuy] = number;
+                                if (put && number < 0)
+                                    num[lineno, (int)OptionType.PutSell] = -number;
+                            }
+                            else
+                            {
+                                //!这里加入错误提示
+                                Console.WriteLine("Not the same subject!");
+                                return;
+                            }
+                        }
+                    }
+                }
+            if (futurename != null && duedate != null && tot != 0)
+
+            BindingForChart(futurename, duedate, tot, num);
+        }
+
+
+        System.Windows.Controls.Label[] labels=new System.Windows.Controls.Label[10];
+        System.Windows.Data.Binding[] Bindings = new System.Windows.Data.Binding[5];
+        //0~4概率盈亏
+
+        public ObservableCollection<StockInfo> BindingStockData { get; set; }
+        //走势图
+        public ObservableCollection<StockInfo> BindingStockData2 { get; set; }
+        //走势图2
+
+        delegate void BindingOCCallBack(string futurename, string duedate, int tot, int[,] num);
+        public void BindingForChart(string futurename,string duedate,int tot, int[,] num)
+        {
+
+            BindingOCCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new BindingOCCallBack(BindingForChart);
+                this.Dispatcher.Invoke(d, new object[] { futurename,duedate,tot, num });
+            }
+            else
+            {
+                YKManager ykm = new YKManager();
+                ykm.Initial(YKManager.Future2Subject(futurename), duedate);
+                VolatilityChart.Visibility = Visibility.Visible;
+                VolatilityChart2.Visibility = Visibility.Visible;
+                ZoomInGL.Visibility = Visibility.Visible;
+                ZoomInYK.Visibility = Visibility.Visible;
+                chartTabControl.SelectedIndex = 1;
+
+
+                ObservableCollection<XY> data = new ObservableCollection<XY>();
+                ObservableCollection<XY> data2 = new ObservableCollection<XY>();
+                ObservableCollection<XY> data3 = new ObservableCollection<XY>();
+                ObservableCollection<XY> data4 = new ObservableCollection<XY>();
+
+                ObservableCollection<XY> coor = new ObservableCollection<XY>();
+                YK yk = new YK(tot, num, "NoName", "NoGroup", 0.2);
+                yk.ComputeYK();
+                int left = yk.LeftEdge, right = yk.RightEdge;
+                double lastprice = yk.ykfuture[0].LastPrice;
+
+
+                int now = 0;
+                bool positive = yk.probability[0].positive;
+                for (int j = left; j <= right; j += yk.ykstep)
+                {
+                    //概率图
+                    double tempX = (int)j;
+                    double tempY = StrategyWindow.ComputeZT((int)j, lastprice, yk.ykmax);
+
+                    coor.Add(new XY() { X = tempX, Y = tempY });
+                    if ((int)j == yk.probability[now].x)
+                    {
+                        Console.WriteLine(yk.probability[now].percent);
+                        positive = yk.probability[now + 1].positive;
+                        now++;
+                        data.Add(new XY() { X = tempX, Y = tempY });
+                        data2.Add(new XY() { X = tempX, Y = tempY });
+                    }
+                    else if (positive)
+                        data.Add(new XY() { X = tempX, Y = tempY });
+                    else
+                        data2.Add(new XY() { X = tempX, Y = tempY });
+
+                    //盈亏图
+                    tempX = (int)j;
+                    XY point = yk.points[(int)((j - left) / yk.ykstep)];
+                    if (point.Y == 0)
+                    {
+                        data3.Add(point);
+                        data4.Add(point);
+                    }
+                    else if (point.Y > 0)
+                        data3.Add(point);
+                    else
+                        data4.Add(point);
+                }
+
+                System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
+
+                System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
+                System.Windows.Data.Binding dataBinding2 = new System.Windows.Data.Binding();   //数据绑定
+                System.Windows.Data.Binding dataBinding3 = new System.Windows.Data.Binding();   //数据绑定
+                System.Windows.Data.Binding dataBinding4 = new System.Windows.Data.Binding();   //数据绑定
+                Bindings[0] = coorBinding;
+                Bindings[1] = dataBinding;
+                Bindings[2] = dataBinding2;
+                Bindings[3] = dataBinding3;
+                Bindings[4] = dataBinding4;
+
+               
+
+
+                coorBinding.Source = coor;
+
+                dataBinding.Source = data;
+                dataBinding2.Source = data2;
+                dataBinding3.Source = data3;
+                dataBinding4.Source = data4;
+
+                this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                this.VolatilityChart.IDMemberPath = "X";
+
+                this.VolatilityGraph.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+                this.VolatilityGraph.SeriesIDMemberPath = "X";
+                this.VolatilityGraph.ValueMemberPath = "Y";
+
+                this.VolatilityGraph2.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding2);
+                this.VolatilityGraph2.SeriesIDMemberPath = "X";
+                this.VolatilityGraph2.ValueMemberPath = "Y";
+
+
+                this.VolatilityChart2.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                this.VolatilityChart2.IDMemberPath = "X";
+
+                this.VolatilityGraph3.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding3);
+                this.VolatilityGraph3.SeriesIDMemberPath = "X";
+                this.VolatilityGraph3.ValueMemberPath = "Y";
+
+                this.VolatilityGraph4.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding4);
+                this.VolatilityGraph4.SeriesIDMemberPath = "X";
+                this.VolatilityGraph4.ValueMemberPath = "Y";
+
+                //设置概率标签
+                for (int i = 0; i < yk.probability.Count; i++)
+                {
+                    System.Windows.Controls.Label temp = labels[i];
+                    //[style]
+                    temp.Content = yk.probability[i].percent + "%";
+                    temp.FontSize = 12;
+
+                    if (yk.probability[i].positive)
+                        temp.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFCB2525"));
+                    else
+                        temp.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF25CB5A"));
+                    int l = 0, r = 0;
+                    if (i == 0)
+                        l = yk.LeftEdge;
+                    else
+                        l = yk.probability[i - 1].x;
+                    if (i == yk.probability.Count - 1)
+                        r = yk.RightEdge;
+                    else
+                        r = yk.probability[i].x;
+                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * VolatilityChart.Width, 10, 0, 0);
+                    temp.Visibility = Visibility.Visible;
+
+                }
+                for (int i = yk.probability.Count; i < 10; i++)
+                    labels[i].Visibility = Visibility.Hidden;
+            }
+        }
 
 
 
+        private void TrendInitial()
+        {
+            trm1 = new Trend();
+            trm1.initial(trmID1);
+            BindingStockData = trm1.Data;
+            TrendInitialCallBack(trm1);
 
 
+        }//初始化走势图（载入历史数据）
+
+        private void TrendInitial2()
+        {
+            trm2 = new Trend();
+            trm2.initial(trmID2);
+            BindingStockData2 = trm2.Data;
+            TrendInitialCallBack2(trm2);
 
 
+        }//初始化走势图（载入历史数据）
+
+        string trmID1, trmID2;
+        Trend trm1,trm2;
+        System.Timers.Timer timer;
+        delegate void trendInitialCallBack(Trend tr);
+        private void TrendInitialCallBack(Trend tr)
+        {
+            trendInitialCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new trendInitialCallBack(TrendInitialCallBack);
+                this.Dispatcher.Invoke(d, new object[] { tr });
+            }
+            else
+            {
+               stockSet1.ItemsSource = tr.Data;
+            }
+        }//走势图数据绑定
+
+        delegate void trendInitialCallBack2(Trend tr);
+        private void TrendInitialCallBack2(Trend tr)
+        {
+            trendInitialCallBack2 d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new trendInitialCallBack2(TrendInitialCallBack2);
+                this.Dispatcher.Invoke(d, new object[] { tr });
+            }
+            else
+            {
+                stockSet2.ItemsSource = tr.Data;
+            }
+        }
+        //走势图数据绑定
+
+        private void ZoomInGL_Click(object sender, RoutedEventArgs e)
+        {
+            ChartWindow.CHARTTYPE = 0;
+            ChartWindow.Bindings = this.Bindings;
+            ChartWindow cw = new ChartWindow(this);
+            cw.Show();
+        }
+
+        private void ZoomInYK_Click(object sender, RoutedEventArgs e)
+        {
+            ChartWindow.CHARTTYPE = 1;
+            ChartWindow.Bindings = this.Bindings;
+            ChartWindow cw = new ChartWindow(this);
+            cw.Show();
+        }
 
 
+        private void ZoomInZS1_Click(object sender, RoutedEventArgs e)
+        {
+            ChartWindow.CHARTTYPE = 3;
+            ChartWindow.BindingStockData = this.BindingStockData;
+            ChartWindow cw = new ChartWindow(this);
+            cw.Show();
+
+        }
+
+        private void ZoomInZS2_Click(object sender, RoutedEventArgs e)
+        {
+            ChartWindow.CHARTTYPE = 3;
+            ChartWindow.BindingStockData = this.BindingStockData2;
+            ChartWindow cw = new ChartWindow(this);
+            cw.Show();
+
+        }
 
 
+        private void optionsMarketListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0) return;
+            futuresMarketListView.SelectedIndex = -1;
+            subjectMatterMarketGrid.SelectedIndex = -1;
+            stockChart2.Visibility = Visibility.Visible;
+            ZoomInZS1.Visibility = Visibility.Visible;
+            ZoomInZS2.Visibility = Visibility.Visible;
+            chartTabControl.SelectedIndex = 0;
 
+     
 
+            int no = optionsMarketListView.Items.IndexOf(e.AddedItems[0]);
+            option op = dm.ObservableObj[no];
+            trmID1 = op.instrumentid1;
+            trmID2 = op.instrumentid2;
+            new Thread(new ThreadStart(TrendInitial)).Start();
+            new Thread(new ThreadStart(TrendInitial2)).Start();
 
+        }
 
+        private void subjectMatterMarketGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0) return;
+            stockChart2.Visibility = Visibility.Hidden;
+            ZoomInZS1.Visibility = Visibility.Visible;
+            ZoomInZS2.Visibility = Visibility.Hidden;
+            futuresMarketListView.SelectedIndex = -1;
+            optionsMarketListView.SelectedIndex = -1;
+            chartTabControl.SelectedIndex = 0;
 
+            int no = subjectMatterMarketGrid.Items.IndexOf(e.AddedItems[0]);
+            future fu = dm.ObservableOb[no];
+            trmID1 = fu.instrumentid;
+            new Thread(new ThreadStart(TrendInitial)).Start();
+        }
 
+        private void futuresMarketListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.AddedItems.Count == 0) return;
+            stockChart2.Visibility = Visibility.Hidden;
+            ZoomInZS1.Visibility = Visibility.Visible;
+            ZoomInZS2.Visibility = Visibility.Hidden;
+             subjectMatterMarketGrid.SelectedIndex = -1;
+            optionsMarketListView.SelectedIndex = -1;
+            chartTabControl.SelectedIndex = 0;
 
+            int no = futuresMarketListView.Items.IndexOf(e.AddedItems[0]);
+            future fu = dm.ObservableOb[no];
+            trmID1 = fu.instrumentid;
+            new Thread(new ThreadStart(TrendInitial)).Start();
 
+        }
 
 
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

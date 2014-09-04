@@ -1549,16 +1549,6 @@
                                 ValueMemberPath="close" VolumeMemberPath="volume"
                                 
                      />
-                    <!--<ams:DataSet Name="stockSet2" Brush="Yellow"
-                                
-                                DateMemberPath="date"
-                                OpenMemberPath="open" HighMemberPath="high"
-                                LowMemberPath="low" CloseMemberPath="close"
-                                ValueMemberPath="close" VolumeMemberPath="volume"
-                             
-  
-                                />-->
-                    <!--ItemsSource="{Binding Data}"-->
                 </ams:StockChart.DataSets>
 
 

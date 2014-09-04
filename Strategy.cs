@@ -79,7 +79,7 @@ namespace qiquanui
     }
 
 
-    struct YKCell
+    public struct YKCell
     {
         public double BidPrice;
         public double AskPrice;
@@ -87,7 +87,7 @@ namespace qiquanui
         public string ID;
     }
 
-    struct YKFuture
+    public struct YKFuture
     {
         public double BidPrice;
         public double AskPrice;
@@ -95,7 +95,7 @@ namespace qiquanui
         public string ID;
     }
 
-    class YKProba
+    public class YKProba
     {
         public bool positive;
         public double percent;
@@ -109,7 +109,7 @@ namespace qiquanui
     /// <summary>
     /// 盈亏图计算相关类。构造完之后使用 .ykoption 和 .ykfuture 填充数据，然后再调用相应计算方法
     /// </summary>
-    class YK
+    public class YK
     {
         public YKCell[,] ykoption;
         public YKFuture[] ykfuture;
@@ -430,18 +430,17 @@ namespace qiquanui
     {
         public void Run()
         {
-            YKManager ykm = new YKManager();
-            int tot = ykm.Initial("中金所", "沪深300", "1409");
-            for (int i = 0; i < 4; i++)
-            {
-                int[,] x = new int[tot + 1, 4];
-                x[0, 0] = i;
-                x[1, 1] = 4 - i;
+            //YKManager ykm = new YKManager();
+            //int tot = ykm.Initial("中金所", "沪深300", "1409");
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    int[,] x = new int[tot + 1, 4];
+            //    x[0, 0] = i;
+            //    x[1, 1] = 4 - i;
                 //YK temp = new YK(tot, x,"单买");
                 //temp.ComputeYK();
                 //ykm.yk[0, i] = temp;
-            }
-            ykm.ComputeYKs(0);
+            //}
         }
     }
 
@@ -468,7 +467,7 @@ namespace qiquanui
         /// <param name="type"></param>
         /// <param name="count"></param>
         /// <returns></returns>
-        public int Initial(string trader, string subject, string duedate)
+        public int Initial( string subject, string duedate)
         {
             yk = new YK[2, 4];
 
@@ -562,31 +561,6 @@ namespace qiquanui
         }
 
 
-        ///<summary>
-        ///计算盈亏对比图
-        ///</summary>
-        ///<returns></returns>
-        public void ComputeYKs(int no)
-        {
-            //计算端点用
-            //double leftx = 1e10, rightx = 0;
-
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    //计算端点用
-            //    if (yk[no, i].points[0].X < leftx)
-            //        leftx = yk[no, i].points[0].X;
-            //    if (yk[no, i].points.Last().X > rightx)
-            //        rightx = yk[no, i].points.Last().X;
-            //}
-
-            ////计算端点用
-            //leftx = (int)leftx * (1 - EDGE);
-            //rightx = (int)rightx * (1 + EDGE);
-            //for (int i = 0; i < 4; i++)
-            //    yk[no, i].AddEdge((int)leftx, (int)rightx, yk[no, i].points3);
-
-        }
 
 
 
@@ -606,6 +580,33 @@ namespace qiquanui
                 if (MainWindow.NameSubject[i].Equals(subject))
                     return MainWindow.NameFuture[i];
             Console.WriteLine("Can't find ! [Subject2Future]");
+            return null;
+        }
+
+        public static string Future2Subject(string future)
+        {
+            for (int i = 0; i < MainWindow.NameFuture.Length; i++)
+                if (MainWindow.NameFuture[i].Equals(future))
+                    return MainWindow.NameSubject[i];
+            Console.WriteLine("Can't find ! [Future2Subject]");
+            return null;
+        }
+
+        public static string Future2Option(string future)
+        {
+            for (int i = 0; i < MainWindow.NameFuture.Length; i++)
+                if (MainWindow.NameFuture[i].Equals(future))
+                    return MainWindow.NameOption[i];
+            Console.WriteLine("Can't find ! [Future2Option]");
+            return null;
+        }
+
+        public static string Option2Future(string option)
+        {
+            for (int i = 0; i < MainWindow.NameOption.Length; i++)
+                if (MainWindow.NameOption[i].Equals(option))
+                    return MainWindow.NameFuture[i];
+            Console.WriteLine("Can't find ! [Option2Future]");
             return null;
         }
 

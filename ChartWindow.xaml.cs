@@ -224,6 +224,7 @@ namespace qiquanui
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
             stockChart.Visibility = Visibility.Hidden;
+            LegendMask.Visibility = Visibility.Hidden;
 
             this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, Bindings[0]);
             this.VolatilityChart.IDMemberPath = "X";

@@ -1443,8 +1443,8 @@
             </am:LineChart>
             <Label Content="Label" Canvas.Left="25" Canvas.Top="13" Width="130" Background="#FF120D13" Foreground="#00000000" Height="22"/>
             <Label Content="Label" Canvas.Top="209" Width="130" Background="#FF120D13" Foreground="#00000000" Canvas.Left="25" Height="22"/>
-            <Button x:Name="ZoomInGL" Content="+" Canvas.Left="269" Canvas.Top="16" Width="21" Click="ZoomInGL_Click"/>
-            <Button x:Name="ZoomInYK" Content="+" Canvas.Left="269" Canvas.Top="222" Width="21" Click="ZoomInYK_Click"/>
+            <Button x:Name="ZoomInGL" Content="+" Canvas.Left="269" Canvas.Top="16" Width="21" Click="ZoomInGL_Click" Visibility="Hidden"/>
+            <Button x:Name="ZoomInYK" Content="+" Canvas.Left="269" Canvas.Top="222" Width="21" Click="ZoomInYK_Click" Visibility="Hidden"/>
 
 
 
@@ -1481,14 +1481,14 @@
             </am:LineChart>
             <Label Content="Label" Canvas.Left="2" Canvas.Top="11" Width="130" Background="#FF120D13" Foreground="#00000000"/>
             <Label x:Name="LegendMask" Content="Label" Canvas.Left="81" Canvas.Top="185" Width="130" Background="#FF120D13" Foreground="#00000000"/>
-            <Button x:Name="ZoomInYKs" Content="+" Canvas.Left="279" Width="21" Click="ZoomInYKs_Click"/>
+            <Button x:Name="ZoomInYKs" Content="+" Canvas.Left="279" Width="21" Click="ZoomInYKs_Click" Visibility="Hidden"/>
 
 
         </Canvas>
 
         <Button x:Name="ZoomInZS" Content="+" Canvas.Left="269" Canvas.Top="222" Width="21" Margin="1140,214.6,24.6,415.4" Grid.Row="1" RenderTransformOrigin="0.505,0.511" Click="ZoomInZS_Click"/>
 
-        <ams:StockChart Name="stockChart" Grid.Row="1" Margin="759,231.6,39.6,198.4" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00">
+        <ams:StockChart Name="stockChart" Grid.Row="1" Margin="759,231.6,45.6,222.4" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00">
             <ams:StockChart.DataSets>
                 <ams:DataSet Name="stockSet1" Brush="#7f8da9"
                                 

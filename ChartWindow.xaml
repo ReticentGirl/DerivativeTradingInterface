@@ -1239,6 +1239,7 @@
     <Window.Effect>
         <DropShadowEffect Color="#FF3F00C5" BlurRadius="7" Direction="270" ShadowDepth="3" Opacity="0.75"/>
     </Window.Effect>
+    
     <Grid>
         <Grid.Background>
             <ImageBrush/>
@@ -1279,8 +1280,6 @@
                 </TransformGroup>
             </Border.RenderTransform>
         </Border>
-        
-        
         
         <Canvas x:Name="GLCanvas" HorizontalAlignment="Right" Height="614" Margin="0,0,68.6,10.4" VerticalAlignment="Bottom" Width="1065" Grid.Row="1">
             <am:LineChart x:Name="VolatilityChart" Width="1000" Height="600" Foreground="LightGray"
@@ -1349,6 +1348,7 @@
 
         </Canvas>
 
+        
         <Canvas x:Name="YKsCanvas" HorizontalAlignment="Right" Height="614" Margin="0,0,64.6,29.4" VerticalAlignment="Bottom" Width="1065" Grid.Row="1">
 
             <am:LineChart x:Name="VolatilityChart3" Width="982" Height="527" Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="37" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Canvas.Left="40">
@@ -1382,6 +1382,7 @@
 
 
         </Canvas>
+
 
         <Canvas x:Name="ZSCanvas" HorizontalAlignment="Right" Height="614" Margin="0,0,68.6,24.4" VerticalAlignment="Bottom" Width="1065" Grid.Row="1">
 

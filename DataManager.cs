@@ -386,11 +386,15 @@ namespace qiquanui
         System.Timers.Timer timer;
         MainWindow pwindow;
         public static DateTime now;
+        //期权
         public ObservableCollection<option> ObservableObj = new ObservableCollection<option>();
         private ObservableCollection<option> ObservableObj2 = new ObservableCollection<option>();
+        //期货及标的
         public ObservableCollection<future> ObservableOb = new ObservableCollection<future>();
         private ObservableCollection<future> ObservableOb2 = new ObservableCollection<future>();
         private other Other = new other();
+
+        public string SubjectID;
         public static Hashtable All = new Hashtable(2000);
         static string nowdate, updatesql, exercisesql, dynamicsql, box_type, box_exchange, box_future, box_time, duedate = "", instrumentname = "";
 
@@ -661,18 +665,19 @@ namespace qiquanui
                         break;
                     }
 
-                string optionidsql = "SELECT instrumentid from staticdata where instrumentname='" + temp + "' and duedate='" + duedate + "'";
-                DataTable dt2 = DataControl.QueryTable(optionidsql);
+                string subjectidsql = "SELECT instrumentid from staticdata where instrumentname='" + temp + "' and duedate='" + duedate + "'";
+                DataTable dt2 = DataControl.QueryTable(subjectidsql);
                 if (dt2.Rows.Count == 1)
                 {
-                    string optionid = (string)dt2.Rows[0][0];
-                    if (optionid.Substring(0, 2).Equals("IH"))
-                        optionid = "上证50指数";
-                    if (optionid.Substring(0, 2).Equals("IF"))
-                        optionid = "沪深300指数";
+                    string subjectid = (string)dt2.Rows[0][0];
+                    SubjectID = subjectid;
+                    if (subjectid.Substring(0, 2).Equals("IH"))
+                        subjectid = "上证50指数";
+                    if (subjectid.Substring(0, 2).Equals("IF"))
+                        subjectid = "沪深300指数";
                     ObservableOb2 = new ObservableCollection<future>();
                     future _fu = new future();
-                    _fu.instrumentid = optionid;
+                    _fu.instrumentid = subjectid;
                     ObservableOb2.Add(_fu);
                     for (int i = 0; i < 10; i++)
                     {

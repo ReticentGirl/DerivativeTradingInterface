@@ -272,7 +272,7 @@ namespace qiquanui
             if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
             {
                 d = new trendInitialCallBack(TrendInitialCallBack);
-                pwindow.Dispatcher.Invoke(d, new object[] { tr });
+                this.Dispatcher.Invoke(d, new object[] { tr });
             }
             else
             {
@@ -288,7 +288,7 @@ namespace qiquanui
             if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
             {
                 d = new trendInitialCallBack(TrendInitialCallBack2);
-                pwindow.Dispatcher.Invoke(d, new object[] { tr });
+                this.Dispatcher.Invoke(d, new object[] { tr });
             }
             else
             {
@@ -304,7 +304,7 @@ namespace qiquanui
             if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
             {
                 d = new trendInitialCallBack(TrendInitialCallBack3);
-                pwindow.Dispatcher.Invoke(d, new object[] { tr });
+                this.Dispatcher.Invoke(d, new object[] { tr });
             }
             else
             {

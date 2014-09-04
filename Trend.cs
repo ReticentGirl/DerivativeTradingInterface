@@ -13,7 +13,7 @@ namespace qiquanui
     class Trend
     {
 
-        public static DateTime StringToDate(string trading, string update)
+        public DateTime StringToDate(string trading, string update)
         {
             return new DateTime(Convert.ToInt32(trading.Substring(0, 4)), Convert.ToInt32(trading.Substring(4, 2)), Convert.ToInt32(trading.Substring(6, 2)),
                 Convert.ToInt32(update.Substring(0, 2)), Convert.ToInt32(update.Substring(3, 2)), 0);
@@ -22,9 +22,16 @@ namespace qiquanui
         public ObservableCollection<StockInfo> Data { get; set; }
         private Timer timer;
         public string id;
-        public void initial(string id)
+
+        public void initial(string _id)
         {
-            this.id = id;
+            this.id = _id;
+            initial();
+        }
+
+        public void initial()
+        {
+            if (id == null) return;
             if (id.Equals("上证50指数")) id = "IH1409";
             if (id.Equals("沪深300指数")) id = "IF1409";
             Data = new ObservableCollection<StockInfo>();
