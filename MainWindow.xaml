@@ -2483,28 +2483,28 @@
                                     </ams:Chart>
                                     <!--成交量的Chart-->
                                     <ams:Chart Title="">
-                        <ams:Chart.Graphs>
-                            <ams:Graph GraphType="Column"
+                                        <ams:Chart.Graphs>
+                                            <ams:Graph GraphType="Column"
                                     LegendItemType="Value" LegendPeriodItemType="Value"
                                     DataField="Volume" PeriodValue="Sum"
                                     CursorBrush="Yellow" CursorSize="6"
                                     />
-                        </ams:Chart.Graphs>
+                                        </ams:Chart.Graphs>
 
-                        <ams:Chart.DateTimeAxis>
-                            <ams:DateTimeAxis ValuesEnabled="False" StrokeThickness="0" />
-                        </ams:Chart.DateTimeAxis>
+                                        <ams:Chart.DateTimeAxis>
+                                            <ams:DateTimeAxis ValuesEnabled="False" StrokeThickness="0" />
+                                        </ams:Chart.DateTimeAxis>
 
-                        <ams:Chart.LeftValueAxis>
-                            <ams:ValueAxis ValuesForeground="#90000000"
+                                        <ams:Chart.LeftValueAxis>
+                                            <ams:ValueAxis ValuesForeground="#90000000"
                                 StrokeThickness="0" TickLength="0"
                                 />
-                        </ams:Chart.LeftValueAxis>
+                                        </ams:Chart.LeftValueAxis>
 
-                        <ams:Chart.Legend>
-                            <ams:Legend PositiveValueForeground="Red" NegativeValueForeground="Green" />
-                        </ams:Chart.Legend>
-                    </ams:Chart>
+                                        <ams:Chart.Legend>
+                                            <ams:Legend PositiveValueForeground="Red" NegativeValueForeground="Green" />
+                                        </ams:Chart.Legend>
+                                    </ams:Chart>
 
 
                                 </ams:StockChart.Charts>
@@ -3025,7 +3025,7 @@
                 </Button.RenderTransform>
             </Button>
             <Image x:Name="LeftImage" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="20" Source="Resources/right.png" Canvas.Top="34" Canvas.Left="5" Stretch="Fill"/>
-            <Button x:Name="strategyButton" Click="strategyButton_Click" Content="期权策略" Width="76" RenderTransformOrigin="0.5,0.5" Height="20" Canvas.Left="-23" Canvas.Top="358" Foreground="Black">
+            <Button x:Name="strategyButton" Style="{StaticResource leftAndRightButtom}" Click="strategyButton_Click" Content="期权策略" Width="76" RenderTransformOrigin="0.5,0.5" Height="28" Canvas.Left="-23" Canvas.Top="354" Foreground="White">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -3035,7 +3035,7 @@
                     </TransformGroup>
                 </Button.RenderTransform>
             </Button>
-            <Button x:Name="arbitragyButton" Click="arbitragyButton_Click"  Content="期货套利" Width="76" RenderTransformOrigin="0.5,0.5" Height="20" Canvas.Left="-23" Canvas.Top="442" Foreground="Black">
+            <Button x:Name="arbitragyButton" Style="{StaticResource leftAndRightButtom}" Click="arbitragyButton_Click"  Content="期货套利" Width="76" RenderTransformOrigin="0.5,0.5" Height="28" Canvas.Left="-23" Canvas.Top="438" Foreground="White">
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>

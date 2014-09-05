@@ -10,7 +10,7 @@
         
         SizeChanged="Window_SizeChanged"
         Closing="Window_Closing"
-        Title="ArbitrageWindow" AllowsTransparency="True" Background="#FF0F0D0D" BorderThickness="7" Foreground="#FFA89B9B" Height="573" Left="100" MinHeight="650.5" MinWidth="1200" Opacity="0.95" ResizeMode="CanResizeWithGrip" Top="20" Width="300" WindowStyle="None" Loaded="Window_Loaded_1">
+        Title="ArbitrageWindow" AllowsTransparency="True" Background="#FF120D13" BorderThickness="7" Foreground="#FFB3A9B6" Height="573" Left="100" MinHeight="650.5" MinWidth="1200" Opacity="0.95" ResizeMode="CanResizeWithGrip" Top="20" Width="300" WindowStyle="None" Loaded="Window_Loaded_1">
     <Window.Resources>
 
 
@@ -266,13 +266,13 @@
                         </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#FFFC6F00" />
+                                <Setter TargetName="Border" Property="Background" Value="#FF876A8F" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="False">
                                 <Setter TargetName="Border" Property="Background" Value="{x:Null}" />
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Border" Property="Background" Value="#FFFF9B50"/>
+                                <Setter TargetName="Border" Property="Background" Value="#FF9F7EA8"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -698,7 +698,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListView}">
-                        <Border x:Name="Bd" CornerRadius="0,0,0,0" BorderBrush="#FFFF7300" Background="{DynamicResource ControlBackgroundBrush}" BorderThickness="0,3,0,0">
+                        <Border x:Name="Bd" CornerRadius="0,0,0,0" BorderBrush="#FF876A8F" Background="{DynamicResource ControlBackgroundBrush}" BorderThickness="0,3,0,0">
                             <ScrollViewer Style="{StaticResource GridViewScrollViewerStyle}">
                                 <ItemsPresenter />
                             </ScrollViewer>
@@ -1235,10 +1235,10 @@
     </Window.Resources>
 
     <Window.Effect>
-        <DropShadowEffect Color="#FFFF7400" BlurRadius="7" Direction="270" ShadowDepth="3" Opacity="0.75"/>
+        <DropShadowEffect Color="#FF3F00C5" BlurRadius="7" Direction="270" ShadowDepth="3" Opacity="0.75"/>
     </Window.Effect>
     <Grid>
-        <Frame x:Name="Top1_ArbitrageLab" Background="#FF0F0D0D" Content="" HorizontalAlignment="Left" Height="38" Margin="0" MouseDoubleClick="Top1_MouseDoubleClick" MouseDown="Top1_MouseDown" VerticalAlignment="Top" Width="1186"/>
+        <Frame x:Name="Top1_ArbitrageLab" Background="#FF120D13" Content="" HorizontalAlignment="Left" Height="38" Margin="0" MouseDoubleClick="Top1_MouseDoubleClick" MouseDown="Top1_MouseDown" VerticalAlignment="Top" Width="1186" Foreground="#FFB3A9B6"/>
 
         <Button x:Name="minButton" Margin="0,11,51,0" Click="MinButton_Click_1" Focusable="False" Height="12" Width="15" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{StaticResource minSty}" Grid.RowSpan="2">
             <Button.Background>
@@ -1255,7 +1255,7 @@
                 <ImageBrush ImageSource="Resources/close.png"/>
             </Button.Background>
         </Button>
-        <Border x:Name="Border1" BorderBrush="#FFC35B04" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.RowSpan="3" >
+        <Border x:Name="Border1" BorderBrush="#FFAE6BBF" BorderThickness="1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.RowSpan="3" >
             <Border.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1268,12 +1268,12 @@
 
         <TabControl x:Name="ResultTab" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="502" Height="462" Margin="23,0,660.6,57.8">
             <TabItem Header="跨期套利" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                <Grid Background="#FF221715" Margin="-3,-12,-3.2,-3.6">
+                <Grid Background="#FF060308" Margin="-3,-3,-3,-13">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <ListView x:Name="calendarSpreadListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="-10,8,-0.4,26" SelectionChanged="calendarSpreadListView_SelectionChanged">
+                    <ListView x:Name="calendarSpreadListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="-10,0,0,34" SelectionChanged="calendarSpreadListView_SelectionChanged">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenCSGVCH" Header="" Width="50">
@@ -1298,12 +1298,12 @@
                 </Grid>
             </TabItem>
             <TabItem Header="跨品种套利" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                <Grid Background="#FF221715" Margin="-3,-2,-5,-4">
+                <Grid Background="#FF060308" Margin="-3,-2,-5,-4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <ListView x:Name="intercommoditySpreadListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,0,0,33">
+                    <ListView x:Name="intercommoditySpreadListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Visible" Foreground="White" Margin="0,-1,0,34">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenSGVCH" Header="" Width="50">
