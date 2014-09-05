@@ -1626,8 +1626,8 @@
 
 
         </Canvas>
-        <Button x:Name="calendarSpreadBtn" Content="跨期套利" Height="78" HorizontalAlignment="Left" Margin="23,12,0,0" VerticalAlignment="Top" Width="78"/>
-        <Button x:Name="intercommoditySpreadBtn" Content="跨品种套利" Height="78" HorizontalAlignment="Left" Margin="132,12,0,0" VerticalAlignment="Top" Width="78"/>
+        <Button x:Name="calendarSpreadBtn" Style="{StaticResource darkButton}" Content="跨期套利" Height="78" HorizontalAlignment="Left" Margin="23,12,0,0" VerticalAlignment="Top" Width="78" Background="#FF81658D" BorderBrush="{x:Null}" Foreground="White"/>
+        <Button x:Name="intercommoditySpreadBtn" Style="{StaticResource darkButton}" Content="跨品种套利" Height="78" HorizontalAlignment="Left" Margin="124,12,0,0" VerticalAlignment="Top" Width="78" Foreground="White" BorderBrush="{x:Null}" Background="#FF81658D"/>
 
     </Grid>
 </Window>

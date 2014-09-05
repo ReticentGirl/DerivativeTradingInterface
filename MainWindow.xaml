@@ -12,7 +12,7 @@
         Closing="Window_Closing"
     
     
-        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1190" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1" WindowState="Maximized" Loaded="Window_Loaded_1">
+        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1300" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1" WindowState="Maximized" Loaded="Window_Loaded_1">
     <Window.Resources>
 
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
