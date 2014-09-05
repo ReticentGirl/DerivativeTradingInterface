@@ -415,53 +415,43 @@ namespace qiquanui
         {
             RiskLabData selectedItem = optionsRiskLV.SelectedItem as RiskLabData;
             RiskControl.Class1 output1 = new Class1();
-            MWArray[] best=output1.PicVolatility(4,"'"+selectedItem.InstrumentID+"'");
-
-
-
-
+            MWArray[] best = output1.PicVolatility(4, "'" + selectedItem.InstrumentID + "'");
             MWCellArray x11 = (MWCellArray)best[0];//横坐标
             ObservableCollection<XY> coor = new ObservableCollection<XY>();
 
-            for (int j = 0; j < x11.NumberOfElements; j++) {
+            for (int j = 0; j < x11.NumberOfElements; j++)
+            {
                 double[,] tempX1 = (double[,])x11[1, j + 1].ToArray();
                 double tempX = Math.Round(tempX1[0, 0], 2);
                 coor.Add(new XY() { X = tempX });
             }
-            
+
 
             MWCellArray x22 = (MWCellArray)best[1]; //时间
-           
-
             MWArray x33 = (MWArray)best[2];
             MWArray x44 = (MWArray)best[3];
-
             Random rnd = new Random();
-
             System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
 
             VolatilityChart.Graphs.Clear();
-
-
             gougou.Visibility = Visibility.Hidden;
-
             for (int i = 0; i < x22.NumberOfElements; i++)
             {
-                string datetime=x22[1+i].ToString();
+                string datetime = x22[1 + i].ToString();
                 ObservableCollection<XY> data = new ObservableCollection<XY>();
-                for (int j = 0; j <(x33.NumberOfElements/x22.NumberOfElements); j++)
+                for (int j = 0; j < (x33.NumberOfElements / x22.NumberOfElements); j++)
                 {
-                    double[,] tempX1 = (double[,])x33[i+1, j+1].ToArray();
-                    double[,] tempY1 = (double[,])x44[i+1, j+1].ToArray();
-                    bool b1 = double.IsNaN(tempX1[0,0]);
-                    bool b2=double.IsNaN(tempY1[0,0]);
-                    if (!b1&&!b2&&(tempX1[0,0]!=0)&&(tempY1[0,0]!=0))
+                    double[,] tempX1 = (double[,])x33[i + 1, j + 1].ToArray();
+                    double[,] tempY1 = (double[,])x44[i + 1, j + 1].ToArray();
+                    bool b1 = double.IsNaN(tempX1[0, 0]);
+                    bool b2 = double.IsNaN(tempY1[0, 0]);
+                    if (!b1 && !b2 && (tempX1[0, 0] != 0) && (tempY1[0, 0] != 0))
                     {
                         double tempX = Math.Round(tempX1[0, 0], 2);
                         double tempY = Math.Round(tempY1[0, 0], 2);
                         data.Add(new XY() { X = tempX, Y = tempY });
                     }
-                    
+
                 }
 
                 System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
@@ -492,16 +482,7 @@ namespace qiquanui
                     case 3:
                         test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
                         break;
-                    //case 4:
-                       
-                    //    test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString());//蓝色
-                    //    break;
-                    //case 5:
-                    //    test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
-                    //    break;
-
                 }
-
 
                 VolatilityChart.Graphs.Add(test);
             }
@@ -510,8 +491,117 @@ namespace qiquanui
             coorBinding.Source = coor;
             this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
             this.VolatilityChart.IDMemberPath = "X";
-     
 
+            //画delta
+
+            MWArray[] DeltaArr = output1.DeltaPic(2, "'" + selectedItem.InstrumentID + "'");
+            MWCellArray yDelta = (MWCellArray)DeltaArr[0];//横坐标
+            MWCellArray xPrice = (MWCellArray)DeltaArr[1];
+            ObservableCollection<XY> coor1 = new ObservableCollection<XY>();
+
+            double[,] tempLow = (double[,])xPrice[1, 1].ToArray();
+            double Low = Math.Round(tempLow[0, 0], 2);
+            double[,] tempHigh = (double[,])xPrice[1, 2].ToArray();
+            double High = Math.Round(tempHigh[0, 0], 2);
+
+            double d = (High - Low) / 500;
+            for (double tempX = Low; tempX <= High; tempX = tempX + d)
+            {
+                coor1.Add(new XY() { X = tempX });
+            }
+
+            Random rnd1 = new Random();
+            System.Windows.Data.Binding coorBinding1 = new System.Windows.Data.Binding();    //X坐标轴绑定
+
+            GammaDelta.Graphs.Clear();
+            //gougou1.Visibility = Visibility.Hidden;
+
+            ObservableCollection<XY> data1 = new ObservableCollection<XY>();
+            for (int j = 0; j < yDelta.NumberOfElements; j++)
+            {
+                double[,] tempY1 = (double[,])yDelta[1, j + 1].ToArray();
+                if (tempY1[0, 0] != 0)
+                {
+                    double tempY = Math.Round(tempY1[0, 0], 2);
+                    data1.Add(new XY() { X = Low + d * j, Y = tempY });
+                }
+
+            }
+
+            System.Windows.Data.Binding dataBinding1 = new System.Windows.Data.Binding();   //数据绑定
+
+            LineChartGraph test1 = new LineChartGraph();
+
+            dataBinding1.Source = data1;
+
+            test1.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding1);
+            test1.SeriesIDMemberPath = "X";
+            test1.ValueMemberPath = "Y";
+            //test1.Title = "delta图";
+
+
+            test1.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//紫色
+                  
+            test1.LineThickness = 2;
+            GammaDelta.Graphs.Add(test1);
+
+            coorBinding1.Source = coor1;
+            this.GammaDelta.SetBinding(SerialChart.SeriesSourceProperty, coorBinding1);
+            this.GammaDelta.IDMemberPath = "X";
+
+             //gamma图
+            MWArray[] GammaArr = output1.GammaPic(2, "'" + selectedItem.InstrumentID + "'");
+            MWCellArray yGamma = (MWCellArray)GammaArr[0];//横坐标
+            MWCellArray xPrice1 = (MWCellArray)GammaArr[1];
+            ObservableCollection<XY> coor2 = new ObservableCollection<XY>();
+
+            double[,] tempLow1 = (double[,])xPrice1[1, 1].ToArray();
+            double Low1 = Math.Round(tempLow1[0, 0], 2);
+            double[,] tempHigh1 = (double[,])xPrice1[1, 2].ToArray();
+            double High1 = Math.Round(tempHigh1[0, 0], 2);
+
+            double d1 = (High1 - Low1) / 500;
+            for (double tempX = Low1; tempX <= High1; tempX = tempX + d1)
+            {
+                coor2.Add(new XY() { X = tempX  });
+            }
+
+            Random rnd2 = new Random();
+            System.Windows.Data.Binding coorBinding2 = new System.Windows.Data.Binding();    //X坐标轴绑定
+
+            GammaDelta1.Graphs.Clear();
+            //gougou2.Visibility = Visibility.Hidden;
+
+            ObservableCollection<XY> data2 = new ObservableCollection<XY>();
+            for (int j = 0; j < yGamma.NumberOfElements; j++)
+            {
+                double[,] tempY1 = (double[,])yGamma[1, j + 1].ToArray();
+                if (tempY1[0, 0] != 0)
+                {
+                    double tempY = Math.Round(tempY1[0, 0], 4);
+                    data2.Add(new XY() { X = Low1 + d1 * j, Y = tempY });
+                }
+
+            }
+
+            System.Windows.Data.Binding dataBinding2 = new System.Windows.Data.Binding();   //数据绑定
+
+            LineChartGraph test2 = new LineChartGraph();
+
+            dataBinding2.Source = data2;
+
+            test2.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding2);
+            test2.SeriesIDMemberPath = "X";
+            test2.ValueMemberPath = "Y";
+            //test1.Title = "delta图";
+
+            test2.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//紫色
+            test2.LineThickness = 2;
+            GammaDelta1.Graphs.Add(test2);
+
+            coorBinding2.Source = coor2;
+            this.GammaDelta1.SetBinding(SerialChart.SeriesSourceProperty, coorBinding2);
+            this.GammaDelta1.IDMemberPath = "X";
         }
 
     }
