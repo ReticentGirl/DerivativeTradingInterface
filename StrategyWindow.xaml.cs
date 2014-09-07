@@ -467,10 +467,21 @@ namespace qiquanui
 
                 ResultTab.SelectedIndex = which;
 
+                ListView lv=null;
                 if (which == 0)
-                    groupListView.SelectedIndex = 0;
+                     lv=groupListView;
                 if (which == 1)
-                    strategyListView.SelectedIndex = 0;
+                    lv=strategyListView;
+                if (lv.Items.Count > 0)
+                    lv.SelectedIndex = 0;
+                else {
+                    VolatilityChart.Visibility = Visibility.Hidden;
+                    VolatilityChart2.Visibility = Visibility.Hidden;
+                    ZoomInGL.Visibility = Visibility.Hidden;
+                    ZoomInYK.Visibility = Visibility.Hidden;
+                    for (int i = 0; i < 10; i++)
+                        labels[i].Visibility = Visibility.Hidden;
+                }
             }
         }
 
@@ -2177,10 +2188,10 @@ namespace qiquanui
             int which = 1;
             YK[] res = ComputeNoCA2(no);
 
-            for (int i = 0; i < no; i++)
+            for (int i = 0; i < no; i++)      
             {
                 ykm.yk[which, i] = res[i];
-                ykm.yk[which, i].title = "Top " + (i + 1);
+                if (res[i] != null)  ykm.yk[which, i].title = "Top " + (i + 1);
             }
 
             BindingForOC(which, no);
@@ -2188,7 +2199,22 @@ namespace qiquanui
 
             ResultTab.SelectedIndex = 1;
 
-            strategyListView.SelectedIndex = 0;
+            ListView lv = null;
+            if (which == 0)
+                lv = groupListView;
+            if (which == 1)
+                lv = strategyListView;
+            if (lv.Items.Count > 0)
+                lv.SelectedIndex = 0;
+            else
+            {
+                VolatilityChart.Visibility = Visibility.Hidden;
+                VolatilityChart2.Visibility = Visibility.Hidden;
+                ZoomInGL.Visibility = Visibility.Hidden;
+                ZoomInYK.Visibility = Visibility.Hidden;
+                for (int i = 0; i < 10; i++)
+                    labels[i].Visibility = Visibility.Hidden;
+            }
 
             clocPresent = StrategyType.NoCA2;
 
@@ -2448,52 +2474,89 @@ namespace qiquanui
                         n1 = n1 / gys;
                         n2 /= gys;
                         n3 /= gys;
-                        //填充  A：
-                        int[,] _num = new int[TotLine + 1, 4];
-                        if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                        int[,] _num;
+                        YK yk;
+                        
+
+                        double c1, c2, c3;
+                        c1 = YKManager.ykOption[i, (int)OptionType.CallBuy].BidPrice;
+                        c2 = YKManager.ykOption[j, (int)OptionType.CallSell].AskPrice;
+                        c3 = YKManager.ykOption[k, (int)OptionType.CallSell].AskPrice;
+
+                        //if (n2 * c2 > n1 * c1 + n3 * c3)
                         {
-                            _num[j, (int)OptionType.CallBuy] = n2 * 1;
-                            _num[i, (int)OptionType.CallSell] = n1 * 1;
-                            _num[k, (int)OptionType.CallSell] = n3 * 1;
+                            //填充 B：
+                            _num = new int[TotLine + 1, 4];
+                            if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                            {
+                                _num[j, (int)OptionType.CallSell] = n2 * 1;
+                                _num[i, (int)OptionType.CallBuy] = n1 * 1;
+                                _num[k, (int)OptionType.CallBuy] = n3 * 1;
 
+                            }
+                            else
+                            {
+                                _num[j, (int)OptionType.CallSell] = n2 * 1;
+                                _num[i, (int)OptionType.CallBuy] = n1;
+                                _num[k, (int)OptionType.CallBuy] = n3;
+                            }
+
+                            //计算盈亏数据
+                            yk = new YK(TotLine, _num, "凸性套利1", "无风险套利", MaxRange);
+                            yk.ComputeYK();
+                            //排序
+                            SortYKAnswer(ans, yk, Tot);
                         }
-                        else
-                        {
-                            _num[j, (int)OptionType.CallBuy] = n2;
-                            _num[i, (int)OptionType.CallSell] = n1;
-                            _num[k, (int)OptionType.CallSell] = n3;
-                        }
-                        //计算盈亏数据
-                        YK yk = new YK(TotLine, _num, "凸性套利", "无风险套利", MaxRange);
-                        yk.ComputeYK();
-                        //排序
-                        SortYKAnswer(ans, yk, Tot);
-
-
-                        //填充 B：
-                        _num = new int[TotLine + 1, 4];
-                        if (subject.Equals("上证50") || subject.Equals("沪深300"))
-                        {
-                            _num[j, (int)OptionType.CallSell] = n2 * 1;
-                            _num[i, (int)OptionType.CallBuy] = n1 * 1;
-                            _num[k, (int)OptionType.CallBuy] = n3 * 1;
-
-                        }
-                        else
-                        {
-                            _num[j, (int)OptionType.CallSell] = n2;
-                            _num[i, (int)OptionType.CallBuy] = n1;
-                            _num[k, (int)OptionType.CallBuy] = n3;
-                        }
-
-                        //计算盈亏数据
-                        yk = new YK(TotLine, _num, "凸性套利", "无风险套利", MaxRange);
-                        yk.ComputeYK();
-                        //排序
-                        SortYKAnswer(ans, yk, Tot);
-
 
                     }
+
+            for (int i = 0; i < TotLine - 2; i++)
+                for (int j = i + 1; j < TotLine - 1; j++)
+                    for (int k = j + 1; k < TotLine; k++)
+                    {
+                        int k1, k2, k3;
+                        k1 = YKManager.ykOption[i, 0].ExercisePrice;
+                        k2 = YKManager.ykOption[j, 0].ExercisePrice;
+                        k3 = YKManager.ykOption[k, 0].ExercisePrice;
+                        int n1, n2, n3;
+                        n1 = k3 - k2;
+                        n2 = k3 - k1;
+                        n3 = k2 - k1;
+                        int gys = ZhanZhuan(ZhanZhuan(n1, n2), n3);
+                        n1 = n1 / gys;
+                        n2 /= gys;
+                        n3 /= gys;
+
+                        if (n2 == 2 && n1 == 1 && n3 == 1) continue;
+
+
+                        int[,] _num;
+                        YK yk;
+
+
+
+                        double c1, c2, c3;
+                        c1 = YKManager.ykOption[i, (int)OptionType.CallBuy].BidPrice;
+                        c2 = YKManager.ykOption[j, (int)OptionType.CallSell].AskPrice;
+                        c3 = YKManager.ykOption[k, (int)OptionType.CallSell].AskPrice;
+
+                        
+                            //填充 B：
+                            _num = new int[TotLine + 1, 4];
+   
+                                _num[j, (int)OptionType.CallSell] = 2;
+                                _num[i, (int)OptionType.CallBuy] = 1;
+                                _num[k, (int)OptionType.CallBuy] = 1;
+
+                            //计算盈亏数据
+                            yk = new YK(TotLine, _num, "凸性套利2", "无风险套利", MaxRange);
+                            yk.ComputeYK();
+                            //排序
+                            SortYKAnswer(ans, yk, Tot);
+                        
+
+                    }
+
 
             return ans;
         }
@@ -2818,6 +2881,7 @@ namespace qiquanui
                 {
                     if (i >= oc.Count) ts = new TopStrategy();
                     else ts = oc[i];
+                    if (ykm.yk[which,i]==null) continue;
                     ts.earnRatePer = ykm.yk[which, i].EarnRate;
                     ts.expectEarnPer = ykm.yk[which, i].ExpectEarn;
                     ts.feePer = 0;//!
@@ -3039,11 +3103,21 @@ namespace qiquanui
             }
             else
             {
-                BindingCount = count;
-                BindingTitles = new string[BindingCount];
+
+                if (ykm.yk[which, 0] == null)
+                {
+                    ZoomInYKs.Visibility = Visibility.Hidden;
+                    VolatilityChart3.Visibility = Visibility.Hidden;
+
+                    return;
+
+                }
                 ZoomInYKs.Visibility = Visibility.Visible;
                 VolatilityChart3.Visibility = Visibility.Visible;
                 LegendMask.Visibility = Visibility.Hidden;
+
+                BindingCount = count;
+                BindingTitles = new string[BindingCount];
                 ObservableCollection<XY> data = new ObservableCollection<XY>();
                 ObservableCollection<XY> data2 = new ObservableCollection<XY>();
 
@@ -3058,6 +3132,7 @@ namespace qiquanui
 
                 for (int i = 0; i < count; i++)
                 {
+                    if (ykm.yk[which, i] == null) continue;
                     YK yk = ykm.yk[which, i];
 
                     data = yk.points;
@@ -3150,6 +3225,11 @@ namespace qiquanui
         /// <param name="Tot"></param>
         private void SortYKAnswer(YK[] ans, YK yk, int Tot)
         {
+            if (yk.ykname.Equals("凸性套利1") || yk.ykname.Equals("凸性套利2"))
+            {
+                if (yk.probability.Count > 1 || yk.probability[0].positive==false)
+                    return;
+            }
             //排序
             for (int k = 0; k < Tot; k++)
                 if (ans[k] == null)

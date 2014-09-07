@@ -201,12 +201,12 @@ namespace qiquanui
                 for (int j = 0; j < 4; j++)
                     if (number[i, j] > 0)
                     {
-                        ans += ComputeY(x, (OptionType)j, ykoption[i, j]);
+                        ans += ComputeY(x, (OptionType)j, ykoption[i, j])*number[i,j];
                     }
             if (number[TotLine, 0] > 0)
-                ans += (x - ykfuture[0].LastPrice);
+                ans += (x - ykfuture[0].LastPrice)*number[TotLine,0];
             if (number[TotLine, 1] > 0)
-                ans += -(x - ykfuture[1].LastPrice);
+                ans += -(x - ykfuture[1].LastPrice)*number[TotLine,1];
             ans *= multiplier;
             ans = Math.Round(ans, 1);
             return ans;
