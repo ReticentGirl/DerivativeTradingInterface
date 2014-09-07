@@ -38,7 +38,9 @@ namespace qiquanui
     {
 
         public static DataManager dm;
-        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper, chartTabControlw, chartTabControlh, chartTabControlwper, chartTabControlhper, chartBorderh;
+        private double originalHeight, originalWidth, list1h, list1w, grid3w, grid3h, list1hper, list1wper, grid3hper, grid3wper, top1w, top1wper, canvas1h, canvas1hper, multipleTabControlw, multipleTabControlwper, tradingListVieww, tradingListViewwper, optionsHoldDetailListVieww, optionsHoldDetailListViewwper, historyListVieww, historyListViewwper, userManageListVieww, userManageListViewwper, statusBar1w, statusBar1wper, canvas2h, canvas2hper, Grid1w, Grid1h, Grid1wper, Grid1hper, optionsMarketListVieww, optionsMarketListViewwper, optionsMarketListViewh, optionsMarketListViewhper, TopCanvas1h, TopCanvas1w, TopCanvas1wper, TopCanvas1hper, TopCanvasButtomGridw, TopCanvasButtomGridwper, optionsMarketTitleGridw, optionsMarketTitleGridwper, titileBorder4w, titileBorder4wper, profitListVieww, profitListViewwper, darkRectangleh, darkRectanglehper, darkRectanglew, darkRectanglewper, subjectMatterMarketGridw, subjectMatterMarketGridwper, chartTabControlw, chartTabControlh, chartTabControlwper, chartTabControlhper, chartBorderh, chartBorderhper;
+        private double trendChartGridh, trendChartGridw, trendChartGridhper, trendChartGridwper, probaAndProfitChartCanvasw, probaAndProfitChartCanvash, probaAndProfitChartCanvaswper, probaAndProfitChartCanvashper;
+        private double stockChartw, stockCharth, stockChartwper, stockCharthper, stockChart2w, stockChart2h, stockChart2wper, stockChart2hper, VolatilityChartwper, VolatilityCharthper, VolatilityChartw, VolatilityCharth, VolatilityChart2w, VolatilityChart2h, VolatilityChart2wper, VolatilityChart2hper;
 
 
         public static TradingManager otm;   //维护交易区的指针
@@ -162,6 +164,24 @@ namespace qiquanui
             chartTabControlh = chartTabControl.Height;
 
             chartBorderh = chartBorder.Height;
+
+
+
+            trendChartGridh = trendChartGrid.Height;
+            trendChartGridw = trendChartGrid.Width;
+            probaAndProfitChartCanvasw = probaAndProfitChartCanvas.Width;
+            probaAndProfitChartCanvash = probaAndProfitChartCanvas.Height;
+
+
+            stockChartw = stockChart.Width;
+            stockCharth = stockChart.Height;
+            stockChart2w = stockChart2.Width;
+            stockChart2h = stockChart2.Height;
+            VolatilityChartw = VolatilityChart.Width;
+            VolatilityCharth = VolatilityChart.Height;
+            VolatilityChart2w = VolatilityChart2.Width;
+            VolatilityChart2h = VolatilityChart2.Height;
+
 
 
             //初始化伸缩面板动画
@@ -303,6 +323,19 @@ namespace qiquanui
         private bool ResizeControl()
         {
 
+            stockChartwper = (this.Width - (originalWidth - stockChartw)) / (originalWidth - (originalWidth - stockChartw));
+            stockChart2wper = (this.Width - (originalWidth - stockChart2w)) / (originalWidth - (originalWidth - stockChart2w));
+            stockCharthper = (this.Height - (originalHeight - stockCharth)) / (originalHeight - (originalHeight - stockCharth));
+            stockChart2hper = (this.Height - (originalHeight - stockChart2h)) / (originalHeight - (originalHeight - stockChart2h));
+            VolatilityChartwper = (this.Width - (originalWidth - VolatilityChartw)) / (originalWidth - (originalWidth - VolatilityChartw));
+            VolatilityChart2wper = (this.Width - (originalWidth - VolatilityChart2w)) / (originalWidth - (originalWidth - VolatilityChart2w));
+            VolatilityCharthper = (this.Height - (originalHeight - VolatilityCharth)) / (originalHeight - (originalHeight - VolatilityCharth));
+            VolatilityChart2hper = (this.Height - (originalHeight - VolatilityChart2h)) / (originalHeight - (originalHeight - VolatilityChart2h));
+
+            trendChartGridhper = (this.Height - (originalHeight - trendChartGridh)) / (originalHeight - (originalHeight - trendChartGridh));
+            trendChartGridwper = (this.Width - (originalWidth - trendChartGridw)) / (originalWidth - (originalWidth - trendChartGridw));
+            probaAndProfitChartCanvaswper = (this.Width - (originalWidth - probaAndProfitChartCanvasw)) / (originalWidth - (originalWidth - probaAndProfitChartCanvasw));
+            probaAndProfitChartCanvashper = (this.Height - (originalHeight - probaAndProfitChartCanvash)) / (originalHeight - (originalHeight - probaAndProfitChartCanvash));
 
             optionsMarketTitleGridwper = TopCanvasButtomGridwper = TopCanvas1wper = list1wper = optionsMarketListViewwper = (this.Width - (originalWidth - list1w - chartTabControlw)) / (originalWidth - (originalWidth - list1w - chartTabControlw));
             profitListViewwper = userManageListViewwper = historyListViewwper = optionsHoldDetailListViewwper = tradingListViewwper = multipleTabControlwper = grid3wper = top1wper = (this.Width - (originalWidth - grid3w)) / (originalWidth - (originalWidth - grid3w));
@@ -315,7 +348,7 @@ namespace qiquanui
 
             chartTabControlwper = (this.Width - (originalWidth - chartTabControlw)) / (originalWidth - (originalWidth - chartTabControlw));
             chartTabControlhper = (this.Height - (originalHeight - chartTabControlh)) / (originalHeight - (originalHeight - chartTabControlh));
-
+            chartBorderhper = (this.Height - (originalHeight - chartBorderh)) / (originalHeight - (originalHeight - chartBorderh));
 
 
             darkRectanglewper = (this.Width - (originalWidth - darkRectanglew)) / (originalWidth - (originalWidth - darkRectanglew));
@@ -326,7 +359,7 @@ namespace qiquanui
 
             chartTabControl.Width = chartTabControlw * chartTabControlwper + 2 * windowShadowControlWidth;
             chartTabControl.Height = chartTabControlh * chartTabControlhper + 2 * windowShadowControlWidth;
-            chartBorder.Height = chartBorderh * chartTabControlhper + 2 * windowShadowControlWidth + 5;
+            chartBorder.Height = chartBorderh * chartBorderhper + 2 * windowShadowControlWidth;
             chartBorder.Width = chartTabControl.Width;
             Border1.Height = this.Height - 14.0 + 2 * windowShadowControlWidth;
             Border1.Width = this.Width - 14.0 + 2 * windowShadowControlWidth;
@@ -362,8 +395,20 @@ namespace qiquanui
 
             Canvas2Border1.Height = Canvas2.Height + 2 * windowShadowControlWidth;
 
+            trendChartGrid.Width = trendChartGridw * trendChartGridwper + 2 * windowShadowControlWidth;
+            trendChartGrid.Height = trendChartGridh * trendChartGridhper + 2 * windowShadowControlWidth;
+            probaAndProfitChartCanvas.Height = probaAndProfitChartCanvash * probaAndProfitChartCanvashper + 2 * windowShadowControlWidth;
+            probaAndProfitChartCanvas.Width = probaAndProfitChartCanvasw * probaAndProfitChartCanvaswper + 2 * windowShadowControlWidth;
 
+            stockChart.Width = stockChartw * stockChartwper + 2 * windowShadowControlWidth;
+            stockChart.Height = stockCharth * stockCharthper + 2 * windowShadowControlWidth;
+            stockChart2.Width = stockChart2w * stockChart2wper + 2 * windowShadowControlWidth;
+            stockChart2.Height = stockChart2h * stockChart2hper + 2 * windowShadowControlWidth;
 
+            VolatilityChart.Width = VolatilityChartw * VolatilityChartwper + 2 * windowShadowControlWidth;
+            VolatilityChart.Height = VolatilityCharth * VolatilityCharthper + 2 * windowShadowControlWidth;
+            VolatilityChart2.Width = VolatilityChart2w * VolatilityChart2wper + 2 * windowShadowControlWidth;
+            VolatilityChart2.Height = VolatilityChart2h * VolatilityChart2hper + 2 * windowShadowControlWidth;
 
 
 
