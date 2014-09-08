@@ -2870,7 +2870,7 @@
                             </ListView.View>
                         </ListView>
 
-                        <CheckBox x:Name="chooseAllHDCheckBox" Content="" HorizontalAlignment="Left" IsChecked="False" Margin="1,17,0,214" Click="chooseAllHDCheckBox_Click" Grid.Column="3"/>
+                        <CheckBox x:Name="chooseAllHDCheckBox" Content="" HorizontalAlignment="Left" IsChecked="False" Margin="17,18,0,213" Click="chooseAllHDCheckBox_Click"/>
                         <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="3"/>
                         <Button x:Name="analyseBtn2" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="3" Click="analyseBtn2_Click"/>
                         <Button x:Name="closeOutBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Click="closeOutBtn_Click" Content="平仓" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,0,199,4" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="75" Grid.Column="3"/>

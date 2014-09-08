@@ -1584,13 +1584,15 @@ namespace qiquanui
                 /////////////////////默认为买入
                 bool haveSame = false;
 
-                future add_Future = dm.ObservableOb[0];
+                //future add_Future = dm.SubjectID;
 
-                double add_MarketPrice = Convert.ToDouble(add_Future.AskPrice1);
+                DataRow nDr = (DataRow)DataManager.All[dm.SubjectID];
+
+                double add_MarketPrice = Convert.ToDouble(nDr["AskPrice1"]);
 
                 string add_userID = this.userComboBox.Text;            //先这样用着
 
-                string add_instrumentID = add_Future.instrumentid;
+                string add_instrumentID = dm.SubjectID;
 
                 string add_callOrPut = "-";
 
