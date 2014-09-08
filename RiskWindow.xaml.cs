@@ -92,7 +92,8 @@ namespace qiquanui
         MainWindow pWindow;
         RiskLabManager pRm;
         string teat, teat1;
-        public RiskWindow(MainWindow _pWindow)
+        string datanow;
+        public RiskWindow(MainWindow _pWindow,string _datanow)
         {
             InitializeComponent();
 
@@ -140,7 +141,7 @@ namespace qiquanui
 
             testForChart();
 
-
+            datanow = _datanow;
         }
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -367,7 +368,7 @@ namespace qiquanui
         {
             teat = setConfidenceLevelCompoTBox.Text;
             double Cov = Convert.ToDouble(teat);
-            pRm.GetData(Cov);
+            pRm.GetData(Cov,datanow);
             pRm.Com(Cov);
         }
 
@@ -375,7 +376,7 @@ namespace qiquanui
         private void okRecomBtn_Click(object sender, RoutedEventArgs e)
         {
             teat1 = setConfidenceLevelRecomTBox.Text;
-            double Cov = Convert.ToDouble(teat);
+            double Cov = Convert.ToDouble(teat1);
             pRm.showData(Cov);
 
         }
@@ -415,7 +416,7 @@ namespace qiquanui
         {
             RiskLabData selectedItem = optionsRiskLV.SelectedItem as RiskLabData;
             RiskControl.Class1 output1 = new Class1();
-            MWArray[] best = output1.PicVolatility(4, "'" + selectedItem.InstrumentID + "'");
+            MWArray[] best = output1.PicVolatility111m(4, "'" + selectedItem.InstrumentID + "'", datanow);
             MWCellArray x11 = (MWCellArray)best[0];//横坐标
             ObservableCollection<XY> coor = new ObservableCollection<XY>();
 
@@ -479,9 +480,9 @@ namespace qiquanui
                     case 2:
                         test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
                         break;
-                    case 3:
-                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
-                        break;
+                    //case 3:
+                    //    test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
+                    //    break;
                 }
 
                 VolatilityChart.Graphs.Add(test);
@@ -494,7 +495,7 @@ namespace qiquanui
 
             //画delta
 
-            MWArray[] DeltaArr = output1.DeltaPic(2, "'" + selectedItem.InstrumentID + "'");
+            MWArray[] DeltaArr = output1.DeltaPic(2, "'" + selectedItem.InstrumentID + "'", datanow);
             MWCellArray yDelta = (MWCellArray)DeltaArr[0];//横坐标
             MWCellArray xPrice = (MWCellArray)DeltaArr[1];
             ObservableCollection<XY> coor1 = new ObservableCollection<XY>();
@@ -504,8 +505,8 @@ namespace qiquanui
             double[,] tempHigh = (double[,])xPrice[1, 2].ToArray();
             double High = Math.Round(tempHigh[0, 0], 2);
 
-            double d = (High - Low) / 500;
-            for (double tempX = Low; tempX <= High; tempX = tempX + d)
+            //double d = (High - Low) / 500;
+            for (double tempX = Low; tempX <= High; tempX = tempX + 1)
             {
                 coor1.Add(new XY() { X = tempX });
             }
@@ -523,7 +524,7 @@ namespace qiquanui
                 if (tempY1[0, 0] != 0)
                 {
                     double tempY = Math.Round(tempY1[0, 0], 2);
-                    data1.Add(new XY() { X = Low + d * j, Y = tempY });
+                    data1.Add(new XY() { X = Low + 1 * j, Y = tempY });
                 }
 
             }
@@ -550,7 +551,7 @@ namespace qiquanui
             this.GammaDelta.IDMemberPath = "X";
 
              //gamma图
-            MWArray[] GammaArr = output1.GammaPic(2, "'" + selectedItem.InstrumentID + "'");
+            MWArray[] GammaArr = output1.GammaPic(2, "'" + selectedItem.InstrumentID + "'", datanow);
             MWCellArray yGamma = (MWCellArray)GammaArr[0];//横坐标
             MWCellArray xPrice1 = (MWCellArray)GammaArr[1];
             ObservableCollection<XY> coor2 = new ObservableCollection<XY>();
@@ -560,8 +561,8 @@ namespace qiquanui
             double[,] tempHigh1 = (double[,])xPrice1[1, 2].ToArray();
             double High1 = Math.Round(tempHigh1[0, 0], 2);
 
-            double d1 = (High1 - Low1) / 500;
-            for (double tempX = Low1; tempX <= High1; tempX = tempX + d1)
+            //double d1 = (High1 - Low1) / 500;
+            for (double tempX = Low1; tempX <= High1; tempX = tempX + 1)
             {
                 coor2.Add(new XY() { X = tempX  });
             }
@@ -579,7 +580,7 @@ namespace qiquanui
                 if (tempY1[0, 0] != 0)
                 {
                     double tempY = Math.Round(tempY1[0, 0], 4);
-                    data2.Add(new XY() { X = Low1 + d1 * j, Y = tempY });
+                    data2.Add(new XY() { X = Low1 +1 * j, Y = tempY });
                 }
 
             }

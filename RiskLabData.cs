@@ -18,6 +18,7 @@ namespace qiquanui
         private string sCallOrPut;    //看涨（0/false）看跌（1/true）
         private string sBuyOrSell;    //买（0） 卖（1）
         private int tradingNum;   //交易手数
+        private string datanow;//系统当前时间
 
         //需求数据
         private double singleDelta;
@@ -35,6 +36,16 @@ namespace qiquanui
         private double comVega;
         private double comRho;
         private string comVar;
+
+        public string Datanow
+        {
+            get { return datanow; }
+            set
+            {
+                instrumentID = value;
+                OnPropertyChanged("Datanow");
+            }
+        }
 
         public string InstrumentID
         {
@@ -211,20 +222,19 @@ namespace qiquanui
             //comVar = "---";
         }
 
-        public RiskLabData(string _instrumentID, string _sCallOrPut, string _sBuyOrSell, int _tradingNum,double cov)
+        public RiskLabData(string _instrumentID, string _sCallOrPut, string _sBuyOrSell, int _tradingNum, double cov, string _datanow)
         {
 
             instrumentID = _instrumentID;
             sCallOrPut = _sCallOrPut;
 
             string instrumentID1 = "'" + _instrumentID + "'";
-            string sCallOrPut1 = "'" + _sCallOrPut + "'";
-
+          
             sBuyOrSell = _sBuyOrSell;
             tradingNum = _tradingNum;
 
             RiskControl.Class1 output1 = new Class1();
-            MWArray[] x = output1.GreekLetter(7, instrumentID1, sCallOrPut1, tradingNum, cov);
+            MWArray[] x = output1.GreekLetter(7, instrumentID1, _sBuyOrSell, tradingNum, cov, _datanow);
             //delta,gamma,theta,vega,rho,vol,var 
             MWNumericArray x0 = (MWNumericArray)x[0];
             MWNumericArray x1 = (MWNumericArray)x[1];
@@ -252,20 +262,22 @@ namespace qiquanui
             singleVar = temp.ToString();
         }
 
-        public RiskLabData(string _instrumentID, string _sCallOrPut, string _sBuyOrSell, int _tradingNum)
+        public RiskLabData(string _instrumentID, string _sCallOrPut, string _sBuyOrSell, int _tradingNum, string _datanow)
         {
 
             instrumentID = _instrumentID;
             sCallOrPut = _sCallOrPut;
 
             string instrumentID1 = "'" + _instrumentID + "'";
-            string sCallOrPut1 = "'" + _sCallOrPut + "'";
-
+           
             sBuyOrSell = _sBuyOrSell;
             tradingNum = _tradingNum;
 
+            //datanow = _datanow;
+            
+
             RiskControl.Class1 output1 = new Class1();
-            MWArray[] x = output1.GreekLetter(7, instrumentID1, sCallOrPut1, tradingNum, 0.95);
+            MWArray[] x = output1.GreekLetter(7, instrumentID1, _sCallOrPut, tradingNum, 0.95, _datanow);
             //delta,gamma,theta,vega,rho,vol,var 
             MWNumericArray x0 = (MWNumericArray)x[0];
             MWNumericArray x1 = (MWNumericArray)x[1];

@@ -26,31 +26,33 @@ namespace qiquanui
         //RiskLabData rd1 = new RiskLabData();
         //pRiskWindow.compoGrid.DataContext = rd1;
 
+        string datanow;//系统当前时间
+
         public RiskLabManager() 
         { 
         }
 
-        public RiskLabManager(TradingManager _otm, RiskWindow _pRiskWindow)
+        public RiskLabManager(TradingManager _otm, RiskWindow _pRiskWindow,string _datanow)
         {
             otm = _otm;
             pRiskWindow = _pRiskWindow;
             pRiskWindow.optionsRiskLV.ItemsSource = RiskOC1;
             pRiskWindow.recomLV.ItemsSource = RiskOC2;
-           rd1 = new RiskLabData();
+            datanow = _datanow;
+            rd1 = new RiskLabData();
            pRiskWindow.compoGrid.DataContext = rd1;
         }
 
-        public void GetData(double cov)
+        public void GetData(double cov,string _datanow)
         {
             for (int i = 0; i < RiskOC1.Count(); i++) {
-                RiskLabData rd = new RiskLabData(RiskOC1[i].InstrumentID,RiskOC1[i].SCallOrPut,RiskOC1[i].SBuyOrSell,RiskOC1[i].TradingNum, cov);
+                RiskLabData rd = new RiskLabData(RiskOC1[i].InstrumentID,RiskOC1[i].SCallOrPut,RiskOC1[i].SBuyOrSell,RiskOC1[i].TradingNum, cov,_datanow);
                 double temp = Math.Round(Convert.ToDouble(rd.SingleVar), 3);
                 RiskOC1[i].SingleVar = temp.ToString();
             }
-
         }
 
-        public void GetData(string instrumentID, string callOrPut, int tradingType, int tradingNum)
+        public void GetData(string instrumentID, string callOrPut, int tradingType, int tradingNum,string _datanow)
         {
 
             string sCallOrPut;////看涨（0/false）看跌（1/true）
@@ -73,7 +75,7 @@ namespace qiquanui
                 sSellOrBuy = "buy";
             }
 
-            RiskLabData rd2 = new RiskLabData(instrumentID, sCallOrPut, sSellOrBuy, tradingNum);
+            RiskLabData rd2 = new RiskLabData(instrumentID, sCallOrPut, sSellOrBuy, tradingNum, _datanow);
             RiskOC1.Add(rd2);
         }
 
@@ -149,8 +151,8 @@ namespace qiquanui
         }
 
         public void showData(double cov) {
-            RiskLabData rd1 = new RiskLabData();
-            pRiskWindow.compoGrid.DataContext = rd1;
+            //RiskLabData rd1 = new RiskLabData();
+            //pRiskWindow.compoGrid.DataContext = rd1;
             for (int i = 0; i < RiskOC1.Count(); i++) {
                 if (RiskOC1[i].SBuyOrSell.Equals("sell"))
                     RiskOC1[i].SBuyOrSell = "卖";
@@ -169,8 +171,7 @@ namespace qiquanui
                 InputID[i + 1] = "'" + RiskOC1[i].InstrumentID + "'";
             }
 
-
-            MWArray[] best = output1.link(2,cov, (RiskOC1.Count() + 1), rd1.ComDelta, rd1.ComGamma, InputID, InputNum);
+            MWArray[] best = output1.link(2, cov, (RiskOC1.Count() + 1), rd1.ComDelta, rd1.ComGamma, InputID, InputNum, datanow);
             MWCellArray x11 = (MWCellArray)best[0];
             MWCellArray x22 = (MWCellArray)best[1];
 

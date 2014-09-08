@@ -1247,7 +1247,7 @@
                         <GridViewColumn x:Name="VegaORGVCH" Header="Vega" DisplayMemberBinding="{Binding SingleVega}" Width="60"/>
                         <GridViewColumn x:Name="rhoORGVCH" Header="Rho" DisplayMemberBinding="{Binding SingleRho}" Width="60"/>
                         <GridViewColumn x:Name="rateORGVCH" Header="隐波率" DisplayMemberBinding="{Binding SingleVol}" Width="60"/>
-                        <GridViewColumn x:Name="varORGVCH" Header="Var" DisplayMemberBinding="{Binding SingleVar}" Width="60"/>
+                        <GridViewColumn x:Name="varORGVCH" Header="Var" DisplayMemberBinding="{Binding SingleVar}" Width="90"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -1296,7 +1296,7 @@
                         <GridViewColumn x:Name="VegaRGVCH" Header="Vega" DisplayMemberBinding="{Binding SingleVega}" Width="60"/>
                         <GridViewColumn x:Name="rhoRGVCH" Header="Rho" DisplayMemberBinding="{Binding SingleRho}" Width="60"/>
                         <GridViewColumn x:Name="rateRGVCH" Header="隐波率" DisplayMemberBinding="{Binding SingleVol}" Width="60"/>
-                        <GridViewColumn x:Name="varRGVCH" Header="Var" DisplayMemberBinding="{Binding SingleVar}" Width="60"/>
+                        <GridViewColumn x:Name="varRGVCH" Header="Var" DisplayMemberBinding="{Binding SingleVar}" Width="90"/>
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -1307,14 +1307,14 @@
 
 
         <!--单支期权delta图、gamma图-->
-        <TabControl x:Name="DeltaAndGammaTabControl" HorizontalAlignment="Right" Height="282" Margin="0,43,20,0" VerticalAlignment="Top" Width="323" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0">
+        <TabControl x:Name="DeltaAndGammaTabControl" HorizontalAlignment="Right" Height="282" Margin="0,43,10,0" VerticalAlignment="Top" Width="358" BorderBrush="{x:Null}" Background="{x:Null}" BorderThickness="0">
             <TabItem  Header="Delta图" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,2,0">
-                <Grid x:Name="DeltaTabGrid" Background="#FF08070A" Margin="-3,-2,-2,2" MouseEnter="DeltaTabGrid_MouseEnter" MouseLeave="DeltaTabGrid_MouseLeave">
+                <Grid x:Name="DeltaTabGrid" Background="#FF08070A" Margin="-3,-2,4,2" MouseEnter="DeltaTabGrid_MouseEnter" MouseLeave="DeltaTabGrid_MouseLeave">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <am:LineChart x:Name="GammaDelta" Height="249"
-                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="-308" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" LegendEnabled="False" HorizontalAlignment="Left" Width="319">
+                    <am:LineChart x:Name="GammaDelta" Height="219"
+                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="-308" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" LegendEnabled="False" HorizontalAlignment="Left" Width="301" Margin="29,10,0,0">
                         <am:LineChart.Legend>
                             <am:Legend HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
 							IsGraphTogglingEnabled="True" ValuesEnabled="True"/>
@@ -1352,18 +1352,18 @@
                         <!--</am:LineChart>-->
 
                     </am:LineChart> 
-                    <Label Content="" Height="25" Width="135" Background="#FF08070A" Canvas.Top="-308" Margin="1,0,188,229"/>
+                    <Label Content="" Background="#FF08070A" Canvas.Top="-308" Margin="29,10,167,216"/>
                     <!--<Label Content="Label" Canvas.Left="246" Canvas.Top="56"/>-->
                     
                 </Grid>
             </TabItem>
             <TabItem Header="Gamma图" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,2,0">
-                <Grid x:Name="GammaTabGrid" Background="#FF08070A" Margin="-2,-2,2,2" MouseEnter="GammaTabGrid_MouseEnter" MouseLeave="GammaTabGrid_MouseLeave">
+                <Grid x:Name="GammaTabGrid" Background="#FF08070A" Margin="-2,-2,8,0" MouseEnter="GammaTabGrid_MouseEnter" MouseLeave="GammaTabGrid_MouseLeave">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <am:LineChart x:Name="GammaDelta1" Height="254"
-                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="-308" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" LegendEnabled="False" Width="319" HorizontalAlignment="Left">
+                    <am:LineChart x:Name="GammaDelta1" Height="209"
+                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="-308" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" LegendEnabled="False" Width="276" HorizontalAlignment="Left" Margin="41,21,0,0">
                         <am:LineChart.Legend>
                             <am:Legend HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
 							IsGraphTogglingEnabled="True" ValuesEnabled="True"/>
@@ -1401,7 +1401,7 @@
                         <!--</am:LineChart>-->
 
                     </am:LineChart>
-                    <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="134" Background="#FF08070A"/>
+                    <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Background="#FF08070A" Margin="41,21,0,0" Height="24"/>
                     <!--<Label  x:Name="gougou2" Canvas.Top="-101" Width="70" Background="{x:Null}" Height="26"/>-->
 
                 </Grid>
