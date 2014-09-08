@@ -106,11 +106,12 @@ namespace qiquanui
 
         }
 
-        public void initial(ObservableCollection<StockInfo> oc1,ObservableCollection<StockInfo> oc2)
+        public void initial(ObservableCollection<StockInfo> oc1, ObservableCollection<StockInfo> oc2)
         {
             Data = new ObservableCollection<StockInfo>();
-            int i1=0, i2=0;
-            while (i1<oc1.Count && i2<oc2.Count)  {
+            int i1 = 0, i2 = 0;
+            while (i1 < oc1.Count && i2 < oc2.Count)
+            {
                 if (oc1[i1].date < oc2[i2].date)
                     i1++;
                 else
@@ -134,6 +135,249 @@ namespace qiquanui
 
     }
 
+
+    public class TrendPoint : INotifyPropertyChanged
+    {
+        private string x;
+        private double y;
+
+        // public double x { get; set; }
+        // public double y { get; set; }
+
+        public TrendPoint()
+        {
+
+        }
+
+        public TrendPoint(string _x, double _y)
+        {
+            x = _x;
+            y = _y;
+        }
+
+        public string X
+        {
+            get { return x; }
+            set
+            {
+                x = value;
+                OnPropertyChanged("X");
+            }
+        }
+
+        public double Y
+        {
+            get { return y; }
+            set
+            {
+                y = value;
+                OnPropertyChanged("Y");
+            }
+        }
+
+
+
+        #region INotifyPropertyChanged 成员
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(name));
+        }
+
+
+
+
+        #endregion
+    }
+
+
+
+    class Trend2
+    {
+        public DateTime StringToDate(string trading, string update)
+        {
+            return new DateTime(Convert.ToInt32(trading.Substring(0, 4)), Convert.ToInt32(trading.Substring(4, 2)), Convert.ToInt32(trading.Substring(6, 2)),
+                Convert.ToInt32(update.Substring(0, 2)), Convert.ToInt32(update.Substring(3, 2)), 0);
+        }
+
+        public string DateToMinute(DateTime dt)
+        {
+            string ans = "";
+            ans += dt.Hour;
+            if (dt.Minute < 10)
+                ans += "0" + dt.Minute;
+            else
+                ans += dt.Minute;
+            return ans;
+        }
+
+        public string id;
+        public void initial(string _id, Window _pwindow)
+        {
+            this.id = _id;
+            this.pwindow = _pwindow;
+            initial();
+        }
+
+        public Window pwindow;
+        public ObservableCollection<TrendPoint> Data;
+        public System.Windows.Data.Binding CoorBinding;
+        public System.Windows.Data.Binding DataBinding;
+        public ObservableCollection<TrendPoint> Coor;
+        Timer timer;
+        public string DateToTradingDay(DateTime dt)
+        {
+            string ans;
+            ans = dt.Year.ToString();
+            if (dt.Month < 10)
+                ans += "0" + dt.Month;
+            else
+                ans += dt.Month;
+            if (dt.Day < 10)
+                ans += "0" + dt.Day;
+            else
+                ans += dt.Day;
+            return ans;
+        }
+
+
+
+        public int middleNumber = 0;
+        public DateTime middle = new DateTime();
+        public DateTime end = new DateTime();
+        private void initial()
+        {
+            if (id == null) return;
+            if (id.Equals("上证50指数")) id = "IH1409";
+            if (id.Equals("沪深300指数")) id = "IF1409";
+            string _tradingday = DateToTradingDay(DataManager.now);
+            string sql = "select * from minutedata where instrumentid='" + id + "' and tradingday='" + _tradingday + "'  order by TradingDay,updatetime";
+            DataTable dt = DataControl.QueryTable(sql);
+            if (dt.Rows.Count == 0)
+            {
+                Console.WriteLine("Initialing Trend Error! " + id + " Count==0");
+                return;
+            }
+
+            Data = new ObservableCollection<TrendPoint>();
+            Coor = new ObservableCollection<TrendPoint>();
+
+            DateTime now = DataManager.now;
+
+            DateTime start = new DateTime(now.Year, now.Month, now.Day, 9, 15, 0);
+            middle = now.AddMinutes(0);
+            middle = new DateTime(middle.Year, middle.Month, middle.Day, middle.Hour, middle.Minute, 0);
+            end = new DateTime(now.Year, now.Month, now.Day, 15, 16, 0);
+            middleNumber = -1;
+
+            DateTime present = start;
+            int i = 0;
+            DateTime nextLine = StringToDate((string)dt.Rows[i]["TradingDay"], (string)dt.Rows[i]["UpdateTime"]);
+            TrendPoint last = new TrendPoint(DateToMinute(start.AddMinutes(-1)), (double)dt.Rows[0]["PreClosePrice"]);
+            do
+            {
+                while (nextLine < present && i < dt.Rows.Count)
+                {
+                    i++;
+                    if (i == dt.Rows.Count)
+                        nextLine = end;
+                    else
+                        nextLine = StringToDate((string)dt.Rows[i]["TradingDay"], (string)dt.Rows[i]["UpdateTime"]);
+                }
+                if (present.Equals(nextLine))
+                {
+                    string time = DateToMinute(present);
+                    double price = (double)dt.Rows[i]["LastPrice"];
+                    last = new TrendPoint(time, price);
+                }
+                else
+                {
+                    string time = DateToMinute(present);
+                    last = new TrendPoint(time, last.Y);
+
+                }
+
+
+                if (present <= middle)
+                {
+                    Data.Add(last);
+                    Coor.Add(last);
+                }
+                else
+                {
+                    Coor.Add(last);
+                }
+
+
+                if (present <= middle)
+                    middleNumber++;
+
+                present = present.AddMinutes(1);
+                if (present.Hour == 11 && present.Minute == 31)
+                    present = new DateTime(present.Year, present.Month, present.Day, 13, 0, 0);
+                //if (present.Hour == 15 && present.Minute == 16)
+                //{
+                //    present = present.AddDays(1);
+                //    present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+                //}
+                //Console.WriteLine(present);
+            }
+            while (!present.Equals(end));
+
+
+            CoorBinding = new System.Windows.Data.Binding();
+            CoorBinding.Source = Coor;
+            DataBinding = new System.Windows.Data.Binding();
+            DataBinding.Source = Data;
+
+
+
+            timer = new Timer(500);
+            timer.Elapsed += new ElapsedEventHandler(RefreshTrend);
+            timer.Start();
+        }
+
+
+        delegate void RateTextCallBack(object sender, ElapsedEventArgs e);
+        private void RefreshTrend(object sender, ElapsedEventArgs e)
+        {
+            RateTextCallBack d;
+            if (System.Threading.Thread.CurrentThread != pwindow.Dispatcher.Thread)
+            {
+                d = new RateTextCallBack(RefreshTrend);
+                pwindow.Dispatcher.Invoke(d, new object[] { sender, e });
+            }
+            else
+            {
+                timer.Stop();
+                DateTime now = DataManager.now;
+                if (now >= end)
+                    return;
+                if (now > middle.AddMinutes(1))
+                {
+                    middle.AddMinutes(1);
+                    middleNumber++;
+                    DateTime newtime = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
+                    Data.Add(new TrendPoint(DateToMinute(newtime), 0));
+
+                }
+
+                DataRow row = (DataRow)DataManager.All[id];
+                double lastprice = (double)row["LastPrice"];
+                Data[middleNumber].Y = lastprice;
+                timer.Start();
+            }
+
+
+        }
+
+
+
+
+    }
 
     public class StockInfo : INotifyPropertyChanged
     {

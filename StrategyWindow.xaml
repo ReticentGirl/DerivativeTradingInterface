@@ -1317,13 +1317,13 @@
 
 
         <TabControl x:Name="ResultTab" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="911" Height="212" Grid.Row="2" Margin="137,0,137,10" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}">
-            <TabItem Header="特定情景收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <TabItem Header="特定情景收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-2.8" HorizontalAlignment="Left" VerticalAlignment="Bottom">
                 <Grid Background="#FF060308" Margin="-3,-2,-3,-4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <!--ListView的ScrollBar.Visibility要设置为hidden，这样只对右边的项列宽造成影响，否则在调整项列宽时，会对左边的数据项列宽也产生影响-->
-                    <ListView x:Name="groupListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="0,0,0.4,28.8" SelectionChanged="groupListView_SelectionChanged">
+                    <ListView x:Name="groupListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="White" Margin="0,0,0.4,28.8" SelectionChanged="groupListView_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenGGVCH" Header="" Width="50">
@@ -1360,15 +1360,15 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="特定策略收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                <Grid Background="#FF060308" Margin="-3,-2,-5,-4">
+            <TabItem Header="特定策略收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,0,0,-2.8" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                <Grid Background="#FF060308" Margin="-3,-2,-5.4,-4.2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <!--这个保留我的版本 DQC-->
                     <!--看注释啊亲 不要再显示滚动条了好吗 DQC-->
-                    <ListView x:Name="strategyListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="0,0,0,33" SelectionChanged="strategyListView_SelectionChanged">
+                    <ListView x:Name="strategyListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ScrollViewer.HorizontalScrollBarVisibility="Auto" Foreground="White" Margin="0,2,-0.4,31.6" SelectionChanged="strategyListView_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenSGVCH" Header="" Width="50">
@@ -1477,7 +1477,7 @@
         </Canvas>
 
         <!--盈亏对比图-->
-        <Canvas HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Height="238" Margin="0,0,50.6,400.4" Width="303" Background="#00C160EE">
+        <Canvas HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1" Height="439" Margin="0,0,50.6,199.4" Width="303" Background="#00C160EE">
 
             <am:LineChart x:Name="VolatilityChart3" Width="300" Height="200" Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="10" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2">
 
@@ -1508,13 +1508,45 @@
             <Label Content="Label" Canvas.Left="2" Canvas.Top="11" Width="130" Background="#FF120D13" Foreground="#00000000"/>
             <Label x:Name="LegendMask" Content="Label" Canvas.Left="81" Canvas.Top="185" Width="130" Background="#FF120D13" Foreground="#00000000"/>
             <Button x:Name="ZoomInYKs" Style="{StaticResource ZoomButtonSty}" Content="" Canvas.Left="317" Width="20" Click="ZoomInYKs_Click" Canvas.Top="-3" Height="20" Visibility="Hidden"/>
+            <Button x:Name="ZoomInZS" Style="{StaticResource ZoomButtonSty}" Content="" Canvas.Left="317" Width="20" Click="ZoomInZS_Click" Canvas.Top="229" Height="20" Visibility="Hidden"/>
+
+ 
+            <am:LineChart x:Name="VolatilityChart4" Width="300" Height="200" Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="229" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Canvas.Left="3" LegendEnabled="False" Visibility="Hidden">
+
+                <am:LineChart.Content >
+                    <Grid Width="640" Height="420">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </am:LineChart.Content>
+                <am:LineChart.CategoryAxis>
+                    <am:CategoryAxis StrokeThickness="0"/>
+                </am:LineChart.CategoryAxis>
+                <am:LineChart.CategoryAxisGrid>
+                    <am:CategoryGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.CategoryAxisGrid>
+                <am:LineChart.LeftValueAxisGrid>
+                    <am:ValueGrid Stroke="#08FFFFFF"/>
+                </am:LineChart.LeftValueAxisGrid>
+                <am:LineChart.LeftValueAxis>
+                    <am:ValueAxis StrokeThickness="0"/>
+                </am:LineChart.LeftValueAxis>
+                <am:LineChartGraph x:Name="VolatilityGraph5" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="72" IsFilled="True" Width="237"/>
+
+            </am:LineChart>
+            <Label Content="Label" Canvas.Left="3" Canvas.Top="229" Width="130" Background="#FF120D13" Foreground="#00000000"/>
 
 
         </Canvas>
 
-        <Button x:Name="ZoomInZS" Style="{StaticResource ZoomButtonSty}" Content="+" Canvas.Left="269" Canvas.Top="222" Width="21" Margin="1149,238,16,392" Grid.Row="1" RenderTransformOrigin="0.505,0.511" Click="ZoomInZS_Click"/>
 
-        <ams:StockChart Name="stockChart" Grid.Row="1" Margin="771,232,46,222" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00">
+
+
+
+
+        <!--  <ams:StockChart Name="stockChart" Grid.Row="1" Margin="771,232,46,222" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00">
             <ams:StockChart.DataSets>
                 <ams:DataSet Name="stockSet1" Brush="#7f8da9"
                                 
@@ -1524,11 +1556,9 @@
                                 ValueMemberPath="close" VolumeMemberPath="volume"
                              
                                 />
-                <!--ItemsSource="{Binding Data}"-->
             </ams:StockChart.DataSets>
 
 
-            <!--走势图-->
             <ams:StockChart.Charts>
 
                 <ams:Chart Title="价格" GridHeight="2*" Background="#00000000">
@@ -1568,10 +1598,6 @@
                                     CursorBrush="Blue" CursorSize="6" 
                                     IsFilled="True" 
                                    />
-                        <!--<ams:Graph GraphType="Column" 
-                                    NegativeBrush="Green" PositiveBrush="Red" 
-                                    LegendItemType="None" LegendPeriodItemType="None"
-                                    CursorBrush="Blue" CursorSize="6" />-->
 
                     </ams:Chart.Graphs>
 
@@ -1591,7 +1617,6 @@
                             IsDateVisible="True" Background="#00000000"/>
                     </ams:Chart.Legend>
                 </ams:Chart>
-                <!--成交量的Chart-->
                 <ams:Chart Title="成交量">
                     <ams:Chart.Graphs>
                         <ams:Graph GraphType="Column"
@@ -1619,21 +1644,7 @@
 
             </ams:StockChart.Charts>
 
-            <!--<ams:StockChart.PeriodSelector>
-                <ams:PeriodSelector CustomPeriodLabelText="自定义间隔:" PresetPeriodLabelText="缩放:"
-                                Margin="0,5,0,0"
-                                >
-                    <ams:PeriodSelector.PresetPeriods>
-                        <ams:PresetPeriodButton Interval="Day" Quantity="10" ToolTipService.ToolTip="10天" Content="10天" />
-                        <ams:PresetPeriodButton Interval="Month" Quantity="1" ToolTipService.ToolTip="1个月" Content="1月" />
-                        <ams:PresetPeriodButton Interval="Month" Quantity="3" ToolTipService.ToolTip="3个月" Content="3月" />
-                        <ams:PresetPeriodButton Interval="Year" Quantity="1" ToolTipService.ToolTip="1年" Content="1年" />
-                        <ams:PresetPeriodButton Interval="Year" Quantity="3" ToolTipService.ToolTip="3年" Content="3年" />
-                        <ams:PresetPeriodButton Quantity="NaN" ToolTipService.ToolTip="所有数据" Content="最大" />
-                    </ams:PeriodSelector.PresetPeriods>
-                </ams:PeriodSelector>
-            </ams:StockChart.PeriodSelector>-->
-        </ams:StockChart>
+        </ams:StockChart>-->
 
 
 

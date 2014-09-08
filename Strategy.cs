@@ -127,6 +127,7 @@ namespace qiquanui
         public int LeftEdge, RightEdge, LeftCompute, RightCompute;
         public double EarnRate, LoseRate, MaxEarn, MaxLose, ExpectEarn, Price;
         public double EDGE = 0.2;
+        public bool szorhs = false;
 
         /// <summary>
         ///     构造完之后使用 .ykoption 和 .ykfuture 填充数据，然后再调用相应计算方法
@@ -201,7 +202,11 @@ namespace qiquanui
                 for (int j = 0; j < 4; j++)
                     if (number[i, j] > 0)
                     {
+                        if ((ykname.Equals("组合标的") || ykname.Equals("转换套利") )&& (szorhs))
+                            ans += ComputeY(x, (OptionType)j, ykoption[i, j]) * number[i, j]/3;
+                        else 
                         ans += ComputeY(x, (OptionType)j, ykoption[i, j])*number[i,j];
+
                     }
             if (number[TotLine, 0] > 0)
                 ans += (x - ykfuture[0].LastPrice)*number[TotLine,0];
@@ -320,7 +325,7 @@ namespace qiquanui
                         probability[i].percent = Math.Round(probability[i].percent / TotCount * 95 + 5, 1);
                     else
                     probability[i].percent = Math.Round(probability[i].percent / TotCount * 95 + 2.5, 1);
-                }
+                } 
                 else
                     probability[i].percent = Math.Round(probability[i].percent / TotCount * 95, 1);
 

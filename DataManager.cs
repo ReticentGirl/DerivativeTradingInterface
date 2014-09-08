@@ -1084,10 +1084,16 @@ namespace qiquanui
 
             //5
             new_string = Math.Round((double)_dr["HighestPrice"], 1).ToString("f1");
+            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数"))
+                new_string = "-";
+
             _fu.HighestPrice = SetTextAndColor(tot_line, 5, new_string, _fu.HighestPrice, preClose);
 
             //6
             new_string = Math.Round((double)_dr["LowestPrice"], 1).ToString("f1");
+            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数"))
+                new_string = "-";
+
             _fu.LowestPrice = SetTextAndColor(tot_line, 6, new_string, _fu.LowestPrice, preClose);
 
 

@@ -2054,7 +2054,8 @@ namespace qiquanui
             for (int i = 0; i < no; i++)
             {
                 ykm.yk[which, i] = res[i];
-                ykm.yk[which, i].title = res[i].ykname;
+                if (res[i]!=null) 
+                    ykm.yk[which, i].title = res[i].ykname;
 
             }
 
@@ -2089,7 +2090,8 @@ namespace qiquanui
             for (int i = 0; i < no; i++)
             {
                 ykm.yk[which, i] = res[i];
-                ykm.yk[which, i].title = "Top " + (i + 1);
+                if (res[i]!=null) 
+                    ykm.yk[which, i].title = "Top " + (i + 1);
             }
 
             BindingForOC(which, no);
@@ -2123,7 +2125,8 @@ namespace qiquanui
             for (int i = 0; i < no; i++)
             {
                 ykm.yk[which, i] = res[i];
-                ykm.yk[which, i].title = "Top " + (i + 1);
+                if (res[i]!=null)
+                    ykm.yk[which, i].title = "Top " + (i + 1);
             }
 
             BindingForOC(which, no);
@@ -2157,7 +2160,8 @@ namespace qiquanui
             for (int i = 0; i < no; i++)
             {
                 ykm.yk[which, i] = res[i];
-                ykm.yk[which, i].title = "Top " + (i + 1);
+                if (res[i]!=null)
+                    ykm.yk[which, i].title = "Top " + (i + 1);
             }
 
             BindingForOC(which, no);
@@ -2269,6 +2273,8 @@ namespace qiquanui
                     _num[TotLine, 1] = 1;
                     //计算盈亏数据
                     YK yk = new YK(TotLine, _num, "转换套利", "无风险套利", MaxRange);
+                    if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                        yk.szorhs = true;
                     yk.ComputeYK();
                     //排序
                     SortYKAnswer(ans, yk, Tot);
@@ -2295,6 +2301,8 @@ namespace qiquanui
                     _num[TotLine, 0] = 1;
                     //计算盈亏数据
                     YK yk = new YK(TotLine, _num, "转换套利", "无风险套利", MaxRange);
+                    if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                        yk.szorhs = true;
                     yk.ComputeYK();
                     //排序
                     SortYKAnswer(ans, yk, Tot);
@@ -2334,6 +2342,9 @@ namespace qiquanui
                 _num[TotLine, 1] = 1;
                 //计算盈亏数据
                 YK yk = new YK(TotLine, _num, "组合标的", "无风险套利", MaxRange);
+                if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                    yk.szorhs = true;
+
                 yk.ComputeYK();
                 //排序
                 SortYKAnswer(ans, yk, Tot);
@@ -2352,6 +2363,9 @@ namespace qiquanui
                 _num[TotLine, 0] = 1;
                 //计算盈亏数据
                 yk = new YK(TotLine, _num, "组合标的", "无风险套利", MaxRange);
+                if (subject.Equals("上证50") || subject.Equals("沪深300"))
+                    yk.szorhs = true;
+
                 yk.ComputeYK();
                 //排序
                 SortYKAnswer(ans, yk, Tot);
@@ -2749,26 +2763,31 @@ namespace qiquanui
             VolatilityChart.Visibility = Visibility.Hidden;
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
+            VolatilityChart4.Visibility = Visibility.Hidden;
+
             ZoomInGL.Visibility = Visibility.Hidden;
             ZoomInYK.Visibility = Visibility.Hidden;
             ZoomInYKs.Visibility = Visibility.Hidden;
+            ZoomInZS.Visibility = Visibility.Hidden;
 
             for (int i = 0; i < labels.Length; i++)
                 labels[i].Visibility = Visibility.Hidden;
 
             ///走势图初始化
-            stockChart.Charts[0].Collapse();
-            DateTime present = DataManager.now;
-            present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
-            stockChart.StartDate = present;
-            new Thread(new ThreadStart(TrendInitial)).Start();
-            timer = new System.Timers.Timer(60000);
-            timer.Elapsed += new ElapsedEventHandler(refreshTrend);
-            timer.Start();//每分钟刷新一次走势图
+            //stockChart.Charts[0].Collapse();
+            //DateTime present = DataManager.now;
+            //present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+            //stockChart.StartDate = present;
+            //new Thread(new ThreadStart(TrendInitial)).Start();
+            //timer = new System.Timers.Timer(60000);
+            //timer.Elapsed += new ElapsedEventHandler(refreshTrend);
+            //timer.Start();//每分钟刷新一次走势图
 
         }
 
 
+
+        /*
         private void TrendInitial()
         {
             trm = new Trend();
@@ -2790,7 +2809,7 @@ namespace qiquanui
             }
             else
             {
-                stockSet1.ItemsSource = tr.Data;
+                //stockSet1.ItemsSource = tr.Data;
             }
         }//走势图数据绑定
 
@@ -2807,28 +2826,28 @@ namespace qiquanui
             else
             {
 
-                DataRow row = (DataRow)DataManager.All[YKManager.SubjectID];
-                double _open = Math.Round((double)row["OpenPrice"], 1);
-                double _close = Math.Round((double)row["LastPrice"], 1);
-                double _high = Math.Round((double)row["HighestPrice"], 1);
-                double _low = Math.Round((double)row["LowestPrice"], 1);
-                double _volume = Math.Round((double)row["OpenInterest"],1);
-                DateTime present = DataManager.now;
-                present = new DateTime(present.Year, present.Month, present.Day, present.Hour, present.Minute, 0);
-                trm.Data.Add(new StockInfo
-               {
-                   date = present,
-                   open = _open,
-                   high = _high,
-                   low = _low,
-                   close = _close,
-                   volume = _volume
-               });
-                stockChart.Scroll(1);
+               // DataRow row = (DataRow)DataManager.All[YKManager.SubjectID];
+               // double _open = Math.Round((double)row["OpenPrice"], 1);
+               // double _close = Math.Round((double)row["LastPrice"], 1);
+               // double _high = Math.Round((double)row["HighestPrice"], 1);
+               // double _low = Math.Round((double)row["LowestPrice"], 1);
+               // double _volume = Math.Round((double)row["OpenInterest"],1);
+               // DateTime present = DataManager.now;
+               // present = new DateTime(present.Year, present.Month, present.Day, present.Hour, present.Minute, 0);
+               // trm.Data.Add(new StockInfo
+               //{
+               //    date = present,
+               //    open = _open,
+               //    high = _high,
+               //    low = _low,
+               //    close = _close,
+               //    volume = _volume
+               //});
+                //stockChart.Scroll(1);
             }
 
         }//每分钟刷新一次走势图
-
+        */
 
 
 
@@ -2974,6 +2993,9 @@ namespace qiquanui
 
                 ObservableCollection<XY> coor = new ObservableCollection<XY>();
                 YK yk = ykm.yk[which, no];
+                ChartWindow.Probability = yk.probability;
+                ChartWindow.LeftEdge = yk.LeftEdge;
+                ChartWindow.RightEdge = yk.RightEdge;
                 int left = yk.LeftEdge, right = yk.RightEdge;
                 double lastprice = yk.ykfuture[0].LastPrice;
 
@@ -3080,6 +3102,8 @@ namespace qiquanui
                     else
                         r=yk.probability[i].x;
                     temp.Margin=new Thickness(25-25+1.0*((l+r)/2-yk.LeftEdge)/(yk.RightEdge-yk.LeftEdge)*256,10,0,0);
+                    temp.Height = 30;
+                    temp.VerticalAlignment = VerticalAlignment.Top;
                     temp.Visibility = Visibility.Visible;
 
                 }
@@ -3173,8 +3197,43 @@ namespace qiquanui
                 }
             }
 
+            BindingForTrend();
         }
 
+        public void BindingForTrend()
+        {
+            if (VolatilityChart4.Visibility == Visibility.Visible) return;
+            VolatilityChart4.Visibility = Visibility.Visible;
+            ZoomInZS.Visibility = Visibility.Visible;
+
+            string id = YKManager.SubjectID;
+            Trend2 tr2 = new Trend2();
+            tr2.initial(id,this);
+
+            System.Windows.Data.Binding coorBinding = tr2.CoorBinding;    //X坐标轴绑定
+            System.Windows.Data.Binding dataBinding = tr2.DataBinding;    //X坐标轴绑定
+            Bindings[10] = coorBinding;
+            Bindings[11] = dataBinding;
+            Bindings[12] = null;
+
+            VolatilityChart4.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+            VolatilityChart4.IDMemberPath = "X";
+            VolatilityChart4.Graphs.Clear();
+            LineChartGraph test = new LineChartGraph();
+
+            test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+            test.SeriesIDMemberPath = "X";
+            test.ValueMemberPath = "Y";
+            //test.Title = yk.title;
+            test.LineThickness = 2;
+            ///[Style]
+            
+            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+                    
+
+            VolatilityChart4.Graphs.Add(test);
+
+        }
 
         private void groupListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -3225,11 +3284,11 @@ namespace qiquanui
         /// <param name="Tot"></param>
         private void SortYKAnswer(YK[] ans, YK yk, int Tot)
         {
-            if (yk.ykname.Equals("凸性套利1") || yk.ykname.Equals("凸性套利2"))
-            {
-                if (yk.probability.Count > 1 || yk.probability[0].positive==false)
-                    return;
-            }
+            //if (yk.ykgroupname.Equals("无风险套利"))
+            //{
+            //    if (yk.probability.Count > 1 || yk.probability[0].positive==false)
+            //        return;
+            //}
             //排序
             for (int k = 0; k < Tot; k++)
                 if (ans[k] == null)
@@ -3428,7 +3487,7 @@ namespace qiquanui
         }
 
 
-        Binding[] Bindings = new Binding[10];
+        Binding[] Bindings = new Binding[13];
         //0~4概率盈亏 5~9盈亏对比
         int BindingCount = 0;
         string[] BindingTitles;
@@ -3467,7 +3526,8 @@ namespace qiquanui
         private void ZoomInZS_Click(object sender, RoutedEventArgs e)
         {
             ChartWindow.CHARTTYPE = 3;
-            ChartWindow.BindingStockData = this.BindingStockData;
+            //ChartWindow.BindingStockData = this.BindingStockData;
+            ChartWindow.Bindings = this.Bindings;
             ChartWindow cw = new ChartWindow(pwindow);
             cw.Show();
 

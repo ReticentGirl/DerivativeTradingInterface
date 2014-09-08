@@ -192,7 +192,7 @@ namespace qiquanui
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            stockChart.Charts[0].Collapse();
+            //stockChart.Charts[0].Collapse();
             switch (CHARTTYPE)
             {
                 case 0:
@@ -208,22 +208,64 @@ namespace qiquanui
                     ChartZS();
                     break;
             }
-        }
+            labels = new Label[10];
+            for (int i = 0; i < 10; i++)
+            {
+                labels[i] = new Label();
+                labels[i].Foreground = Brushes.White;
+                GLCanvas.Children.Add(labels[i]);
+                labels[i].Visibility = Visibility.Hidden;
+            }
 
+
+
+        }
+        public Label[] labels;
 
         public static Binding[] Bindings;
         public static int BindingCount;
         public static string[] BindingTitles;
         public static ObservableCollection<StockInfo> BindingStockData { get; set; }
-
+        public static  ObservableCollection<YKProba> Probability;
+        public static int LeftEdge,RightEdge;
 
         private void ChartGL()
         {
             if (Bindings[0] == null || Bindings[1] == null || Bindings[2] == null)
                 return;
+            //设置概率标签
+            for (int i = 0; i < Probability.Count; i++)
+            {
+                Label temp = labels[i];
+                //[style]
+                temp.Content = Probability[i].percent + "%";
+                temp.FontSize = 18;
+
+                if (Probability[i].positive)
+                    temp.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFCB2525"));
+                else
+                    temp.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF25CB5A"));
+                int l = 0, r = 0;
+                if (i == 0)
+                    l = LeftEdge;
+                else
+                    l = Probability[i - 1].x;
+                if (i == Probability.Count - 1)
+                    r = RightEdge;
+                else
+                    r = Probability[i].x;
+                temp.Margin = new Thickness(0 - 100 + 1.0 * ((l + r) / 2 - LeftEdge) / (RightEdge - LeftEdge) * Width, 35, 0, 0);
+                temp.Height = 35;
+                temp.VerticalAlignment = VerticalAlignment.Top;
+                temp.Visibility = Visibility.Visible;
+
+            }
+            for (int i = Probability.Count; i < 10; i++)
+                labels[i].Visibility = Visibility.Hidden;
+
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
-            stockChart.Visibility = Visibility.Hidden;
+            VolatilityChart4.Visibility = Visibility.Hidden;
             LegendMask.Visibility = Visibility.Hidden;
 
             this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, Bindings[0]);
@@ -244,7 +286,7 @@ namespace qiquanui
             VolatilityChart.Visibility = Visibility.Hidden;
             LegendMask.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
-            stockChart.Visibility = Visibility.Hidden;
+            VolatilityChart4.Visibility = Visibility.Hidden;
 
             if (Bindings[0] == null || Bindings[3] == null || Bindings[4] == null)
                 return;
@@ -267,7 +309,7 @@ namespace qiquanui
 
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart.Visibility = Visibility.Hidden;
-            stockChart.Visibility = Visibility.Hidden;
+            VolatilityChart4.Visibility = Visibility.Hidden;
             if (Bindings[5] == null )
                 return;
             for (int i=6;i<6+BindingCount;i++)
@@ -321,15 +363,34 @@ namespace qiquanui
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
             VolatilityChart.Visibility = Visibility.Hidden;
-            if (BindingStockData == null)
+            if (Bindings[10] == null || Bindings[11] == null )
                 return;
 
-            stockChart.Charts[0].Collapse();
-            DateTime present = DataManager.now;
-            present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
-            stockChart.StartDate = present;
+            System.Windows.Data.Binding coorBinding = Bindings[10];    //X坐标轴绑定
+            System.Windows.Data.Binding dataBinding = Bindings[11];    //X坐标轴绑定
 
-            stockSet1.ItemsSource = BindingStockData;
+            VolatilityChart4.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+            VolatilityChart4.IDMemberPath = "X";
+            VolatilityChart4.Graphs.Clear();
+            LineChartGraph test = new LineChartGraph();
+
+            test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+            test.SeriesIDMemberPath = "X";
+            test.ValueMemberPath = "Y";
+            //test.Title = yk.title;
+            test.LineThickness = 2;
+            ///[Style]
+
+            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+
+
+            VolatilityChart4.Graphs.Add(test);
+            //stockChart.Charts[0].Collapse();
+            //DateTime present = DataManager.now;
+            //present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+            //stockChart.StartDate = present;
+
+            //stockSet1.ItemsSource = BindingStockData;
 
         }
 

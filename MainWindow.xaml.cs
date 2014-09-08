@@ -422,6 +422,39 @@ namespace qiquanui
                 MaxButton_Click_1(null, null);
             }
 
+            YK yk = GLYK;
+            if (yk != null)
+            {
+                //设置概率标签
+                for (int i = 0; i < yk.probability.Count; i++)
+                {
+                    System.Windows.Controls.Label temp = labels[i];
+                    //[style]
+                    temp.Content = yk.probability[i].percent + "%";
+                    temp.FontSize = 12;
+
+                    if (yk.probability[i].positive)
+                        temp.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFCB2525"));
+                    else
+                        temp.Foreground = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF25CB5A"));
+                    int l = 0, r = 0;
+                    if (i == 0)
+                        l = yk.LeftEdge;
+                    else
+                        l = yk.probability[i - 1].x;
+                    if (i == yk.probability.Count - 1)
+                        r = yk.RightEdge;
+                    else
+                        r = yk.probability[i].x;
+                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * chartBorder.Width, 10, 0, 0);
+                    temp.Height = 30;
+                    temp.VerticalAlignment = VerticalAlignment.Top;
+                    temp.Visibility = Visibility.Visible;
+
+                }
+            }
+
+
             ResizeControl();
 
 
@@ -2207,6 +2240,9 @@ namespace qiquanui
         public ObservableCollection<StockInfo> BindingStockData2 { get; set; }
         //走势图2
 
+        public YK GLYK = null;
+
+
         delegate void BindingOCCallBack(string futurename, string duedate, int tot, int[,] num);
         public void BindingForChart(string futurename,string duedate,int tot, int[,] num)
         {
@@ -2236,6 +2272,11 @@ namespace qiquanui
                 ObservableCollection<XY> coor = new ObservableCollection<XY>();
                 YK yk = new YK(tot, num, "NoName", "NoGroup", 0.2);
                 yk.ComputeYK();
+                GLYK = yk;
+                ChartWindow.Probability = yk.probability;
+                ChartWindow.LeftEdge = yk.LeftEdge;
+                ChartWindow.RightEdge = yk.RightEdge;
+
                 int left = yk.LeftEdge, right = yk.RightEdge;
                 double lastprice = yk.ykfuture[0].LastPrice;
 
@@ -2342,7 +2383,9 @@ namespace qiquanui
                         r = yk.RightEdge;
                     else
                         r = yk.probability[i].x;
-                   // temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * VolatilityChart.Width, 10, 0, 0);
+                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * chartBorder.Width, 10, 0, 0); 
+                    temp.Height = 30;
+                    temp.VerticalAlignment = VerticalAlignment.Top;
                     temp.Visibility = Visibility.Visible;
 
                 }
