@@ -2419,13 +2419,13 @@
                 <!--走势图&盈亏图&概率图-->
                 <TabControl x:Name="chartTabControl" HorizontalAlignment="Left" Height="326" VerticalAlignment="Top" Width="224" Canvas.Left="903" Canvas.Top="30" Background="{x:Null}" BorderBrush="{x:Null}">
                     <TabItem Header="走势图" Margin="0,0,-6,-6" Style="{StaticResource TabItemStyle}" Foreground="#FFF2F4F8">
-                        <Grid x:Name="trendChartGrid" Background="#FF0C0E16">
+                        <Grid x:Name="trendChartGrid" Background="#FF0C0E16" Margin="-3,3,-3,-3">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="7*"/>
-                                <RowDefinition Height="6*"/>
+                                <RowDefinition Height="147*"/>
+                                <RowDefinition Height="152*"/>
                             </Grid.RowDefinitions>
                             <!--走势图-->
-                            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="10,9,20,0" VerticalAlignment="Top" Height="143">
+                            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="10,9,20,0" VerticalAlignment="Top" Height="138">
                                 <ams:StockChart.DataSets>
                                     <ams:DataSet Name="stockSet1" Brush="#7f8da9"
                                 
@@ -2536,7 +2536,7 @@
                                 </ams:StockChart.Charts>
 
                             </ams:StockChart>
-                            <ams:StockChart Name="stockChart2" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="10,5,20,0" Grid.Row="1" VerticalAlignment="Top" Height="123">
+                            <ams:StockChart Name="stockChart2" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="10,0,20,0" Grid.Row="1" VerticalAlignment="Top" Height="152">
                                 <ams:StockChart.DataSets>
                                     <ams:DataSet Name="stockSet2" Brush="#7f8da9"
                                 
@@ -2653,22 +2653,22 @@
 
                             </ams:StockChart>
 
-                            <Button x:Name="ZoomInZS1" Content="+" Click="ZoomInZS1_Click" Margin="0,0,10,133" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="18" Height="19" Visibility="Hidden"  Style="{StaticResource ZoomButtonSty}"/>
-                            <Button x:Name="ZoomInZS2" Content="+" Click="ZoomInZS2_Click" Margin="0,0,10,108" Grid.Row="1" Width="18" Height="19" HorizontalAlignment="Right" VerticalAlignment="Bottom"  Style="{StaticResource ZoomButtonSty}" Visibility="Hidden"/>
+                            <Button x:Name="ZoomInZS1" Content="+" Click="ZoomInZS1_Click" Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="18" Height="19"  Style="{StaticResource ZoomButtonSty}" Visibility="Hidden"/>
+                            <Button x:Name="ZoomInZS2" Content="+" Click="ZoomInZS2_Click" Margin="0,5,5,0" Grid.Row="1" Width="18" Height="19" HorizontalAlignment="Right" VerticalAlignment="Top"  Style="{StaticResource ZoomButtonSty}" Visibility="Hidden"/>
 
                         </Grid>
                     </TabItem>
 
                     <TabItem Header="盈亏图/概率图" Margin="8,0,-14,-6" Style="{StaticResource TabItemStyle}" Foreground="#FFF2F4F8">
-                        <Grid x:Name="probaAndProfitChartCanvas" Background="#FF0C0E16">
+                        <Grid x:Name="probaAndProfitChartCanvas" Background="#FF0C0E16" Margin="-3,2,-3,-2">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="77*"/>
-                                <RowDefinition Height="73*"/>
+                                <RowDefinition Height="150*"/>
+                                <RowDefinition Height="151*"/>
                             </Grid.RowDefinitions>
                             <!--这里放概率图-->
-                            <am:LineChart x:Name="VolatilityChart" Height="133" Foreground="LightGray"
+                            <am:LineChart x:Name="VolatilityChart" Foreground="LightGray"
                       
-					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Width="181" Margin="20,10,16,0">
+					BorderBrush="Transparent" BorderThickness="0" Background="Transparent" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Margin="56,10,29,10">
 
                                 <am:LineChart.CategoryAxis>
                                     <am:CategoryAxis StrokeThickness="0"/>
@@ -2689,10 +2689,10 @@
 
                             <!--这里放盈亏图-->
 
-                            <am:LineChart x:Name="VolatilityChart2" Height="130"
+                            <am:LineChart x:Name="VolatilityChart2"
 					Background="Transparent" Foreground="#FFECECEC"
                       
-					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Width="161" Margin="28,10,30,0" Grid.Row="1">
+					BorderBrush="Transparent" BorderThickness="0" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Margin="56,5,29,10" Grid.Row="1">
 
                                 <am:LineChart.CategoryAxis>
                                     <am:CategoryAxis StrokeThickness="0"/>
@@ -2710,8 +2710,8 @@
                                 <am:LineChartGraph x:Name="VolatilityGraph4" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
                             </am:LineChart>
 
-                            <Button x:Name="ZoomInGL"  Style="{StaticResource ZoomButtonSty}" Content="+" Width="18" Click="ZoomInGL_Click" Margin="187,10,10,123" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="19" Visibility="Hidden"/>
-                            <Button x:Name="ZoomInYK" Style="{StaticResource ZoomButtonSty}" Content="+" Width="18" Click="ZoomInYK_Click" Margin="187,10,10,116" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="19" Visibility="Hidden"/>
+                            <Button x:Name="ZoomInGL"  Style="{StaticResource ZoomButtonSty}" Content="+" Width="19" Click="ZoomInGL_Click" Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="19" Visibility="Hidden"/>
+                            <Button x:Name="ZoomInYK" Style="{StaticResource ZoomButtonSty}" Content="+" Width="19" Click="ZoomInYK_Click" Margin="0,5,5,0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="19" Visibility="Hidden"/>
                         </Grid>
                     </TabItem>
 
@@ -3041,7 +3041,7 @@
         <!--策略实验室伸缩面板-->
         <Canvas x:Name="Canvas1" HorizontalAlignment="Left" Height="627" Margin="0,38,0,0" VerticalAlignment="Top" Width="29" IsHitTestVisible="True" ClipToBounds="True" Background="#FF151519"  ScrollViewer.VerticalScrollBarVisibility="Disabled" FlowDirection="RightToLeft">
 
-            <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="110" Canvas.Top="263" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White"/>
+            <Button x:Name="startStrategyBtn" Content="开始分析" Canvas.Left="110" Canvas.Top="263" Width="82" Style="{StaticResource darkButton}" Height="20" Background="#FF4D5166" BorderBrush="{x:Null}" Foreground="White" Click="startStrategyBtn_Click"/>
 
             <Button x:Name="StategyCanvasButtom" Content="    策略设计实验室   STRATEGY-DESIGN LAB" HorizontalAlignment="Left" VerticalAlignment="Top" Width="260" Canvas.Left="-116" Canvas.Top="146" RenderTransformOrigin="0.5,0.5" Style="{StaticResource leftAndRightButtom}" Foreground="White" Height="28" Click="StategyCanvasButtom_Click">
                 <Button.RenderTransform>

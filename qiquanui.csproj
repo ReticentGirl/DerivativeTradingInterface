@@ -107,6 +107,10 @@
     <Compile Include="DataManager.cs" />
     <Compile Include="DynamicData.cs" />
     <Compile Include="HistoryManager.cs" />
+    <Compile Include="MessagesControl.cs" />
+    <Compile Include="MessagesWindow.xaml.cs">
+      <DependentUpon>MessagesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NumericUpAndDownUserControl.xaml.cs">
       <DependentUpon>NumericUpAndDownUserControl.xaml</DependentUpon>
     </Compile>
@@ -160,6 +164,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MessagesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NumericUpAndDownUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -409,6 +417,21 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\plus_unable.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\messageCloseButton.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\messageCloseButton_down.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\messageCloseButton_hover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

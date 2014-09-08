@@ -325,12 +325,12 @@ namespace qiquanui
 
             stockChartwper = (this.Width - (originalWidth - stockChartw)) / (originalWidth - (originalWidth - stockChartw));
             stockChart2wper = (this.Width - (originalWidth - stockChart2w)) / (originalWidth - (originalWidth - stockChart2w));
-            stockCharthper = (this.Height - (originalHeight - stockCharth)) / (originalHeight - (originalHeight - stockCharth));
-            stockChart2hper = (this.Height - (originalHeight - stockChart2h)) / (originalHeight - (originalHeight - stockChart2h));
+            stockCharthper = (this.Height - (originalHeight - stockCharth - stockChart2h)) / (originalHeight - (originalHeight - stockCharth - stockChart2h));
+            stockChart2hper = (this.Height - (originalHeight - stockCharth - stockChart2h)) / (originalHeight - (originalHeight - stockCharth - stockChart2h));
             VolatilityChartwper = (this.Width - (originalWidth - VolatilityChartw)) / (originalWidth - (originalWidth - VolatilityChartw));
             VolatilityChart2wper = (this.Width - (originalWidth - VolatilityChart2w)) / (originalWidth - (originalWidth - VolatilityChart2w));
-            VolatilityCharthper = (this.Height - (originalHeight - VolatilityCharth)) / (originalHeight - (originalHeight - VolatilityCharth));
-            VolatilityChart2hper = (this.Height - (originalHeight - VolatilityChart2h)) / (originalHeight - (originalHeight - VolatilityChart2h));
+            VolatilityCharthper = (this.Height - (originalHeight - VolatilityCharth - VolatilityChart2h)) / (originalHeight - (originalHeight - VolatilityCharth - VolatilityChart2h));
+            VolatilityChart2hper = (this.Height - (originalHeight - VolatilityCharth - VolatilityChart2h)) / (originalHeight - (originalHeight - VolatilityCharth - VolatilityChart2h));
 
             trendChartGridhper = (this.Height - (originalHeight - trendChartGridh)) / (originalHeight - (originalHeight - trendChartGridh));
             trendChartGridwper = (this.Width - (originalWidth - trendChartGridw)) / (originalWidth - (originalWidth - trendChartGridw));
@@ -657,6 +657,7 @@ namespace qiquanui
 
         private void StategyCanvasButtom_Click(object sender, RoutedEventArgs e)
         {
+            MessagesControl.showMessage("a");
             if (Canvas1.Width == 29.0)
             {
                 openLeftCanvas();
@@ -2341,7 +2342,7 @@ namespace qiquanui
                         r = yk.RightEdge;
                     else
                         r = yk.probability[i].x;
-                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * VolatilityChart.Width, 10, 0, 0);
+                   // temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * VolatilityChart.Width, 10, 0, 0);
                     temp.Visibility = Visibility.Visible;
 
                 }
@@ -2494,6 +2495,11 @@ namespace qiquanui
             trmID1 = fu.instrumentid;
             new Thread(new ThreadStart(TrendInitial)).Start();
 
+        }
+
+        private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessagesControl.showMessage("b");
         }
 
 

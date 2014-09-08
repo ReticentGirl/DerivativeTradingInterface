@@ -213,6 +213,36 @@ namespace qiquanui.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap messageCloseButton {
+            get {
+                object obj = ResourceManager.GetObject("messageCloseButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap messageCloseButton_down {
+            get {
+                object obj = ResourceManager.GetObject("messageCloseButton_down", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap messageCloseButton_hover {
+            get {
+                object obj = ResourceManager.GetObject("messageCloseButton_hover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap min {
             get {
                 object obj = ResourceManager.GetObject("min", resourceCulture);

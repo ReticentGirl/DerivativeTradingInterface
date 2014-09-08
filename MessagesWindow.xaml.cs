@@ -36,51 +36,51 @@ namespace qiquanui
         Rect rc = SystemParameters.WorkArea;//获取工作区大小
         public MessagesWindow()
         {
-            
-            
+
+
             InitializeComponent();
             MessageText.Content = MessagesControl.MessageText;
             this.Topmost = true;
-            
-            
-            
+
+
+
 
 
 
             if (MessagesControl.messagesWindowNum < 3 && MessagesControl.messagesWindowNum >= 0)
             {
-                this.Top = 30 + (MessagesControl.messagesWindowNum )* (this.Height + 20);
-                
+                this.Top = 30 + (MessagesControl.messagesWindowNum) * (this.Height + 20);
+
             }
             else
             {
                 MessagesControl.messagesWindowNum = 0;
 
 
-                
+
                 this.Top = 30 + (MessagesControl.messagesWindowNum) * (this.Height + 20);
             }
             MessagesControl.messagesWindowNum += 1;
 
-            
-           // this.Left = rc.Width - this.Width;//窗口置顶
-                     
+
+            // this.Left = rc.Width - this.Width;//窗口置顶
+
 
         }
 
-       
+
 
         private System.Windows.Threading.DispatcherTimer dTimer = new DispatcherTimer();//提示框消失计时器
         private System.Windows.Threading.DispatcherTimer dTimer_c = new DispatcherTimer();//提示框消失关闭计时器
         private void dTimer_c_Tick(object sender, EventArgs e)
         {
             dTimer_c.Stop();
-            if (MessagesControl.messagesWindowNum>0)
-            MessagesControl.messagesWindowNum -= 1;
+            if (MessagesControl.messagesWindowNum > 0)
+                MessagesControl.messagesWindowNum -= 1;
 
 
-     
-            this.Close();     
+
+            this.Close();
         }
         private void dTimer_Tick(object sender, EventArgs e)
         {
@@ -101,7 +101,7 @@ namespace qiquanui
             s.Begin();
 
             dTimer.Stop();
-            
+
         }
 
 
@@ -109,7 +109,7 @@ namespace qiquanui
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DoubleAnimation Animation1 = new DoubleAnimation();
-            Animation1.From =rc.Width;     //初始值   1为  整个窗体     0.1表示窗体的十分之一
+            Animation1.From = rc.Width;     //初始值   1为  整个窗体     0.1表示窗体的十分之一
             Animation1.To = rc.Width - this.Width;     //结束值    0为完全关闭
             Animation1.Duration = new Duration(TimeSpan.Parse("0:0:0.8"));    //所用时间的间隔
             Animation1.AccelerationRatio = 0.5;
@@ -119,7 +119,7 @@ namespace qiquanui
             dTimer.Tick += new EventHandler(dTimer_Tick);
             dTimer.Interval = new TimeSpan(0, 0, 10);
             dTimer.Start();
- 
+
         }
         private bool closeStoryBoardCompleted = false;
         private DoubleAnimation closeAnimation1;
@@ -131,7 +131,7 @@ namespace qiquanui
             if (MessagesControl.messagesWindowNum > 0)
                 MessagesControl.messagesWindowNum -= 1;
 
-            
+
 
 
             this.Close();
@@ -152,12 +152,12 @@ namespace qiquanui
                 closeAnimation1.Completed += new EventHandler(closeWindow_Completed);
 
                 this.BeginAnimation(Window.LeftProperty, closeAnimation1);
-                
+
             }
-            
+
         }
 
-       
+
         private void closeWindow_Completed(object sender, EventArgs e)
         {
 
