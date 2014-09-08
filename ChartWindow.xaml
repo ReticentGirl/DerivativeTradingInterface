@@ -1413,9 +1413,9 @@
         </Canvas>
 
 
-        <Canvas x:Name="ZS2Canvas" HorizontalAlignment="Right" Height="614" Margin="0,0,68.6,24.4" VerticalAlignment="Bottom" Width="1065" Grid.Row="1">
+        <Canvas x:Name="ZS2Canvas" HorizontalAlignment="Right" Height="436" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="766">
 
-            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="10,9,20,0" VerticalAlignment="Top" Height="138">
+            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" VerticalAlignment="Top" Height="436" Width="766">
                 <ams:StockChart.DataSets>
                     <ams:DataSet Name="stockSet1" Brush="#7f8da9"
                                 
@@ -1536,7 +1536,7 @@
 
 
 
-        <Border x:Name="Border1" BorderBrush="#FFAE6BBF" BorderThickness="1"  VerticalAlignment="Top" Panel.ZIndex="10" HorizontalAlignment="Left" Height="686" Grid.RowSpan="2" Width="1186" />
+        <Border x:Name="Border1" BorderBrush="#FFAE6BBF" BorderThickness="1"  VerticalAlignment="Top" Panel.ZIndex="10" HorizontalAlignment="Left" Height="486" Width="786" />
 
 
     </Grid>

@@ -2587,7 +2587,7 @@ namespace qiquanui
 
         private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessagesControl.showMessage("b");
+            MessagesControl.showMessage("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
 
 
