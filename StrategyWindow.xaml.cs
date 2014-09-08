@@ -340,8 +340,63 @@ namespace qiquanui
 
 
         #region 上涨
+        private bool isUpPolyOpen = false;
+        private void closeUpPoly()
+        {
+            isUpPolyOpen = false;
+            //遮盖面板浮现
+            openUpPoly.Visibility = Visibility.Visible;
+            DoubleAnimation showOpenUpPloy = new DoubleAnimation();
+            showOpenUpPloy.From = 0;
+            showOpenUpPloy.To = 100;
+            showOpenUpPloy.Duration = new Duration(TimeSpan.Parse("0:0:30"));
+            openUpPoly.BeginAnimation(Polygon.OpacityProperty, showOpenUpPloy);
+
+            //单买看涨Canvas移回
+            ThicknessAnimation buyAndUpMove = new ThicknessAnimation();
+            buyAndUpMove.From = new Thickness(408, 355, 0, 0);
+            buyAndUpMove.To = new Thickness(510, 355, 0, 0);
+            buyAndUpMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            buyAndUpCanvas.BeginAnimation(Canvas.MarginProperty, buyAndUpMove);
+
+            //牛市差价Canvas移回
+            ThicknessAnimation bullSpreadMove = new ThicknessAnimation();
+            bullSpreadMove.From = new Thickness(448, 385, 0, 0);
+            bullSpreadMove.To = new Thickness(550, 385, 0, 0);
+            bullSpreadMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            bullSpreadCanvas.BeginAnimation(Canvas.MarginProperty, bullSpreadMove);
+
+            //Canvas、button缩回
+            DoubleAnimation shorten = new DoubleAnimation();
+            shorten.From = 102;
+            shorten.To = 0;
+            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            buyAndUpCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
+            bullSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
+            buyAndUpBtn.BeginAnimation(Button.WidthProperty, shorten);
+            bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
+        }
         private void openUpPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            isUpPolyOpen = true;
+
+            if (isDownPolyOpen == true)
+            {
+                closeDownPoly();
+            }
+            if (isHighVolatilityPolyOpen == true)
+            {
+                closeHighVolatilityPoly();
+            }
+            if (isLowVolatilityPolyOpen == true)
+            {
+                closeLowVolatilityPoly();
+            }
+            if (isRisklessArbiPolyOpen == true)
+            {
+                closeRisklessArbiPoly();
+            }
+
             //鼠标点击，隐藏上涨遮盖面板
             DoubleAnimation hideOpenUpPloy = new DoubleAnimation();
             hideOpenUpPloy.From = openUpPoly.Opacity;
@@ -377,37 +432,7 @@ namespace qiquanui
 
         private void upBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择情景，遮盖面板浮现
-            openUpPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenUpPloy = new DoubleAnimation();
-            showOpenUpPloy.From = 0;
-            showOpenUpPloy.To = 100;
-            showOpenUpPloy.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openUpPoly.BeginAnimation(Polygon.OpacityProperty, showOpenUpPloy);
-
-            //单买看涨Canvas移回
-            ThicknessAnimation buyAndUpMove = new ThicknessAnimation();
-            buyAndUpMove.From = new Thickness(408, 355, 0, 0);
-            buyAndUpMove.To = new Thickness(510, 355, 0, 0);
-            buyAndUpMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            buyAndUpCanvas.BeginAnimation(Canvas.MarginProperty, buyAndUpMove);
-
-            //牛市差价Canvas移回
-            ThicknessAnimation bullSpreadMove = new ThicknessAnimation();
-            bullSpreadMove.From = new Thickness(448, 385, 0, 0);
-            bullSpreadMove.To = new Thickness(550, 385, 0, 0);
-            bullSpreadMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bullSpreadCanvas.BeginAnimation(Canvas.MarginProperty, bullSpreadMove);
-
-            //Canvas、button缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            buyAndUpCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bullSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            buyAndUpBtn.BeginAnimation(Button.WidthProperty, shorten);
-            bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
+            closeUpPoly();
 
 
             qjocPresent = StrategyType.Up;
@@ -597,37 +622,7 @@ namespace qiquanui
 
         private void buyAndUpBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择单买看涨，遮盖面板浮现
-            openUpPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenUpPloy = new DoubleAnimation();
-            showOpenUpPloy.From = 0;
-            showOpenUpPloy.To = 100;
-            showOpenUpPloy.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openUpPoly.BeginAnimation(Polygon.OpacityProperty, showOpenUpPloy);
-
-            //单买看涨Canvas移回
-            ThicknessAnimation buyAndUpMove = new ThicknessAnimation();
-            buyAndUpMove.From = new Thickness(408, 355, 0, 0);
-            buyAndUpMove.To = new Thickness(510, 355, 0, 0);
-            buyAndUpMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            buyAndUpCanvas.BeginAnimation(Canvas.MarginProperty, buyAndUpMove);
-
-            //牛市差价Canvas移回
-            ThicknessAnimation bullSpreadMove = new ThicknessAnimation();
-            bullSpreadMove.From = new Thickness(448, 385, 0, 0);
-            bullSpreadMove.To = new Thickness(550, 385, 0, 0);
-            bullSpreadMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bullSpreadCanvas.BeginAnimation(Canvas.MarginProperty, bullSpreadMove);
-
-            //Canvas、button缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            buyAndUpCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bullSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            buyAndUpBtn.BeginAnimation(Button.WidthProperty, shorten);
-            bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
+            closeUpPoly();
 
             UpSingleRefresh();
         }//点击“单买看涨”按钮
@@ -670,38 +665,7 @@ namespace qiquanui
 
         private void bullSpreadBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择牛市差价，遮盖面板浮现
-            openUpPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenUpPloy = new DoubleAnimation();
-            showOpenUpPloy.From = 0;
-            showOpenUpPloy.To = 100;
-            showOpenUpPloy.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openUpPoly.BeginAnimation(Polygon.OpacityProperty, showOpenUpPloy);
-
-            //单买看涨Canvas移回
-            ThicknessAnimation buyAndUpMove = new ThicknessAnimation();
-            buyAndUpMove.From = new Thickness(408, 355, 0, 0);
-            buyAndUpMove.To = new Thickness(510, 355, 0, 0);
-            buyAndUpMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            buyAndUpCanvas.BeginAnimation(Canvas.MarginProperty, buyAndUpMove);
-
-            //牛市差价Canvas移回
-            ThicknessAnimation bullSpreadMove = new ThicknessAnimation();
-            bullSpreadMove.From = new Thickness(448, 385, 0, 0);
-            bullSpreadMove.To = new Thickness(550, 385, 0, 0);
-            bullSpreadMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bullSpreadCanvas.BeginAnimation(Canvas.MarginProperty, bullSpreadMove);
-
-            //Canvas、button缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            buyAndUpCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bullSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            buyAndUpBtn.BeginAnimation(Button.WidthProperty, shorten);
-            bullSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
-
+            closeUpPoly();
 
 
             UpBullRefresh();
@@ -751,9 +715,49 @@ namespace qiquanui
 
 
         #region 下跌
+        private bool isDownPolyOpen = false;
+        private void closeDownPoly()
+        {
+            isDownPolyOpen = false;
+            //遮盖面板浮现
+            openDownPoly.Visibility = Visibility.Visible;
+            DoubleAnimation showOpenDownPoly = new DoubleAnimation();
+            showOpenDownPoly.From = 0;
+            showOpenDownPoly.To = 100;
+            showOpenDownPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
+            openDownPoly.BeginAnimation(Polygon.OpacityProperty, showOpenDownPoly);
 
+            //Canvas、button缩回
+            DoubleAnimation shorten = new DoubleAnimation();
+            shorten.From = 102;
+            shorten.To = 0;
+            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            buyAndDownCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
+            bearSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
+            buyAndDownBtn.BeginAnimation(Button.WidthProperty, shorten);
+            bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
+        }
         private void openDownPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            isDownPolyOpen = true;
+
+            if (isUpPolyOpen == true)
+            {
+                closeUpPoly();
+            }
+            if (isHighVolatilityPolyOpen == true)
+            {
+                closeHighVolatilityPoly();
+            }
+            if (isLowVolatilityPolyOpen == true)
+            {
+                closeLowVolatilityPoly();
+            }
+            if (isRisklessArbiPolyOpen == true)
+            {
+                closeRisklessArbiPoly();
+            }
+
             //鼠标点击，隐藏遮盖面板
             DoubleAnimation hideOpenDownPloy = new DoubleAnimation();
             hideOpenDownPloy.From = openDownPoly.Opacity;
@@ -775,24 +779,8 @@ namespace qiquanui
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //选择情景，遮盖面板浮现
-            openDownPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenDownPoly = new DoubleAnimation();
-            showOpenDownPoly.From = 0;
-            showOpenDownPoly.To = 100;
-            showOpenDownPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openDownPoly.BeginAnimation(Polygon.OpacityProperty, showOpenDownPoly);
 
-            //Canvas、button缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            buyAndDownCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bearSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            buyAndDownBtn.BeginAnimation(Button.WidthProperty, shorten);
-            bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
-
+            closeDownPoly();
 
             DownRefresh();
 
@@ -836,25 +824,7 @@ namespace qiquanui
 
         private void buyAndDownBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择单买看跌，遮盖面板浮现
-            openDownPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenDownPoly = new DoubleAnimation();
-            showOpenDownPoly.From = 0;
-            showOpenDownPoly.To = 100;
-            showOpenDownPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openDownPoly.BeginAnimation(Polygon.OpacityProperty, showOpenDownPoly);
-
-            //Canvas、button缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            buyAndDownCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bearSpreadCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            buyAndDownBtn.BeginAnimation(Button.WidthProperty, shorten);
-            bearSpreadBtn.BeginAnimation(Button.WidthProperty, shorten);
-
-
+            closeDownPoly();
 
             DownSingleRefresh();
 
@@ -1065,9 +1035,65 @@ namespace qiquanui
 
 
         #region 高波动率
+        private bool isHighVolatilityPolyOpen = false;
+        private void closeHighVolatilityPoly()
+        {
+            isHighVolatilityPolyOpen = false;
+            //遮盖面板浮现
+            openHighVolatilityPoly.Visibility = Visibility.Visible;
+            DoubleAnimation showOpenHighVolatilityPoly = new DoubleAnimation();
+            showOpenHighVolatilityPoly.From = 0;
+            showOpenHighVolatilityPoly.To = 100;
+            showOpenHighVolatilityPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
+            openHighVolatilityPoly.BeginAnimation(Polygon.OpacityProperty, showOpenHighVolatilityPoly);
+
+            //底部宽跨Canvas移回
+            ThicknessAnimation bottomWideMove = new ThicknessAnimation();
+            bottomWideMove.From = new Thickness(366, 200, 0, 0);
+            bottomWideMove.To = new Thickness(468, 200, 0, 0);
+            bottomWideMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            bottomWideCanvas.BeginAnimation(Canvas.MarginProperty, bottomWideMove);
+
+            //底部跨式Canvas移回
+            ThicknessAnimation bottomCrossMove = new ThicknessAnimation();
+            bottomCrossMove.From = new Thickness(352, 242, 0, 0);
+            bottomCrossMove.To = new Thickness(454, 242, 0, 0);
+            bottomCrossMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            bottomCrossCanvas.BeginAnimation(Canvas.MarginProperty, bottomCrossMove);
+
+            //Canvas、buttom缩回
+            DoubleAnimation shorten = new DoubleAnimation();
+            shorten.From = 102;
+            shorten.To = 0;
+            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            bottomCrossCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
+            bottomWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
+            bottomWideBtn.BeginAnimation(Button.WidthProperty, shorten);
+            bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+
+        }
 
         private void openHighVolatilityPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            isHighVolatilityPolyOpen = true;
+
+            if (isUpPolyOpen == true)
+            {
+                closeUpPoly();
+            }
+            if (isDownPolyOpen == true)
+            {
+                closeDownPoly();
+            }
+            if (isLowVolatilityPolyOpen == true)
+            {
+                closeLowVolatilityPoly();
+            }
+            if (isRisklessArbiPolyOpen == true)
+            {
+                closeRisklessArbiPoly();
+            }
+
             //鼠标点击，隐藏遮盖面板
             DoubleAnimation hideOpenHighVolatilityPoly = new DoubleAnimation();
             hideOpenHighVolatilityPoly.From = openHighVolatilityPoly.Opacity;
@@ -1103,38 +1129,7 @@ namespace qiquanui
 
         private void highVolatilityBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择情景，遮盖面板浮现
-            openHighVolatilityPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenHighVolatilityPoly = new DoubleAnimation();
-            showOpenHighVolatilityPoly.From = 0;
-            showOpenHighVolatilityPoly.To = 100;
-            showOpenHighVolatilityPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openHighVolatilityPoly.BeginAnimation(Polygon.OpacityProperty, showOpenHighVolatilityPoly);
-
-            //底部宽跨Canvas移回
-            ThicknessAnimation bottomWideMove = new ThicknessAnimation();
-            bottomWideMove.From = new Thickness(366, 200, 0, 0);
-            bottomWideMove.To = new Thickness(468, 200, 0, 0);
-            bottomWideMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomWideCanvas.BeginAnimation(Canvas.MarginProperty, bottomWideMove);
-
-            //底部跨式Canvas移回
-            ThicknessAnimation bottomCrossMove = new ThicknessAnimation();
-            bottomCrossMove.From = new Thickness(352, 242, 0, 0);
-            bottomCrossMove.To = new Thickness(454, 242, 0, 0);
-            bottomCrossMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomCrossCanvas.BeginAnimation(Canvas.MarginProperty, bottomCrossMove);
-
-            //Canvas、buttom缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomCrossCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bottomWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bottomWideBtn.BeginAnimation(Button.WidthProperty, shorten);
-            bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
-
+            closeHighVolatilityPoly();
 
             HighRefresh();
 
@@ -1177,37 +1172,7 @@ namespace qiquanui
 
         private void bottomWideBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择底部宽跨，遮盖面板浮现
-            openHighVolatilityPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenHighVolatilityPoly = new DoubleAnimation();
-            showOpenHighVolatilityPoly.From = 0;
-            showOpenHighVolatilityPoly.To = 100;
-            showOpenHighVolatilityPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openHighVolatilityPoly.BeginAnimation(Polygon.OpacityProperty, showOpenHighVolatilityPoly);
-
-            //底部宽跨Canvas移回
-            ThicknessAnimation bottomWideMove = new ThicknessAnimation();
-            bottomWideMove.From = new Thickness(366, 200, 0, 0);
-            bottomWideMove.To = new Thickness(468, 200, 0, 0);
-            bottomWideMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomWideCanvas.BeginAnimation(Canvas.MarginProperty, bottomWideMove);
-
-            //底部跨式Canvas移回
-            ThicknessAnimation bottomCrossMove = new ThicknessAnimation();
-            bottomCrossMove.From = new Thickness(352, 242, 0, 0);
-            bottomCrossMove.To = new Thickness(454, 242, 0, 0);
-            bottomCrossMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomCrossCanvas.BeginAnimation(Canvas.MarginProperty, bottomCrossMove);
-
-            //Canvas、buttom缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomCrossCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bottomWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bottomWideBtn.BeginAnimation(Button.WidthProperty, shorten);
-            bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+            closeHighVolatilityPoly();
 
 
             HighWideRefresh();
@@ -1253,38 +1218,7 @@ namespace qiquanui
 
         private void bottomCrossBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择底部跨式，遮盖面板浮现
-            openHighVolatilityPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenHighVolatilityPoly = new DoubleAnimation();
-            showOpenHighVolatilityPoly.From = 0;
-            showOpenHighVolatilityPoly.To = 100;
-            showOpenHighVolatilityPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openHighVolatilityPoly.BeginAnimation(Polygon.OpacityProperty, showOpenHighVolatilityPoly);
-
-            //底部宽跨Canvas移回
-            ThicknessAnimation bottomWideMove = new ThicknessAnimation();
-            bottomWideMove.From = new Thickness(366, 200, 0, 0);
-            bottomWideMove.To = new Thickness(468, 200, 0, 0);
-            bottomWideMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomWideCanvas.BeginAnimation(Canvas.MarginProperty, bottomWideMove);
-
-            //底部跨式Canvas移回
-            ThicknessAnimation bottomCrossMove = new ThicknessAnimation();
-            bottomCrossMove.From = new Thickness(352, 242, 0, 0);
-            bottomCrossMove.To = new Thickness(454, 242, 0, 0);
-            bottomCrossMove.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomCrossCanvas.BeginAnimation(Canvas.MarginProperty, bottomCrossMove);
-
-            //Canvas、buttom缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            bottomCrossCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bottomWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            bottomWideBtn.BeginAnimation(Button.WidthProperty, shorten);
-            bottomCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
-
+            closeHighVolatilityPoly();
 
             HighSharpRefresh();
 
@@ -1410,10 +1344,51 @@ namespace qiquanui
 
 
         #region 低波动率
+        private bool isLowVolatilityPolyOpen = false;
+        private void closeLowVolatilityPoly()
+        {
+            isLowVolatilityPolyOpen = false;
+            //遮盖面板浮现
+            openLowVolatilityPoly.Visibility = Visibility.Visible;
+            DoubleAnimation showOpenLowVolatilityPoly = new DoubleAnimation();
+            showOpenLowVolatilityPoly.From = 0;
+            showOpenLowVolatilityPoly.To = 100;
+            showOpenLowVolatilityPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
+            openLowVolatilityPoly.BeginAnimation(Polygon.OpacityProperty, showOpenLowVolatilityPoly);
+
+            //Canvas、button缩回
+            DoubleAnimation shorten = new DoubleAnimation();
+            shorten.From = 102;
+            shorten.To = 0;
+            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            topCrossCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
+            topWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
+            topWideBtn.BeginAnimation(Button.WidthProperty, shorten);
+            topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+        }
 
 
         private void openLowVolatilityPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            isLowVolatilityPolyOpen = true;
+
+            if (isUpPolyOpen == true)
+            {
+                closeUpPoly();
+            }
+            if (isDownPolyOpen == true)
+            {
+                closeDownPoly();
+            }
+            if (isHighVolatilityPolyOpen == true)
+            {
+                closeHighVolatilityPoly();
+            }
+            if (isRisklessArbiPolyOpen == true)
+            {
+                closeRisklessArbiPoly();
+            }
+
             //鼠标点击，隐藏低波动率面板
             DoubleAnimation hideOpenLowVolatilityPoly = new DoubleAnimation();
             hideOpenLowVolatilityPoly.From = openLowVolatilityPoly.Opacity;
@@ -1435,24 +1410,7 @@ namespace qiquanui
 
         private void lowVolatilityBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择情景，遮盖面板浮现
-            openLowVolatilityPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenLowVolatilityPoly = new DoubleAnimation();
-            showOpenLowVolatilityPoly.From = 0;
-            showOpenLowVolatilityPoly.To = 100;
-            showOpenLowVolatilityPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openLowVolatilityPoly.BeginAnimation(Polygon.OpacityProperty, showOpenLowVolatilityPoly);
-
-            //Canvas、button缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            topCrossCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            topWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            topWideBtn.BeginAnimation(Button.WidthProperty, shorten);
-            topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
-
+            closeLowVolatilityPoly();
 
             LowRefresh();
 
@@ -1495,23 +1453,7 @@ namespace qiquanui
 
         private void topWideBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择顶部宽跨，遮盖面板浮现
-            openLowVolatilityPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenLowVolatilityPoly = new DoubleAnimation();
-            showOpenLowVolatilityPoly.From = 0;
-            showOpenLowVolatilityPoly.To = 100;
-            showOpenLowVolatilityPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openLowVolatilityPoly.BeginAnimation(Polygon.OpacityProperty, showOpenLowVolatilityPoly);
-
-            //Canvas、button缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            topCrossCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            topWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            topWideBtn.BeginAnimation(Button.WidthProperty, shorten);
-            topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+            closeLowVolatilityPoly();
 
 
             LowWideRefresh();
@@ -1556,23 +1498,7 @@ namespace qiquanui
 
         private void topCrossBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择顶部跨式，遮盖面板浮现
-            openLowVolatilityPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenLowVolatilityPoly = new DoubleAnimation();
-            showOpenLowVolatilityPoly.From = 0;
-            showOpenLowVolatilityPoly.To = 100;
-            showOpenLowVolatilityPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openLowVolatilityPoly.BeginAnimation(Polygon.OpacityProperty, showOpenLowVolatilityPoly);
-
-            //Canvas、button缩回
-            DoubleAnimation shorten = new DoubleAnimation();
-            shorten.From = 102;
-            shorten.To = 0;
-            shorten.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            topCrossCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            topWideCanvas.BeginAnimation(Canvas.WidthProperty, shorten);
-            topWideBtn.BeginAnimation(Button.WidthProperty, shorten);
-            topCrossBtn.BeginAnimation(Button.WidthProperty, shorten);
+            closeLowVolatilityPoly();
 
 
             LowSharpRefresh();
@@ -1699,9 +1625,83 @@ namespace qiquanui
 
 
         #region 无风险套利
+        private bool isRisklessArbiPolyOpen = false;
+        private void closeRisklessArbiPoly()
+        {
+            isRisklessArbiPolyOpen = false;
+            //遮盖面板浮现
+            openRisklessArbiPoly.Visibility = Visibility.Visible;
+            DoubleAnimation showOpenRisklessArbiPoly = new DoubleAnimation();
+            showOpenRisklessArbiPoly.From = 0;
+            showOpenRisklessArbiPoly.To = 100;
+            showOpenRisklessArbiPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
+            openRisklessArbiPoly.BeginAnimation(Canvas.OpacityProperty, showOpenRisklessArbiPoly);
+
+            //转换套利Ellipse移回
+            ThicknessAnimation moveCA = new ThicknessAnimation();
+            moveCA.From = new Thickness(470, 84, 0, 0);
+            moveCA.To = new Thickness(580, 119, 0, 0);
+            moveCA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            conversionArbitrageEllipse.Visibility = Visibility.Visible;
+            conversionArbitrageEllipse.BeginAnimation(MarginProperty, moveCA);
+            //组合标的Ellipse移回
+            ThicknessAnimation moveMSM = new ThicknessAnimation();
+            moveMSM.From = new Thickness(524, 55, 0, 0);
+            moveMSM.To = new Thickness(580, 119, 0, 0);
+            moveMSM.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            multiSubjectMatterEllipse.Visibility = Visibility.Visible;
+            multiSubjectMatterEllipse.BeginAnimation(MarginProperty, moveMSM);
+            //箱型套利Ellipse移回
+            ThicknessAnimation moveBA = new ThicknessAnimation();
+            moveBA.From = new Thickness(589, 55, 0, 0);
+            moveBA.To = new Thickness(580, 119, 0, 0);
+            moveBA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            boxArbitrageEllipse.Visibility = Visibility.Visible;
+            boxArbitrageEllipse.BeginAnimation(MarginProperty, moveBA);
+            //凸性套利Ellipse移回
+            ThicknessAnimation moveCA2 = new ThicknessAnimation();
+            moveCA2.From = new Thickness(642, 84, 0, 0);
+            moveCA2.To = new Thickness(580, 119, 0, 0);
+            moveCA2.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            convexityArbitrageEllipse.Visibility = Visibility.Visible;
+            convexityArbitrageEllipse.BeginAnimation(MarginProperty, moveCA2);
+
+            //eclipse缩小
+            DoubleAnimation reduce = new DoubleAnimation();
+            reduce.From = 47;
+            reduce.To = 0;
+            reduce.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
+            conversionArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
+            conversionArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+            multiSubjectMatterEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
+            multiSubjectMatterEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+            boxArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
+            boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+            convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
+            convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+        }
 
         private void openRisklessArbiPoly_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            isRisklessArbiPolyOpen = true;
+
+            if (isUpPolyOpen == true)
+            {
+                closeUpPoly();
+            }
+            if (isDownPolyOpen == true)
+            {
+                closeDownPoly();
+            }
+            if (isHighVolatilityPolyOpen == true)
+            {
+                closeHighVolatilityPoly();
+            }
+            if (isLowVolatilityPolyOpen == true)
+            {
+                closeLowVolatilityPoly();
+            }
+
             //鼠标点击，遮盖面板隐藏
             DoubleAnimation hideOpenRisklessArbiPoly = new DoubleAnimation();
             hideOpenRisklessArbiPoly.From = openRisklessArbiPoly.Opacity;
@@ -1758,56 +1758,8 @@ namespace qiquanui
 
         private void risklessArbiBtn_Click(object sender, RoutedEventArgs e)
         {
-            //选择情景，遮盖面板浮现
-            openRisklessArbiPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenRisklessArbiPoly = new DoubleAnimation();
-            showOpenRisklessArbiPoly.From = 0;
-            showOpenRisklessArbiPoly.To = 100;
-            showOpenRisklessArbiPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openRisklessArbiPoly.BeginAnimation(Canvas.OpacityProperty, showOpenRisklessArbiPoly);
 
-            //转换套利Ellipse移回
-            ThicknessAnimation moveCA = new ThicknessAnimation();
-            moveCA.From = new Thickness(470, 84, 0, 0);
-            moveCA.To = new Thickness(580, 119, 0, 0);
-            moveCA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.Visibility = Visibility.Visible;
-            conversionArbitrageEllipse.BeginAnimation(MarginProperty, moveCA);
-            //组合标的Ellipse移回
-            ThicknessAnimation moveMSM = new ThicknessAnimation();
-            moveMSM.From = new Thickness(524, 55, 0, 0);
-            moveMSM.To = new Thickness(580, 119, 0, 0);
-            moveMSM.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            multiSubjectMatterEllipse.Visibility = Visibility.Visible;
-            multiSubjectMatterEllipse.BeginAnimation(MarginProperty, moveMSM);
-            //箱型套利Ellipse移回
-            ThicknessAnimation moveBA = new ThicknessAnimation();
-            moveBA.From = new Thickness(589, 55, 0, 0);
-            moveBA.To = new Thickness(580, 119, 0, 0);
-            moveBA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            boxArbitrageEllipse.Visibility = Visibility.Visible;
-            boxArbitrageEllipse.BeginAnimation(MarginProperty, moveBA);
-            //凸性套利Ellipse移回
-            ThicknessAnimation moveCA2 = new ThicknessAnimation();
-            moveCA2.From = new Thickness(642, 84, 0, 0);
-            moveCA2.To = new Thickness(580, 119, 0, 0);
-            moveCA2.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            convexityArbitrageEllipse.Visibility = Visibility.Visible;
-            convexityArbitrageEllipse.BeginAnimation(MarginProperty, moveCA2);
-
-            //eclipse缩小
-            DoubleAnimation reduce = new DoubleAnimation();
-            reduce.From = 47;
-            reduce.To = 0;
-            reduce.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+            closeRisklessArbiPoly();
 
             NoRefresh();
 
@@ -1815,224 +1767,28 @@ namespace qiquanui
 
         private void conversionArbitrageEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //选择转换套利，遮盖面板浮现
-            openRisklessArbiPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenRisklessArbiPoly = new DoubleAnimation();
-            showOpenRisklessArbiPoly.From = 0;
-            showOpenRisklessArbiPoly.To = 100;
-            showOpenRisklessArbiPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openRisklessArbiPoly.BeginAnimation(Canvas.OpacityProperty, showOpenRisklessArbiPoly);
-
-            //转换套利Ellipse移回
-            ThicknessAnimation moveCA = new ThicknessAnimation();
-            moveCA.From = new Thickness(470, 84, 0, 0);
-            moveCA.To = new Thickness(580, 119, 0, 0);
-            moveCA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.Visibility = Visibility.Visible;
-            conversionArbitrageEllipse.BeginAnimation(MarginProperty, moveCA);
-            //组合标的Ellipse移回
-            ThicknessAnimation moveMSM = new ThicknessAnimation();
-            moveMSM.From = new Thickness(524, 55, 0, 0);
-            moveMSM.To = new Thickness(580, 119, 0, 0);
-            moveMSM.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            multiSubjectMatterEllipse.Visibility = Visibility.Visible;
-            multiSubjectMatterEllipse.BeginAnimation(MarginProperty, moveMSM);
-            //箱型套利Ellipse移回
-            ThicknessAnimation moveBA = new ThicknessAnimation();
-            moveBA.From = new Thickness(589, 55, 0, 0);
-            moveBA.To = new Thickness(580, 119, 0, 0);
-            moveBA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            boxArbitrageEllipse.Visibility = Visibility.Visible;
-            boxArbitrageEllipse.BeginAnimation(MarginProperty, moveBA);
-            //凸性套利Ellipse移回
-            ThicknessAnimation moveCA2 = new ThicknessAnimation();
-            moveCA2.From = new Thickness(642, 84, 0, 0);
-            moveCA2.To = new Thickness(580, 119, 0, 0);
-            moveCA2.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            convexityArbitrageEllipse.Visibility = Visibility.Visible;
-            convexityArbitrageEllipse.BeginAnimation(MarginProperty, moveCA2);
-
-            //eclipse缩小
-            DoubleAnimation reduce = new DoubleAnimation();
-            reduce.From = 47;
-            reduce.To = 0;
-            reduce.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+            closeRisklessArbiPoly();
 
             NoCARefresh();
         }//点击“转换套利”按钮
 
         private void multiSubjectMatterEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //选择“组合标的”，遮盖面板浮现
-            openRisklessArbiPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenRisklessArbiPoly = new DoubleAnimation();
-            showOpenRisklessArbiPoly.From = 0;
-            showOpenRisklessArbiPoly.To = 100;
-            showOpenRisklessArbiPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openRisklessArbiPoly.BeginAnimation(Canvas.OpacityProperty, showOpenRisklessArbiPoly);
-
-            //转换套利Ellipse移回
-            ThicknessAnimation moveCA = new ThicknessAnimation();
-            moveCA.From = new Thickness(470, 84, 0, 0);
-            moveCA.To = new Thickness(580, 119, 0, 0);
-            moveCA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.Visibility = Visibility.Visible;
-            conversionArbitrageEllipse.BeginAnimation(MarginProperty, moveCA);
-            //组合标的Ellipse移回
-            ThicknessAnimation moveMSM = new ThicknessAnimation();
-            moveMSM.From = new Thickness(524, 55, 0, 0);
-            moveMSM.To = new Thickness(580, 119, 0, 0);
-            moveMSM.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            multiSubjectMatterEllipse.Visibility = Visibility.Visible;
-            multiSubjectMatterEllipse.BeginAnimation(MarginProperty, moveMSM);
-            //箱型套利Ellipse移回
-            ThicknessAnimation moveBA = new ThicknessAnimation();
-            moveBA.From = new Thickness(589, 55, 0, 0);
-            moveBA.To = new Thickness(580, 119, 0, 0);
-            moveBA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            boxArbitrageEllipse.Visibility = Visibility.Visible;
-            boxArbitrageEllipse.BeginAnimation(MarginProperty, moveBA);
-            //凸性套利Ellipse移回
-            ThicknessAnimation moveCA2 = new ThicknessAnimation();
-            moveCA2.From = new Thickness(642, 84, 0, 0);
-            moveCA2.To = new Thickness(580, 119, 0, 0);
-            moveCA2.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            convexityArbitrageEllipse.Visibility = Visibility.Visible;
-            convexityArbitrageEllipse.BeginAnimation(MarginProperty, moveCA2);
-
-            //eclipse缩小
-            DoubleAnimation reduce = new DoubleAnimation();
-            reduce.From = 47;
-            reduce.To = 0;
-            reduce.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+            closeRisklessArbiPoly(); 
 
             NoMSMRefresh();
         }//点击“组合标的”按钮
 
         private void boxArbitrageEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //选择箱型套利，遮盖面板浮现
-            openRisklessArbiPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenRisklessArbiPoly = new DoubleAnimation();
-            showOpenRisklessArbiPoly.From = 0;
-            showOpenRisklessArbiPoly.To = 100;
-            showOpenRisklessArbiPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openRisklessArbiPoly.BeginAnimation(Canvas.OpacityProperty, showOpenRisklessArbiPoly);
-
-            //转换套利Ellipse移回
-            ThicknessAnimation moveCA = new ThicknessAnimation();
-            moveCA.From = new Thickness(470, 84, 0, 0);
-            moveCA.To = new Thickness(580, 119, 0, 0);
-            moveCA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.Visibility = Visibility.Visible;
-            conversionArbitrageEllipse.BeginAnimation(MarginProperty, moveCA);
-            //组合标的Ellipse移回
-            ThicknessAnimation moveMSM = new ThicknessAnimation();
-            moveMSM.From = new Thickness(524, 55, 0, 0);
-            moveMSM.To = new Thickness(580, 119, 0, 0);
-            moveMSM.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            multiSubjectMatterEllipse.Visibility = Visibility.Visible;
-            multiSubjectMatterEllipse.BeginAnimation(MarginProperty, moveMSM);
-            //箱型套利Ellipse移回
-            ThicknessAnimation moveBA = new ThicknessAnimation();
-            moveBA.From = new Thickness(589, 55, 0, 0);
-            moveBA.To = new Thickness(580, 119, 0, 0);
-            moveBA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            boxArbitrageEllipse.Visibility = Visibility.Visible;
-            boxArbitrageEllipse.BeginAnimation(MarginProperty, moveBA);
-            //凸性套利Ellipse移回
-            ThicknessAnimation moveCA2 = new ThicknessAnimation();
-            moveCA2.From = new Thickness(642, 84, 0, 0);
-            moveCA2.To = new Thickness(580, 119, 0, 0);
-            moveCA2.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            convexityArbitrageEllipse.Visibility = Visibility.Visible;
-            convexityArbitrageEllipse.BeginAnimation(MarginProperty, moveCA2);
-
-            //eclipse缩小
-            DoubleAnimation reduce = new DoubleAnimation();
-            reduce.From = 47;
-            reduce.To = 0;
-            reduce.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+            closeRisklessArbiPoly();
 
             NoBARefresh();
         }//点击“箱型套利”按钮
 
         private void convexityArbitrageEllipse_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //选择凸性套利，遮盖面板浮现
-            openRisklessArbiPoly.Visibility = Visibility.Visible;
-            DoubleAnimation showOpenRisklessArbiPoly = new DoubleAnimation();
-            showOpenRisklessArbiPoly.From = 0;
-            showOpenRisklessArbiPoly.To = 100;
-            showOpenRisklessArbiPoly.Duration = new Duration(TimeSpan.Parse("0:0:30"));
-            openRisklessArbiPoly.BeginAnimation(Canvas.OpacityProperty, showOpenRisklessArbiPoly);
-
-            //转换套利Ellipse移回
-            ThicknessAnimation moveCA = new ThicknessAnimation();
-            moveCA.From = new Thickness(470, 84, 0, 0);
-            moveCA.To = new Thickness(580, 119, 0, 0);
-            moveCA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.Visibility = Visibility.Visible;
-            conversionArbitrageEllipse.BeginAnimation(MarginProperty, moveCA);
-            //组合标的Ellipse移回
-            ThicknessAnimation moveMSM = new ThicknessAnimation();
-            moveMSM.From = new Thickness(524, 55, 0, 0);
-            moveMSM.To = new Thickness(580, 119, 0, 0);
-            moveMSM.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            multiSubjectMatterEllipse.Visibility = Visibility.Visible;
-            multiSubjectMatterEllipse.BeginAnimation(MarginProperty, moveMSM);
-            //箱型套利Ellipse移回
-            ThicknessAnimation moveBA = new ThicknessAnimation();
-            moveBA.From = new Thickness(589, 55, 0, 0);
-            moveBA.To = new Thickness(580, 119, 0, 0);
-            moveBA.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            boxArbitrageEllipse.Visibility = Visibility.Visible;
-            boxArbitrageEllipse.BeginAnimation(MarginProperty, moveBA);
-            //凸性套利Ellipse移回
-            ThicknessAnimation moveCA2 = new ThicknessAnimation();
-            moveCA2.From = new Thickness(642, 84, 0, 0);
-            moveCA2.To = new Thickness(580, 119, 0, 0);
-            moveCA2.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            convexityArbitrageEllipse.Visibility = Visibility.Visible;
-            convexityArbitrageEllipse.BeginAnimation(MarginProperty, moveCA2);
-
-            //eclipse缩小
-            DoubleAnimation reduce = new DoubleAnimation();
-            reduce.From = 47;
-            reduce.To = 0;
-            reduce.Duration = new Duration(TimeSpan.Parse("0:0:0.1"));
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            conversionArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            multiSubjectMatterEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            boxArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.WidthProperty, reduce);
-            convexityArbitrageEllipse.BeginAnimation(Ellipse.HeightProperty, reduce);
+            closeRisklessArbiPoly();
 
             NoCA2Refresh();
         }//点击“凸性套利”按钮
