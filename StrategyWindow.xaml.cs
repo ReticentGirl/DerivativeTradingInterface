@@ -50,6 +50,9 @@ namespace qiquanui
         private string loseRate;
         public double loseRatePer;
 
+        public bool IfChoose { get; set; }
+
+
         public int LineNo { get; set; }
         public string GroupName
         {
@@ -3156,41 +3159,53 @@ namespace qiquanui
         //下单
         private void placeOrderGButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = groupListView.SelectedIndex;
-            if (index < 0) return;
-            List<OrderUnit> l=ykm.yk[0,index].OrderList;
-            foreach (OrderUnit item in l)
-            {
-                bool buy=true;
-                item.Number *= qjoc[index].Number;
-                if (item.Number>0) buy=true;
-                else {
-                    buy=false;
-                    item.Number*=-1;
+            bool changed = false;
+            for (int i=0;i<qjoc.Count;i++)
+                if (qjoc[i].IfChoose)
+                {
+                    changed = true;
+                    int index = i;
+                    List<OrderUnit> l = ykm.yk[0, index].OrderList;
+                    foreach (OrderUnit item in l)
+                    {
+                        bool buy = true;
+                        item.Number *= qjoc[index].Number;
+                        if (item.Number > 0) buy = true;
+                        else
+                        {
+                            buy = false;
+                            item.Number *= -1;
+                        }
+                        MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, 1000);    //需要改一下
+                    }
                 }
-                MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number,1000);    //需要改一下
-            }
             //this.WindowState = WindowState.Minimized;
+            if (changed) 
             pwindow.WindowState = WindowState.Normal;
         }
 
         private void placeOrderSButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = strategyListView.SelectedIndex;
-            if (index < 0) return;
-            List<OrderUnit> l = ykm.yk[1, index].OrderList;
-            foreach (OrderUnit item in l)
-            {
-                bool buy = true;
-                item.Number *= cloc[index].Number;
-                if (item.Number > 0) buy = true;
-                else
-                {
-                    buy = false;
-                    item.Number *= -1;
-                }
-                MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number,1000);   //需要改一下
-            }
+            bool changed = false;
+           for (int i=0;i<qjoc.Count;i++)
+               if (cloc[i].IfChoose)
+               {
+                   int index = i;
+                   changed = true;
+                   List<OrderUnit> l = ykm.yk[1, index].OrderList;
+                   foreach (OrderUnit item in l)
+                   {
+                       bool buy = true;
+                       item.Number *= cloc[index].Number;
+                       if (item.Number > 0) buy = true;
+                       else
+                       {
+                           buy = false;
+                           item.Number *= -1;
+                       }
+                       MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, 1000);   //需要改一下
+                   }
+               }
             //this.WindowState = WindowState.Minimized;
             pwindow.WindowState = WindowState.Normal;
         }

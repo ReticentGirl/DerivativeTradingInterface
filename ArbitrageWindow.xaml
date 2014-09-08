@@ -1279,7 +1279,7 @@
                                 <GridViewColumn x:Name="ifChosenCSGVCH" Header="" Width="50">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox x:Name="ifChosenGCheckBox" />
+                                            <CheckBox x:Name="ifChosenGCheckBox" IsChecked="{Binding IfChoose, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -1293,7 +1293,7 @@
                     </ListView>
 
                     <CheckBox x:Name="chooseAllCSCheckBox" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,18,0,0" RenderTransformOrigin="0.625,1.632"/>
-                    <Button x:Name="placeOrderCSButton" Content="一键下单" Margin="0,0,25,10" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True"/>
+                    <Button x:Name="placeOrderCSButton" Content="一键下单" Margin="0,0,25,10" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.526" Click="placeOrderCSButton_Click"/>
 
                 </Grid>
             </TabItem>
@@ -1309,7 +1309,7 @@
                                 <GridViewColumn x:Name="ifChosenSGVCH" Header="" Width="50">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox x:Name="ifChosenGCheckBox" />
+                                            <CheckBox x:Name="ifChosenGCheckBox" IsChecked="{Binding IfChoose, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -1626,7 +1626,7 @@
 
 
         </Canvas>
-        <Button x:Name="calendarSpreadBtn" Style="{StaticResource darkButton}" Content="跨期套利" Height="78" HorizontalAlignment="Left" Margin="23,12,0,0" VerticalAlignment="Top" Width="78" Background="#FF81658D" BorderBrush="{x:Null}" Foreground="White"/>
+        <Button x:Name="calendarSpreadBtn" Style="{StaticResource darkButton}" Content="跨期套利" Height="78" HorizontalAlignment="Left" Margin="23,12,0,0" VerticalAlignment="Top" Width="78" Background="#FF81658D" BorderBrush="{x:Null}" Foreground="White" Click="calendarSpreadBtn_Click"/>
         <Button x:Name="intercommoditySpreadBtn" Style="{StaticResource darkButton}" Content="跨品种套利" Height="78" HorizontalAlignment="Left" Margin="124,12,0,0" VerticalAlignment="Top" Width="78" Foreground="White" BorderBrush="{x:Null}" Background="#FF81658D"/>
 
     </Grid>

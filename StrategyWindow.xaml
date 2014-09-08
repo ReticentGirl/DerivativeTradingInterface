@@ -1329,7 +1329,7 @@
                                 <GridViewColumn x:Name="ifChosenGGVCH" Header="" Width="50">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox x:Name="ifChosenGCheckBox" />
+                                            <CheckBox x:Name="ifChosenGCheckBox" IsChecked="{Binding IfChoose, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

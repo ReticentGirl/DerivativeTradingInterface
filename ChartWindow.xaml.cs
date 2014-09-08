@@ -192,10 +192,19 @@ namespace qiquanui
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            //stockChart.Charts[0].Collapse();
+            stockChart.Charts[0].Collapse();
             switch (CHARTTYPE)
             {
                 case 0:
+                                labels = new Label[10];
+            for (int i = 0; i < 10; i++)
+            {
+                labels[i] = new Label();
+                labels[i].Foreground = Brushes.White;
+                GLCanvas.Children.Add(labels[i]);
+                labels[i].Visibility = Visibility.Hidden;
+            }
+
                     ChartGL();
                     break;
                 case 1:
@@ -207,14 +216,9 @@ namespace qiquanui
                 case 3:
                     ChartZS();
                     break;
-            }
-            labels = new Label[10];
-            for (int i = 0; i < 10; i++)
-            {
-                labels[i] = new Label();
-                labels[i].Foreground = Brushes.White;
-                GLCanvas.Children.Add(labels[i]);
-                labels[i].Visibility = Visibility.Hidden;
+                case 4:
+                    ChartZS2();
+                    break;
             }
 
 
@@ -394,6 +398,24 @@ namespace qiquanui
 
         }
 
+
+        private void ChartZS2()
+        {
+            VolatilityChart2.Visibility = Visibility.Hidden;
+            VolatilityChart3.Visibility = Visibility.Hidden;
+            VolatilityChart.Visibility = Visibility.Hidden;
+            VolatilityChart4.Visibility = Visibility.Hidden;
+
+            if (BindingStockData==null)
+                return;
+
+            DateTime present = DataManager.now;
+            present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+            stockChart.StartDate = present;
+
+            stockSet1.ItemsSource = BindingStockData;
+
+        }
 
 
     }

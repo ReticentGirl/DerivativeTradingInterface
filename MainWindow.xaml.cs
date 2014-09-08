@@ -2514,7 +2514,7 @@ namespace qiquanui
 
         private void ZoomInZS1_Click(object sender, RoutedEventArgs e)
         {
-            ChartWindow.CHARTTYPE = 3;
+            ChartWindow.CHARTTYPE = 4;
             ChartWindow.BindingStockData = this.BindingStockData;
             ChartWindow cw = new ChartWindow(this);
             cw.Show();
@@ -2523,7 +2523,7 @@ namespace qiquanui
 
         private void ZoomInZS2_Click(object sender, RoutedEventArgs e)
         {
-            ChartWindow.CHARTTYPE = 3;
+            ChartWindow.CHARTTYPE = 4;
             ChartWindow.BindingStockData = this.BindingStockData2;
             ChartWindow cw = new ChartWindow(this);
             cw.Show();

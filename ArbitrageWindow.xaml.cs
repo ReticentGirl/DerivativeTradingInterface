@@ -171,7 +171,6 @@ namespace qiquanui
         {
             CrossDueOC = new ObservableCollection<CrossArbitrageLine>();
             calendarSpreadListView.DataContext = CrossDueOC;
-            ListCrossDue();
 
             stockChart.Charts[0].Collapse();
             stockChart2.Charts[0].Collapse();
@@ -314,6 +313,33 @@ namespace qiquanui
             }
         }//走势图数据绑定
 
+        private void calendarSpreadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ListCrossDue();
+
+        }
+
+        private void placeOrderCSButton_Click(object sender, RoutedEventArgs e)
+        {
+            bool changed = false;
+            for (int i = 0; i < CrossDueOC.Count; i++)
+                if (CrossDueOC[i].IfChoose)
+                {
+                    changed = true;
+                    int index = i;
+                    string id1=CrossDueOC[i].FutureID1;
+                    MainWindow.otm.AddTrading(id1, true, 1, 1000);    //需要改一下
+
+                    string id2 = CrossDueOC[i].FutureID2;
+                    MainWindow.otm.AddTrading(id2, true, 1, 1000);    //需要改一下
+
+                }
+            //this.WindowState = WindowState.Minimized;
+            if (changed)
+                pwindow.WindowState = WindowState.Normal;
+
+        }
+
     }
 
 
@@ -328,6 +354,7 @@ namespace qiquanui
         public string DayToDue { get; set; }
         public string FutureID1 { get; set; }
         public string FutureID2 { get; set; }
+        public bool IfChoose { get; set; }
 
         #region INotifyPropertyChanged 成员
 
