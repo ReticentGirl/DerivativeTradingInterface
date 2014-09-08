@@ -707,20 +707,20 @@ namespace qiquanui
             if (Canvas2.Width == 29.0)
             {
                 openRightCanvas();
-                
-               
+
+
 
                 DateTime present = DataManager.now;
                 string data1 = present.ToString("yyyyMMdd");
 
-                RiskWindow riskWindow = new RiskWindow(this,data1);
+                RiskWindow riskWindow = new RiskWindow(this, data1);
 
                 RiskLabManager rm = new RiskLabManager(otm, riskWindow, data1); //风险实验室
-              
+
                 for (int i = 0; i < otm.TradingOC.Count(); i++) //显示组合单支期权的希腊值
                 {
                     TradingData td = otm.TradingOC[i];
-                    rm.GetData(td.InstrumentID, td.CallOrPut, td.TradingType, td.TradingNum,data1);
+                    rm.GetData(td.InstrumentID, td.CallOrPut, td.TradingType, td.TradingNum, data1);
                 }
                 rm.Com();
 
@@ -1333,6 +1333,7 @@ namespace qiquanui
             int exercisePrice = Convert.ToInt32((sender as System.Windows.Controls.Button).Tag);  //获取按钮Tag
 
             string userID = this.userComboBox.Text;
+
             BuyOrSellForButtonForOption(exercisePrice, userID, "看涨", false, false);
 
         }
@@ -1391,169 +1392,213 @@ namespace qiquanui
         {
             // this.tradingListView.Visibility = Visibility.Visible;
 
-            this.tradingTabItem.IsSelected = true;
-
-            bool haveSame = false;    //用以判断交易区中是否有相同的
-
-            bool isValid = true;    //用来处理卖价 ，卖价 出现  - 的情况
-
-
-
-            if (_optionOrFuture == false)   //如果是期权
+            if (_SelectedUserID == "")
             {
-                int exercisePrice = _buttonTag;  //获取按钮Tag
+                MessagesControl.showMessage("账户为空,请登入并选择账户");
+            }
+            else
+            {
+                this.tradingTabItem.IsSelected = true;
 
-                int buttonIndex = (int)dm.ep_no[(int)exercisePrice];    //根据哈希表获得行数
+                bool haveSame = false;    //用以判断交易区中是否有相同的
 
-                option selectedOption = dm.ObservableObj[buttonIndex];
+                bool isValid = true;    //用来处理卖价 ，卖价 出现  - 的情况
 
 
-                //////////////////////////先判断点击的按钮有没有效 ///////////////////////////////////////////////////////////
-                double selectedMarketPrice = 0;
 
-                if (_isBuy == true && _selectedCallOrPut.Equals("看涨"))
+                if (_optionOrFuture == false)   //如果是期权
                 {
-                    if (selectedOption.BidPrice1.Equals("-"))
-                        isValid = false;
-                    else
-                        selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice1);
-                }
-                else if (_isBuy == false && _selectedCallOrPut.Equals("看涨"))
-                {
-                    if (selectedOption.AskPrice1.Equals("-"))
-                        isValid = false;
-                    else
-                        selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice1);
+                    int exercisePrice = _buttonTag;  //获取按钮Tag
 
-                }
-                else if (_isBuy == true && _selectedCallOrPut.Equals("看跌"))
-                {
-                    if (selectedOption.BidPrice2.Equals("-"))
-                        isValid = false;
-                    else
-                        selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice2);
-                }
-                else if (_isBuy == false && _selectedCallOrPut.Equals("看跌"))
-                {
-                    if (selectedOption.AskPrice2.Equals("-"))
-                        isValid = false;
-                    else
-                        selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice2);
-                }
+                    int buttonIndex = (int)dm.ep_no[(int)exercisePrice];    //根据哈希表获得行数
+
+                    option selectedOption = dm.ObservableObj[buttonIndex];
 
 
-                //////////////////////////////////////////////////////////////////
-
-                if (isValid == true)
-                {
-                    string selectedUserID = _SelectedUserID;
-
-                    string selectedInstrumentID = "";
+                    //////////////////////////先判断点击的按钮有没有效 ///////////////////////////////////////////////////////////
+                    double selectedMarketPrice = 0;
 
                     if (_selectedCallOrPut.Equals("看涨"))
                     {
-                        selectedInstrumentID = selectedOption.instrumentid1;   //看涨
-                    }
-                    else if (_selectedCallOrPut.Equals("看跌"))
-                    {
-                        selectedInstrumentID = selectedOption.instrumentid2;   //看跌
-                    }
-
-                    string selectedCallOrPut = _selectedCallOrPut;
-
-                    double selectedExercisePrice = Convert.ToDouble(selectedOption.ExercisePrice);
-
-                    bool selectedIsBuy = _isBuy;
-
-                    if (otm.TradingOC.Count() > 0)    //判断是否有相同的
-                        for (int i = 0; i < otm.TradingOC.Count(); i++)
+                        if (selectedOption.AskPrice1.Equals("-") || selectedOption.BidPrice1.Equals("-"))
                         {
-                            TradingData td = otm.TradingOC[i];
-                            if (td.UserID == selectedUserID && td.InstrumentID == selectedInstrumentID && Convert.ToDouble(td.ExercisePrice) == selectedExercisePrice && td.IsBuy == selectedIsBuy &&
-                                td.CallOrPut.Equals(selectedCallOrPut) && td.OptionOrFuture == _optionOrFuture)
-                                haveSame = true;
+                            isValid = false;
+                        }
+                        else
+                        {
+                            if (_isBuy == true)
+                            {
+                                selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice1);
+                            }
+                            else if (_isBuy == false)
+                            {
+                                selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice1);
+                            }
                         }
 
-                    if (haveSame == false)    //没有相同的  入列表中
-                    {
-                        //otm.TurnOver();
-                        otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut, Convert.ToString(selectedExercisePrice), selectedMarketPrice, selectedIsBuy, _optionOrFuture);
-                        //otm.TurnOver();
                     }
-                }
 
-            } ////////////////////////////////////////////////////////////////////////以上是期权处理
+
+                    if (_selectedCallOrPut.Equals("看跌"))
+                    {
+                        if (selectedOption.AskPrice2.Equals("-") || selectedOption.BidPrice2.Equals("-"))
+                        {
+                            isValid = false;
+                        }
+                        else
+                        {
+                            if (_isBuy == true)
+                            {
+                                selectedMarketPrice = Convert.ToDouble(selectedOption.AskPrice2);
+                            }
+                            else if (_isBuy == false)
+                            {
+                                selectedMarketPrice = Convert.ToDouble(selectedOption.BidPrice2);
+                            }
+
+                        }
+                    }
+
+
+
+                    //////////////////////////////////////////////////////////////////
+
+                    if (isValid == true)
+                    {
+                        string selectedUserID = _SelectedUserID;
+
+                        string selectedInstrumentID = "";
+
+                        if (_selectedCallOrPut.Equals("看涨"))
+                        {
+                            selectedInstrumentID = selectedOption.instrumentid1;   //看涨
+                        }
+                        else if (_selectedCallOrPut.Equals("看跌"))
+                        {
+                            selectedInstrumentID = selectedOption.instrumentid2;   //看跌
+                        }
+
+                        string selectedCallOrPut = _selectedCallOrPut;
+
+                        double selectedExercisePrice = Convert.ToDouble(selectedOption.ExercisePrice);
+
+                        bool selectedIsBuy = _isBuy;
+
+                        if (otm.TradingOC.Count() > 0)    //判断是否有相同的
+                            for (int i = 0; i < otm.TradingOC.Count(); i++)
+                            {
+                                TradingData td = otm.TradingOC[i];
+                                if (td.UserID == selectedUserID && td.InstrumentID == selectedInstrumentID && Convert.ToDouble(td.ExercisePrice) == selectedExercisePrice && td.IsBuy == selectedIsBuy &&
+                                    td.CallOrPut.Equals(selectedCallOrPut) && td.OptionOrFuture == _optionOrFuture)
+                                    haveSame = true;
+                            }
+
+                        if (haveSame == false)    //没有相同的  入列表中
+                        {
+                            //otm.TurnOver();
+                            otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut, Convert.ToString(selectedExercisePrice), selectedMarketPrice, selectedIsBuy, _optionOrFuture);
+                            //otm.TurnOver();
+                        }
+                    }
+                    else
+                    {
+                        MessagesControl.showMessage("该期权基本信息不完善,不能成功加入交易区,请选择其他期权");
+                    }
+
+                } ////////////////////////////////////////////////////////////////////////以上是期权处理
+            }
+
+
 
         }
 
 
         public void BuyOrSellForButtonForFuture(string _buttonTag, string _SelectedUserID, bool _isBuy, bool _optionOrFuture)
         {
-            //this.tradingListView.Visibility = Visibility.Visible;
 
-            this.tradingTabItem.IsSelected = true;
-
-            bool haveSame = false;
-
-            bool isValid = true;
-
-            if (_optionOrFuture == true)   //如果是期货
+            if (_SelectedUserID == "")
             {
+                MessagesControl.showMessage("账户为空,请登入并选择账户");
+            }
+            else
+            {
+                //this.tradingListView.Visibility = Visibility.Visible;
 
-                int selectedIndex = (int)dm.id_no[_buttonTag];
+                this.tradingTabItem.IsSelected = true;
 
-                future selectedFuture = dm.ObservableOb[selectedIndex];
+                bool haveSame = false;
 
-                double selectedMarketPrice = 0;
+                bool isValid = true;
 
-                if (_isBuy == true)
+                if (_optionOrFuture == true)   //如果是期货
                 {
-                    if (selectedFuture.BidPrice1.Equals("-"))
+
+                    int selectedIndex = (int)dm.id_no[_buttonTag];
+
+                    future selectedFuture = dm.ObservableOb[selectedIndex];
+
+                    double selectedMarketPrice = 0;
+
+
+                    if (selectedFuture.AskPrice1.Equals("-") || selectedFuture.BidPrice1.Equals("-"))
+                    {
                         isValid = false;
+                    }
                     else
-                        selectedMarketPrice = Convert.ToDouble(selectedFuture.AskPrice1);
-                }
-                else if (_isBuy == false)
-                {
-                    if (selectedFuture.AskPrice1.Equals("-"))
-                        isValid = false;
-                    else
-                        selectedMarketPrice = Convert.ToDouble(selectedFuture.BidPrice1);
-                }
-
-
-                if (isValid == true)     //如果有效的话
-                {
-                    string selectedUserID = _SelectedUserID;
-
-                    string selectedInstrumentID = selectedFuture.instrumentid;
-
-
-                    string selectedCallOrPut = "-";     //因为是期货，所以没有看涨看跌
-
-                    string selectedExercisePrice = "-";    //因为是期货，所以没有行权价
-
-                    bool selectedIsBuy = _isBuy;
-
-                    if (otm.TradingOC.Count() > 0)    //判断是否有相同的
-                        for (int i = 0; i < otm.TradingOC.Count(); i++)
+                    {
+                        if (_isBuy == true)
                         {
-                            TradingData td = otm.TradingOC[i];
-
-                            if (td.InstrumentID.Equals(selectedInstrumentID) && td.IsBuy == _isBuy && td.OptionOrFuture == _optionOrFuture)
-                            {
-                                haveSame = true;
-                            }
-
+                            selectedMarketPrice = Convert.ToDouble(selectedFuture.AskPrice1);
+                        }
+                        else if (_isBuy == false)
+                        {
+                            selectedMarketPrice = Convert.ToDouble(selectedFuture.BidPrice1);
                         }
 
-                    if (haveSame == false)   //如果没有相同的
-                    {
-                        otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut, selectedExercisePrice, selectedMarketPrice, selectedIsBuy, _optionOrFuture);
                     }
 
+
+
+
+
+                    if (isValid == true)     //如果有效的话
+                    {
+                        string selectedUserID = _SelectedUserID;
+
+                        string selectedInstrumentID = selectedFuture.instrumentid;
+
+
+                        string selectedCallOrPut = "-";     //因为是期货，所以没有看涨看跌
+
+                        string selectedExercisePrice = "-";    //因为是期货，所以没有行权价
+
+                        bool selectedIsBuy = _isBuy;
+
+                        if (otm.TradingOC.Count() > 0)    //判断是否有相同的
+                            for (int i = 0; i < otm.TradingOC.Count(); i++)
+                            {
+                                TradingData td = otm.TradingOC[i];
+
+                                if (td.InstrumentID.Equals(selectedInstrumentID) && td.IsBuy == _isBuy && td.OptionOrFuture == _optionOrFuture)
+                                {
+                                    haveSame = true;
+                                }
+
+                            }
+
+                        if (haveSame == false)   //如果没有相同的
+                        {
+                            otm.OnAdd(selectedUserID, selectedInstrumentID, selectedCallOrPut, selectedExercisePrice, selectedMarketPrice, selectedIsBuy, _optionOrFuture);
+                        }
+
+                    }
+                    else
+                    {
+                        MessagesControl.showMessage("该期货基本信息不完善,不能成功加入交易区,请选择其他期货");
+                    }
                 }
             }
+
         }
 
         private void cancelOrderBtn_Click(object sender, RoutedEventArgs e)   //历史记录区 “删除”按钮
@@ -2095,8 +2140,8 @@ namespace qiquanui
                         }
                     }
                 }
-            if (futurename!=null && duedate!=null && tot!=0)
-            BindingForChart(futurename, duedate, tot, num);
+            if (futurename != null && duedate != null && tot != 0)
+                BindingForChart(futurename, duedate, tot, num);
 
         }
 
@@ -2145,7 +2190,7 @@ namespace qiquanui
                         {
                             string _futurename = (string)dt.Rows[0]["InstrumentName"];
                             string _duedate = (string)dt.Rows[0]["DueDate"];
-                            if (_futurename.Equals(futurename)&& _duedate.Equals(duedate))
+                            if (_futurename.Equals(futurename) && _duedate.Equals(duedate))
                             {
                                 if (otm.TradingOC[i].TradingNum > 0)
                                     num[tot, 0] = otm.TradingOC[i].TradingNum;
@@ -2227,11 +2272,11 @@ namespace qiquanui
                 }
             if (futurename != null && duedate != null && tot != 0)
 
-            BindingForChart(futurename, duedate, tot, num);
+                BindingForChart(futurename, duedate, tot, num);
         }
 
 
-        System.Windows.Controls.Label[] labels=new System.Windows.Controls.Label[10];
+        System.Windows.Controls.Label[] labels = new System.Windows.Controls.Label[10];
         System.Windows.Data.Binding[] Bindings = new System.Windows.Data.Binding[5];
         //0~4概率盈亏
 
@@ -2244,14 +2289,14 @@ namespace qiquanui
 
 
         delegate void BindingOCCallBack(string futurename, string duedate, int tot, int[,] num);
-        public void BindingForChart(string futurename,string duedate,int tot, int[,] num)
+        public void BindingForChart(string futurename, string duedate, int tot, int[,] num)
         {
 
             BindingOCCallBack d;
             if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
             {
                 d = new BindingOCCallBack(BindingForChart);
-                this.Dispatcher.Invoke(d, new object[] { futurename,duedate,tot, num });
+                this.Dispatcher.Invoke(d, new object[] { futurename, duedate, tot, num });
             }
             else
             {
@@ -2329,7 +2374,7 @@ namespace qiquanui
                 Bindings[3] = dataBinding3;
                 Bindings[4] = dataBinding4;
 
-               
+
 
 
                 coorBinding.Source = coor;
@@ -2383,7 +2428,7 @@ namespace qiquanui
                         r = yk.RightEdge;
                     else
                         r = yk.probability[i].x;
-                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * chartBorder.Width, 10, 0, 0); 
+                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * chartBorder.Width, 10, 0, 0);
                     temp.Height = 30;
                     temp.VerticalAlignment = VerticalAlignment.Top;
                     temp.Visibility = Visibility.Visible;
@@ -2417,7 +2462,7 @@ namespace qiquanui
         }//初始化走势图（载入历史数据）
 
         string trmID1, trmID2;
-        Trend trm1,trm2;
+        Trend trm1, trm2;
         System.Timers.Timer timer;
         delegate void trendInitialCallBack(Trend tr);
         private void TrendInitialCallBack(Trend tr)
@@ -2430,7 +2475,7 @@ namespace qiquanui
             }
             else
             {
-               stockSet1.ItemsSource = tr.Data;
+                stockSet1.ItemsSource = tr.Data;
             }
         }//走势图数据绑定
 
@@ -2496,7 +2541,7 @@ namespace qiquanui
             ZoomInZS2.Visibility = Visibility.Visible;
             chartTabControl.SelectedIndex = 0;
 
-     
+
 
             int no = optionsMarketListView.Items.IndexOf(e.AddedItems[0]);
             option op = dm.ObservableObj[no];
@@ -2529,7 +2574,7 @@ namespace qiquanui
             stockChart2.Visibility = Visibility.Hidden;
             ZoomInZS1.Visibility = Visibility.Visible;
             ZoomInZS2.Visibility = Visibility.Hidden;
-             subjectMatterMarketGrid.SelectedIndex = -1;
+            subjectMatterMarketGrid.SelectedIndex = -1;
             optionsMarketListView.SelectedIndex = -1;
             chartTabControl.SelectedIndex = 0;
 
