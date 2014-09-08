@@ -75,8 +75,7 @@ namespace qiquanui
         private void dTimer_c_Tick(object sender, EventArgs e)
         {
             dTimer_c.Stop();
-            if (MessagesControl.messagesWindowNum > 0)
-                MessagesControl.messagesWindowNum -= 1;
+            
 
 
 
@@ -128,8 +127,7 @@ namespace qiquanui
         private void dTimer_closing_Tick(object sender, EventArgs e)
         {
             dTimer_closing.Stop();
-            if (MessagesControl.messagesWindowNum > 0)
-                MessagesControl.messagesWindowNum -= 1;
+            
 
 
 

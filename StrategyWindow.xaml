@@ -1664,10 +1664,10 @@
         <!--低波动率-->
         <!--【低波动率】特定策略-->
         <Canvas x:Name="topWideCanvas" Background="#FF884DCF" Grid.Row="1" Height="25" HorizontalAlignment="Left" Margin="695,200,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="0">
-            <Button x:Name="topWideBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="topWideBtn_Click" Content="顶部宽跨" Height="25" RenderTransformOrigin="0.5,0.5" Width="0"/>
+            <Button x:Name="topWideBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="topWideBtn_Click" Content="顶部宽跨" Height="25" RenderTransformOrigin="0.5,0.5" Width="0" Foreground="White"/>
         </Canvas>
         <Canvas x:Name="topCrossCanvas" Background="#FF884DCF" Grid.Row="1" Height="25" HorizontalAlignment="Left" Margin="709,242,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="0">
-            <Button x:Name="topCrossBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="topCrossBtn_Click" Content="顶部跨式" Height="25" RenderTransformOrigin="0.5,0.5" Width="0"/>
+            <Button x:Name="topCrossBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="topCrossBtn_Click" Content="顶部跨式" Height="25" RenderTransformOrigin="0.5,0.5" Width="0" Foreground="White"/>
         </Canvas>
 
         <Polygon x:Name="lowVolatilityPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FF884DCF" Margin="472,173,528,331" RenderTransformOrigin="0.5,0.5">
@@ -1682,9 +1682,9 @@
         </Polygon>
         <!--【低波动率】设定参数-->
         <Canvas x:Name="lowVolatilityCanvas" Background="#FF884DCF" Grid.Row="1" HorizontalAlignment="Left" Height="30" Margin="604,246,0,0" VerticalAlignment="Top" Width="106">
-            <TextBlock x:Name="miniRateOfVolatiTB" Text="最小波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="1" Foreground="Black" Width="59"/>
+            <TextBlock x:Name="miniRateOfVolatiTB" Text="最小波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="1" Foreground="White" Width="59"/>
             <TextBox x:Name="setMiniRateOfVolatiTBox" Canvas.Left="60" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="10" VerticalAlignment="Center" Width="35"/>
-            <TextBlock x:Name="percentLVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="96" Foreground="Black"/>
+            <TextBlock x:Name="percentLVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="96" Foreground="White"/>
         </Canvas>
         <Button x:Name="lowVolatilityBtn" Background="#FF9D59F3" BorderBrush="{x:Null}" Click="lowVolatilityBtn_Click" Content="低波动率" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="640,198,0,0" VerticalAlignment="Top" Width="52" Foreground="White">
             <Button.Effect>
@@ -1710,10 +1710,10 @@
         <!--高波动率-->
         <!--【高波动率】特定策略-->
         <Canvas x:Name="bottomWideCanvas" Background="#FF884DCF" Grid.Row="1" HorizontalAlignment="Left" Height="25" Margin="468,200,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="0">
-            <Button x:Name="bottomWideBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bottomWideBtn_Click" Content="底部宽跨"  Height="25" Width="0"/>
+            <Button x:Name="bottomWideBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bottomWideBtn_Click" Content="底部宽跨"  Height="25" Width="0" Foreground="White"/>
         </Canvas>
         <Canvas x:Name="bottomCrossCanvas" Background="#FF884DCF" Grid.Row="1" HorizontalAlignment="Left" Height="25" Margin="454,242,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" Width="0">
-            <Button x:Name="bottomCrossBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bottomCrossBtn_Click" Content="底部跨式" Height="25" Width="0"/>
+            <Button x:Name="bottomCrossBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bottomCrossBtn_Click" Content="底部跨式" Height="25" Width="0" Foreground="White"/>
         </Canvas>
 
         <Polygon x:Name="highVolatilityPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FF884DCF" Margin="499,275,501,229" RenderTransformOrigin="0.5,0.5">
@@ -1728,9 +1728,9 @@
         </Polygon>
         <!--【高波动率】设定参数-->
         <Canvas x:Name="highVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="452,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Background="#FF884DCF">
-            <TextBlock x:Name="maxRateOfVolatiTB" Text="最大波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Foreground="Black" Width="57"/>
+            <TextBlock x:Name="maxRateOfVolatiTB" Text="最大波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Foreground="White" Width="57"/>
             <TextBox x:Name="setMaxRateOfVolatiTBox" Canvas.Left="57" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="10" VerticalAlignment="Center" Width="35"/>
-            <TextBlock x:Name="percentHVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="93" Foreground="Black"/>
+            <TextBlock x:Name="percentHVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="93" Foreground="White"/>
         </Canvas>
         <Button x:Name="highVolatilityBtn" Background="#FF9D59F3" BorderBrush="{x:Null}" Click="highVolatilityBtn_Click" Content="高波动率" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="470,198,0,0" VerticalAlignment="Top" Width="53" Foreground="White">
             <Button.Effect>
@@ -1810,10 +1810,10 @@
         <!--下跌-->
         <!--【下跌】特定策略-->
         <Canvas x:Name="buyAndDownCanvas" HorizontalAlignment="Left" Height="25" Margin="652,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0" Background="#FF884DCF">
-            <Button x:Name="buyAndDownBtn"  Background="{x:Null}" BorderBrush="{x:Null}" Click="buyAndDownBtn_Click" Content="单买看跌"  Height="25" Width="0"/>
+            <Button x:Name="buyAndDownBtn"  Background="{x:Null}" BorderBrush="{x:Null}" Click="buyAndDownBtn_Click" Content="单买看跌"  Height="25" Width="0" Foreground="White"/>
         </Canvas>
         <Canvas x:Name="bearSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="611,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0" Background="#FF884DCF">
-            <Button x:Name="bearSpreadBtn"  Background="{x:Null}" BorderBrush="{x:Null}" Click="bearSpreadBtn_Click" Content="熊市差价" Height="25" Width="0"/>
+            <Button x:Name="bearSpreadBtn"  Background="{x:Null}" BorderBrush="{x:Null}" Click="bearSpreadBtn_Click" Content="熊市差价" Height="25" Width="0" Foreground="White"/>
         </Canvas>
 
         <Polygon x:Name="downPoly" Points="0,0,185,0,92.5,127.315" Grid.Row="1" Fill="#FF884DCF" Margin="536,175,464,329" RenderTransformOrigin="0.5,0.5">
@@ -1828,9 +1828,9 @@
         </Polygon>
         <!--【下跌】设定参数-->
         <Canvas x:Name="downCanvas" HorizontalAlignment="Left" Height="30" Margin="583,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FF884DCF">
-            <TextBlock x:Name="maxRateOfDecreTB" Text="最大跌幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black" Width="56"/>
+            <TextBlock x:Name="maxRateOfDecreTB" Text="最大跌幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="White" Width="56"/>
             <TextBox x:Name="setMaxRateOfDecreTBox" Text="10"  HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="59" Canvas.Top="6" Foreground="Black" Width="35"/>
-            <TextBlock x:Name="percentDownTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="94" Foreground="Black"/>
+            <TextBlock x:Name="percentDownTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="94" Foreground="White"/>
         </Canvas>
         <Button Content="下  跌" BorderBrush="{x:Null}" Click="Button_Click" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="595,344,0,0" VerticalAlignment="Top" Width="50" Background="#FF9D59F3" Foreground="White">
             <Button.Effect>
@@ -1855,7 +1855,7 @@
         <!--上涨-->
         <!--【上涨】特定策略-->
         <Canvas x:Name="buyAndUpCanvas" HorizontalAlignment="Left" Height="25" Margin="510,355,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0" Background="#FF884DCF">
-            <Button x:Name="buyAndUpBtn" Background="{x:Null}" BorderBrush="{x:Null}" Canvas.Left="0" Click="buyAndUpBtn_Click" Content="单买看涨" Height="25" Width="0" RenderTransformOrigin="0.5,0.5">
+            <Button x:Name="buyAndUpBtn" Background="{x:Null}" BorderBrush="{x:Null}" Canvas.Left="0" Click="buyAndUpBtn_Click" Content="单买看涨" Height="25" Width="0" RenderTransformOrigin="0.5,0.5" Foreground="White">
                 <!--<Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -1867,7 +1867,7 @@
             </Button>
         </Canvas>
         <Canvas x:Name="bullSpreadCanvas" HorizontalAlignment="Left" Height="25" Margin="550,385,0,0" Grid.Row="1" VerticalAlignment="Top" Width="0" Background="#FF884DCF">
-            <Button x:Name="bullSpreadBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bullSpreadBtn_Click" Content="牛市差价" Height="25" Width="0" RenderTransformOrigin="0.5,0.5"/>
+            <Button x:Name="bullSpreadBtn" Background="{x:Null}" BorderBrush="{x:Null}" Click="bullSpreadBtn_Click" Content="牛市差价" Height="25" Width="0" RenderTransformOrigin="0.5,0.5" Foreground="White"/>
         </Canvas>
 
         <Polygon x:Name="upPoly" Fill="#FF884DCF" Grid.Row="1" Margin="553,239,447,265" Points="0,0,185,0,92.5,127.315" RenderTransformOrigin="0.5,0.5">
@@ -1884,9 +1884,9 @@
 
         <!--【上涨】设定参数-->
         <Canvas x:Name="upCanvas" HorizontalAlignment="Left" Height="30" Margin="469,312,0,0" Grid.Row="1" VerticalAlignment="Top" Width="109" Background="#FF884DCF">
-            <TextBlock x:Name="maxRateOfGrothTB" Text="最大涨幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="Black"/>
+            <TextBlock x:Name="maxRateOfGrothTB" Text="最大涨幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="3" Foreground="White"/>
             <TextBox x:Name="setMaxRateOfGrothTBox" Canvas.Left="63" Canvas.Top="7" Foreground="Black" HorizontalAlignment="Center" Text="10" VerticalAlignment="Center" Width="35"/>
-            <TextBlock x:Name="percentUpTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="8" Canvas.Left="98" Foreground="Black"/>
+            <TextBlock x:Name="percentUpTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="8" Canvas.Left="98" Foreground="White"/>
 
         </Canvas>
         <Button x:Name="upBtn" Content="上  涨" HorizontalAlignment="Left" Margin="515,344,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="35" Background="#FF9D59F3" BorderBrush="{x:Null}" Click="upBtn_Click" Foreground="White">

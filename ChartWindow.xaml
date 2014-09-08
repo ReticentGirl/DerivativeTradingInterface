@@ -1275,7 +1275,124 @@
 
 
 
+        <Canvas x:Name="ZS2Canvas" HorizontalAlignment="Right" Height="418" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="766">
 
+            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" VerticalAlignment="Top" Height="436" Width="766">
+                <ams:StockChart.DataSets>
+                    <ams:DataSet Name="stockSet1" Brush="#7f8da9"
+                                
+                                DateMemberPath="date"
+                                OpenMemberPath="open" HighMemberPath="high"
+                                LowMemberPath="low" CloseMemberPath="close"
+                                ValueMemberPath="close" VolumeMemberPath="volume"
+                                
+                     />
+                </ams:StockChart.DataSets>
+
+
+                <!--走势图-->
+                <ams:StockChart.Charts>
+
+                    <ams:Chart Title="" GridHeight="2*" Background="#00000000">
+                        <ams:Chart.Graphs>
+                            <ams:Graph GraphType="Line" 
+                                    NegativeBrush="Green" PositiveBrush="Red" 
+                                    LegendItemType="Ohlc" LegendPeriodItemType="Ohlc"
+                                    CursorBrush="Blue" CursorSize="6" 
+                                    IsFilled="False" 
+                                   />
+                            <ams:Graph GraphType="Line" 
+                                    NegativeBrush="Green" PositiveBrush="Red" 
+                                    LegendItemType="Ohlc" LegendPeriodItemType="Ohlc"
+                                    CursorBrush="Blue" CursorSize="6" 
+                                    IsFilled="False" 
+                                   />
+
+                        </ams:Chart.Graphs>
+
+                        <ams:Chart.DateTimeAxis>
+                            <ams:DateTimeAxis ValuesForeground="#90000000" StrokeThickness="0" TickLength="0" 
+                                            />
+                        </ams:Chart.DateTimeAxis>
+
+                        <ams:Chart.LeftValueAxis>
+                            <ams:ValueAxis ValuesForeground="#90000000"
+                                StrokeThickness="0" TickLength="0" />
+                        </ams:Chart.LeftValueAxis>
+
+                        <ams:Chart.Legend>
+                            <ams:Legend
+                            PositiveValueForeground="Red" NegativeValueForeground="Green"
+                            IsDateVisible="True" Background="#00000000"/>
+                        </ams:Chart.Legend>
+                    </ams:Chart>
+
+
+                    <ams:Chart Name="Chart1" Title="" GridHeight="2*" Background="#00000000">
+                        <ams:Chart.Graphs>
+                            <ams:Graph GraphType="Line" 
+                                    NegativeBrush="Green" PositiveBrush="Red" 
+                                    LegendItemType="Ohlc" LegendPeriodItemType="Ohlc"
+                                    CursorBrush="Blue" CursorSize="6" 
+                                    IsFilled="True" 
+                                   />
+                            <!--<ams:Graph GraphType="Column" 
+                                    NegativeBrush="Green" PositiveBrush="Red" 
+                                    LegendItemType="None" LegendPeriodItemType="None"
+                                    CursorBrush="Blue" CursorSize="6" />-->
+
+                        </ams:Chart.Graphs>
+
+                        <ams:Chart.DateTimeAxis>
+                            <ams:DateTimeAxis Name="timeAxis" ValuesForeground="#90000000" StrokeThickness="0" TickLength="0" 
+                                            />
+                        </ams:Chart.DateTimeAxis>
+
+                        <ams:Chart.LeftValueAxis>
+                            <ams:ValueAxis ValuesForeground="#90000000"
+                                StrokeThickness="0" TickLength="0" />
+                        </ams:Chart.LeftValueAxis>
+
+                        <ams:Chart.Legend>
+                            <ams:Legend
+                            PositiveValueForeground="Red" NegativeValueForeground="Green"
+                            IsDateVisible="True" Background="#00000000"/>
+                        </ams:Chart.Legend>
+                    </ams:Chart>
+                    <!--成交量的Chart-->
+                    <ams:Chart Title="">
+                        <ams:Chart.Graphs>
+                            <ams:Graph GraphType="Column"
+                                    LegendItemType="Value" LegendPeriodItemType="Value"
+                                    DataField="Volume" PeriodValue="Sum"
+                                    CursorBrush="Yellow" CursorSize="6"
+                                    />
+                        </ams:Chart.Graphs>
+
+                        <ams:Chart.DateTimeAxis>
+                            <ams:DateTimeAxis ValuesEnabled="False" StrokeThickness="0" />
+                        </ams:Chart.DateTimeAxis>
+
+                        <ams:Chart.LeftValueAxis>
+                            <ams:ValueAxis ValuesForeground="#90000000"
+                                StrokeThickness="0" TickLength="0"
+                                />
+                        </ams:Chart.LeftValueAxis>
+
+                        <ams:Chart.Legend>
+                            <ams:Legend PositiveValueForeground="Red" NegativeValueForeground="Green" />
+                        </ams:Chart.Legend>
+                    </ams:Chart>
+
+
+                </ams:StockChart.Charts>
+
+            </ams:StockChart>
+
+
+
+        </Canvas>
+        
         <Canvas x:Name="GLCanvas" HorizontalAlignment="Right" Height="484" VerticalAlignment="Bottom" Width="786">
             <am:LineChart x:Name="VolatilityChart" Width="682" Height="420" Foreground="LightGray"
                       
@@ -1413,123 +1530,7 @@
         </Canvas>
 
 
-        <Canvas x:Name="ZS2Canvas" HorizontalAlignment="Right" Height="436" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="766">
-
-            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" VerticalAlignment="Top" Height="436" Width="766">
-                <ams:StockChart.DataSets>
-                    <ams:DataSet Name="stockSet1" Brush="#7f8da9"
-                                
-                                DateMemberPath="date"
-                                OpenMemberPath="open" HighMemberPath="high"
-                                LowMemberPath="low" CloseMemberPath="close"
-                                ValueMemberPath="close" VolumeMemberPath="volume"
-                                
-                     />
-                </ams:StockChart.DataSets>
-
-
-                <!--走势图-->
-                <ams:StockChart.Charts>
-
-                    <ams:Chart Title="" GridHeight="2*" Background="#00000000">
-                        <ams:Chart.Graphs>
-                            <ams:Graph GraphType="Line" 
-                                    NegativeBrush="Green" PositiveBrush="Red" 
-                                    LegendItemType="Ohlc" LegendPeriodItemType="Ohlc"
-                                    CursorBrush="Blue" CursorSize="6" 
-                                    IsFilled="False" 
-                                   />
-                            <ams:Graph GraphType="Line" 
-                                    NegativeBrush="Green" PositiveBrush="Red" 
-                                    LegendItemType="Ohlc" LegendPeriodItemType="Ohlc"
-                                    CursorBrush="Blue" CursorSize="6" 
-                                    IsFilled="False" 
-                                   />
-
-                        </ams:Chart.Graphs>
-
-                        <ams:Chart.DateTimeAxis>
-                            <ams:DateTimeAxis ValuesForeground="#90000000" StrokeThickness="0" TickLength="0" 
-                                            />
-                        </ams:Chart.DateTimeAxis>
-
-                        <ams:Chart.LeftValueAxis>
-                            <ams:ValueAxis ValuesForeground="#90000000"
-                                StrokeThickness="0" TickLength="0" />
-                        </ams:Chart.LeftValueAxis>
-
-                        <ams:Chart.Legend>
-                            <ams:Legend
-                            PositiveValueForeground="Red" NegativeValueForeground="Green"
-                            IsDateVisible="True" Background="#00000000"/>
-                        </ams:Chart.Legend>
-                    </ams:Chart>
-
-
-                    <ams:Chart Name="Chart1" Title="" GridHeight="2*" Background="#00000000">
-                        <ams:Chart.Graphs>
-                            <ams:Graph GraphType="Line" 
-                                    NegativeBrush="Green" PositiveBrush="Red" 
-                                    LegendItemType="Ohlc" LegendPeriodItemType="Ohlc"
-                                    CursorBrush="Blue" CursorSize="6" 
-                                    IsFilled="True" 
-                                   />
-                            <!--<ams:Graph GraphType="Column" 
-                                    NegativeBrush="Green" PositiveBrush="Red" 
-                                    LegendItemType="None" LegendPeriodItemType="None"
-                                    CursorBrush="Blue" CursorSize="6" />-->
-
-                        </ams:Chart.Graphs>
-
-                        <ams:Chart.DateTimeAxis>
-                            <ams:DateTimeAxis Name="timeAxis" ValuesForeground="#90000000" StrokeThickness="0" TickLength="0" 
-                                            />
-                        </ams:Chart.DateTimeAxis>
-
-                        <ams:Chart.LeftValueAxis>
-                            <ams:ValueAxis ValuesForeground="#90000000"
-                                StrokeThickness="0" TickLength="0" />
-                        </ams:Chart.LeftValueAxis>
-
-                        <ams:Chart.Legend>
-                            <ams:Legend
-                            PositiveValueForeground="Red" NegativeValueForeground="Green"
-                            IsDateVisible="True" Background="#00000000"/>
-                        </ams:Chart.Legend>
-                    </ams:Chart>
-                    <!--成交量的Chart-->
-                    <ams:Chart Title="">
-                        <ams:Chart.Graphs>
-                            <ams:Graph GraphType="Column"
-                                    LegendItemType="Value" LegendPeriodItemType="Value"
-                                    DataField="Volume" PeriodValue="Sum"
-                                    CursorBrush="Yellow" CursorSize="6"
-                                    />
-                        </ams:Chart.Graphs>
-
-                        <ams:Chart.DateTimeAxis>
-                            <ams:DateTimeAxis ValuesEnabled="False" StrokeThickness="0" />
-                        </ams:Chart.DateTimeAxis>
-
-                        <ams:Chart.LeftValueAxis>
-                            <ams:ValueAxis ValuesForeground="#90000000"
-                                StrokeThickness="0" TickLength="0"
-                                />
-                        </ams:Chart.LeftValueAxis>
-
-                        <ams:Chart.Legend>
-                            <ams:Legend PositiveValueForeground="Red" NegativeValueForeground="Green" />
-                        </ams:Chart.Legend>
-                    </ams:Chart>
-
-
-                </ams:StockChart.Charts>
-
-            </ams:StockChart>
-
-
-
-        </Canvas>
+        
 
 
 
