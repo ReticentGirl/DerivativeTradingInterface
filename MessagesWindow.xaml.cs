@@ -39,7 +39,7 @@ namespace qiquanui
 
             this.ShowInTaskbar = false; 
             InitializeComponent();
-            MessageText.Content = MessagesControl.MessageText;
+            MessageText.Text = MessagesControl.MessageText;
             this.Topmost = true;
 
 

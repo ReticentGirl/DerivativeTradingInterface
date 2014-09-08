@@ -1508,6 +1508,51 @@
             </Setter>
 
         </Style>
+        <Style x:Key="passwordStyle" TargetType="{x:Type PasswordBox}">
+            <Setter Property="Foreground" Value="#FF9198AC"/>
+            <Setter Property="BorderBrush" Value="#FF2E3143"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="SelectionBrush" Value="#FF3E414D"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border 
+          Name="Border"
+          CornerRadius="0" 
+          Padding="2"
+          BorderBrush="#FF2E3143"
+          BorderThickness="1" >
+                            <Border.Background>
+                                <SolidColorBrush Color="Transparent" Opacity="0"/>
+                            </Border.Background>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="Transparent"/>
+                                <Setter TargetName="Border" Property="BorderBrush">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FF2E3143" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Foreground">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="#FF8A92A9" Opacity="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="Border" Property="Background" Value="#FF2E3143"/>
+                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF007ACC"/>
+                                <Setter Property="Foreground" Value="#FF8A92A9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
 
         <!--定义按钮样式-->
         <Style x:Key="marketListViewButtom" TargetType="Button" >
@@ -2935,7 +2980,7 @@
                                     <GridViewColumn x:Name="statusOfUserUMGVCH" Header=" 登录状态"  Width=" 70">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
-                                                <ComboBox x:Name="setUserStatusComboBox"  SelectedIndex="{Binding UserState,UpdateSourceTrigger=PropertyChanged}" Width="Auto" SelectionChanged="setUserStatusComboBox_SelectionChanged">
+                                                <ComboBox x:Name="setUserStatusComboBox"  SelectedIndex="{Binding UserState,UpdateSourceTrigger=PropertyChanged}" Width="Auto" SelectionChanged="setUserStatusComboBox_SelectionChanged" Style="{StaticResource CboCommomStyle}" Foreground="White">
                                                     <ComboBoxItem x:Name="logout" Content="登出" HorizontalContentAlignment="Left"/>
                                                     <ComboBoxItem x:Name="login" Content="登录" HorizontalContentAlignment="Left"/>
                                                 </ComboBox>
@@ -3030,9 +3075,9 @@
                 <TextBlock Name="addUserErrorWarn" Foreground="Red"   Visibility="Hidden" TextWrapping="Wrap"/>
             </Label>
             <TextBlock Foreground="#FFE6E8EC" Canvas.Left="27" Canvas.Top="96" Text="帐号：" TextWrapping="Wrap"/>
-            <TextBox x:Name="userIDAUTB" Canvas.Left="68" Canvas.Top="92" Height="23"  TextWrapping="Wrap" VerticalContentAlignment="Center" Width="120"/>
+            <TextBox x:Name="userIDAUTB" Canvas.Left="68" Canvas.Top="92" Height="23"  TextWrapping="Wrap" VerticalContentAlignment="Center" Width="120" Style="{StaticResource textboxStyle}"/>
             <TextBlock Foreground="#FFE6E8EC" Canvas.Left="27" Canvas.Top="133" Text="密码：" TextWrapping="Wrap"/>
-            <PasswordBox x:Name="passwordAUTB" Canvas.Left="68" Canvas.Top="129" Height="23"   VerticalContentAlignment="Center" Width="120"/>
+            <PasswordBox x:Name="passwordAUTB" Canvas.Left="68" Canvas.Top="129" Height="23"   VerticalContentAlignment="Center" Width="120" Style="{StaticResource passwordStyle}"/>
             <Button x:Name="resetAUBtn" Click="resetAUBtn_Click" Content="重置" Background="#FF4D5166" BorderBrush="{x:Null}" Canvas.Left="27" Canvas.Top="216" Style="{StaticResource darkButton}" Width="45"/>
             <Button x:Name="addUserBtn" Background="#FF4D5166" BorderBrush="{x:Null}" Canvas.Left="68" Canvas.Top="170" Content="添加账户" FlowDirection="RightToLeft" Foreground="White" Height="21" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Padding="1" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="82" Click="addUserBtn_Click"/>
 

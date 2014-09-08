@@ -51,31 +51,15 @@ namespace qiquanui
         }
         private void Top1_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (isWindowMax == false)
-            {
+            
                 this.DragMove();
-            }
-            else if (isWindowMax == true) ;
+           
 
         }//窗口移动
 
 
-        private void Top1_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            MaxButton_Click_1(null, null);
-        } //双击标题栏最大化、还原
-        private void Window_SizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
-        {
-            if (this.ActualHeight > SystemParameters.WorkArea.Height || this.ActualWidth > SystemParameters.WorkArea.Width)
-            {
-                this.WindowState = System.Windows.WindowState.Normal;
-                MaxButton_Click_1(null, null);
-            }
-
-            ResizeControl();
-
-
-        } //拉伸窗口调用ResizeControl()
+        
+       
         private bool ResizeControl()
         {
             Border1.Width = this.Width - 14.0;
@@ -103,50 +87,7 @@ namespace qiquanui
             this.WindowState = WindowState.Minimized;
         }
 
-        Rect rcnormal;//定义一个全局rect记录还原状态下窗口的位置和大小。
-        bool isWindowMax = false;
-        private void MaxButton_Click_1(object sender, RoutedEventArgs e)
-        {
-
-            if (isWindowMax == false)
-            {
-                Rect rcnormal = new Rect(this.Left, this.Top, this.Width, this.Height);//保存下当前位置与大小
-                windowShadowControlWidth = 7;
-                this.BorderThickness = new Thickness(0);
-                maxButton.Style = Resources["normalSty"] as Style;
-                this.Opacity = 1;
-                Border1.Visibility = Visibility.Hidden;
-
-
-                Rect rc = SystemParameters.WorkArea;//获取工作区大小
-                this.Left = 0;//设置位置
-                this.Top = 0;
-
-
-                this.Width = rc.Width;
-                this.Height = rc.Height;
-                isWindowMax = true;
-
-            }
-            else if (isWindowMax == true)
-            {
-                windowShadowControlWidth = 0;
-                this.BorderThickness = new Thickness(7);
-                maxButton.Style = Resources["maxSty"] as Style;
-                this.Left = rcnormal.Left;
-                this.Top = rcnormal.Top;
-                this.Width = rcnormal.Width;
-                this.Height = rcnormal.Height;
-                this.Left = 50;
-                this.Top = 50;
-                this.Opacity = 0.95;
-
-                Border1.Visibility = Visibility.Visible;
-                isWindowMax = false;
-
-            }
-
-        } //最大化窗口按钮
+        
         private bool closeStoryBoardCompleted = false;
         private DoubleAnimation closeAnimation1;
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
@@ -193,6 +134,7 @@ namespace qiquanui
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
             stockChart.Charts[0].Collapse();
+
             switch (CHARTTYPE)
             {
                 case 0:
@@ -258,7 +200,7 @@ namespace qiquanui
                     r = RightEdge;
                 else
                     r = Probability[i].x;
-                temp.Margin = new Thickness(0 - 100 + 1.0 * ((l + r) / 2 - LeftEdge) / (RightEdge - LeftEdge) * Width, 35, 0, 0);
+                temp.Margin = new Thickness(0 - 50 + 1.0 * ((l + r) / 2 - LeftEdge) / (RightEdge - LeftEdge) * Width, 180, 0, 0);
                 temp.Height = 35;
                 temp.VerticalAlignment = VerticalAlignment.Top;
                 temp.Visibility = Visibility.Visible;

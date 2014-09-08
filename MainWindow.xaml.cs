@@ -446,7 +446,7 @@ namespace qiquanui
                         r = yk.RightEdge;
                     else
                         r = yk.probability[i].x;
-                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * chartBorder.Width, 10, 0, 0);
+                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * chartBorder.Width, 40, 0, 0);
                     temp.Height = 30;
                     temp.VerticalAlignment = VerticalAlignment.Top;
                     temp.Visibility = Visibility.Visible;
@@ -2428,7 +2428,7 @@ namespace qiquanui
                         r = yk.RightEdge;
                     else
                         r = yk.probability[i].x;
-                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * chartBorder.Width, 10, 0, 0);
+                    temp.Margin = new Thickness(25 - 25 + 1.0 * ((l + r) / 2 - yk.LeftEdge) / (yk.RightEdge - yk.LeftEdge) * chartBorder.Width, 40, 0, 0); 
                     temp.Height = 30;
                     temp.VerticalAlignment = VerticalAlignment.Top;
                     temp.Visibility = Visibility.Visible;

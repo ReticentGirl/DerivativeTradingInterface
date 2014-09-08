@@ -28,6 +28,9 @@
     </Window.Resources>
     <Grid Background="#FF0080D8">
         <Button Content="Button" HorizontalAlignment="Left" Margin="333,4,0,0" VerticalAlignment="Top" Width="15" Height="13" Style="{StaticResource CloseButtonSty}" Click="Button_Click"/>
-        <Label x:Name="MessageText" Content="Label" HorizontalAlignment="Left" Margin="22,20,0,0" VerticalAlignment="Top" Height="51" Width="306" Foreground="White"/>
+        <Label  HorizontalAlignment="Left" Margin="22,20,0,0" VerticalAlignment="Top" Height="51" Width="306" MaxWidth="306" Foreground="White">
+            <TextBlock x:Name="MessageText" TextWrapping="Wrap" Text="Label"></TextBlock>
+
+        </Label>
     </Grid>
 </Window>
