@@ -3353,7 +3353,7 @@ namespace qiquanui
                     buy=false;
                     item.Number*=-1;
                 }
-                MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number);
+                MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number,1000);    //需要改一下
             }
             //this.WindowState = WindowState.Minimized;
             pwindow.WindowState = WindowState.Normal;
@@ -3374,7 +3374,7 @@ namespace qiquanui
                     buy = false;
                     item.Number *= -1;
                 }
-                MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number);
+                MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number,1000);   //需要改一下
             }
             //this.WindowState = WindowState.Minimized;
             pwindow.WindowState = WindowState.Normal;

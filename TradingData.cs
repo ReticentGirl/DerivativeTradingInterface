@@ -368,7 +368,8 @@ namespace qiquanui
                                  double _marketPrice,
                                  bool _isBuy,
                                  bool _optionOrFuture,
-                                 int _tradingNum
+                                 int _tradingNum,
+                                 double _limitedprice
                               )
         {
             userID = _userID;
@@ -377,7 +378,9 @@ namespace qiquanui
             exercisePrice = _exercisePrice;
             marketPrice = _marketPrice;
 
-            clientagePrice = "-";   //将委托价默认"-"
+            clientageType = 1;
+
+            clientagePrice = _limitedprice.ToString();
 
             isBuy = _isBuy;
 
@@ -393,7 +396,7 @@ namespace qiquanui
 
             if (_isBuy == true)
             {
-                tradingType = 0;  //初始化为买
+                tradingType = 0; 
                
 
             }
