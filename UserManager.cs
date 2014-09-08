@@ -1229,7 +1229,7 @@ namespace qiquanui
 
             if (isHave == false)
             {
-                string querySql = String.Format("SELECT * FROM User WHERE UserID='{0}' AND UserPassWord={1}", add_userID, add_passWord);
+                string querySql = String.Format("SELECT * FROM User WHERE UserID='{0}' AND UserPassWord='{1}'", add_userID, add_passWord);
 
                 DataTable usersDT = DataControl.QueryTable(querySql);
 
