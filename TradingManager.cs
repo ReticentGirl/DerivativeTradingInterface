@@ -105,7 +105,7 @@ namespace qiquanui
                     if (i_td.UserID.Equals(a_userID) && i_td.InstrumentID.Equals(_instrumentID) && i_td.IsBuy == _isBuy)
                     {
                         haveSame = true;
-
+                        
                         TradingOC[i].TradingNum += _tradingNum;
                         TradingOC[i].ClientageType = 1;
                         TradingOC[i].ClientagePrice = _limitedprice.ToString();

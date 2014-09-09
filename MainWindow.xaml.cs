@@ -1634,7 +1634,11 @@ namespace qiquanui
                     }
                     else if (cTd.ClientageType == 1)    //限价
                     {
-                        cTd.ClientagePrice = cTd.MarketPrice.ToString();
+                        if (cTd.ClientagePrice.Equals("-"))
+                        {
+                            cTd.ClientagePrice = cTd.MarketPrice.ToString();
+                        }
+                 
                         cTd.IsEnableOfClientagePrice = true;
                     }
                 }
@@ -1655,7 +1659,11 @@ namespace qiquanui
                         cTd.AboutIOC = Visibility.Visible;
                         cTd.AboutROD = Visibility.Visible;
 
-                        cTd.ClientagePrice = cTd.MarketPrice.ToString();
+                        if (cTd.ClientagePrice.Equals("-"))
+                        {
+                            cTd.ClientagePrice = cTd.MarketPrice.ToString();
+                        }
+                      
                         cTd.IsEnableOfClientagePrice = true;
                     }
 
