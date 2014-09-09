@@ -61,7 +61,7 @@ namespace qiquanui
         }
 
 
-        public void AddTrading(string _instrumentID, bool _isBuy, int _tradingNum,double _limitedprice)
+        public void AddTrading(string _instrumentID, bool _isBuy, int _tradingNum, double _limitedprice)
         {
             string a_userID = pwindow.userComboBox.Text;
 
@@ -97,9 +97,35 @@ namespace qiquanui
 
                 bool a_optionOrFuture = false;   //期权
 
-                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice.ToString(), a_marketPrice, _isBuy, a_optionOrFuture, _tradingNum,_limitedprice);
+                bool haveSame = false;   //判断是否有同样的
 
-                TradingOC.Add(add_td);
+                for (int i = 0; i < TradingOC.Count; i++)
+                {
+                    TradingData i_td = TradingOC[i];
+                    if (i_td.UserID.Equals(a_userID) && i_td.InstrumentID.Equals(_instrumentID) && i_td.IsBuy == _isBuy)
+                    {
+                        haveSame = true;
+
+                        TradingOC[i].TradingNum += _tradingNum;
+                        TradingOC[i].ClientageType = 1;
+                        TradingOC[i].ClientagePrice = _limitedprice.ToString();
+                    } 
+
+                  
+                }
+
+
+                if (haveSame == false)
+                {
+                    TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice.ToString(), a_marketPrice, _isBuy, a_optionOrFuture, _tradingNum, _limitedprice);
+
+                    TradingOC.Add(add_td);
+                }
+
+               
+
+
+
 
             }
             else
@@ -109,7 +135,7 @@ namespace qiquanui
                 string a_exercisePrice = "-";
 
                 double a_marketPrice = 0;
-                
+
                 if (_isBuy == true)
                 {
                     a_marketPrice = Convert.ToDouble(aDr["AskPrice1"]);
@@ -127,13 +153,13 @@ namespace qiquanui
 
             }
 
-          
 
-            
+
+
         }
 
 
-        public void AddTradingForCloseOut(string _userID,string _instrumentID, bool _isBuy, int _tradingNum)
+        public void AddTradingForCloseOut(string _userID, string _instrumentID, bool _isBuy, int _tradingNum)
         {
             string a_userID = _userID;
 
@@ -169,7 +195,7 @@ namespace qiquanui
 
                 bool a_optionOrFuture = false;   //期权
 
-                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice.ToString(), a_marketPrice, _isBuy,_tradingNum,a_optionOrFuture);
+                TradingData add_td = new TradingData(a_userID, a_instrumentID, a_callOrPut, a_exercisePrice.ToString(), a_marketPrice, _isBuy, _tradingNum, a_optionOrFuture);
 
                 TradingOC.Add(add_td);
 
@@ -288,7 +314,7 @@ namespace qiquanui
 
         }
 
-        
+
         /*
         public void TurnOver()
         {
