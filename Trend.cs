@@ -214,18 +214,29 @@ namespace qiquanui
             return ans;
         }
 
-        public string id;
+        public string id,id2;
         public void initial(string _id, Window _pwindow)
         {
             this.id = _id;
+            this.id2 = null;
             this.pwindow = _pwindow;
             initial();
         }
 
+        public void initial2(string _id1, string _id2, Window _pwindow)
+        {
+            this.id = _id1;
+            this.id2 = _id2;
+            this.pwindow = _pwindow;
+            initial();
+            initial2();
+            initialDiff();
+        }
+
         public Window pwindow;
-        public ObservableCollection<TrendPoint> Data;
+        public ObservableCollection<TrendPoint> Data, Data2, DataDiff1, DataDiff2;
         public System.Windows.Data.Binding CoorBinding;
-        public System.Windows.Data.Binding DataBinding;
+        public System.Windows.Data.Binding DataBinding, DataBinding2, DataBindingDiff1, DataBindingDiff2;
         public ObservableCollection<TrendPoint> Coor;
         Timer timer;
         public string DateToTradingDay(DateTime dt)
@@ -340,6 +351,120 @@ namespace qiquanui
             timer.Start();
         }
 
+        private void initial2()
+        {
+            timer.Stop();
+            if (id2 == null) return;
+            if (id2.Equals("上证50指数")) id2 = "IH1409";
+            if (id2.Equals("沪深300指数")) id2 = "IF1409";
+            string _tradingday = DateToTradingDay(DataManager.now);
+            string sql = "select * from minutedata where instrumentid='" + id2 + "' and tradingday='" + _tradingday + "'  order by TradingDay,updatetime";
+            DataTable dt = DataControl.QueryTable(sql);
+            if (dt.Rows.Count == 0)
+            {
+                Console.WriteLine("Initialing Trend Error! " + id2 + " Count==0");
+                return;
+            }
+
+            Data2 = new ObservableCollection<TrendPoint>();
+
+            DateTime now = DataManager.now;
+
+            DateTime start = new DateTime(now.Year, now.Month, now.Day, 9, 15, 0);
+            middle = now.AddMinutes(0);
+            middle = new DateTime(middle.Year, middle.Month, middle.Day, middle.Hour, middle.Minute, 0);
+            end = new DateTime(now.Year, now.Month, now.Day, 15, 16, 0);
+            middleNumber = -1;
+
+            DateTime present = start;
+            int i = 0;
+            DateTime nextLine = StringToDate((string)dt.Rows[i]["TradingDay"], (string)dt.Rows[i]["UpdateTime"]);
+            TrendPoint last = new TrendPoint(DateToMinute(start.AddMinutes(-1)), (double)dt.Rows[0]["PreClosePrice"]);
+            do
+            {
+                while (nextLine < present && i < dt.Rows.Count)
+                {
+                    i++;
+                    if (i == dt.Rows.Count)
+                        nextLine = end;
+                    else
+                        nextLine = StringToDate((string)dt.Rows[i]["TradingDay"], (string)dt.Rows[i]["UpdateTime"]);
+                }
+                if (present.Equals(nextLine))
+                {
+                    string time = DateToMinute(present);
+                    double price = (double)dt.Rows[i]["LastPrice"];
+                    last = new TrendPoint(time, price);
+                }
+                else
+                {
+                    string time = DateToMinute(present);
+                    last = new TrendPoint(time, last.Y);
+
+                }
+
+
+                if (present <= middle)
+                {
+                    Data2.Add(last);
+                }
+
+
+
+                if (present <= middle)
+                    middleNumber++;
+
+                present = present.AddMinutes(1);
+                if (present.Hour == 11 && present.Minute == 31)
+                    present = new DateTime(present.Year, present.Month, present.Day, 13, 0, 0);
+                //if (present.Hour == 15 && present.Minute == 16)
+                //{
+                //    present = present.AddDays(1);
+                //    present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+                //}
+                //Console.WriteLine(present);
+            }
+            while (!present.Equals(end));
+
+
+            DataBinding2 = new System.Windows.Data.Binding();
+            DataBinding2.Source = Data2;
+            timer.Start();
+        }
+
+        private void initialDiff()
+        {
+            timer.Stop();
+
+            DataDiff1 = new ObservableCollection<TrendPoint>();
+            DataDiff2 = new ObservableCollection<TrendPoint>();
+
+            for (int i = 0; i < Data.Count; i++)
+            {
+
+                TrendPoint tp = new TrendPoint(Data[i].X,Data[i].Y-Data2[i].Y);
+                if (tp.Y>0)
+                    DataDiff1.Add(tp);
+                else if (tp.Y < 0)
+                    DataDiff2.Add(tp);
+                else if (tp.Y == 0)
+                {
+                    DataDiff1.Add(tp);
+                    DataDiff2.Add(tp);
+       
+                }
+            }
+
+
+            DataBindingDiff1 = new System.Windows.Data.Binding();
+            DataBindingDiff1.Source = DataDiff1;
+            DataBindingDiff2 = new System.Windows.Data.Binding();
+            DataBindingDiff2.Source = DataDiff2;
+
+
+            timer.Start();
+        }
+
 
         delegate void RateTextCallBack(object sender, ElapsedEventArgs e);
         private void RefreshTrend(object sender, ElapsedEventArgs e)
@@ -362,12 +487,23 @@ namespace qiquanui
                     middleNumber++;
                     DateTime newtime = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
                     Data.Add(new TrendPoint(DateToMinute(newtime), 0));
-
+                    if (id2!=null)
+                        Data2.Add(new TrendPoint(DateToMinute(newtime), 0));
                 }
 
                 DataRow row = (DataRow)DataManager.All[id];
                 double lastprice = (double)row["LastPrice"];
-                Data[middleNumber].Y = lastprice;
+                string oldx=Data[middleNumber].X;
+                Data.RemoveAt(middleNumber);
+                Data.Add(new TrendPoint(oldx, lastprice));
+               // Data[middleNumber].Y = lastprice;
+                if (id2 != null)
+                {
+                    DataRow row2 = (DataRow)DataManager.All[id2];
+                    double lastprice2 = (double)row2["LastPrice"];
+                    Data2[middleNumber].Y = lastprice2;
+                   // DataDiff1[middleNumber].Y = Data[middleNumber].Y - Data2[middleNumber].Y;
+                }
                 timer.Start();
             }
 

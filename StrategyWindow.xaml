@@ -1374,7 +1374,7 @@
                                 <GridViewColumn x:Name="ifChosenSGVCH" Header="" Width="50">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <CheckBox x:Name="ifChosenGCheckBox" />
+                                            <CheckBox x:Name="ifChosenGCheckBox" IsChecked="{Binding IfChoose, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -1505,7 +1505,7 @@
                 <am:LineChartGraph x:Name="VolatilityGraphTemp2" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
 
             </am:LineChart>
-            <Label Content="Label" Canvas.Left="2" Canvas.Top="11" Width="130" Background="#FF120D13" Foreground="#00000000"/>
+            <Label Content="Label" Canvas.Left="2" Canvas.Top="10" Width="130" Background="#FF120D13" Foreground="#00000000"/>
             <Label x:Name="LegendMask" Content="Label" Canvas.Left="81" Canvas.Top="185" Width="130" Background="#FF120D13" Foreground="#00000000"/>
             <Button x:Name="ZoomInYKs" Style="{StaticResource ZoomButtonSty}" Content="" Canvas.Left="317" Width="20" Click="ZoomInYKs_Click" Canvas.Top="-3" Height="20" Visibility="Hidden"/>
             <Button x:Name="ZoomInZS" Style="{StaticResource ZoomButtonSty}" Content="" Canvas.Left="317" Width="20" Click="ZoomInZS_Click" Canvas.Top="229" Height="20" Visibility="Hidden"/>

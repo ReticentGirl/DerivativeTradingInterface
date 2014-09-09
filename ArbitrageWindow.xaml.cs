@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AmCharts.Windows.Core;
+using AmCharts.Windows.Line;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -49,7 +51,7 @@ namespace qiquanui
 
             ResizeControl();
         } //拉伸窗口调用ResizeControl()
-        
+
         private bool ResizeControl()
         {
             Border1.Width = this.Width - 14.0;
@@ -172,15 +174,15 @@ namespace qiquanui
             CrossDueOC = new ObservableCollection<CrossArbitrageLine>();
             calendarSpreadListView.DataContext = CrossDueOC;
 
-            stockChart.Charts[0].Collapse();
-            stockChart2.Charts[0].Collapse();
-            stockChart3.Charts[0].Collapse();
+            //stockChart.Charts[0].Collapse();
+            //stockChart2.Charts[0].Collapse();
+            //stockChart3.Charts[0].Collapse();
 
-            DateTime present = DataManager.now;
-            present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
-            stockChart.StartDate = present;
-            stockChart2.StartDate = present;
-            stockChart3.StartDate = present;
+            //DateTime present = DataManager.now;
+            //present = new DateTime(present.Year, present.Month, present.Day, 9, 15, 0);
+            //stockChart.StartDate = present;
+            //stockChart2.StartDate = present;
+            //stockChart3.StartDate = present;
 
         }//窗口移动
 
@@ -202,14 +204,14 @@ namespace qiquanui
             timer.Start();
         }
 
-        private void RefreshCrossDue(object sender,ElapsedEventArgs e)
+        private void RefreshCrossDue(object sender, ElapsedEventArgs e)
         {
             for (int i = 0; i < listOfCrossDue.Rows.Count; i++)
-            { 
-                string id=(string)listOfCrossDue.Rows[i]["InstrumentID"];
-                DataRow row = (DataRow) DataManager.All[id];
+            {
+                string id = (string)listOfCrossDue.Rows[i]["InstrumentID"];
+                DataRow row = (DataRow)DataManager.All[id];
                 CrossArbitrageLine cal = CrossDueOC[i];
-                cal.InstrumentID = (string) row["InstrumentID"];
+                cal.InstrumentID = (string)row["InstrumentID"];
                 string id1, id2;
                 id1 = cal.InstrumentID.Substring(4, 5);
                 id2 = cal.InstrumentID.Substring(10, 5);
@@ -221,8 +223,8 @@ namespace qiquanui
                 dr2 = (DataRow)DataManager.All[id2];
                 ch1 = (string)dr1["InstrumentName"];
                 ch2 = (string)dr2["InstrumentName"];
-                cal.Chinese = ch1 +"1"+id1.Substring(2,3)+ "/" + ch2+"1"+id2.Substring(2,3);
-                cal.Price = ""+(SomeCalculate.caculateMargin(id1,1,true,(double)dr1["LastPrice"])+SomeCalculate.caculateMargin(id2,1,true,(double)dr2["LastPrice"]));
+                cal.Chinese = ch1 + "1" + id1.Substring(2, 3) + "/" + ch2 + "1" + id2.Substring(2, 3);
+                cal.Price = "" + (SomeCalculate.caculateMargin(id1, 1, true, (double)dr1["LastPrice"]) + SomeCalculate.caculateMargin(id2, 1, true, (double)dr2["LastPrice"]));
                 cal.Difference = "" + ((double)dr1["LastPrice"] - (double)dr2["LastPrice"]);
                 cal.DayToDue = DayToDue((string)dr1["LastDate"]) + "天/" + DayToDue((string)dr2["LastDate"]) + "天";
             }
@@ -244,9 +246,9 @@ namespace qiquanui
             int no = calendarSpreadListView.Items.IndexOf(e.AddedItems[0]);
             FutureID1 = CrossDueOC[no].FutureID1;
             FutureID2 = CrossDueOC[no].FutureID2;
-            Chart1.Title = FutureID1;
-            Chart2.Title = FutureID2;
-            new Thread(new ThreadStart(TrendInitial)).Start();
+            //Chart1.Title = FutureID1;
+            //Chart2.Title = FutureID2;
+            new Thread(new ThreadStart(RightCharts)).Start();
         }
 
         private void TrendInitial()
@@ -262,7 +264,7 @@ namespace qiquanui
             TrendInitialCallBack3(trm3);
         }//初始化走势图（载入历史数据）
 
-        Trend trm1,trm2,trm3;
+        Trend trm1, trm2, trm3;
         System.Timers.Timer timer;
         delegate void trendInitialCallBack(Trend tr);
         private void TrendInitialCallBack(Trend tr)
@@ -275,7 +277,7 @@ namespace qiquanui
             }
             else
             {
-                stockSet1.ItemsSource = tr.Data;
+                //stockSet1.ItemsSource = tr.Data;
                 //stockSet2.ItemsSource = tr.Data;
 
             }
@@ -291,7 +293,7 @@ namespace qiquanui
             }
             else
             {
-                stockSet2.ItemsSource = tr.Data;
+                //stockSet2.ItemsSource = tr.Data;
                 //stockSet2.ItemsSource = tr.Data;
 
             }
@@ -307,7 +309,7 @@ namespace qiquanui
             }
             else
             {
-                stockSet3.ItemsSource = tr.Data;
+                //stockSet3.ItemsSource = tr.Data;
                 //stockSet2.ItemsSource = tr.Data;
 
             }
@@ -327,7 +329,7 @@ namespace qiquanui
                 {
                     changed = true;
                     int index = i;
-                    string id1=CrossDueOC[i].FutureID1;
+                    string id1 = CrossDueOC[i].FutureID1;
                     MainWindow.otm.AddTrading(id1, true, 1, 1000);    //需要改一下
 
                     string id2 = CrossDueOC[i].FutureID2;
@@ -340,14 +342,129 @@ namespace qiquanui
 
         }
 
+        Trend2 tr2;
+        private void RightCharts()
+        {
+            string id1 = FutureID1;
+            string id2 = FutureID2;
+
+            tr2 = new Trend2();
+            tr2.initial2(id1, id2, this);
+
+            BindingForTrend();
+        }
+
+        delegate void RateTextCallBack();
+
+        public void BindingForTrend()
+        {
+            RateTextCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new RateTextCallBack(BindingForTrend);
+                this.Dispatcher.Invoke(d, new object[] { });
+            }
+            else
+            {
+
+
+                System.Windows.Data.Binding coorBinding = tr2.CoorBinding;    //X坐标轴绑定
+                System.Windows.Data.Binding dataBinding = tr2.DataBinding;    //X坐标轴绑定
+                System.Windows.Data.Binding dataBinding2 = tr2.DataBinding2;    //X坐标轴绑定
+                System.Windows.Data.Binding dataBindingDiff1 = tr2.DataBindingDiff1;    //X坐标轴绑定
+                System.Windows.Data.Binding dataBindingDiff2 = tr2.DataBindingDiff2;    //X坐标轴绑定
+
+
+                //Bindings[10] = coorBinding;
+                //Bindings[11] = dataBinding;
+                //Bindings[12] = null;
+
+                VolatilityChart1.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                VolatilityChart1.IDMemberPath = "X";
+                VolatilityChart1.Graphs.Clear();
+
+
+
+                LineChartGraph test = new LineChartGraph();
+
+                test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+                test.SeriesIDMemberPath = "X";
+                test.ValueMemberPath = "Y";
+                //test.Title = yk.title;
+                test.LineThickness = 2;
+                ///[Style]
+
+                test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+
+
+                VolatilityChart1.Graphs.Add(test);
+
+
+
+                test = new LineChartGraph();
+
+                test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding2);
+                test.SeriesIDMemberPath = "X";
+                test.ValueMemberPath = "Y";
+                //test.Title = yk.title;
+                test.LineThickness = 2;
+                ///[Style]
+
+                test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
+
+
+                VolatilityChart1.Graphs.Add(test);
+
+
+
+
+
+
+
+                VolatilityChart2.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                VolatilityChart2.IDMemberPath = "X";
+                //VolatilityChart2.Graphs.Clear();
+
+                test = VolatilityGraph2;
+
+                test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBindingDiff1);
+                test.SeriesIDMemberPath = "X";
+                test.ValueMemberPath = "Y";
+                //test.Title = yk.title;
+                test.LineThickness = 2;
+                ///[Style]
+
+               // test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
+
+
+
+                test = VolatilityGraph3;
+
+                test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBindingDiff2);
+                test.SeriesIDMemberPath = "X";
+                test.ValueMemberPath = "Y";
+                //test.Title = yk.title;
+                test.LineThickness = 2;
+                ///[Style]
+
+               // test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
+
+
+
+
+            }
+
+
+        }
+
     }
 
 
 
 
     public class CrossArbitrageLine : INotifyPropertyChanged
-    { 
-        public string InstrumentID{get;set;}
+    {
+        public string InstrumentID { get; set; }
         public string Chinese { get; set; }
         public string Price { get; set; }
         public string Difference { get; set; }

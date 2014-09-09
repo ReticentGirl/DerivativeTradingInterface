@@ -3187,7 +3187,7 @@ namespace qiquanui
         private void placeOrderSButton_Click(object sender, RoutedEventArgs e)
         {
             bool changed = false;
-           for (int i=0;i<qjoc.Count;i++)
+            for (int i = 0; i < cloc.Count; i++)
                if (cloc[i].IfChoose)
                {
                    int index = i;
