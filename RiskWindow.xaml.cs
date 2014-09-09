@@ -608,11 +608,16 @@ namespace qiquanui
         {
             for (int i = 0; i < RiskLabManager.RiskOC2.Count;i++)
             {
-               
-                    bool buy = true;
-                    MainWindow.otm.AddTrading(RiskLabManager.RiskOC2[i].InstrumentID, buy, RiskLabManager.RiskOC2[i].TradingNum, 1000);    //需要改一下
-              
-
+                bool buy = true;
+                if (RiskLabManager.RiskOC2[i].SBuyOrSell.Equals("卖"))
+                    buy = false;
+                if (RiskLabManager.RiskOC2[i].InstrumentID.Length==13)
+                    MainWindow.otm.AddTrading(RiskLabManager.RiskOC2[i].InstrumentID,buy, RiskLabManager.RiskOC2[i].TradingNum, 1000);    //需要改一下
+                else
+                    if (RiskLabManager.RiskOC2[i].InstrumentID.Length == 8)
+                       MainWindow.otm.AddTrading(RiskLabManager.RiskOC2[i].InstrumentID.Substring(1, 6), buy, RiskLabManager.RiskOC2[i].TradingNum, 1000);    //需要改一下
+                    else
+                        MainWindow.otm.AddTrading(RiskLabManager.RiskOC2[i].InstrumentID.Substring(1,13), buy, RiskLabManager.RiskOC2[i].TradingNum, 1000);    //需要改一下
             }
            
             //this.WindowState = WindowState.Minimized;

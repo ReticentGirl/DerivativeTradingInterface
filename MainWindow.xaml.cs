@@ -708,7 +708,7 @@ namespace qiquanui
             {
                 openRightCanvas();
 
-
+          
 
                 DateTime present = DataManager.now;
                 string data1 = present.ToString("yyyyMMdd");

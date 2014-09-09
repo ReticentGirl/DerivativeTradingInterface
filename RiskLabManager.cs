@@ -16,7 +16,7 @@ namespace qiquanui
     {
 
         public ObservableCollection<RiskLabData> RiskOC1 = new ObservableCollection<RiskLabData>(); //单支期权的希腊值
-        public  static ObservableCollection<RiskLabData> RiskOC2 = new ObservableCollection<RiskLabData>(); //推荐组合
+        public static ObservableCollection<RiskLabData> RiskOC2 = new ObservableCollection<RiskLabData>(); //推荐组合
 
         RiskWindow pRiskWindow;    //风险实验室窗体指针
 
@@ -109,23 +109,12 @@ namespace qiquanui
 
             for (int i = 0; i < RiskOC1.Count(); i++)
             {
-                //if (RiskOC1[i].SBuyOrSell == "buy")
-                //{
-
                     tempDelta = RiskOC1[i].SingleDelta * RiskOC1[i].TradingNum;
                     tempGama = Convert.ToDouble(RiskOC1[i].SingleGamma) * RiskOC1[i].TradingNum;
                     tempTheta = Convert.ToDouble(RiskOC1[i].SingleTheta) * RiskOC1[i].TradingNum;
                     tempVega = Convert.ToDouble(RiskOC1[i].SingleVega) * RiskOC1[i].TradingNum;
                     tempRho = Convert.ToDouble(RiskOC1[i].SingleRho) * RiskOC1[i].TradingNum;
-                //}
-                //else if (RiskOC1[i].SBuyOrSell == "call")
-                //{
-                //    tempDelta = RiskOC1[i].SingleDelta * RiskOC1[i].TradingNum * (-1);
-                //    tempGama = Convert.ToDouble(RiskOC1[i].SingleGamma) * RiskOC1[i].TradingNum * (-1);
-                //    tempTheta = Convert.ToDouble(RiskOC1[i].SingleTheta) * RiskOC1[i].TradingNum * (-1);
-                //    tempVega = Convert.ToDouble(RiskOC1[i].SingleVega) * RiskOC1[i].TradingNum * (-1);
-                //    tempRho = Convert.ToDouble(RiskOC1[i].SingleRho) * RiskOC1[i].TradingNum * (-1);
-                //}
+              
                 dMultiDelta += tempDelta;
                 dMultiGamma += tempGama;
                 dMultiTheta += tempTheta;
@@ -236,6 +225,7 @@ namespace qiquanui
 
           
             RiskOC2.Add(rdOption);
+            //rdOption.InstrumentID.Substring(2, 8);
             RiskOC2.Add(rdFuture);
             }
     }
