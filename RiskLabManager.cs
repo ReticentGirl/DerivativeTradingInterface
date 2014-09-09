@@ -16,7 +16,7 @@ namespace qiquanui
     {
 
         public ObservableCollection<RiskLabData> RiskOC1 = new ObservableCollection<RiskLabData>(); //单支期权的希腊值
-        public ObservableCollection<RiskLabData> RiskOC2 = new ObservableCollection<RiskLabData>(); //推荐组合
+        public  static ObservableCollection<RiskLabData> RiskOC2 = new ObservableCollection<RiskLabData>(); //推荐组合
 
         RiskWindow pRiskWindow;    //风险实验室窗体指针
 

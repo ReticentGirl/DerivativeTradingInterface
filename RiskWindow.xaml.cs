@@ -378,7 +378,6 @@ namespace qiquanui
             teat1 = setConfidenceLevelRecomTBox.Text;
             double Cov = Convert.ToDouble(teat1);
             pRm.showData(Cov);
-
         }
 
         public void testForChart()
@@ -603,6 +602,21 @@ namespace qiquanui
             coorBinding2.Source = coor2;
             this.GammaDelta1.SetBinding(SerialChart.SeriesSourceProperty, coorBinding2);
             this.GammaDelta1.IDMemberPath = "X";
+        }
+
+        private void placeOrderBtn_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < RiskLabManager.RiskOC2.Count;i++)
+            {
+               
+                    bool buy = true;
+                    MainWindow.otm.AddTrading(RiskLabManager.RiskOC2[i].InstrumentID, buy, RiskLabManager.RiskOC2[i].TradingNum, 1000);    //需要改一下
+              
+
+            }
+           
+            //this.WindowState = WindowState.Minimized;
+            pWindow.WindowState = WindowState.Normal;
         }
 
     }
