@@ -1333,7 +1333,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn x:Name="nameGGVCH"  DisplayMemberBinding="{Binding Name}" Header="组合名称" Width="80"/>
+                                <GridViewColumn x:Name="nameGGVCH"  DisplayMemberBinding="{Binding Name}" Header="组合名称" Width="120"/>
                                 <GridViewColumn x:Name="expectedRevenueGGVCH" DisplayMemberBinding="{Binding ExpectEarn}" Header="收益期望" Width="80"/>
                                 <GridViewColumn x:Name="lotGGVCH" Header="份数" Width="60">
                                     <GridViewColumn.CellTemplate>
@@ -1344,12 +1344,12 @@
                                 </GridViewColumn>
                                 <GridViewColumn x:Name="priceGGVCH" DisplayMemberBinding="{Binding Price}" Header="价格" Width="80"/>
                                 <GridViewColumn x:Name="marginGGVCH" DisplayMemberBinding="{Binding Guarantee}" Header="保证金" Width="80"/>
-                                <GridViewColumn x:Name="serviceGGVCH" DisplayMemberBinding="{Binding Fee}" Header="手续费" Width="80"/>
+                                <GridViewColumn x:Name="serviceGGVCH" DisplayMemberBinding="{Binding Fee}" Header="手续费" Width="60"/>
                                 <!--只有卖才有-->
                                 <GridViewColumn x:Name="maxGainGGVCH" DisplayMemberBinding="{Binding MaxEarn}" Header="最大收益" Width="80"/>
-                                <GridViewColumn x:Name="rateOfGainGGVCH" DisplayMemberBinding="{Binding EarnRate}" Header="收益概率" Width="80"/>
+                                <GridViewColumn x:Name="rateOfGainGGVCH" DisplayMemberBinding="{Binding EarnRate}" Header="收益概率" Width="70"/>
                                 <GridViewColumn x:Name="maxLossGGVCH" DisplayMemberBinding="{Binding MaxLose}" Header="最大损失" Width="80"/>
-                                <GridViewColumn x:Name="rateOfLossGGVCH" DisplayMemberBinding="{Binding LoseRate}" Header="损失概率" Width="80"/>
+                                <GridViewColumn x:Name="rateOfLossGGVCH" DisplayMemberBinding="{Binding LoseRate}" Header="损失概率" Width="70"/>
                                 <GridViewColumn x:Name="varGGVCH" DisplayMemberBinding="{Binding VaR}" Header="VaR" Width="60"/>
                             </GridView>
                         </ListView.View>
@@ -1378,7 +1378,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="nameOfStrategySGVCH" Header="策略名称" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="nameOfStrategySGVCH" Header="策略名称" Width="120"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding ExpectEarn}" x:Name="expectedRevenueSGVCH" Header="收益期望" Width="80"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding GroupName}" x:Name="nameSGVCH" Header="组合名称" Width="80"/>
                                 <GridViewColumn x:Name="lotSGVCH" Header="份数" Width="60">
@@ -1390,12 +1390,12 @@
                                 </GridViewColumn>
                                 <GridViewColumn DisplayMemberBinding="{Binding Price}" x:Name="priceSGVCH" Header="价格" Width="80"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Guarantee}" x:Name="marginSGVCH" Header="保证金" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Fee}" x:Name="serviceSGVCH" Header="手续费" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Fee}" x:Name="serviceSGVCH" Header="手续费" Width="60"/>
                                 <!--只有卖才有-->
                                 <GridViewColumn DisplayMemberBinding="{Binding MaxEarn}" x:Name="maxGainSGVCH" Header="最大收益" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding EarnRate}" x:Name="rateOfGainSGVCH" Header="收益概率" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding EarnRate}" x:Name="rateOfGainSGVCH" Header="收益概率" Width="70"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding MaxLose}" x:Name="maxLossSGVCH" Header="最大损失" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding LoseRate}" x:Name="rateOfLossSGVCH" Header="损失概率" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding LoseRate}" x:Name="rateOfLossSGVCH" Header="损失概率" Width="70"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding VaR}" x:Name="varSGVCH" Header="VaR" Width="60"/>
                             </GridView>
                         </ListView.View>

@@ -2470,7 +2470,7 @@
                                 <RowDefinition Height="152*"/>
                             </Grid.RowDefinitions>
                             <!--走势图-->
-                            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="10,9,20,0" VerticalAlignment="Top" Height="138">
+                            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="15,12,24.4,0" VerticalAlignment="Top" Height="138">
                                 <ams:StockChart.DataSets>
                                     <ams:DataSet Name="stockSet1" Brush="#7f8da9"
                                 
@@ -2581,7 +2581,7 @@
                                 </ams:StockChart.Charts>
 
                             </ams:StockChart>
-                            <ams:StockChart Name="stockChart2" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="10,0,20,0" Grid.Row="1" VerticalAlignment="Top" Height="152">
+                            <ams:StockChart Name="stockChart2" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="15,0,24.4,5" Grid.Row="1" VerticalAlignment="Top" Height="146">
                                 <ams:StockChart.DataSets>
                                     <ams:DataSet Name="stockSet2" Brush="#7f8da9"
                                 
@@ -2713,7 +2713,7 @@
                             <!--这里放概率图-->
                             <am:LineChart x:Name="VolatilityChart" Foreground="LightGray"
                       
-					BorderBrush="Transparent" BorderThickness="0" Background="Transparent" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Margin="56,10,29,10">
+					BorderBrush="Transparent" BorderThickness="0" Background="Transparent" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Margin="56,20,29,10">
 
                                 <am:LineChart.CategoryAxis>
                                     <am:CategoryAxis StrokeThickness="0"/>

@@ -3292,18 +3292,18 @@ namespace qiquanui
         //nConut是组合一共有多少支期权
         //组合每支期权合约数组
         //购买的每支期权多少份
-        {/*
-            MWCellArray InputNum = new MWCellArray(1, nCount);
-            MWCellArray InputID = new MWCellArray(1, nCount);
-            for (int i = 0; i < nCount; i++)
-            {
-                InputNum[i + 1] = Num[i];
-                InputID[i + 1] = "'" + InstrumentName[i] + "'";
-            }
-            RiskControl.Class1 output1 = new Class1();
-            MWNumericArray x0 = (MWNumericArray)output1.VaR(InputID, InputNum, nCount, dCov);
-            double ComVar = Math.Round((double)x0, 3);
-            return ComVar;*/
+        {
+            //MWCellArray InputNum = new MWCellArray(1, nCount);
+            //MWCellArray InputID = new MWCellArray(1, nCount);
+            //for (int i = 0; i < nCount; i++)
+            //{
+            //    InputNum[i + 1] = Num[i];
+            //    InputID[i + 1] = "'" + InstrumentName[i] + "'";
+            //}
+            //RiskControl.Class1 output1 = new Class1();
+            //MWNumericArray x0 = (MWNumericArray)output1.VaR(InputID, InputNum, nCount, dCov);
+            //double ComVar = Math.Round((double)x0, 3);
+            //return ComVar;
             return 0;
         }
 

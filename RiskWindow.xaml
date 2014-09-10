@@ -1190,7 +1190,7 @@
             <TextBox x:Name="setConfidenceLevelCompoTBox" Grid.Column="0" Margin="76,5,25,129" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource textboxStyle}" Foreground="White"/>
             <Button x:Name="okCompoBtn"  Content="确定" Grid.Column="0" VerticalAlignment="Center" Margin="42,35,41,103" Grid.Row="1" Height="20" Style="{StaticResource darkButton}" Background="#FF363338" BorderBrush="{x:Null}" Click="okCompoBtn_Click"/>
 
-            <TextBlock Text="当前组合：" Grid.Column="1" Grid.Row="0" Margin="10,10,563,91" Foreground="White"/>
+            <TextBlock Text="组合希腊字母值及VaR值：" Grid.Column="1" Grid.Row="0" Margin="9.8,10,480.8,90.8" Foreground="White"/>
             <Grid x:Name="compoGrid" Grid.Column="1" Grid.Row="0" Margin="50,33,40,30" MouseEnter="compoGrid_MouseEnter" MouseLeave="compoGrid_MouseLeave">
                 <Grid.Background>
                     <SolidColorBrush Color="#FF35313C" Opacity="0.7"/>

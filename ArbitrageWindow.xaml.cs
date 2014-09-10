@@ -225,6 +225,39 @@ namespace qiquanui
             }
         }
 
+        private void RefreshChart2(object sender, ElapsedEventArgs e)
+        {
+            RefreshChartCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new RefreshChartCallBack(RefreshChart2);
+                this.Dispatcher.Invoke(d, new object[] { sender, e });
+            }
+            else
+            {
+                VolatilityChart1.InvalidateMeasure();
+                VolatilityChart2.InvalidateMeasure();
+                timer2.Stop();
+            }
+        }
+
+          private void LegendCallBack(object sender, ElapsedEventArgs e)
+        {
+            RefreshChartCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new RefreshChartCallBack(LegendCallBack);
+                this.Dispatcher.Invoke(d, new object[] { sender, e });
+            }
+            else
+            {
+                LegendMask.Visibility = Visibility.Hidden;
+            }
+        }
+
+
+
+
 
         private void RefreshCrossDue(object sender, ElapsedEventArgs e)
         {
@@ -268,9 +301,12 @@ namespace qiquanui
             int no = calendarSpreadListView.Items.IndexOf(e.AddedItems[0]);
             FutureID1 = CrossDueOC[no].FutureID1;
             FutureID2 = CrossDueOC[no].FutureID2;
+            Title1.Content = "走势图";
+            Title2.Content = "价差图";
             //Chart1.Title = FutureID1;
             //Chart2.Title = FutureID2;
             new Thread(new ThreadStart(RightCharts)).Start();
+
         }
 
         private void TrendInitial()
@@ -379,6 +415,7 @@ namespace qiquanui
             tr2.initial2(id1, id2, this);
 
             BindingForTrend();
+            LegendCallBack(null, null);
             Lock = false;
         }
 
@@ -419,7 +456,7 @@ namespace qiquanui
                 test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
                 test.SeriesIDMemberPath = "X";
                 test.ValueMemberPath = "Y";
-                //test.Title = yk.title;
+                test.Title = FutureID1;
                 test.LineThickness = 2;
                 ///[Style]
 
@@ -435,7 +472,7 @@ namespace qiquanui
                 test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding2);
                 test.SeriesIDMemberPath = "X";
                 test.ValueMemberPath = "Y";
-                //test.Title = yk.title;
+                test.Title = FutureID2;
                 test.LineThickness = 2;
                 ///[Style]
 

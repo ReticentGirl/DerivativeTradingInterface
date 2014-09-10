@@ -148,7 +148,9 @@ namespace qiquanui
                 labels[i] = new Label();
                 labels[i].Foreground = Brushes.White;
                 GLCanvas.Children.Add(labels[i]);
+                //this.AddVisualChild(labels[i]);
                 labels[i].Visibility = Visibility.Hidden;
+                //labels[i]
             }
 
                     ChartGL();
@@ -227,7 +229,7 @@ namespace qiquanui
                     r = RightEdge;
                 else
                     r = Probability[i].x;
-                temp.Margin = new Thickness(0 - 50 + 1.0 * ((l + r) / 2 - LeftEdge) / (RightEdge - LeftEdge) * Width, 180, 0, 0);
+                temp.Margin = new Thickness(10 - 50 + 1.0 * ((l + r) / 2 - LeftEdge) / (RightEdge - LeftEdge) * Width, 15, 0, 0);
                 temp.Height = 35;
                 temp.VerticalAlignment = VerticalAlignment.Top;
                 temp.Visibility = Visibility.Visible;
