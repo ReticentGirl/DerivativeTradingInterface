@@ -2952,7 +2952,6 @@
                                     <GridViewColumn x:Name="priceOfTransactionHGVCH" Header=" 成交价格" DisplayMemberBinding="{Binding DonePrice, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="timeLimitHGVCH" Header=" 有效期" DisplayMemberBinding="{Binding TimeLimit, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="userHGVCH" Header=" 投资账户" DisplayMemberBinding="{Binding UserID, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
-                                    <GridViewColumn x:Name="IDOfTransactionHGVCH" Header="交易单号"   DisplayMemberBinding="{Binding ClientageType, UpdateSourceTrigger=PropertyChanged}" Width="120"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>
