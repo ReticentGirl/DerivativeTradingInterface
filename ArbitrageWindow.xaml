@@ -1276,7 +1276,7 @@
                     <ListView x:Name="calendarSpreadListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Visible"  ScrollViewer.HorizontalScrollBarVisibility="Hidden" Foreground="White" Margin="-10,0,0,34" SelectionChanged="calendarSpreadListView_SelectionChanged">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn x:Name="ifChosenCSGVCH" Header="" Width="50">
+                                <GridViewColumn x:Name="ifChosenCSGVCH" Header="" Width="55">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <CheckBox x:Name="ifChosenGCheckBox" IsChecked="{Binding IfChoose, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
@@ -1291,8 +1291,8 @@
                             </GridView>
                         </ListView.View>
                     </ListView>
+                    <CheckBox x:Name="chooseAllCSCheckBox" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,8,0,0" Click="chooseAllCSCheckBox_Click"/>
 
-                    <CheckBox x:Name="chooseAllCSCheckBox" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,18,0,0" RenderTransformOrigin="0.625,1.632"/>
                     <Button x:Name="placeOrderCSButton" Content="一键下单" Margin="0,0,25,10" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.526" Click="placeOrderCSButton_Click"/>
 
                 </Grid>
@@ -1356,7 +1356,7 @@
                 <am:LineChartGraph x:Name="VolatilityGraph1" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="72" IsFilled="True" Width="237"/>
 
             </am:LineChart>
-            <Label Content="Label" Canvas.Left="3" Canvas.Top="0" Width="130" Background="#FF120D13" Foreground="#00000000"/>
+            <Label Content="Label" Canvas.Left="62" Canvas.Top="23" Width="130" Background="#FF120D13" Foreground="#00000000"/>
 
 
             <!--价差图-->
@@ -1382,11 +1382,11 @@
                 <am:LineChart.LeftValueAxis>
                     <am:ValueAxis StrokeThickness="0"/>
                 </am:LineChart.LeftValueAxis>
-                <am:LineChartGraph x:Name="VolatilityGraph2" AreaFillOpacity="1" AreaFill="#FFD46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
-                <am:LineChartGraph x:Name="VolatilityGraph3" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
+                <am:LineChartGraph x:Name="VolatilityGraph2" AreaFillOpacity="1" AreaFill="#00D46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#FFE0E02B" Height="141" IsFilled="True" Width="95"/>
+                <am:LineChartGraph x:Name="VolatilityGraph3" AreaFillOpacity="1" AreaFill="#0046C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#FF46C55D" Height="141" IsFilled="True" Width="95"/>
 
             </am:LineChart>
-            <Label Content="Label" Canvas.Left="3" Canvas.Top="229" Width="130" Background="#FF120D13" Foreground="#00000000"/>
+            <Label Content="Label" Canvas.Left="62" Canvas.Top="290" Width="130" Background="#FF120D13" Foreground="#00000000"/>
 
 
         </Canvas>

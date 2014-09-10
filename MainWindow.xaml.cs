@@ -2223,6 +2223,7 @@ namespace qiquanui
                             string optionname = (string)dt.Rows[0]["InstrumentName"];
                             duedate = (string)dt.Rows[0]["DueDate"];
                             futurename = YKManager.Option2Future(optionname);
+
                             string sql2 = "select exerciseprice from staticdata where instrumentname='" + optionname + "' and duedate='" + duedate + "' and callorput=0 order by exerciseprice";
                             DataTable dt2 = DataControl.QueryTable(sql2);
                             tot = dt2.Rows.Count;
@@ -2310,6 +2311,8 @@ namespace qiquanui
             {
                 YKManager ykm = new YKManager();
                 ykm.Initial(YKManager.Future2Subject(futurename), duedate);
+
+
                 VolatilityChart.Visibility = Visibility.Visible;
                 VolatilityChart2.Visibility = Visibility.Visible;
                 ZoomInGL.Visibility = Visibility.Visible;
@@ -2324,6 +2327,12 @@ namespace qiquanui
 
                 ObservableCollection<XY> coor = new ObservableCollection<XY>();
                 YK yk = new YK(tot, num, "NoName", "NoGroup", 0.2);
+                if ((futurename.Equals("上证50期货") || futurename.Equals("沪深300期货")) && (num[tot, 0] != 0 || num[tot, 1] != 0))
+                {
+                    yk.szorhs = true;
+                    yk.ykname = "组合标的";
+                }
+
                 yk.ComputeYK();
                 GLYK = yk;
                 ChartWindow.Probability = yk.probability;

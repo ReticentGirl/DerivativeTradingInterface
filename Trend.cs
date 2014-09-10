@@ -206,7 +206,7 @@ namespace qiquanui
         public string DateToMinute(DateTime dt)
         {
             string ans = "";
-            ans += dt.Hour;
+            ans += dt.Hour+":";
             if (dt.Minute < 10)
                 ans += "0" + dt.Minute;
             else
@@ -221,6 +221,7 @@ namespace qiquanui
             this.id2 = null;
             this.pwindow = _pwindow;
             initial();
+            RefreshTrend(null,null);
         }
 
         public void initial2(string _id1, string _id2, Window _pwindow)
@@ -231,6 +232,7 @@ namespace qiquanui
             initial();
             initial2();
             initialDiff();
+            RefreshTrend(null, null);
         }
 
         public Window pwindow;
@@ -348,12 +350,12 @@ namespace qiquanui
 
             timer = new Timer(500);
             timer.Elapsed += new ElapsedEventHandler(RefreshTrend);
-            timer.Start();
+            if (id2==null)
+                timer.Start();
         }
 
         private void initial2()
         {
-            timer.Stop();
             if (id2 == null) return;
             if (id2.Equals("上证50指数")) id2 = "IH1409";
             if (id2.Equals("沪深300指数")) id2 = "IF1409";
@@ -429,30 +431,35 @@ namespace qiquanui
 
             DataBinding2 = new System.Windows.Data.Binding();
             DataBinding2.Source = Data2;
-            timer.Start();
         }
 
         private void initialDiff()
         {
-            timer.Stop();
 
             DataDiff1 = new ObservableCollection<TrendPoint>();
-            DataDiff2 = new ObservableCollection<TrendPoint>();
+            //DataDiff2 = new ObservableCollection<TrendPoint>();
 
-            for (int i = 0; i < Data.Count; i++)
+            int smaller = 0;
+            if (Data.Count < Data2.Count)
+                smaller = Data.Count;
+            else
+                smaller = Data2.Count;
+
+            for (int i = 0; i < smaller; i++)
             {
 
                 TrendPoint tp = new TrendPoint(Data[i].X,Data[i].Y-Data2[i].Y);
-                if (tp.Y>0)
-                    DataDiff1.Add(tp);
-                else if (tp.Y < 0)
-                    DataDiff2.Add(tp);
-                else if (tp.Y == 0)
-                {
-                    DataDiff1.Add(tp);
-                    DataDiff2.Add(tp);
+                DataDiff1.Add(tp);
+                //if (tp.Y>0)
+                //    DataDiff1.Add(tp);
+                //else if (tp.Y < 0)
+                //    DataDiff2.Add(tp);
+                //else if (tp.Y == 0)
+                //{
+                //    DataDiff1.Add(tp);
+                //    DataDiff2.Add(tp);
        
-                }
+                //}
             }
 
 
@@ -487,22 +494,52 @@ namespace qiquanui
                     middleNumber++;
                     DateTime newtime = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, 0);
                     Data.Add(new TrendPoint(DateToMinute(newtime), 0));
-                    if (id2!=null)
+                    if (id2 != null)
+                    {
                         Data2.Add(new TrendPoint(DateToMinute(newtime), 0));
+                        DataDiff1.Add(new TrendPoint(DateToMinute(newtime), 0));
+
+                    }
                 }
 
                 DataRow row = (DataRow)DataManager.All[id];
                 double lastprice = (double)row["LastPrice"];
                 string oldx=Data[middleNumber].X;
-                Data.RemoveAt(middleNumber);
-                Data.Add(new TrendPoint(oldx, lastprice));
-               // Data[middleNumber].Y = lastprice;
+                //Data.RemoveAt(middleNumber);
+               // Data.Add(new TrendPoint(oldx, lastprice));
+                
+               Data[middleNumber].Y = lastprice;
                 if (id2 != null)
                 {
                     DataRow row2 = (DataRow)DataManager.All[id2];
                     double lastprice2 = (double)row2["LastPrice"];
+                    string oldx2 = Data2[middleNumber].X;
+                   // Data2.RemoveAt(middleNumber);
+                    //Data2.Add(new TrendPoint(oldx2, lastprice2));
                     Data2[middleNumber].Y = lastprice2;
-                   // DataDiff1[middleNumber].Y = Data[middleNumber].Y - Data2[middleNumber].Y;
+
+                    //if (DataDiff1.Count > 0 && DataDiff1[DataDiff1.Count - 1].X == oldx2)
+                    //{
+                    //    DataDiff1.RemoveAt(DataDiff1.Count - 1);
+                    //}
+                    //if (DataDiff2.Count > 0 && DataDiff2[DataDiff2.Count - 1].X == oldx2)
+                    //{
+                    //    DataDiff2.RemoveAt(DataDiff2.Count - 1);
+                    //}
+                    //double diff = lastprice - lastprice2;
+                    //TrendPoint tp = new TrendPoint(oldx, diff);
+                    //if (tp.Y > 0)
+                    //    DataDiff1.Add(tp);
+                    //else if (tp.Y < 0)
+                    //    DataDiff2.Add(tp);
+                    //else if (tp.Y == 0)
+                    //{
+                    //    DataDiff1.Add(tp);
+                    //    DataDiff2.Add(tp);
+                    //}
+
+
+                    DataDiff1[middleNumber].Y = Data[middleNumber].Y - Data2[middleNumber].Y;
                 }
                 timer.Start();
             }

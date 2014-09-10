@@ -50,7 +50,18 @@ namespace qiquanui
         private string loseRate;
         public double loseRatePer;
 
-        public bool IfChoose { get; set; }
+        private bool ifchoose;
+        public bool IfChoose
+        {
+            get { return ifchoose; }
+            set
+            {
+
+                ifchoose = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("IfChoose"));
+            }
+        }
+
 
 
         public int LineNo { get; set; }
@@ -2390,7 +2401,30 @@ namespace qiquanui
             StrategyInitial();
             initialing = false;
 
+            //刷新走势图
+            System.Timers.Timer timer2 = new System.Timers.Timer(3000);
+            timer2.Elapsed += new ElapsedEventHandler(RefreshChart);
+            timer2.Start();
+
         }
+
+
+        delegate void RefreshChartCallBack(object sender, ElapsedEventArgs e);
+        private void RefreshChart(object sender, ElapsedEventArgs e)
+        {
+            RefreshChartCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new RefreshChartCallBack(RefreshChart);
+                this.Dispatcher.Invoke(d, new object[] { sender, e });
+            }
+            else
+            {
+                VolatilityChart4.InvalidateMeasure();
+            }
+        }
+
+
 
         Label[] labels;
         LineChartGraph temp1, temp2;
@@ -3043,11 +3077,12 @@ namespace qiquanui
         /// <param name="Tot"></param>
         private void SortYKAnswer(YK[] ans, YK yk, int Tot)
         {
-            //if (yk.ykgroupname.Equals("无风险套利"))
-            //{
-            //    if (yk.probability.Count > 1 || yk.probability[0].positive==false)
-            //        return;
-            //}
+            //无风险套利必须全为盈利
+            if (yk.ykgroupname.Equals("无风险套利"))
+            {
+                if (yk.probability.Count > 1 || yk.probability[0].positive == false)
+                    return;
+            }
             //排序
             for (int k = 0; k < Tot; k++)
                 if (ans[k] == null)
@@ -3170,13 +3205,20 @@ namespace qiquanui
                     {
                         bool buy = true;
                         item.Number *= qjoc[index].Number;
-                        if (item.Number > 0) buy = true;
+                        double price = 0;
+                        if (item.Number > 0)
+                        {
+                            buy = true;
+                            price = item.AskPrice;
+                        }
                         else
                         {
                             buy = false;
                             item.Number *= -1;
+                            price = item.BidPrice;
                         }
-                        MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, 1000);    //需要改一下
+                        
+                        MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, price);    
                     }
                 }
             //this.WindowState = WindowState.Minimized;
@@ -3197,13 +3239,20 @@ namespace qiquanui
                    {
                        bool buy = true;
                        item.Number *= cloc[index].Number;
-                       if (item.Number > 0) buy = true;
+                       double price = 0;
+                       if (item.Number > 0)
+                       {
+                           buy = true;
+                           price = item.AskPrice;
+                       }
                        else
                        {
                            buy = false;
                            item.Number *= -1;
+                           price = item.BidPrice;
                        }
-                       MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, 1000);   //需要改一下
+
+                       MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, price);
                    }
                }
             //this.WindowState = WindowState.Minimized;
@@ -3221,6 +3270,7 @@ namespace qiquanui
                 oc=cloc;
             for (int no = 0; no < oc.Count; no++)
             {
+                if (ykm.yk[which, no] == null) continue;
                 int count = ykm.yk[which, no].OrderList.Count;
                 string[] ids = new string[count];
                 int[] nums = new int[count];
@@ -3301,6 +3351,37 @@ namespace qiquanui
             ChartWindow.Bindings = this.Bindings;
             ChartWindow cw = new ChartWindow(pwindow);
             cw.Show();
+
+        }
+
+        private void chooseAllGCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)chooseAllGCheckBox.IsChecked)
+            {
+                for (int i = 0; i < qjoc.Count; i++)
+                    qjoc[i].IfChoose = true;
+            }
+            else
+            {
+                for (int i = 0; i < qjoc.Count; i++)
+                    qjoc[i].IfChoose = false;
+
+            }
+        }
+
+        private void chooseAllSCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)chooseAllSCheckBox.IsChecked)
+            {
+                for (int i = 0; i < cloc.Count; i++)
+                    cloc[i].IfChoose = true;
+            }
+            else
+            {
+                for (int i = 0; i < cloc.Count; i++)
+                    cloc[i].IfChoose = false;
+
+            }
 
         }
 

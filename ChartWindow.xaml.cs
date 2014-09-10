@@ -41,6 +41,8 @@ namespace qiquanui
             pwindow = _pWindow;
             originalHeight = this.Height;
             originalWidth = this.Width;
+            this.Left += 200;
+            this.Top += 100;
 
             Top1_StrategyLabw = Top1_StrategyLab.Width;
 
@@ -135,6 +137,8 @@ namespace qiquanui
         {
             stockChart.Charts[0].Collapse();
 
+
+
             switch (CHARTTYPE)
             {
                 case 0:
@@ -157,15 +161,38 @@ namespace qiquanui
                     break;
                 case 3:
                     ChartZS();
+                                System.Timers.Timer timer2 = new System.Timers.Timer(3000);
+            timer2.Elapsed += new ElapsedEventHandler(RefreshChart);
+            timer2.Start();
+
                     break;
                 case 4:
                     ChartZS2();
                     break;
             }
 
-
+                        //刷新走势图
 
         }
+
+
+        delegate void RefreshChartCallBack(object sender, ElapsedEventArgs e);
+        private void RefreshChart(object sender, ElapsedEventArgs e)
+        {
+            RefreshChartCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new RefreshChartCallBack(RefreshChart);
+                this.Dispatcher.Invoke(d, new object[] { sender, e });
+            }
+            else
+            {
+                VolatilityChart4.InvalidateMeasure();
+            }
+        }
+
+
+        
         public Label[] labels;
 
         public static Binding[] Bindings;
@@ -275,7 +302,7 @@ namespace qiquanui
             {
                     LineChartGraph test = new LineChartGraph();
 
-                    test.SetBinding(SerialGraph.DataItemsSourceProperty, Bindings[5+i]);
+                    test.SetBinding(SerialGraph.DataItemsSourceProperty, Bindings[6+i]);
                     test.SeriesIDMemberPath = "X";
                     test.ValueMemberPath = "Y";
                     test.Title = BindingTitles[i];

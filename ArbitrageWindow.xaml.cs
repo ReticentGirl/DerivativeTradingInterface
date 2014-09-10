@@ -199,10 +199,32 @@ namespace qiquanui
                 CrossDueOC.Add(new CrossArbitrageLine());
             }
             RefreshCrossDue(null, null);
-            System.Timers.Timer timer = new System.Timers.Timer(1000);
+            timer = new System.Timers.Timer(3000);
             timer.Elapsed += new ElapsedEventHandler(RefreshCrossDue);
+            timer.Elapsed += new ElapsedEventHandler(RefreshChart);
             timer.Start();
+
         }
+
+
+        delegate void RefreshChartCallBack(object sender, ElapsedEventArgs e);
+        private void RefreshChart(object sender, ElapsedEventArgs e)
+        {
+            RefreshChartCallBack d;
+            if (System.Threading.Thread.CurrentThread != this.Dispatcher.Thread)
+            {
+                d = new RefreshChartCallBack(RefreshChart);
+                this.Dispatcher.Invoke(d, new object[] { sender, e });
+            }
+            else
+            {
+                timer.Stop();
+                VolatilityChart1.InvalidateMeasure();
+                VolatilityChart2.InvalidateMeasure();
+                timer.Start();
+            }
+        }
+
 
         private void RefreshCrossDue(object sender, ElapsedEventArgs e)
         {
@@ -265,7 +287,7 @@ namespace qiquanui
         }//初始化走势图（载入历史数据）
 
         Trend trm1, trm2, trm3;
-        System.Timers.Timer timer;
+        System.Timers.Timer timer,timer2;
         delegate void trendInitialCallBack(Trend tr);
         private void TrendInitialCallBack(Trend tr)
         {
@@ -343,15 +365,21 @@ namespace qiquanui
         }
 
         Trend2 tr2;
+        bool Lock = false;
         private void RightCharts()
         {
             string id1 = FutureID1;
             string id2 = FutureID2;
-
+            while (Lock)
+            {
+                Thread.Sleep(100);
+            }
+            Lock = true;
             tr2 = new Trend2();
             tr2.initial2(id1, id2, this);
 
             BindingForTrend();
+            Lock = false;
         }
 
         delegate void RateTextCallBack();
@@ -372,8 +400,9 @@ namespace qiquanui
                 System.Windows.Data.Binding dataBinding = tr2.DataBinding;    //X坐标轴绑定
                 System.Windows.Data.Binding dataBinding2 = tr2.DataBinding2;    //X坐标轴绑定
                 System.Windows.Data.Binding dataBindingDiff1 = tr2.DataBindingDiff1;    //X坐标轴绑定
-                System.Windows.Data.Binding dataBindingDiff2 = tr2.DataBindingDiff2;    //X坐标轴绑定
-
+                //System.Windows.Data.Binding dataBindingDiff2 = tr2.DataBindingDiff2;    //X坐标轴绑定
+                if (coorBinding == null || dataBinding == null || dataBinding2 == null || dataBindingDiff1 == null )
+                    return;
 
                 //Bindings[10] = coorBinding;
                 //Bindings[11] = dataBinding;
@@ -438,13 +467,13 @@ namespace qiquanui
 
 
 
-                test = VolatilityGraph3;
+                //test = VolatilityGraph3;
 
-                test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBindingDiff2);
-                test.SeriesIDMemberPath = "X";
-                test.ValueMemberPath = "Y";
-                //test.Title = yk.title;
-                test.LineThickness = 2;
+                //test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBindingDiff2);
+                //test.SeriesIDMemberPath = "X";
+                //test.ValueMemberPath = "Y";
+                ////test.Title = yk.title;
+                //test.LineThickness = 2;
                 ///[Style]
 
                // test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
@@ -455,6 +484,20 @@ namespace qiquanui
             }
 
 
+        }
+
+        private void chooseAllCSCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)chooseAllCSCheckBox.IsChecked)
+            {
+                for (int i = 0; i < CrossDueOC.Count; i++)
+                    CrossDueOC[i].IfChoose = true;
+            }
+            else {
+                for (int i = 0; i < CrossDueOC.Count; i++)
+                    CrossDueOC[i].IfChoose = false;
+            
+            }
         }
 
     }
@@ -471,18 +514,32 @@ namespace qiquanui
         public string DayToDue { get; set; }
         public string FutureID1 { get; set; }
         public string FutureID2 { get; set; }
-        public bool IfChoose { get; set; }
+        private bool ifchoose;
+        public bool IfChoose
+        {
+            get { return ifchoose; }
+            set
+            {
+
+                ifchoose = value;
+                OnPropertyChanged("IfChoose");
+            }
+        }
 
         #region INotifyPropertyChanged 成员
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged(PropertyChangedEventArgs e)
+
+        void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
-            {
-                PropertyChanged(this, e);
-            }
+                this.PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
+
+
+
+
+
         #endregion
 
     }

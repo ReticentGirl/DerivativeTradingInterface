@@ -548,12 +548,12 @@ namespace qiquanui
                 if (_instrumentid.Equals("IH1409"))
                 {
                     All["上证50指数"] = dtall.Rows[pt];
-                    ((DataRow)All["上证50指数"])["InstrumentID"] = "上证50指数";
+                    //((DataRow)All["上证50指数"])["InstrumentID"] = "上证50指数";
                 }
                 if (_instrumentid.Equals("IF1409"))
                 {
                     All["沪深300指数"] = dtall.Rows[pt];
-                    ((DataRow)All["沪深300指数"])["InstrumentID"] = "沪深300指数";
+                    //((DataRow)All["沪深300指数"])["InstrumentID"] = "沪深300指数";
                 }
                 ///倘若是
                 //string _instrumentname = (string)dtall.Rows[pt]["InstrumentName"];
@@ -671,10 +671,10 @@ namespace qiquanui
                 {
                     string subjectid = (string)dt2.Rows[0][0];
                     SubjectID = subjectid;
-                    if (subjectid.Substring(0, 2).Equals("IH"))
-                        subjectid = "上证50指数";
-                    if (subjectid.Substring(0, 2).Equals("IF"))
-                        subjectid = "沪深300指数";
+                    //if (subjectid.Substring(0, 2).Equals("IH"))
+                    //    subjectid = "上证50指数";
+                    //if (subjectid.Substring(0, 2).Equals("IF"))
+                    //    subjectid = "沪深300指数";
                     ObservableOb2 = new ObservableCollection<future>();
                     future _fu = new future();
                     _fu.instrumentid = subjectid;
@@ -1071,27 +1071,27 @@ namespace qiquanui
 
             //3
             new_string = Math.Round((double)_dr["BidPrice1"], 1).ToString("f1");
-            if (_fu.InstrumentID.Equals("上证50指数")||_fu.InstrumentID.Equals("沪深300指数") )
+            if (_fu.InstrumentID.Equals("上证50指数")||_fu.InstrumentID.Equals("沪深300指数") || _fu.InstrumentID.Substring(0,2).Equals("IF")||_fu.InstrumentID.Substring(0,2).Equals("IH"))
              new_string="-";
             _fu.BidPrice1 = SetTextAndColor(tot_line, 3, new_string, _fu.BidPrice1, preClose);
 
             //4
             new_string = Math.Round((double)_dr["AskPrice1"], 1).ToString("f1");
-            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数"))
+            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数") || _fu.InstrumentID.Substring(0, 2).Equals("IF") || _fu.InstrumentID.Substring(0, 2).Equals("IH"))
                 new_string = "-";
 
             _fu.AskPrice1 = SetTextAndColor(tot_line, 4, new_string, _fu.AskPrice1, preClose);
 
             //5
             new_string = Math.Round((double)_dr["HighestPrice"], 1).ToString("f1");
-            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数"))
+            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数") || _fu.InstrumentID.Substring(0, 2).Equals("IF") || _fu.InstrumentID.Substring(0, 2).Equals("IH"))
                 new_string = "-";
 
             _fu.HighestPrice = SetTextAndColor(tot_line, 5, new_string, _fu.HighestPrice, preClose);
 
             //6
             new_string = Math.Round((double)_dr["LowestPrice"], 1).ToString("f1");
-            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数"))
+            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数") || _fu.InstrumentID.Substring(0, 2).Equals("IF") || _fu.InstrumentID.Substring(0, 2).Equals("IH"))
                 new_string = "-";
 
             _fu.LowestPrice = SetTextAndColor(tot_line, 6, new_string, _fu.LowestPrice, preClose);
@@ -1110,7 +1110,7 @@ namespace qiquanui
                 new_string = new_string.Insert(6, "/");
                 new_string = new_string.Insert(4, "/");
             }
-            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数"))
+            if (_fu.InstrumentID.Equals("上证50指数") || _fu.InstrumentID.Equals("沪深300指数") || _fu.InstrumentID.Substring(0, 2).Equals("IF") || _fu.InstrumentID.Substring(0, 2).Equals("IH"))
                 new_string = "-";
 
             _fu.LastDate = new_string;
