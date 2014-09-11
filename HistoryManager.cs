@@ -1095,9 +1095,36 @@ namespace qiquanui
         }
 
 
+        public void HistoryAllChoose(bool _isChooseAll)   //历史界面 全选按钮响应函数
+        {
 
 
+            if (HistoryOC.Count > 0)
+            {
+                for (int i = 0; i < HistoryOC.Count; i++)
+                {
+                    HistoryOC[i].HIfChoose = _isChooseAll;
+                }
+            }
 
+            if (HistoryFutureOC.Count > 0)
+            {
+                for (int i = 0; i < HistoryFutureOC.Count; i++)
+                {
+                    HistoryFutureOC[i].HIfChoose = _isChooseAll;
+                }
+            }
+
+
+            if (HistoryOptionOC.Count > 0)
+            {
+                for (int i = 0; i < HistoryOptionOC.Count; i++)
+                {
+                    HistoryOptionOC[i].HIfChoose = _isChooseAll;
+                }
+            }
+
+        }
 
     }
 }

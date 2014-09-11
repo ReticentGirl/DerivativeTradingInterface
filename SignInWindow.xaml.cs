@@ -88,7 +88,7 @@ namespace qiquanui
                 SignToDB(i_userID, i_passWord, i_userName, i_userMail, i_openCompany);
 
                 reInitUser();
-
+                
                 this.Close();
             }
 

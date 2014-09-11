@@ -115,9 +115,11 @@ namespace qiquanui
 
         private void OKBtn_Click(object sender, RoutedEventArgs e)    //下单盒子中“确定”按钮
         {
-            //System.Windows.MessageBox.Show("123");
+            
+
             OrderToHistory();
             cleanTrading();
+
 
             if (pWindow.optionsCheckBox.IsChecked == true && pWindow.futuresCheckBox.IsChecked == true)
             {

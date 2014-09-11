@@ -2960,7 +2960,7 @@
                         <CheckBox x:Name="optionsCheckBox" Content="显示期权交易明细" HorizontalAlignment="Left" Margin="159,0,0,4" IsChecked="True" VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsCheckBox_Click"/>
                         <CheckBox x:Name="futuresCheckBox" Content="显示期货交易明细" HorizontalAlignment="Left" Margin="10,0,0,4"  IsChecked="True"  VerticalAlignment="Bottom" Foreground="White" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresCheckBox_Click"/>
                         <Button x:Name="pickUserBtn" Click="pickUserBtn_Click" Content="筛选账户" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Margin="0,0,110,4" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" />
-                        <CheckBox x:Name="chooseAllHCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
+                        <CheckBox x:Name="chooseAllHCheckBox" Content="" HorizontalAlignment="Left" IsChecked="False" Margin="16,0,0,214" VerticalAlignment="Bottom" Click="chooseAllHCheckBox_Click"/>
 
                     </Grid>
                 </TabItem>

@@ -1212,7 +1212,7 @@ namespace qiquanui
         }
 
 
-        public bool UserLogOut(MainWindow _pWindow)
+        public bool UserLogin(MainWindow _pWindow)
         {
             string add_userID = _pWindow.userIDAUTB.Text;
 

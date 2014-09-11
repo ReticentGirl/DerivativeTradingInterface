@@ -86,6 +86,7 @@ namespace qiquanui
         public MainWindow()
         {
 
+
             //new Thread(new ThreadStart(dataStart)).Start();
             dataStart();
 
@@ -212,6 +213,8 @@ namespace qiquanui
             basicInforAndPromptGridStoryboard_Leave = (Storyboard)this.FindResource("basicInforAndPromptGridAnimate_Leave");
 
             typeComboBox.SelectedIndex = 0;
+
+          
 
         }
 
@@ -710,7 +713,7 @@ namespace qiquanui
             {
                 openRightCanvas();
 
-          
+
 
                 DateTime present = DataManager.now;
                 string data1 = present.ToString("yyyyMMdd");
@@ -1640,7 +1643,7 @@ namespace qiquanui
                         {
                             cTd.ClientagePrice = cTd.MarketPrice.ToString();
                         }
-                 
+
                         cTd.IsEnableOfClientagePrice = true;
                     }
                 }
@@ -1665,7 +1668,7 @@ namespace qiquanui
                         {
                             cTd.ClientagePrice = cTd.MarketPrice.ToString();
                         }
-                      
+
                         cTd.IsEnableOfClientagePrice = true;
                     }
 
@@ -1947,8 +1950,7 @@ namespace qiquanui
 
         private void addUserBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool b_Login = um.UserLogOut(this);
-
+            bool b_Login = um.UserLogin(this);
         }
 
         private void chooseAllHDCheckBox_Click(object sender, RoutedEventArgs e)
@@ -2609,6 +2611,22 @@ namespace qiquanui
         private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
         {
             MessagesControl.showMessage("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        }
+
+        private void chooseAllHCheckBox_Click(object sender, RoutedEventArgs e)     //历史记录 全选按钮
+        {
+            System.Windows.Controls.CheckBox all_selected = sender as System.Windows.Controls.CheckBox;
+
+            if (all_selected.IsChecked == true)
+            {
+                hm.HistoryAllChoose(true);
+            }
+            
+            if (all_selected.IsChecked == false)
+            {
+                hm.HistoryAllChoose(false);
+            }
+           
         }
 
 
