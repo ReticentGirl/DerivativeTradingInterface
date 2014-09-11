@@ -695,7 +695,7 @@ namespace qiquanui
 
         private void StategyCanvasButtom_Click(object sender, RoutedEventArgs e)
         {
-            MessagesControl.showMessage("a");
+            //MessagesControl.showMessage("a");
             if (Canvas1.Width == 29.0)
             {
                 openLeftCanvas();
@@ -2041,6 +2041,7 @@ namespace qiquanui
                     if (dt.Rows.Count == 0)
                     {
                         //!这里加入错误提示
+                        MessagesControl.showMessage("不存在此合约：" + pm.PositionsOC[i].InstrumentID);
                         Console.WriteLine("No such instrument:" + pm.PositionsOC[i].InstrumentID);
                         return;
                     }
@@ -2083,6 +2084,8 @@ namespace qiquanui
                             else
                             {
                                 //!这里加入错误提示
+                                MessagesControl.showMessage("所选合约对应的标的不唯一，无法计算，请修改后再点击！");
+
                                 Console.WriteLine("Not the same subject!");
                                 return;
                             }
@@ -2146,6 +2149,8 @@ namespace qiquanui
                             else
                             {
                                 //!这里加入错误提示
+                                MessagesControl.showMessage("所选合约对应的标的不唯一，无法计算，请修改后再点击！");
+
                                 Console.WriteLine("Not the same subject!");
                                 return;
                             }
@@ -2171,6 +2176,8 @@ namespace qiquanui
                     if (dt.Rows.Count == 0)
                     {
                         //!这里加入错误提示
+                                                MessagesControl.showMessage("不存在此合约：" + pm.PositionsOC[i].InstrumentID);
+
                         Console.WriteLine("No such instrument:" + otm.TradingOC[i].InstrumentID);
                         return;
                     }
@@ -2213,6 +2220,8 @@ namespace qiquanui
                             else
                             {
                                 //!这里加入错误提示
+                                MessagesControl.showMessage("所选合约对应的标的不唯一，无法计算，请修改后再点击！");
+
                                 Console.WriteLine("Not the same subject!");
                                 return;
                             }
@@ -2277,6 +2286,9 @@ namespace qiquanui
                             else
                             {
                                 //!这里加入错误提示
+                                MessagesControl.showMessage("所选合约对应的标的不唯一，无法计算，请修改后再点击！");
+
+
                                 Console.WriteLine("Not the same subject!");
                                 return;
                             }
@@ -2562,6 +2574,14 @@ namespace qiquanui
             stockChart2.Visibility = Visibility.Visible;
             ZoomInZS1.Visibility = Visibility.Visible;
             ZoomInZS2.Visibility = Visibility.Visible;
+            if (this.Height>720)
+                stockChart.Height = 205;
+            else
+                stockChart.Height = 138;
+
+            stockChart.VerticalAlignment = VerticalAlignment.Top;
+            ZoomInZS1.VerticalAlignment = VerticalAlignment.Top;
+
             chartTabControl.SelectedIndex = 0;
 
 
@@ -2583,6 +2603,11 @@ namespace qiquanui
             ZoomInZS2.Visibility = Visibility.Hidden;
             futuresMarketListView.SelectedIndex = -1;
             optionsMarketListView.SelectedIndex = -1;
+            stockChart.Height = 230;
+
+            stockChart.VerticalAlignment = VerticalAlignment.Center;
+            ZoomInZS1.VerticalAlignment = VerticalAlignment.Center;
+
             chartTabControl.SelectedIndex = 0;
 
             int no = subjectMatterMarketGrid.Items.IndexOf(e.AddedItems[0]);
@@ -2599,6 +2624,10 @@ namespace qiquanui
             ZoomInZS2.Visibility = Visibility.Hidden;
             subjectMatterMarketGrid.SelectedIndex = -1;
             optionsMarketListView.SelectedIndex = -1;
+            stockChart.VerticalAlignment = VerticalAlignment.Center;
+            stockChart.Height = 230;
+            ZoomInZS1.VerticalAlignment = VerticalAlignment.Center;
+
             chartTabControl.SelectedIndex = 0;
 
             int no = futuresMarketListView.Items.IndexOf(e.AddedItems[0]);
@@ -2610,7 +2639,7 @@ namespace qiquanui
 
         private void startStrategyBtn_Click(object sender, RoutedEventArgs e)
         {
-            MessagesControl.showMessage("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            //MessagesControl.showMessage("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         }
 
         private void chooseAllHCheckBox_Click(object sender, RoutedEventArgs e)     //历史记录 全选按钮

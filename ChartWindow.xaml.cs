@@ -242,6 +242,7 @@ namespace qiquanui
             VolatilityChart3.Visibility = Visibility.Hidden;
             VolatilityChart4.Visibility = Visibility.Hidden;
             LegendMask.Visibility = Visibility.Hidden;
+            ZS2Canvas.Visibility = Visibility.Hidden;
 
             this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, Bindings[0]);
             this.VolatilityChart.IDMemberPath = "X";
@@ -262,6 +263,7 @@ namespace qiquanui
             LegendMask.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
             VolatilityChart4.Visibility = Visibility.Hidden;
+            ZS2Canvas.Visibility = Visibility.Hidden;
 
             if (Bindings[0] == null || Bindings[3] == null || Bindings[4] == null)
                 return;
@@ -285,6 +287,7 @@ namespace qiquanui
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart.Visibility = Visibility.Hidden;
             VolatilityChart4.Visibility = Visibility.Hidden;
+            ZS2Canvas.Visibility = Visibility.Hidden;
             if (Bindings[5] == null )
                 return;
             for (int i=6;i<6+BindingCount;i++)
@@ -338,6 +341,7 @@ namespace qiquanui
             VolatilityChart2.Visibility = Visibility.Hidden;
             VolatilityChart3.Visibility = Visibility.Hidden;
             VolatilityChart.Visibility = Visibility.Hidden;
+            stockChart.Visibility = Visibility.Hidden;
             if (Bindings[10] == null || Bindings[11] == null )
                 return;
 

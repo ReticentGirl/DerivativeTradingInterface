@@ -49,6 +49,7 @@ namespace qiquanui
             int i = 0;
             StockInfo last = null;
             DateTime nextLine = StringToDate((string)dt.Rows[i]["TradingDay"], (string)dt.Rows[i]["UpdateTime"]);
+            int lastVolume = 0;
             do
             {
                 while (nextLine < present && i < dt.Rows.Count)
@@ -65,7 +66,13 @@ namespace qiquanui
                     double _close = Math.Round((double)dt.Rows[i]["LastPrice"], 1);
                     double _high = Math.Round((double)dt.Rows[i]["HighestPrice"], 1);
                     double _low = Math.Round((double)dt.Rows[i]["LowestPrice"], 1);
-                    double _volume = Math.Round((double)dt.Rows[i]["OpenInterest"], 1);
+                    int _volume = (int)( (Int64)dt.Rows[i]["Volume"]-lastVolume);
+                    lastVolume = (int)(Int64)dt.Rows[i]["Volume"];
+                    if (_volume < 0)
+                    {
+                        _volume = 0;
+                        lastVolume = 0;
+                    }
                     last = new StockInfo
                     {
                         date = present,

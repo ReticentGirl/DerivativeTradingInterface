@@ -128,7 +128,7 @@ namespace qiquanui
         public double EarnRate, LoseRate, MaxEarn, MaxLose, ExpectEarn, Price;
         public double EDGE = 0.2;
         public bool szorhs = false;
-
+        public bool allPositive = true;
         /// <summary>
         ///     构造完之后使用 .ykoption 和 .ykfuture 填充数据，然后再调用相应计算方法
         /// </summary>
@@ -256,13 +256,15 @@ namespace qiquanui
             double EarnCount = 0, LoseCount = 0, ProbaCount = 0, TotCount = 0;
             double k;
             XY last = null, now;
-
+            allPositive = true;
             for (int i = LeftEdge; i <= RightEdge; i += ykstep)
             {
                 k = ComputePoint(i);
+                if (k < 0)
+                    allPositive = false;
                 now = new XY((int)i, k);
                 points.Add(now);
-
+             
                 if (i >= LeftCompute && i <= RightCompute)
                 {
                     ///如果在计算范围内才进行概率与收益相关计算
@@ -404,8 +406,8 @@ namespace qiquanui
                     OrderUnit ou = new OrderUnit();
                     ou.InstrumentID = ykoption[i, 2].ID;
                     ou.Number = number[i, 2] - number[i, 3];
-                    ou.AskPrice = ykoption[i, 0].AskPrice;
-                    ou.BidPrice = ykoption[i, 0].BidPrice;
+                    ou.AskPrice = ykoption[i, 2].AskPrice;
+                    ou.BidPrice = ykoption[i, 2].BidPrice;
                     OrderList.Add(ou);
                 }
             }

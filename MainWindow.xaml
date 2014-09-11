@@ -12,7 +12,7 @@
         Closing="Window_Closing"
     
     
-        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1300" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1" WindowState="Maximized" Loaded="Window_Loaded_1">
+        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1000" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1" WindowState="Maximized" Loaded="Window_Loaded_1">
     <Window.Resources>
 
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
@@ -2467,10 +2467,10 @@
                         <Grid x:Name="trendChartGrid" Background="#FF0C0E16" Margin="-3,3,-3,-3">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="147*"/>
-                                <RowDefinition Height="152*"/>
+                                <!--<RowDefinition Height="152*"/>-->
                             </Grid.RowDefinitions>
                             <!--走势图-->
-                            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="15,12,24.4,0" VerticalAlignment="Top" Height="138">
+                            <ams:StockChart Name="stockChart" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="15,12,24.4,0" Height="138" VerticalAlignment="Top">
                                 <ams:StockChart.DataSets>
                                     <ams:DataSet Name="stockSet1" Brush="#7f8da9"
                                 
@@ -2581,7 +2581,7 @@
                                 </ams:StockChart.Charts>
 
                             </ams:StockChart>
-                            <ams:StockChart Name="stockChart2" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="15,0,24.4,5" Grid.Row="1" VerticalAlignment="Top" Height="146">
+                            <ams:StockChart Name="stockChart2" Foreground="#FFEDEDED" Background="#00000000" PeriodSelectorVisibility="Hidden" MaximumDataGroupingInterval="Day" MinimumDataGroupingInterval="Minute" StartDate="07/23/2014 09:31:00" Margin="15,0,24.4,5" Grid.Row="1" VerticalAlignment="Bottom" Height="146">
                                 <ams:StockChart.DataSets>
                                     <ams:DataSet Name="stockSet2" Brush="#7f8da9"
                                 
@@ -2698,8 +2698,8 @@
 
                             </ams:StockChart>
 
-                            <Button x:Name="ZoomInZS1" Content="+" Click="ZoomInZS1_Click" Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="18" Height="19"  Style="{StaticResource ZoomButtonSty}" Visibility="Hidden"/>
-                            <Button x:Name="ZoomInZS2" Content="+" Click="ZoomInZS2_Click" Margin="0,5,5,0" Grid.Row="1" Width="18" Height="19" HorizontalAlignment="Right" VerticalAlignment="Top"  Style="{StaticResource ZoomButtonSty}" Visibility="Hidden"/>
+                            <Button x:Name="ZoomInZS1" Content="+" Click="ZoomInZS1_Click" Margin="0,5,6,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="19" Height="19"  Style="{StaticResource ZoomButtonSty}" Visibility="Hidden"/>
+                            <Button x:Name="ZoomInZS2" Content="+" Click="ZoomInZS2_Click" Margin="0,5,6,0" Grid.Row="1" Width="19" Height="19" HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource ZoomButtonSty}" Visibility="Hidden"/>
 
                         </Grid>
                     </TabItem>
@@ -2799,7 +2799,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>-->
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="nameOTGVCH" Header="交易代码 "  DisplayMemberBinding="{Binding InstrumentID}" Width="110"/>
+                                    <GridViewColumn x:Name="nameOTGVCH" Header="交易代码 "  DisplayMemberBinding="{Binding InstrumentID}" Width="130"/>
                                     <GridViewColumn x:Name="typeOTGVCH" Header="合约类型 " DisplayMemberBinding="{Binding CallOrPut}" Width="80"/>
                                     <GridViewColumn x:Name="exercisePriceTGVCH" Header="行权价 " Width="60" DisplayMemberBinding="{Binding ExercisePrice}"/>
                                     <GridViewColumn x:Name="typeOfTradeTGVCH" Header=" 交易类型" Width="70" >
@@ -2856,14 +2856,14 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="accuracyTGVCH" Header=" 精确度" Width=" 50">
+                                    <GridViewColumn x:Name="accuracyTGVCH" Header=" 精确度" Width=" 65">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
                                                 <TextBox x:Name="accuracyTTextBox" Text="{Binding Accuracy,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IsSetGradient,Mode=OneWay}" Width=" 50" Style="{StaticResource textboxStyle}" TextChanged="accuracyTTextBox_TextChanged" Height="23" Foreground="White"/>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="arithmeticProgressionTGVCH" Header="手数等差 " Width=" 50">
+                                    <GridViewColumn x:Name="arithmeticProgressionTGVCH" Header="手数等差 " Width=" 65">
                                         <GridViewColumn.CellTemplate >
                                             <DataTemplate >
                                                 <TextBox x:Name="arithmeticProgressionTTextBox" IsEnabled="{Binding IsSetGradient,Mode=OneWay}"  Text="{Binding ArithmeticProgression,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width=" 50" Style="{StaticResource textboxStyle}" Height="23" Foreground="White" TextChanged="arithmeticProgressionTTextBox_TextChanged"/>
@@ -2877,8 +2877,8 @@
                         <CheckBox x:Name="chooseAllCheckBox" Content="" HorizontalAlignment="Left" IsChecked="True" Margin="16,17,0,0" VerticalAlignment="Top" Click="chooseAllCheckBox_Click"/>
                         <Button x:Name="placeOrderTBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,25,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click"/>
                         <Button x:Name="deleteTBtn" Content="删除" HorizontalAlignment="Left" Margin="21,0,0,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="deleteTBtn_Click"/>
-                        <Button x:Name="addSubjectMatter" Content="加入标的期货" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="addSubjectMatter_Click"/>
-                        <Button x:Name="analyseBtn1" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,231.6,3.6" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="analyseBtn1_Click"/>
+                        <Button x:Name="addSubjectMatter" Content="加入标的期货" HorizontalAlignment="Right" Margin="0,0,204.6,3.6" VerticalAlignment="Bottom" Width="110" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="addSubjectMatter_Click"/>
+                        <Button x:Name="analyseBtn1" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,113.6,3.6" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="analyseBtn1_Click"/>
 
                     </Grid>
                 </TabItem>
@@ -2901,7 +2901,7 @@
                                     </GridViewColumn>
                                     <GridViewColumn x:Name="userHDGVCH" Header="投资账户" DisplayMemberBinding="{Binding UserID,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="traderHDGVCH" Header="交易商" DisplayMemberBinding="{Binding ExchangeName,UpdateSourceTrigger=PropertyChanged}" Width="80"/>
-                                    <GridViewColumn x:Name="typeHDGVCH" Header="交易代码" DisplayMemberBinding="{Binding InstrumentID,UpdateSourceTrigger=PropertyChanged}" Width="80"/>
+                                    <GridViewColumn x:Name="typeHDGVCH" Header="交易代码" DisplayMemberBinding="{Binding InstrumentID,UpdateSourceTrigger=PropertyChanged}" Width="130"/>
                                     <GridViewColumn x:Name="latestPriceHDGVCH" Header="最新价" DisplayMemberBinding="{Binding LatestPrice,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
                                     <GridViewColumn x:Name="averagePriceHDGVCH" Header="开仓均价" DisplayMemberBinding="{Binding AveragePrice,UpdateSourceTrigger=PropertyChanged}" Width="90"/>
                                     <GridViewColumn x:Name="positionAveragePriceHDGVCH" Header="持仓均价" DisplayMemberBinding="{Binding PositionAveragePrice,UpdateSourceTrigger=PropertyChanged}" Width="90"/>
@@ -2917,8 +2917,8 @@
 
                         <CheckBox x:Name="chooseAllHDCheckBox" Content="" HorizontalAlignment="Left" IsChecked="False" Margin="17,18,0,213" Click="chooseAllHDCheckBox_Click"/>
                         <Button x:Name="exerciseBtn" Content="行权" Width="75" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="3"/>
-                        <Button x:Name="analyseBtn2" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,110,4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Grid.Column="3" Click="analyseBtn2_Click"/>
-                        <Button x:Name="closeOutBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Click="closeOutBtn_Click" Content="平仓" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,0,199,4" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="75" Grid.Column="3"/>
+                        <Button x:Name="analyseBtn2" Content="盈亏分析" Width="75" HorizontalAlignment="Right" Margin="0,0,202.6,4.4" VerticalAlignment="Bottom" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="analyseBtn2_Click"/>
+                        <Button x:Name="closeOutBtn" Background="#FF2A3044" BorderBrush="{x:Null}" Click="closeOutBtn_Click" Content="平仓" Foreground="White" Height="21" HorizontalAlignment="Right" Margin="0,0,111.6,4.4" Style="{StaticResource darkButton}" VerticalAlignment="Bottom" Width="75"/>
                         <CheckBox x:Name="optionsHDCheckBox" Content="显示期权交易明细" IsChecked="True" HorizontalAlignment="Left" Margin="145,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="optionsHDCheckBox_Click" Grid.Column="3"/>
                         <CheckBox x:Name="futuresHDCheckBox" Content="显示期货交易明细"  IsChecked="True" HorizontalAlignment="Left" Margin="3,0,0,4" VerticalAlignment="Bottom" Foreground="#FF9395A2" HorizontalContentAlignment="Right" VerticalContentAlignment="Bottom" Click="futuresHDCheckBox_Click" Grid.ColumnSpan="3" Grid.Column="1"/>
 
@@ -2941,8 +2941,8 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="nameHGVCH" Header="衍生品名称" DisplayMemberBinding="{Binding InstrumentID,UpdateSourceTrigger=PropertyChanged}" Width="100"/>
-                                    <GridViewColumn x:Name="timeHGVCH" Header="交易时间" DisplayMemberBinding="{Binding TradingTime, UpdateSourceTrigger=PropertyChanged}" Width="100"/>
+                                    <GridViewColumn x:Name="nameHGVCH" Header="衍生品名称" DisplayMemberBinding="{Binding InstrumentID,UpdateSourceTrigger=PropertyChanged}" Width="125"/>
+                                    <GridViewColumn x:Name="timeHGVCH" Header="交易时间" DisplayMemberBinding="{Binding TradingTime, UpdateSourceTrigger=PropertyChanged}" Width="140"/>
                                     <GridViewColumn x:Name="typeHGVCH" Header="交易类型" DisplayMemberBinding="{Binding TradingType, UpdateSourceTrigger=PropertyChanged}" Width="60"/>
                                     <!-- 买卖-->
                                     <GridViewColumn x:Name="lotOfPendingHGVCH" Header=" 挂单手数" DisplayMemberBinding="{Binding PostNum, UpdateSourceTrigger=PropertyChanged}" Width="60"/>

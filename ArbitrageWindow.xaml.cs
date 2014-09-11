@@ -385,20 +385,35 @@ namespace qiquanui
             for (int i = 0; i < CrossDueOC.Count; i++)
                 if (CrossDueOC[i].IfChoose)
                 {
-                    changed = true;
                     int index = i;
                     string id1 = CrossDueOC[i].FutureID1;
-                    MainWindow.otm.AddTrading(id1, true, 1, 1000);    //需要改一下
+                    double price = (double)((DataRow)DataManager.All[id1])["AskPrice1"];
+                    MainWindow.otm.AddTrading(id1, true, 1, price);    //需要改一下
 
                     string id2 = CrossDueOC[i].FutureID2;
-                    MainWindow.otm.AddTrading(id2, true, 1, 1000);    //需要改一下
+                    price = (double)((DataRow)DataManager.All[id2])["AskPrice1"];
+                    MainWindow.otm.AddTrading(id2, true, 1, price);    //需要改一下
+                    if (!changed)
+                        MessagesControl.showMessage("已加入交易区!");
+                    changed = true;
 
                 }
             //this.WindowState = WindowState.Minimized;
             if (changed)
                 pwindow.WindowState = WindowState.Normal;
+            else
+                MessagesControl.showMessage("未勾选任何行!");
 
         }
+
+        private void placeOrderISButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessagesControl.showMessage("未勾选任何行!");
+        }
+
+
+
+
 
         Trend2 tr2;
         bool Lock = false;
@@ -536,6 +551,7 @@ namespace qiquanui
             
             }
         }
+
 
     }
 

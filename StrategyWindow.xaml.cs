@@ -2786,6 +2786,7 @@ namespace qiquanui
 
                 ObservableCollection<XY> coor = new ObservableCollection<XY>();
                 YK yk = ykm.yk[which, no];
+                if (yk == null) return;
                 ChartWindow.Probability = yk.probability;
                 ChartWindow.LeftEdge = yk.LeftEdge;
                 ChartWindow.RightEdge = yk.RightEdge;
@@ -3080,7 +3081,7 @@ namespace qiquanui
             //无风险套利必须全为盈利
             if (yk.ykgroupname.Equals("无风险套利"))
             {
-                if (yk.probability.Count > 1 || yk.probability[0].positive == false)
+                if (yk.allPositive == false)
                     return;
             }
             //排序
@@ -3166,6 +3167,7 @@ namespace qiquanui
                     break;
 
             }
+            MessagesControl.showMessage("数据已刷新!");
         }
 
         //份数改变
@@ -3198,7 +3200,6 @@ namespace qiquanui
             for (int i=0;i<qjoc.Count;i++)
                 if (qjoc[i].IfChoose)
                 {
-                    changed = true;
                     int index = i;
                     List<OrderUnit> l = ykm.yk[0, index].OrderList;
                     foreach (OrderUnit item in l)
@@ -3218,12 +3219,23 @@ namespace qiquanui
                             price = item.BidPrice;
                         }
                         
-                        MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, price);    
+                        MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, price);
+                        if (!changed)
+                            MessagesControl.showMessage("已加入交易区!");
+                        changed = true;
+
                     }
                 }
             //this.WindowState = WindowState.Minimized;
-            if (changed) 
-            pwindow.WindowState = WindowState.Normal;
+            if (changed)
+            {
+                pwindow.WindowState = WindowState.Normal;
+
+            }
+            else
+
+                MessagesControl.showMessage("未勾选任何行!");
+
         }
 
         private void placeOrderSButton_Click(object sender, RoutedEventArgs e)
@@ -3233,7 +3245,6 @@ namespace qiquanui
                if (cloc[i].IfChoose)
                {
                    int index = i;
-                   changed = true;
                    List<OrderUnit> l = ykm.yk[1, index].OrderList;
                    foreach (OrderUnit item in l)
                    {
@@ -3253,10 +3264,18 @@ namespace qiquanui
                        }
 
                        MainWindow.otm.AddTrading(item.InstrumentID, buy, item.Number, price);
+                       if (!changed)
+                           MessagesControl.showMessage("已加入交易区!");
+                       changed = true;
+
+
                    }
                }
             //this.WindowState = WindowState.Minimized;
-            pwindow.WindowState = WindowState.Normal;
+            if (changed)
+                pwindow.WindowState = WindowState.Normal;
+            else
+                MessagesControl.showMessage("未勾选任何行!");
         }
 
 
