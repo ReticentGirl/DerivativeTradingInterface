@@ -89,5 +89,32 @@ namespace qiquanui
             return false;
         }
 
+
+        public static void setAllChooseOrNot(bool _isChoose)
+        {
+            for (int i = 0; i < PickUpUserOC.Count; i++)
+            {
+                PickUpUserOC[i].IsChoose = _isChoose;
+            }
+            
+        }
+
+
+
+        public static bool ifAllChoose()
+        {
+            bool _isAllchoose=true;
+            for (int i = 0; i < PickUpUserOC.Count; i++)
+            {
+                if (PickUpUserOC[i].IsChoose == false)
+                {
+                    _isAllchoose = false;
+                }
+            }
+
+
+            return _isAllchoose;
+        }
+
     }
 }

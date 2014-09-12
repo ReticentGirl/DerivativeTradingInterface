@@ -943,7 +943,7 @@
                     <GridViewColumn x:Name="ifChooseGVCH" Header="" Width="50" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox x:Name="ifChooseCheckBox"  HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsChoose, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Height="23"/>
+                                <CheckBox x:Name="ifChooseCheckBox"  HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsChoose, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Height="23" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

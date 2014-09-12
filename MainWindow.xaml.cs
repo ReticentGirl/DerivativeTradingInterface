@@ -1951,6 +1951,23 @@ namespace qiquanui
         private void addUserBtn_Click(object sender, RoutedEventArgs e)
         {
             bool b_Login = um.UserLogin(this);
+
+            if (this.optionsCheckBox.IsChecked == true && this.futuresCheckBox.IsChecked == true)
+            {
+                this.hm.OnShowAll();
+            }
+            else if (this.optionsCheckBox.IsChecked == true && this.futuresCheckBox.IsChecked == false)
+            {
+                this.hm.OnShowOption();
+            }
+            else if (this.optionsCheckBox.IsChecked == false && this.futuresCheckBox.IsChecked == true)
+            {
+                this.hm.OnShowFuture();
+            }
+            else if (this.optionsCheckBox.IsChecked == false && this.futuresCheckBox.IsChecked == false)
+            {
+                this.hm.OnShowNull();
+            }
         }
 
         private void chooseAllHDCheckBox_Click(object sender, RoutedEventArgs e)

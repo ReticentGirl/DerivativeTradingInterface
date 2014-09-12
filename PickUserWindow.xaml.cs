@@ -25,6 +25,11 @@ namespace qiquanui
         {
             pWindow = _pWindow;
             InitializeComponent();
+
+            if (PickUpUserManager.ifAllChoose() == false)
+            {
+                chooseAllCheckBox.IsChecked = false;
+            }
         }
 
         bool isWindowMax = false;
@@ -91,10 +96,21 @@ namespace qiquanui
                 e.Cancel = true;
             }
         } //窗口关闭效果
-        private void chooseAllCheckBox_Click(object sender, RoutedEventArgs e) 
+        private void chooseAllCheckBox_Click(object sender, RoutedEventArgs e)    //全选
         {
-           
 
+            System.Windows.Controls.CheckBox all_selected = sender as System.Windows.Controls.CheckBox;
+
+
+            if (all_selected.IsChecked == true)
+            {
+                PickUpUserManager.setAllChooseOrNot(true);
+                   
+            }
+            else if (all_selected.IsChecked == false)
+            {
+                PickUpUserManager.setAllChooseOrNot(false);
+            }
         }
 
         private void OKBtn_Click(object sender, RoutedEventArgs e)
@@ -116,6 +132,6 @@ namespace qiquanui
                 pWindow.hm.OnShowNull();
             }
             this.Close();
-        }//全选
+        }
     }
 }
