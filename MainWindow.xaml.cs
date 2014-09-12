@@ -2029,6 +2029,13 @@ namespace qiquanui
 
         private void analyseBtn2_Click(object sender, RoutedEventArgs e)
         {
+            VolatilityChart.Visibility = Visibility.Hidden;
+            VolatilityChart2.Visibility = Visibility.Hidden;
+            ZoomInGL.Visibility = Visibility.Hidden;
+            ZoomInYK.Visibility = Visibility.Hidden;
+            for (int i = 0; i < 10; i++)
+                labels[i].Visibility = Visibility.Hidden;
+
             string futurename = null, duedate = null;
             int[,] num = new int[100, 4];
             int tot = 0;
@@ -2085,6 +2092,8 @@ namespace qiquanui
                             {
                                 //!这里加入错误提示
                                 MessagesControl.showMessage("所选合约对应的标的不唯一，无法计算，请修改后再点击！");
+                                VolatilityChart.Visibility = Visibility.Hidden;
+                                VolatilityChart2.Visibility = Visibility.Hidden;
 
                                 Console.WriteLine("Not the same subject!");
                                 return;
@@ -2150,6 +2159,8 @@ namespace qiquanui
                             {
                                 //!这里加入错误提示
                                 MessagesControl.showMessage("所选合约对应的标的不唯一，无法计算，请修改后再点击！");
+                                VolatilityChart.Visibility = Visibility.Hidden;
+                                VolatilityChart2.Visibility = Visibility.Hidden;
 
                                 Console.WriteLine("Not the same subject!");
                                 return;
@@ -2164,6 +2175,13 @@ namespace qiquanui
 
         private void analyseBtn1_Click(object sender, RoutedEventArgs e)
         {
+            VolatilityChart.Visibility = Visibility.Hidden;
+            VolatilityChart2.Visibility = Visibility.Hidden;
+            ZoomInGL.Visibility = Visibility.Hidden;
+            ZoomInYK.Visibility = Visibility.Hidden;
+            for (int i = 0; i < 10; i++)
+                labels[i].Visibility = Visibility.Hidden;
+
             string futurename = null, duedate = null;
             int[,] num = new int[100, 4];
             int tot = 0;
@@ -2176,7 +2194,9 @@ namespace qiquanui
                     if (dt.Rows.Count == 0)
                     {
                         //!这里加入错误提示
-                                                MessagesControl.showMessage("不存在此合约：" + pm.PositionsOC[i].InstrumentID);
+                        MessagesControl.showMessage("不存在此合约：" + pm.PositionsOC[i].InstrumentID);
+                        VolatilityChart.Visibility = Visibility.Hidden;
+                        VolatilityChart2.Visibility = Visibility.Hidden;
 
                         Console.WriteLine("No such instrument:" + otm.TradingOC[i].InstrumentID);
                         return;
@@ -2221,6 +2241,8 @@ namespace qiquanui
                             {
                                 //!这里加入错误提示
                                 MessagesControl.showMessage("所选合约对应的标的不唯一，无法计算，请修改后再点击！");
+                                VolatilityChart.Visibility = Visibility.Hidden;
+                                VolatilityChart2.Visibility = Visibility.Hidden;
 
                                 Console.WriteLine("Not the same subject!");
                                 return;
@@ -2287,6 +2309,8 @@ namespace qiquanui
                             {
                                 //!这里加入错误提示
                                 MessagesControl.showMessage("所选合约对应的标的不唯一，无法计算，请修改后再点击！");
+                                VolatilityChart.Visibility = Visibility.Hidden;
+                                VolatilityChart2.Visibility = Visibility.Hidden;
 
 
                                 Console.WriteLine("Not the same subject!");

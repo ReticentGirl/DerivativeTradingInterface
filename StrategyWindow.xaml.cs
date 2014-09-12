@@ -667,6 +667,7 @@ namespace qiquanui
 
             ResultTab.SelectedIndex = 1;
 
+
             strategyListView.SelectedIndex = 0;
 
             clocPresent = StrategyType.UpSingle;
@@ -1826,7 +1827,7 @@ namespace qiquanui
                 ykm.yk[which, i] = res[i];
                 if (res[i]!=null) 
                     ykm.yk[which, i].title = res[i].ykname;
-
+                
             }
 
             BindingForOC(which, no);
@@ -1834,8 +1835,22 @@ namespace qiquanui
 
             ResultTab.SelectedIndex = which;
 
-            groupListView.SelectedIndex = 0;
-
+            ListView lv = null;
+            if (which == 0)
+                lv = groupListView;
+            if (which == 1)
+                lv = strategyListView;
+            if (lv.Items.Count > 0)
+                lv.SelectedIndex = 0;
+            else
+            {
+                VolatilityChart.Visibility = Visibility.Hidden;
+                VolatilityChart2.Visibility = Visibility.Hidden;
+                ZoomInGL.Visibility = Visibility.Hidden;
+                ZoomInYK.Visibility = Visibility.Hidden;
+                for (int i = 0; i < 10; i++)
+                    labels[i].Visibility = Visibility.Hidden;
+            }
             qjocPresent = StrategyType.NoRisk;
 
 
@@ -1869,8 +1884,22 @@ namespace qiquanui
 
             ResultTab.SelectedIndex = 1;
 
-            strategyListView.SelectedIndex = 0;
-
+            ListView lv = null;
+            if (which == 0)
+                lv = groupListView;
+            if (which == 1)
+                lv = strategyListView;
+            if (lv.Items.Count > 0)
+                lv.SelectedIndex = 0;
+            else
+            {
+                VolatilityChart.Visibility = Visibility.Hidden;
+                VolatilityChart2.Visibility = Visibility.Hidden;
+                ZoomInGL.Visibility = Visibility.Hidden;
+                ZoomInYK.Visibility = Visibility.Hidden;
+                for (int i = 0; i < 10; i++)
+                    labels[i].Visibility = Visibility.Hidden;
+            }
             clocPresent = StrategyType.NoCA;
 
 
@@ -1904,8 +1933,22 @@ namespace qiquanui
 
             ResultTab.SelectedIndex = 1;
 
-            strategyListView.SelectedIndex = 0;
-
+            ListView lv = null;
+            if (which == 0)
+                lv = groupListView;
+            if (which == 1)
+                lv = strategyListView;
+            if (lv.Items.Count > 0)
+                lv.SelectedIndex = 0;
+            else
+            {
+                VolatilityChart.Visibility = Visibility.Hidden;
+                VolatilityChart2.Visibility = Visibility.Hidden;
+                ZoomInGL.Visibility = Visibility.Hidden;
+                ZoomInYK.Visibility = Visibility.Hidden;
+                for (int i = 0; i < 10; i++)
+                    labels[i].Visibility = Visibility.Hidden;
+            }
             clocPresent = StrategyType.NoMSM;
 
 
@@ -1939,8 +1982,22 @@ namespace qiquanui
 
             ResultTab.SelectedIndex = 1;
 
-            strategyListView.SelectedIndex = 0;
-
+            ListView lv = null;
+            if (which == 0)
+                lv = groupListView;
+            if (which == 1)
+                lv = strategyListView;
+            if (lv.Items.Count > 0)
+                lv.SelectedIndex = 0;
+            else
+            {
+                VolatilityChart.Visibility = Visibility.Hidden;
+                VolatilityChart2.Visibility = Visibility.Hidden;
+                ZoomInGL.Visibility = Visibility.Hidden;
+                ZoomInYK.Visibility = Visibility.Hidden;
+                for (int i = 0; i < 10; i++)
+                    labels[i].Visibility = Visibility.Hidden;
+            }
             clocPresent = StrategyType.NoBA;
 
 
@@ -2687,13 +2744,17 @@ namespace qiquanui
                     oc = qjoc;
                 else
                     oc = cloc;
+                oc.Clear();
                 TopStrategy ts;
+                int count = 0;
 
                 for (int i = 0; i < num; i++)
                 {
-                    if (i >= oc.Count) ts = new TopStrategy();
-                    else ts = oc[i];
-                    if (ykm.yk[which,i]==null) continue;
+                    if (ykm.yk[which, i] == null) continue;
+                    //count++;
+                    //if (count >oc.Count) 
+                        ts = new TopStrategy();
+                    //else ts = oc[i];
                     ts.earnRatePer = ykm.yk[which, i].EarnRate;
                     ts.expectEarnPer = ykm.yk[which, i].ExpectEarn;
                     ts.feePer = 0;//!
@@ -2729,11 +2790,12 @@ namespace qiquanui
                     ts.LineNo = i;
                     RefreshTSPrice(ts);
 
-                    if (i >= oc.Count) oc.Add(ts);
+                    //if (count > oc.Count) 
+                        oc.Add(ts);
                 }
 
-                for (int i = num; i < oc.Count; i++)
-                    oc.RemoveAt(i);
+                //for (int i = num; i < oc.Count; i++)
+                //    oc.RemoveAt(i);
             }
         }
         static int WHICH = 0;
@@ -2828,7 +2890,9 @@ namespace qiquanui
 
                     //盈亏图
                     tempX = (int)j;
-                    XY point = yk.points[(int)((j - left) / yk.ykstep)];
+                    int pno = (int)((j - left) / yk.ykstep);
+                    if (pno >= yk.points.Count) break ;
+                    XY point = yk.points[pno];
                     if (point.Y == 0)
                     {
                         data3.Add(point);
@@ -2992,14 +3056,28 @@ namespace qiquanui
                 VolatilityChart3.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
                 VolatilityChart3.IDMemberPath = "X";
                 VolatilityChart3.Graphs.Clear();
-                double max = -1e10;
 
+                //int x = ykm.yk[which, 0].points.Count;
+                //x = (int)ykm.yk[which, 0].points[x - 1].X;
+                //coor.Add(new XY(x+1, 0));
+                //coor.Add(new XY(x+2, 0));
+                double max = -1e10,min=1e10;
+                int j = 0;
                 for (int i = 0; i < count; i++)
                 {
-                    if (ykm.yk[which, i] == null) continue;
+                    j = i;
+                    if (ykm.yk[which, i] == null)
+                    {
+                        j--;
+                        continue;
+                    }
                     YK yk = ykm.yk[which, i];
 
+                    if (yk.max > max) max = yk.max;
+                    if (yk.min < min) min = yk.min;
                     data = yk.points;
+
+
 
                     System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
                     Bindings[6 + i] = dataBinding;
@@ -3035,6 +3113,21 @@ namespace qiquanui
                     VolatilityChart3.Graphs.Add(test);
 
                 }
+
+                if (j>=0 && ykm.yk[which, j] != null)
+                {
+                    if (max < 0) max = 0;
+                    if (min > 0) min = 0;
+                    int c = ykm.yk[which, j].points.Count;
+                    int x = (int)ykm.yk[which, j].points[c - 1].X;
+                    data.RemoveAt(c - 1);
+                    data.RemoveAt(c - 2);
+                    data.Add(new XY(x, max + (max - min) * 0.2));
+                }
+
+
+
+
             }
 
             BindingForTrend();

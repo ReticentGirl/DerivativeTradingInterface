@@ -129,6 +129,7 @@ namespace qiquanui
         public double EDGE = 0.2;
         public bool szorhs = false;
         public bool allPositive = true;
+        public double max, min ;
         /// <summary>
         ///     构造完之后使用 .ykoption 和 .ykfuture 填充数据，然后再调用相应计算方法
         /// </summary>
@@ -257,6 +258,8 @@ namespace qiquanui
             double k;
             XY last = null, now;
             allPositive = true;
+            max = -1e10;
+            min = 1e10;
             for (int i = LeftEdge; i <= RightEdge; i += ykstep)
             {
                 k = ComputePoint(i);
@@ -264,6 +267,8 @@ namespace qiquanui
                     allPositive = false;
                 now = new XY((int)i, k);
                 points.Add(now);
+                if (k > max) max = k;
+                if (k < min) min = k;
              
                 if (i >= LeftCompute && i <= RightCompute)
                 {

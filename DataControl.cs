@@ -10,9 +10,9 @@ namespace qiquanui
 {
     class DataControl
     {
-       static string dataPath = "D:/Data.sqlite;";
+       //static string dataPath = "D:/Data.sqlite;";
 
-        //static string dataPath = "db/Data.sqlite;";    //相对路径
+        static string dataPath = "db/Data.sqlite;";    //相对路径
  
 
         //////////////////////////////查询 

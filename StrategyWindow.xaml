@@ -1323,7 +1323,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <!--ListView的ScrollBar.Visibility要设置为hidden，这样只对右边的项列宽造成影响，否则在调整项列宽时，会对左边的数据项列宽也产生影响-->
-                    <ListView x:Name="groupListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="White" SelectionChanged="groupListView_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1022" Height="157" Margin="0,2,0,0">
+                    <ListView x:Name="groupListView" ItemsSource="{Binding Mode=OneWay}" DataContext="{Binding Mode=OneWay}" Style="{StaticResource ListViewStyle}" ScrollViewer.VerticalScrollBarVisibility="Disabled"  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="White" SelectionChanged="groupListView_SelectionChanged" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1022" Height="160" Margin="0,2,0,0">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="ifChosenGGVCH" Header="" Width="50">
