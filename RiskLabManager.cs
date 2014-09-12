@@ -15,11 +15,11 @@ namespace qiquanui
     public class RiskLabManager
     {
 
-        public ObservableCollection<RiskLabData> RiskOC1 = new ObservableCollection<RiskLabData>(); //单支期权的希腊值
+        public static ObservableCollection<RiskLabData> RiskOC1 = new ObservableCollection<RiskLabData>(); //单支期权的希腊值
         public static ObservableCollection<RiskLabData> RiskOC2 = new ObservableCollection<RiskLabData>(); //推荐组合
 
         RiskWindow pRiskWindow;    //风险实验室窗体指针
-
+       
         TradingManager otm;//交易区指针
 
         RiskLabData rd1;
@@ -230,5 +230,5 @@ namespace qiquanui
             }
     }
 
-
+   
 }

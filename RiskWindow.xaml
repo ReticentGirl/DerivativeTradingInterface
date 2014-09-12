@@ -1409,7 +1409,7 @@
         </TabControl>
         <Canvas HorizontalAlignment="Left" Height="266" Margin="843,390,0,0" VerticalAlignment="Top" Width="312">
             <am:LineChart x:Name="VolatilityChart" Width="312" Height="256"
-                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="10" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" HorizontalAlignment="Right">
+                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Bottom" Canvas.Top="10" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" HorizontalAlignment="Right">
 					
                 <am:LineChart.Legend>
                     <am:Legend HorizontalAlignment="Left" HorizontalContentAlignment="Left" 
@@ -1442,7 +1442,7 @@
                 <!--<am:LineChart.Graphs >
                     <am:LineChartGraph Name="VolatilityGraph" Height="184" Width="312" Brush="White" AreaFillOpacity="0.5" BulletType="None" IsFilled="True" AreaFill="Blue"  />
                 </am:LineChart.Graphs>-->
-                <am:LineChartGraph x:Name="VolatilityGraphTemp1" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="72" IsFilled="True" Width="237"/>
+                <am:LineChartGraph x:Name="VolatilityGraphTemp1" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="22" IsFilled="True" Width="58"/>
                 <am:LineChartGraph x:Name="VolatilityGraphTemp2" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
 
             <!--</am:LineChart>-->
@@ -1455,6 +1455,7 @@
             
             
         </Canvas>
+        <Label Content="隐含波动率图" HorizontalAlignment="Left" Margin="843,359,0,0" VerticalAlignment="Top" Foreground="White"/>
 
         </Grid>
 </Window>

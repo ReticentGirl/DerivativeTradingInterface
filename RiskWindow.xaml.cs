@@ -213,6 +213,10 @@ namespace qiquanui
             pWindow.WindowState = WindowState.Normal;
             pWindow.CloseLeftCanvas();
             pWindow.CloseRightCanvas();
+
+            RiskLabManager.RiskOC1.Clear();
+            RiskLabManager.RiskOC2.Clear();
+
             this.Close();
         }//关闭窗口按钮
 
@@ -511,7 +515,7 @@ namespace qiquanui
 
             if (selectedItem.InstrumentID == "HO1408-C-1400")
             {
-                string[] datatime = { "20140819", "20140919", "20141219" };
+                string[] datatime = { "20140815", "20140919", "20141219" };
 
                 for (int j = 0; j < X1.Length; j++)
                 {
