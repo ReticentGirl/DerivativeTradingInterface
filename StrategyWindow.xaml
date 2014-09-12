@@ -1356,7 +1356,7 @@
                     </ListView>
 
                     <CheckBox x:Name="chooseAllGCheckBox" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,12,0,0" Click="chooseAllGCheckBox_Click"/>
-                    <Button x:Name="placeOrderGButton" Content="一键下单" Margin="0,0,6.4,5.8" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True" Click="placeOrderGButton_Click"/>
+                    <Button x:Name="placeOrderGButton" Content="下单" Margin="0,0,6.4,5.8" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True" Click="placeOrderGButton_Click"/>
 
                 </Grid>
             </TabItem>
@@ -1402,7 +1402,7 @@
                     </ListView>
 
                     <CheckBox x:Name="chooseAllSCheckBox" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="21,10,0,0" Click="chooseAllSCheckBox_Click"/>
-                    <Button x:Name="placeOrderSButton" Content="一键下单" Margin="0,0,7,6" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True" Click="placeOrderSButton_Click"/>
+                    <Button x:Name="placeOrderSButton" Content="下单" Margin="0,0,7,6" Style="{StaticResource darkButton}" BorderBrush="{x:Null}" Foreground="White" Background="#FF666672" Height="23" Width="75" VerticalAlignment="Bottom" HorizontalAlignment="Right" UseLayoutRounding="True" ScrollViewer.CanContentScroll="True" Click="placeOrderSButton_Click"/>
 
                 </Grid>
             </TabItem>
@@ -1437,6 +1437,8 @@
                 </am:LineChart.LeftValueAxis>
                 <am:LineChartGraph x:Name="VolatilityGraph" AreaFillOpacity="1" AreaFill="#FFD46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
                 <am:LineChartGraph x:Name="VolatilityGraph2" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
+                <am:LineChartGraph x:Name="Transparent1" AreaFillOpacity="0" BalloonBackground="sc#0, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237" Foreground="#00ECECEC" Opacity="0"/>
+
             </am:LineChart>
 
             <am:LineChart x:Name="VolatilityChart2" Width="256" Height="180"
@@ -1507,7 +1509,7 @@
                 <am:LineChartGraph x:Name="VolatilityGraphTemp2" AreaFillOpacity="1" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
 
             </am:LineChart>
-            <Label Content="Label" Canvas.Left="2" Canvas.Top="10" Width="130" Background="#FF120D13" Foreground="#00000000"/>
+            <Label Content="Label" Canvas.Top="10" Width="132" Background="#FF120D13" Foreground="#00000000"/>
             <Label x:Name="LegendMask" Content="Label" Canvas.Left="81" Canvas.Top="179" Width="130" Background="#FF120D13" Foreground="#00000000"/>
             <Button x:Name="ZoomInYKs" Style="{StaticResource ZoomButtonSty}" Content="" Canvas.Left="317" Width="20" Click="ZoomInYKs_Click" Canvas.Top="-3" Height="20" Visibility="Hidden"/>
             <Button x:Name="ZoomInZS" Style="{StaticResource ZoomButtonSty}" Content="" Canvas.Left="317" Width="20" Click="ZoomInZS_Click" Canvas.Top="229" Height="20" Visibility="Hidden"/>

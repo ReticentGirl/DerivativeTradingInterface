@@ -12,7 +12,7 @@
         Closing="Window_Closing"
     
     
-        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1000" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1" WindowState="Maximized" Loaded="Window_Loaded_1">
+        Title="MainWindow" BorderThickness="7" WindowStyle="None" AllowsTransparency="True" Foreground="#FF8C838F" Background="#FF1D1D21" ResizeMode="CanResizeWithGrip" MinWidth="1200" MinHeight="700" Width="1198.75" Height="700.5" Opacity="0.95" Closed="Window_Closed_1" WindowState="Maximized" Loaded="Window_Loaded_1">
     <Window.Resources>
 
         <!--MouseDown="Window_MouseDown"         MouseMove=" Window_MouseMove"   MouseDoubleClick="Window_MouseDoubleClick"-->
@@ -2106,7 +2106,7 @@
                     <Label x:Name="dueDateLabel" Content="到期年月" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="448,2,0,1" Height="26" />
                     <ComboBox x:Name="dueDateComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" SelectedIndex="0" Style="{StaticResource CboCommomStyle}" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="502,3,0,0" SelectionChanged="dueDateComboBox_SelectionChanged" />
                     <Label x:Name="userLabel" Content="投资账户" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Background="{x:Null}" Margin="601,2,0,1" Height="26" />
-                    <ComboBox x:Name="userComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="80" Style="{StaticResource CboCommomStyle}" SelectedIndex="0" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="655,3,0,0" />
+                    <ComboBox x:Name="userComboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="105" Style="{StaticResource CboCommomStyle}" SelectedIndex="0" Foreground="White" BorderBrush="#FF414551" FlowDirection="LeftToRight" Margin="655,3,0,0" />
 
                 </Grid>
 
@@ -2729,6 +2729,8 @@
                                 </am:LineChart.LeftValueAxis>
                                 <am:LineChartGraph x:Name="VolatilityGraph" AreaFillOpacity="1" AreaFill="#FFD46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
                                 <am:LineChartGraph x:Name="VolatilityGraph2" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
+                                <am:LineChartGraph x:Name="Transparent1" AreaFillOpacity="0" BalloonBackground="sc#0, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237" Foreground="#00ECECEC" Opacity="0"/>
+
                             </am:LineChart>
 
 
@@ -2753,7 +2755,13 @@
                                 </am:LineChart.LeftValueAxis>
                                 <am:LineChartGraph x:Name="VolatilityGraph3" AreaFillOpacity="1" AreaFill="#FFD46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
                                 <am:LineChartGraph x:Name="VolatilityGraph4" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
+                                <am:LineChartGraph x:Name="Transparent2" AreaFillOpacity="0" BalloonBackground="sc#0, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237" Foreground="#00ECECEC" Opacity="0"/>
+
                             </am:LineChart>
+
+
+                            <Label Content="Label" Canvas.Left="2" Canvas.Top="10" Background="#FF0C0E16" Foreground="#00000000" Margin="56,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131"/>
+                            <Label Content="Label" Canvas.Left="2" Canvas.Top="10" Background="#FF0C0E16" Foreground="#00000000" Margin="56,3.4,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Grid.Row="1"/>
 
                             <Button x:Name="ZoomInGL"  Style="{StaticResource ZoomButtonSty}" Content="+" Width="19" Click="ZoomInGL_Click" Margin="0,5,5,0" HorizontalAlignment="Right" VerticalAlignment="Top" Height="19" Visibility="Hidden"/>
                             <Button x:Name="ZoomInYK" Style="{StaticResource ZoomButtonSty}" Content="+" Width="19" Click="ZoomInYK_Click" Margin="0,5,5,0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Top" Height="19" Visibility="Hidden"/>

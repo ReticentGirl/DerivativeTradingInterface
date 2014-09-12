@@ -1394,9 +1394,9 @@
         </Canvas>
         
         <Canvas x:Name="GLCanvas" Height="484" VerticalAlignment="Bottom" Margin="0,0,-0.4,0.4" HorizontalAlignment="Right" Width="786">
-            <am:LineChart x:Name="VolatilityChart" Width="682" Height="398" Foreground="LightGray"
+            <am:LineChart x:Name="VolatilityChart" Width="682" Height="394" Foreground="LightGray"
                       
-					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" Canvas.Top="62" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Canvas.Left="64" >
+					BorderBrush="Transparent" BorderThickness="0" VerticalAlignment="Top" Background="Transparent" Canvas.Top="66" BalloonForeground="#FFECECEC" BalloonsEnabled="True" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" LegendEnabled="False" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" Canvas.Left="64" >
 
                 <am:LineChart.Content >
                     <Grid Width="640" Height="420">
@@ -1421,7 +1421,7 @@
                 <am:LineChartGraph x:Name="VolatilityGraph" AreaFillOpacity="1" AreaFill="#FFD46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
                 <am:LineChartGraph x:Name="VolatilityGraph2" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
             </am:LineChart>
-            <Label Content="Label" Canvas.Top="63" Width="130" Background="#FF120D13" Foreground="#00000000" Height="25" Canvas.Left="64"/>
+            <Label Content="Label" Canvas.Top="64" Width="130" Background="#FF120D13" Foreground="#00000000" Height="25" Canvas.Left="64"/>
 
 
         </Canvas>
@@ -1456,7 +1456,7 @@
                 <am:LineChartGraph x:Name="VolatilityGraph3" AreaFillOpacity="1" AreaFill="#FFD46459" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00000000" Height="141" IsFilled="True" Width="95"/>
                 <am:LineChartGraph x:Name="VolatilityGraph4" AreaFillOpacity="1" AreaFill="#FF46C55D" BalloonBackground="sc#1, 0.4452012, 0.08650046, 0.0202885624" BulletType="None" Brush="#00D7D7EE" Height="72" IsFilled="True" Width="237"/>
             </am:LineChart>
-            <Label Content="Label" Canvas.Left="64" Canvas.Top="43" Width="130" Background="#FF120D13" Foreground="#00000000" Height="22"/>
+            <Label Content="Label" Canvas.Left="64" Canvas.Top="45" Width="130" Background="#FF120D13" Foreground="#00000000" Height="22"/>
 
         </Canvas>
 

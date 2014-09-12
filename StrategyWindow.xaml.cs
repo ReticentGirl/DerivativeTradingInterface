@@ -2783,6 +2783,7 @@ namespace qiquanui
                 ObservableCollection<XY> data2 = new ObservableCollection<XY>();
                 ObservableCollection<XY> data3 = new ObservableCollection<XY>();
                 ObservableCollection<XY> data4 = new ObservableCollection<XY>();
+                ObservableCollection<XY> dataTrans1 = new ObservableCollection<XY>();
                 ObservableCollection<XY> dataTrans2 = new ObservableCollection<XY>();
 
                 ObservableCollection<XY> coor = new ObservableCollection<XY>();
@@ -2793,8 +2794,9 @@ namespace qiquanui
                 ChartWindow.RightEdge = yk.RightEdge;
                 int left = yk.LeftEdge, right = yk.RightEdge;
                 double lastprice = yk.ykfuture[0].LastPrice;
-
-                
+                double max1 = -1e10;
+                double max2 = -1e10;
+               
 
                 int now = 0;
                 bool positive = yk.probability[0].positive;
@@ -2818,11 +2820,10 @@ namespace qiquanui
                         data.Add(new XY() { X = tempX, Y = tempY });
                     else
                         data2.Add(new XY() { X = tempX, Y = tempY });
+                    if (tempY > max1)
+                        max1 = tempY;
 
 
-
-                    if (j == left)
-                        dataTrans2.Add(new XY(tempX, 30000));
 
 
                     //盈亏图
@@ -2837,6 +2838,21 @@ namespace qiquanui
                         data3.Add(point);
                     else
                         data4.Add(point);
+
+                    if (point.Y > max2)
+                        max2 = point.Y;
+
+                }
+
+                if (yk.ykname.Equals("转换套利") || yk.ykname.Equals("箱型套利"))
+                {
+                    //dataTrans1.Add(new XY(left, max1 * 1.1));
+                    //dataTrans2.Add(new XY(left, max2 * 1.1));
+                }
+                else
+                {
+                    dataTrans1.Add(new XY(left, max1 * 1.2));
+                    dataTrans2.Add(new XY(left, max2 * 1.2));
                 }
 
                 System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
@@ -2846,6 +2862,7 @@ namespace qiquanui
                 System.Windows.Data.Binding dataBinding3 = new System.Windows.Data.Binding();   //数据绑定
                 System.Windows.Data.Binding dataBinding4 = new System.Windows.Data.Binding();   //数据绑定
                 System.Windows.Data.Binding dataBindingTrans2 = new System.Windows.Data.Binding();   //数据绑定
+                System.Windows.Data.Binding dataBindingTrans1 = new System.Windows.Data.Binding();   //数据绑定
 
 
                 Bindings[0] = coorBinding;
@@ -2862,7 +2879,13 @@ namespace qiquanui
                 dataBinding2.Source = data2;
                 dataBinding3.Source = data3;
                 dataBinding4.Source = data4;
+                dataBindingTrans1.Source = dataTrans1;
                 dataBindingTrans2.Source = dataTrans2;
+
+                this.Transparent1.SetBinding(SerialGraph.DataItemsSourceProperty, dataBindingTrans1);
+                this.Transparent1.SeriesIDMemberPath = "X";
+                this.Transparent1.ValueMemberPath = "Y";
+
 
                 this.Transparent2.SetBinding(SerialGraph.DataItemsSourceProperty, dataBindingTrans2);
                 this.Transparent2.SeriesIDMemberPath = "X";
@@ -2964,6 +2987,7 @@ namespace qiquanui
                 VolatilityChart3.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
                 VolatilityChart3.IDMemberPath = "X";
                 VolatilityChart3.Graphs.Clear();
+                double max = -1e10;
 
                 for (int i = 0; i < count; i++)
                 {
@@ -3036,7 +3060,7 @@ namespace qiquanui
             test.SeriesIDMemberPath = "X";
             test.ValueMemberPath = "Y";
             //test.Title = yk.title;
-            test.LineThickness = 2;
+            test.LineThickness = 1;
             ///[Style]
             
             test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色

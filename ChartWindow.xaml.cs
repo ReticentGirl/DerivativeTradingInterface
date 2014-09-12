@@ -238,9 +238,9 @@ namespace qiquanui
             for (int i = Probability.Count; i < 10; i++)
                 labels[i].Visibility = Visibility.Hidden;
 
-            VolatilityChart2.Visibility = Visibility.Hidden;
-            VolatilityChart3.Visibility = Visibility.Hidden;
-            VolatilityChart4.Visibility = Visibility.Hidden;
+            YKCanvas.Visibility = Visibility.Hidden;
+            YKsCanvas.Visibility = Visibility.Hidden;
+            ZSCanvas.Visibility = Visibility.Hidden;
             LegendMask.Visibility = Visibility.Hidden;
             ZS2Canvas.Visibility = Visibility.Hidden;
 
@@ -259,10 +259,10 @@ namespace qiquanui
 
         private void ChartYK()
         {
-            VolatilityChart.Visibility = Visibility.Hidden;
+            GLCanvas.Visibility = Visibility.Hidden;
+            YKsCanvas.Visibility = Visibility.Hidden;
+            ZSCanvas.Visibility = Visibility.Hidden;
             LegendMask.Visibility = Visibility.Hidden;
-            VolatilityChart3.Visibility = Visibility.Hidden;
-            VolatilityChart4.Visibility = Visibility.Hidden;
             ZS2Canvas.Visibility = Visibility.Hidden;
 
             if (Bindings[0] == null || Bindings[3] == null || Bindings[4] == null)
@@ -284,11 +284,13 @@ namespace qiquanui
         private void ChartYKs()
         {
 
-            VolatilityChart2.Visibility = Visibility.Hidden;
-            VolatilityChart.Visibility = Visibility.Hidden;
-            VolatilityChart4.Visibility = Visibility.Hidden;
+            GLCanvas.Visibility = Visibility.Hidden;
+            YKCanvas.Visibility = Visibility.Hidden;
+            ZSCanvas.Visibility = Visibility.Hidden;
+            LegendMask.Visibility = Visibility.Hidden;
             ZS2Canvas.Visibility = Visibility.Hidden;
-            if (Bindings[5] == null )
+
+            if (Bindings[5] == null)
                 return;
             for (int i=6;i<6+BindingCount;i++)
                 if (Bindings[i] == null)
@@ -338,11 +340,13 @@ namespace qiquanui
 
         private void ChartZS()
         {
-            VolatilityChart2.Visibility = Visibility.Hidden;
-            VolatilityChart3.Visibility = Visibility.Hidden;
-            VolatilityChart.Visibility = Visibility.Hidden;
-            stockChart.Visibility = Visibility.Hidden;
-            if (Bindings[10] == null || Bindings[11] == null )
+            GLCanvas.Visibility = Visibility.Hidden;
+            YKsCanvas.Visibility = Visibility.Hidden;
+            YKCanvas.Visibility = Visibility.Hidden;
+            LegendMask.Visibility = Visibility.Hidden;
+            ZS2Canvas.Visibility = Visibility.Hidden;
+
+            if (Bindings[10] == null || Bindings[11] == null)
                 return;
 
             System.Windows.Data.Binding coorBinding = Bindings[10];    //X坐标轴绑定
@@ -376,10 +380,12 @@ namespace qiquanui
 
         private void ChartZS2()
         {
-            VolatilityChart2.Visibility = Visibility.Hidden;
-            VolatilityChart3.Visibility = Visibility.Hidden;
-            VolatilityChart.Visibility = Visibility.Hidden;
-            VolatilityChart4.Visibility = Visibility.Hidden;
+            GLCanvas.Visibility = Visibility.Hidden;
+            YKsCanvas.Visibility = Visibility.Hidden;
+            ZSCanvas.Visibility = Visibility.Hidden;
+            LegendMask.Visibility = Visibility.Hidden;
+            YKCanvas.Visibility = Visibility.Hidden;
+
 
             if (BindingStockData==null)
                 return;
