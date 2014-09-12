@@ -1733,7 +1733,7 @@
         <!--【高波动率】设定参数-->
         <Canvas x:Name="highVolatilityCanvas" HorizontalAlignment="Left" Height="30" Margin="452,246,0,0" Grid.Row="1" VerticalAlignment="Top" Width="106" Background="#FF884DCF">
             <TextBlock x:Name="maxRateOfVolatiTB" Text="最大波幅：" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Foreground="White" Width="57"/>
-            <TextBox x:Name="setMaxRateOfVolatiTBox" Canvas.Left="57" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="10" VerticalAlignment="Center" Width="35"/>
+            <TextBox x:Name="setMaxRateOfVolatiTBox" Canvas.Left="57" Canvas.Top="6" Foreground="Black" HorizontalAlignment="Center" Text="25" VerticalAlignment="Center" Width="35"/>
             <TextBlock x:Name="percentHVTB" Text="%" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Top="7" Canvas.Left="93" Foreground="White"/>
         </Canvas>
         <Button x:Name="highVolatilityBtn" Background="#FF9D59F3" BorderBrush="{x:Null}" Click="highVolatilityBtn_Click" Content="高波动率" Grid.Row="1" Height="35" HorizontalAlignment="Left" Margin="470,198,0,0" VerticalAlignment="Top" Width="53" Foreground="White">

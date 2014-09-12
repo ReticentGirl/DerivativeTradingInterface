@@ -2796,7 +2796,7 @@ namespace qiquanui
                 double lastprice = yk.ykfuture[0].LastPrice;
                 double max1 = -1e10;
                 double max2 = -1e10;
-               
+                double min2 = 1e10;
 
                 int now = 0;
                 bool positive = yk.probability[0].positive;
@@ -2841,18 +2841,23 @@ namespace qiquanui
 
                     if (point.Y > max2)
                         max2 = point.Y;
-
+                    if (point.Y < min2)
+                        min2 = point.Y;
                 }
 
                 if (yk.ykname.Equals("转换套利") || yk.ykname.Equals("箱型套利"))
                 {
-                    //dataTrans1.Add(new XY(left, max1 * 1.1));
-                    //dataTrans2.Add(new XY(left, max2 * 1.1));
+                    dataTrans1.Add(new XY(left, max1 * 1.2));
                 }
                 else
                 {
                     dataTrans1.Add(new XY(left, max1 * 1.2));
-                    dataTrans2.Add(new XY(left, max2 * 1.2));
+
+                    if (max2 < 0) max2 = 0;
+                    if (min2 > 0) min2 = 0;
+                    dataTrans2.Add(new XY(left, max2 + (max2 - min2) * 0.2));
+
+                   
                 }
 
                 System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
