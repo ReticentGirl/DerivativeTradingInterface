@@ -1409,7 +1409,7 @@
         </TabControl>
         <Canvas HorizontalAlignment="Left" Height="266" Margin="843,390,0,0" VerticalAlignment="Top" Width="312">
             <am:LineChart x:Name="VolatilityChart" Width="312" Height="256"
-                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="10" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2">
+                          Foreground="LightGray" BorderThickness="0" VerticalAlignment="Top" Canvas.Top="10" BalloonForeground="#FFC9C9C9" BalloonsEnabled="True" Background="#001DB2DE" IndicatorStroke="#FF1A6E95" IsIndicatorEnabled="True" IsZoomable="False" IndicatorBalloonForeground="#FFDEDEDE" PlotAreaMargin="0,0,0,0" PlotAreaBackground="{x:Null}" ScrollerLocation="Bottom" ScrollBarVisibilty="Visible" SelectionMode="Extended" VerticalLinesClustered="True" ZoomOutButtonHoverForeground="#FF5EB1E0" ZoomOutButtonMargin="0" ZoomOutButtonForeground="#FF249DE2" HorizontalAlignment="Right">
 					
                 <am:LineChart.Legend>
                     <am:Legend HorizontalAlignment="Left" HorizontalContentAlignment="Left" 

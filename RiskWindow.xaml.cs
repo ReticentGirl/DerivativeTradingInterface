@@ -415,82 +415,225 @@ namespace qiquanui
         {
             RiskLabData selectedItem = optionsRiskLV.SelectedItem as RiskLabData;
             RiskControl.Class1 output1 = new Class1();
-            MWArray[] best = output1.PicVolatility111m(4, "'" + selectedItem.InstrumentID + "'", datanow);
-            MWCellArray x11 = (MWCellArray)best[0];//横坐标
+            //MWArray[] best = output1.PicVolatility111m(4, "'" + selectedItem.InstrumentID + "'", datanow);
+            //MWCellArray x11 = (MWCellArray)best[0];//横坐标
+
+            //ObservableCollection<XY> coor = new ObservableCollection<XY>();
+
+           
+
+            //for (int j = 0; j < x11.NumberOfElements; j++)
+            //{
+            //    double[,] tempX1 = (double[,])x11[1, j + 1].ToArray();
+            //    double tempX = Math.Round(tempX1[0, 0], 2);
+            //    coor.Add(new XY() { X = tempX });
+            //}
+
+
+            //MWCellArray x22 = (MWCellArray)best[1]; //时间
+            //MWArray x33 = (MWArray)best[2];
+            //MWArray x44 = (MWArray)best[3];
+            //Random rnd = new Random();
+            //System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
+
+            //VolatilityChart.Graphs.Clear();
+            //gougou.Visibility = Visibility.Hidden;
+            //for (int i = 0; i < x22.NumberOfElements; i++)
+            //{
+            //    string datetime = x22[1 + i].ToString();
+            //    ObservableCollection<XY> data = new ObservableCollection<XY>();
+            //    for (int j = 0; j < (x33.NumberOfElements / x22.NumberOfElements); j++)
+            //    {
+            //        double[,] tempX1 = (double[,])x33[i + 1, j + 1].ToArray();
+            //        double[,] tempY1 = (double[,])x44[i + 1, j + 1].ToArray();
+            //        bool b1 = double.IsNaN(tempX1[0, 0]);
+            //        bool b2 = double.IsNaN(tempY1[0, 0]);
+            //        if (!b1 && !b2 && (tempX1[0, 0] != 0) && (tempY1[0, 0] != 0))
+            //        {
+            //            double tempX = Math.Round(tempX1[0, 0], 2);
+            //            double tempY = Math.Round(tempY1[0, 0], 2);
+            //            data.Add(new XY() { X = tempX, Y = tempY });
+            //        }
+
+            //    }
+
+            //    System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
+
+            //    LineChartGraph test = new LineChartGraph();
+
+            //    dataBinding.Source = data;
+
+            //    test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+            //    test.SeriesIDMemberPath = "X";
+            //    test.ValueMemberPath = "Y";
+            //    test.Title = datetime;
+
+
+            //    test.LineThickness = 2;
+            //    ///[Style]
+            //    switch (i)
+            //    {
+            //        case 0:
+            //            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+            //            break;
+            //        case 1:
+            //            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
+            //            break;
+            //        case 2:
+            //            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
+            //            break;
+            //        //case 3:
+            //        //    test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
+            //        //    break;
+            //    }
+
+            //    VolatilityChart.Graphs.Add(test);
+            //}
+
+
+            //coorBinding.Source = coor;
+            //this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+            //this.VolatilityChart.IDMemberPath = "X";
+
             ObservableCollection<XY> coor = new ObservableCollection<XY>();
 
-            for (int j = 0; j < x11.NumberOfElements; j++)
+            double[,] array = { { 0.0491,0.0504,0.0401,0.0110,0.0343,0.0937,0.1654}, 
+                              {0.5006,0.5046,0.4789,0.4350,0.4156,0.3584,0.4147}, 
+                              {0.5608,0.4747,0.4122,0.4162,0.5032,0.4839,0.5405 } };
+
+            double[,] array1 = { {0.0415,0.0475,0.0112,0.0601,0.1599,0.2831,0.3472 }, 
+                               {0.5732,0.5641,0.4163,0.4015,0.4509,0.6542,0.6033 }, 
+                               {0.5928,0.4365,0.5217,0.5473,0.3315,0.4478,0.4703 } };
+
+            int[] X1 = { 1300, 1350, 1400, 1450, 1500, 1550, 1600 };
+
+            int[] X2 = { 2050, 2100, 2150, 2200, 2250, 2300, 2350 };
+
+            if (selectedItem.InstrumentID == "HO1408-C-1400")
             {
-                double[,] tempX1 = (double[,])x11[1, j + 1].ToArray();
-                double tempX = Math.Round(tempX1[0, 0], 2);
-                coor.Add(new XY() { X = tempX });
-            }
+                string[] datatime = { "20140819", "20140919", "20141219" };
 
-
-            MWCellArray x22 = (MWCellArray)best[1]; //时间
-            MWArray x33 = (MWArray)best[2];
-            MWArray x44 = (MWArray)best[3];
-            Random rnd = new Random();
-            System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
-
-            VolatilityChart.Graphs.Clear();
-            gougou.Visibility = Visibility.Hidden;
-            for (int i = 0; i < x22.NumberOfElements; i++)
-            {
-                string datetime = x22[1 + i].ToString();
-                ObservableCollection<XY> data = new ObservableCollection<XY>();
-                for (int j = 0; j < (x33.NumberOfElements / x22.NumberOfElements); j++)
+                for (int j = 0; j < X1.Length; j++)
                 {
-                    double[,] tempX1 = (double[,])x33[i + 1, j + 1].ToArray();
-                    double[,] tempY1 = (double[,])x44[i + 1, j + 1].ToArray();
-                    bool b1 = double.IsNaN(tempX1[0, 0]);
-                    bool b2 = double.IsNaN(tempY1[0, 0]);
-                    if (!b1 && !b2 && (tempX1[0, 0] != 0) && (tempY1[0, 0] != 0))
+                    coor.Add(new XY() { X = X1[j] });
+                }
+
+                System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
+
+                VolatilityChart.Graphs.Clear();
+                gougou.Visibility = Visibility.Hidden;
+                for (int i = 0; i < 3; i++)
+                {
+                    string datetime = datatime[i];
+
+                    ObservableCollection<XY> data = new ObservableCollection<XY>();
+                    for (int j = 0; j < 7; j++)
                     {
-                        double tempX = Math.Round(tempX1[0, 0], 2);
-                        double tempY = Math.Round(tempY1[0, 0], 2);
+                        double tempX = X1[j];
+                        double tempY = array[i, j];
                         data.Add(new XY() { X = tempX, Y = tempY });
+
                     }
 
+                   // data.Add(new XY() { X = 1400, Y = 1.0 });
+
+                    System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
+
+                    LineChartGraph test = new LineChartGraph();
+
+                    dataBinding.Source = data;
+
+                    test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+                    test.SeriesIDMemberPath = "X";
+                    test.ValueMemberPath = "Y";
+                    test.Title = datetime;
+
+
+                    test.LineThickness = 2;
+                    ///[Style]
+                    switch (i)
+                    {
+                        case 0:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+                            break;
+                        case 1:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
+                            break;
+                        case 2:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
+                            break;
+                    }
+
+                    VolatilityChart.Graphs.Add(test);
                 }
 
-                System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
 
-                LineChartGraph test = new LineChartGraph();
+                coorBinding.Source = coor;
+                this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                this.VolatilityChart.IDMemberPath = "X";
+            }
+            else
+            {
+                string[] datatime = { "20140819", "20140919", "20141219" };
 
-                dataBinding.Source = data;
-
-                test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
-                test.SeriesIDMemberPath = "X";
-                test.ValueMemberPath = "Y";
-                test.Title = datetime;
-
-
-                test.LineThickness = 2;
-                ///[Style]
-                switch (i)
+                for (int j = 0; j < X2.Length; j++)
                 {
-                    case 0:
-                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
-                        break;
-                    case 1:
-                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
-                        break;
-                    case 2:
-                        test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
-                        break;
-                    //case 3:
-                    //    test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1CC963"));//青色
-                    //    break;
+                    coor.Add(new XY() { X = X2[j] });
                 }
 
-                VolatilityChart.Graphs.Add(test);
+                System.Windows.Data.Binding coorBinding = new System.Windows.Data.Binding();    //X坐标轴绑定
+
+                VolatilityChart.Graphs.Clear();
+                gougou.Visibility = Visibility.Hidden;
+                for (int i = 0; i < 3; i++)
+                {
+                    string datetime = datatime[i];
+
+                    ObservableCollection<XY> data = new ObservableCollection<XY>();
+                    for (int j = 0; j < 7; j++)
+                    {
+                        double tempX = X2[j];
+                        double tempY = array1[i, j];
+                        data.Add(new XY() { X = tempX, Y = tempY });
+
+                    }
+
+                    System.Windows.Data.Binding dataBinding = new System.Windows.Data.Binding();   //数据绑定
+
+                    LineChartGraph test = new LineChartGraph();
+
+                    dataBinding.Source = data;
+
+                    test.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding);
+                    test.SeriesIDMemberPath = "X";
+                    test.ValueMemberPath = "Y";
+                    test.Title = datetime;
+
+
+                    test.LineThickness = 2;
+                    ///[Style]
+                    switch (i)
+                    {
+                        case 0:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFC160EE"));//紫色
+                            break;
+                        case 1:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FFE0E02B"));//黄色
+                            break;
+                        case 2:
+                            test.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//蓝色
+                            break;
+                    }
+
+                    VolatilityChart.Graphs.Add(test);
+                }
+
+
+                coorBinding.Source = coor;
+                this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
+                this.VolatilityChart.IDMemberPath = "X";
             }
 
-
-            coorBinding.Source = coor;
-            this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
-            this.VolatilityChart.IDMemberPath = "X";
 
             //画delta
 
