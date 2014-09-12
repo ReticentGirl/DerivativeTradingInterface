@@ -2783,6 +2783,7 @@ namespace qiquanui
                 ObservableCollection<XY> data2 = new ObservableCollection<XY>();
                 ObservableCollection<XY> data3 = new ObservableCollection<XY>();
                 ObservableCollection<XY> data4 = new ObservableCollection<XY>();
+                ObservableCollection<XY> dataTrans2 = new ObservableCollection<XY>();
 
                 ObservableCollection<XY> coor = new ObservableCollection<XY>();
                 YK yk = ykm.yk[which, no];
@@ -2793,6 +2794,7 @@ namespace qiquanui
                 int left = yk.LeftEdge, right = yk.RightEdge;
                 double lastprice = yk.ykfuture[0].LastPrice;
 
+                
 
                 int now = 0;
                 bool positive = yk.probability[0].positive;
@@ -2803,6 +2805,7 @@ namespace qiquanui
                     double tempY = StrategyWindow.ComputeZT((int)j, lastprice, yk.ykmax);
 
                     coor.Add(new XY() { X = tempX, Y = tempY });
+
                     if ((int)j == yk.probability[now].x)
                     {
                         Console.WriteLine(yk.probability[now].percent);
@@ -2815,6 +2818,12 @@ namespace qiquanui
                         data.Add(new XY() { X = tempX, Y = tempY });
                     else
                         data2.Add(new XY() { X = tempX, Y = tempY });
+
+
+
+                    if (j == left)
+                        dataTrans2.Add(new XY(tempX, 30000));
+
 
                     //盈亏图
                     tempX = (int)j;
@@ -2836,6 +2845,9 @@ namespace qiquanui
                 System.Windows.Data.Binding dataBinding2 = new System.Windows.Data.Binding();   //数据绑定
                 System.Windows.Data.Binding dataBinding3 = new System.Windows.Data.Binding();   //数据绑定
                 System.Windows.Data.Binding dataBinding4 = new System.Windows.Data.Binding();   //数据绑定
+                System.Windows.Data.Binding dataBindingTrans2 = new System.Windows.Data.Binding();   //数据绑定
+
+
                 Bindings[0] = coorBinding;
                 Bindings[1] = dataBinding;
                 Bindings[2] = dataBinding2;
@@ -2850,6 +2862,11 @@ namespace qiquanui
                 dataBinding2.Source = data2;
                 dataBinding3.Source = data3;
                 dataBinding4.Source = data4;
+                dataBindingTrans2.Source = dataTrans2;
+
+                this.Transparent2.SetBinding(SerialGraph.DataItemsSourceProperty, dataBindingTrans2);
+                this.Transparent2.SeriesIDMemberPath = "X";
+                this.Transparent2.ValueMemberPath = "Y";
 
                 this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
                 this.VolatilityChart.IDMemberPath = "X";
