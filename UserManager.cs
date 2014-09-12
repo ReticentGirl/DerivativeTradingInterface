@@ -963,6 +963,8 @@ namespace qiquanui
 
                 int instrumentMultiplier = Convert.ToInt32(nDrAll["InstrumentMultiplier"]);
 
+                int _optionOrFuture = Convert.ToInt32(nDrAll["OptionOrFuture"]);
+
                 //string First = "";    //先买 还是先卖
 
 
@@ -987,7 +989,7 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-
+                    new_usedMargin = Math.Round(new_usedMargin, 2);
 
                     //////平仓盈亏
                     double old_closedProfitAndLoss = Convert.ToDouble(userDr["ClosedProfitAndLoss"]);
@@ -999,7 +1001,7 @@ namespace qiquanui
                     DataRow secondOne = testForCloseOutTable.Rows[1];
 
 
-                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(firstOne["AveragePrice"]) - Convert.ToDouble(secondOne["AveragePrice"])) * Convert.ToInt32(positionBuy["TradingNum"]) * instrumentMultiplier;
+                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(secondOne["AveragePrice"]) - Convert.ToDouble(firstOne["AveragePrice"])) * Convert.ToInt32(positionBuy["TradingNum"]) * instrumentMultiplier;
 
                     string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
                     ///////////////////
@@ -1008,6 +1010,8 @@ namespace qiquanui
 
                     new_availableCapital += (cut_marginBuy + cut_marginSell);
 
+                    if (_optionOrFuture == 1)   //如果是期货  要加上平仓盈亏
+                        new_availableCapital += (new_closedProfitAndLoss - old_closedProfitAndLoss);
 
                     string deleteBuySqlAndSell = String.Format("DELETE FROM Positions WHERE UserID='{0}' AND InstrumentID='{1}'", _userID, _insrtumentID);
 
@@ -1032,7 +1036,7 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-
+                    new_usedMargin = Math.Round(new_usedMargin, 2);
 
 
                     double old_positionAveragePrice = Convert.ToDouble(positionBuy["PositionAveragePrice"]);
@@ -1048,13 +1052,16 @@ namespace qiquanui
 
                     DataRow secondOne = testForCloseOutTable.Rows[1];
 
-                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(firstOne["AveragePrice"]) - Convert.ToDouble(secondOne["AveragePrice"])) * Math.Abs(sellNum) * instrumentMultiplier;
+                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(secondOne["AveragePrice"]) - Convert.ToDouble(firstOne["AveragePrice"])) * Math.Abs(sellNum) * instrumentMultiplier;
 
                     string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
                     ///////////////////
 
 
                     new_availableCapital += (cut_marginBuy + cut_marginSell);
+
+                    if (_optionOrFuture == 1)   //如果是期货  要加上平仓盈亏
+                        new_availableCapital += (new_closedProfitAndLoss - old_closedProfitAndLoss);
 
                     string updateBuySql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=1", d_num, new_positionAveragePrice, _userID, _insrtumentID);
 
@@ -1081,7 +1088,7 @@ namespace qiquanui
 
                     new_usedMargin -= (cut_marginBuy + cut_marginSell);
 
-
+                    new_usedMargin = Math.Round(new_usedMargin, 2);
 
 
                     double old_positionAveragePrice = Convert.ToDouble(positionSell["PositionAveragePrice"]);
@@ -1098,13 +1105,16 @@ namespace qiquanui
 
                     DataRow secondOne = testForCloseOutTable.Rows[1];
 
-                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(firstOne["AveragePrice"]) - Convert.ToDouble(secondOne["AveragePrice"])) * Math.Abs(buyNum) * instrumentMultiplier;
+                    double new_closedProfitAndLoss = old_closedProfitAndLoss + (Convert.ToDouble(secondOne["AveragePrice"]) - Convert.ToDouble(firstOne["AveragePrice"])) * Math.Abs(buyNum) * instrumentMultiplier;
 
                     string updateUserSql = String.Format("UPDATE User SET ClosedProfitAndLoss='{0}' WHERE UserID='{1}'", new_closedProfitAndLoss, _userID);
                     ///////////////////
 
 
                     new_availableCapital += (cut_marginBuy + cut_marginSell);
+
+                    if (_optionOrFuture == 1)   //如果是期货  要加上平仓盈亏
+                        new_availableCapital += (new_closedProfitAndLoss - old_closedProfitAndLoss);
 
                     string updateSellSql = string.Format("UPDATE Positions SET TradingNum='{0}',PositionAveragePrice='{1}' WHERE UserID='{2}' AND InstrumentID='{3}' AND IsBuy=0", -d_num, new_positionAveragePrice, _userID, _insrtumentID);
 
