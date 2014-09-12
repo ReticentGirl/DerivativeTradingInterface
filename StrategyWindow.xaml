@@ -1350,7 +1350,7 @@
                                 <GridViewColumn x:Name="rateOfGainGGVCH" DisplayMemberBinding="{Binding EarnRate}" Header="收益概率" Width="70"/>
                                 <GridViewColumn x:Name="maxLossGGVCH" DisplayMemberBinding="{Binding MaxLose}" Header="最大损失" Width="80"/>
                                 <GridViewColumn x:Name="rateOfLossGGVCH" DisplayMemberBinding="{Binding LoseRate}" Header="损失概率" Width="70"/>
-                                <GridViewColumn x:Name="varGGVCH" DisplayMemberBinding="{Binding VaR}" Header="VaR" Width="60"/>
+                                <!--<GridViewColumn x:Name="varGGVCH" DisplayMemberBinding="{Binding VaR}" Header="VaR" Width="60"/>-->
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -1396,7 +1396,7 @@
                                 <GridViewColumn DisplayMemberBinding="{Binding EarnRate}" x:Name="rateOfGainSGVCH" Header="收益概率" Width="70"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding MaxLose}" x:Name="maxLossSGVCH" Header="最大损失" Width="80"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding LoseRate}" x:Name="rateOfLossSGVCH" Header="损失概率" Width="70"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding VaR}" x:Name="varSGVCH" Header="VaR" Width="60"/>
+                                <!--<GridViewColumn DisplayMemberBinding="{Binding VaR}" x:Name="varSGVCH" Header="VaR" Width="60"/>-->
                             </GridView>
                         </ListView.View>
                     </ListView>

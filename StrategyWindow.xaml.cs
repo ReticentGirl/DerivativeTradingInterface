@@ -3065,12 +3065,11 @@ namespace qiquanui
                 int j = 0;
                 for (int i = 0; i < count; i++)
                 {
-                    j = i;
                     if (ykm.yk[which, i] == null)
                     {
-                        j--;
                         continue;
                     }
+                    j = i;
                     YK yk = ykm.yk[which, i];
 
                     if (yk.max > max) max = yk.max;
@@ -3114,7 +3113,7 @@ namespace qiquanui
 
                 }
 
-                if (j>=0 && ykm.yk[which, j] != null)
+                if (j>0 && ykm.yk[which, j] != null)
                 {
                     if (max < 0) max = 0;
                     if (min > 0) min = 0;
