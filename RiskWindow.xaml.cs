@@ -370,18 +370,22 @@ namespace qiquanui
 
         private void okCompoBtn_Click(object sender, RoutedEventArgs e)//已选择组合的置信水平
         {
+            DateTime start = DateTime.Now;
             teat = setConfidenceLevelCompoTBox.Text;
             double Cov = Convert.ToDouble(teat);
             pRm.GetData(Cov,datanow);
             pRm.Com(Cov);
+            DateTime end = DateTime.Now;
         }
 
 
         private void okRecomBtn_Click(object sender, RoutedEventArgs e)
         {
+            DateTime time1 = DateTime.Now;
             teat1 = setConfidenceLevelRecomTBox.Text;
             double Cov = Convert.ToDouble(teat1);
             pRm.showData(Cov);
+            DateTime time2 = DateTime.Now;
         }
 
         public void testForChart()
@@ -417,6 +421,8 @@ namespace qiquanui
 
         private void optionsRiskLV_SelectionChanged(object sender, SelectionChangedEventArgs e)//画图
         {
+            if (e.AddedItems.Count == 0)
+                return;
             RiskLabData selectedItem = optionsRiskLV.SelectedItem as RiskLabData;
             RiskControl.Class1 output1 = new Class1();
             //MWArray[] best = output1.PicVolatility111m(4, "'" + selectedItem.InstrumentID + "'", datanow);
@@ -499,6 +505,7 @@ namespace qiquanui
             //this.VolatilityChart.SetBinding(SerialChart.SeriesSourceProperty, coorBinding);
             //this.VolatilityChart.IDMemberPath = "X";
 
+            //DateTime time1 = DateTime.Now;
             ObservableCollection<XY> coor = new ObservableCollection<XY>();
 
             double[,] array = { { 0.0491,0.0504,0.0401,0.0110,0.0343,0.0937,0.1654}, 
@@ -638,6 +645,7 @@ namespace qiquanui
                 this.VolatilityChart.IDMemberPath = "X";
             }
 
+            //DateTime time2 = DateTime.Now;
 
             //画delta
 
@@ -684,17 +692,15 @@ namespace qiquanui
             test1.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding1);
             test1.SeriesIDMemberPath = "X";
             test1.ValueMemberPath = "Y";
-            //test1.Title = "delta图";
-
-
             test1.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//紫色
-                  
             test1.LineThickness = 2;
             GammaDelta.Graphs.Add(test1);
 
             coorBinding1.Source = coor1;
             this.GammaDelta.SetBinding(SerialChart.SeriesSourceProperty, coorBinding1);
             this.GammaDelta.IDMemberPath = "X";
+
+            //DateTime time3 = DateTime.Now;
 
              //gamma图
             MWArray[] GammaArr = output1.GammaPic(2, "'" + selectedItem.InstrumentID + "'", datanow);
@@ -710,7 +716,7 @@ namespace qiquanui
             //double d1 = (High1 - Low1) / 500;
             for (double tempX = Low1; tempX <= High1; tempX = tempX + 1)
             {
-                coor2.Add(new XY() { X = tempX  });
+                coor2.Add(new XY() { X = tempX });
             }
 
             Random rnd2 = new Random();
@@ -726,7 +732,7 @@ namespace qiquanui
                 if (tempY1[0, 0] != 0)
                 {
                     double tempY = Math.Round(tempY1[0, 0], 4);
-                    data2.Add(new XY() { X = Low1 +1 * j, Y = tempY });
+                    data2.Add(new XY() { X = Low1 + 1 * j, Y = tempY });
                 }
 
             }
@@ -740,8 +746,6 @@ namespace qiquanui
             test2.SetBinding(SerialGraph.DataItemsSourceProperty, dataBinding2);
             test2.SeriesIDMemberPath = "X";
             test2.ValueMemberPath = "Y";
-            //test1.Title = "delta图";
-
             test2.Brush = new SolidColorBrush((System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#FF1DB2DE"));//紫色
             test2.LineThickness = 2;
             GammaDelta1.Graphs.Add(test2);
@@ -749,6 +753,8 @@ namespace qiquanui
             coorBinding2.Source = coor2;
             this.GammaDelta1.SetBinding(SerialChart.SeriesSourceProperty, coorBinding2);
             this.GammaDelta1.IDMemberPath = "X";
+
+            //DateTime time4 = DateTime.Now;
         }
 
         private void placeOrderBtn_Click(object sender, RoutedEventArgs e)

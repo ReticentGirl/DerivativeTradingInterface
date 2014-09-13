@@ -55,6 +55,7 @@ namespace qiquanui
         public void GetData(string instrumentID, string callOrPut, int tradingType, int tradingNum,string _datanow)
         {
 
+            
             string sCallOrPut;////看涨（0/false）看跌（1/true）
             if (callOrPut.Equals("看涨"))
             {
@@ -75,7 +76,9 @@ namespace qiquanui
                 sSellOrBuy = "buy";
             }
 
+            DateTime start = DateTime.Now;
             RiskLabData rd2 = new RiskLabData(instrumentID, sCallOrPut, sSellOrBuy, tradingNum, _datanow);
+            DateTime end = DateTime.Now;
             RiskOC1.Add(rd2);
         }
 

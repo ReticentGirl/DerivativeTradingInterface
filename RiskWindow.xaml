@@ -1352,7 +1352,7 @@
                         <!--</am:LineChart>-->
 
                     </am:LineChart> 
-                    <Label Content="" Background="#FF08070A" Canvas.Top="-308" Margin="29,10,167,216"/>
+                    <Label Content="" Background="#FF08070A" Canvas.Top="-308" Margin="29,10,191,214"/>
                     <!--<Label Content="Label" Canvas.Left="246" Canvas.Top="56"/>-->
                     
                 </Grid>
@@ -1401,7 +1401,7 @@
                         <!--</am:LineChart>-->
 
                     </am:LineChart>
-                    <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="136" Background="#FF08070A" Margin="41,21,0,0" Height="24"/>
+                    <Label Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Background="#FF08070A" Margin="41,21,0,0" Height="24"/>
                     <!--<Label  x:Name="gougou2" Canvas.Top="-101" Width="70" Background="{x:Null}" Height="26"/>-->
 
                 </Grid>

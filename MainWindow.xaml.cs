@@ -711,9 +711,14 @@ namespace qiquanui
         {
             if (Canvas2.Width == 29.0)
             {
+                if (otm.TradingOC.Count == 0)
+                {
+                    MessagesControl.showMessage("未勾选任何期权进行风险分析");
+                    return;
+                }
                 openRightCanvas();
-
-
+             
+                //DateTime start = DateTime.Now;
 
                 DateTime present = DataManager.now;
                 string data1 = present.ToString("yyyyMMdd");
@@ -722,17 +727,27 @@ namespace qiquanui
 
                 RiskLabManager rm = new RiskLabManager(otm, riskWindow, data1); //风险实验室
 
+                TradingData td;
+
+                //DateTime start1 = DateTime.Now;
+
                 for (int i = 0; i < otm.TradingOC.Count(); i++) //显示组合单支期权的希腊值
                 {
-                    TradingData td = otm.TradingOC[i];
-                    rm.GetData(td.InstrumentID, td.CallOrPut, td.TradingType, td.TradingNum, data1);
+                   
+                     td = otm.TradingOC[i];
+                     rm.GetData(td.InstrumentID, td.CallOrPut, td.TradingType, td.TradingNum, data1);
+                    
                 }
-                rm.Com();
 
-                riskWindow.getRM(rm);
+               //DateTime end1 = DateTime.Now;
+               rm.Com();
+
+               riskWindow.getRM(rm);
 
                 riskWindow.Show();
                 this.WindowState = WindowState.Minimized;
+
+                //DateTime end = DateTime.Now;
 
             }
             else if (Canvas2.Width == 60.0)
