@@ -128,8 +128,10 @@ namespace qiquanui
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
-            pwindow.WindowState = WindowState.Normal;
-            pwindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
+            pwindow.MaxButton_Click_1(null,null);
+            pwindow.WindowState = WindowState.Maximized;
+
+            pwindow.darkRectangleHidden();
             this.Close();
         }
 

@@ -210,9 +210,11 @@ namespace qiquanui
 
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
-            pWindow.WindowState = WindowState.Normal;
-            pWindow.CloseLeftCanvas();
-            pWindow.CloseRightCanvas();
+            pWindow.WindowState = WindowState.Maximized;
+            pWindow.MaxButton_Click_1(null, null);
+
+            //pWindow.CloseLeftCanvas();
+            //pWindow.CloseRightCanvas();
 
             RiskLabManager.RiskOC1.Clear();
             RiskLabManager.RiskOC2.Clear();

@@ -63,6 +63,36 @@ namespace qiquanui.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap arbitragyBtn {
+            get {
+                object obj = ResourceManager.GetObject("arbitragyBtn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap arbitragyBtn_on {
+            get {
+                object obj = ResourceManager.GetObject("arbitragyBtn_on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap arbitragyBtn_unabled {
+            get {
+                object obj = ResourceManager.GetObject("arbitragyBtn_unabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap close {
             get {
                 object obj = ResourceManager.GetObject("close", resourceCulture);
@@ -446,6 +476,36 @@ namespace qiquanui.Properties {
         public static System.Drawing.Bitmap scroll_top_unable {
             get {
                 object obj = ResourceManager.GetObject("scroll_top_unable", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap strategyBtn {
+            get {
+                object obj = ResourceManager.GetObject("strategyBtn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap strategyBtn_on {
+            get {
+                object obj = ResourceManager.GetObject("strategyBtn_on", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap strategyBtn_unabled {
+            get {
+                object obj = ResourceManager.GetObject("strategyBtn_unabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

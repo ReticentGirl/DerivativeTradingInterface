@@ -169,6 +169,7 @@
             <GradientStop Color="#FF25112C" Offset="0"/>
             <GradientStop Color="#FF0C0C1B" Offset="1"/>
         </LinearGradientBrush>
+        
         <Style x:Key="maxSty" TargetType="{x:Type Button}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -382,7 +383,52 @@
             </Setter>
 
         </Style>
+        <!--strategyBtn-->
+        <Style x:Key="strategySty" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <StackPanel Orientation="Horizontal" >
+                            <Image x:Name="ImgBtnBg3" Source="Resources\strategyBtn.png" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Resources\strategyBtn_on.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Source" Value="Resources\strategyBtn_on.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Source" Value="Resources\strategyBtn_unabled.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
+        <Style x:Key="arbitragySty" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <StackPanel Orientation="Horizontal" >
+                            <Image x:Name="ImgBtnBg3" Source="Resources\arbitragyBtn.png" />
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Source" Value="Resources\arbitragyBtn_on.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Source" Value="Resources\arbitragyBtn_on.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Source" Value="Resources\arbitragyBtn_unabled.png" TargetName="ImgBtnBg3"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="TabItemStyle" TargetType="{x:Type TabItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -3017,28 +3063,7 @@
                     </Grid>
                 </TabItem>
 
-                <TabItem x:Name="strategyAndProfitTabItem"  Header="投资策略及收益" Style="{StaticResource TabItemStyle}" Foreground="White" Margin="-2,6,2,-10" Visibility="Hidden">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-
-                        <ListView x:Name="profitListView" HorizontalAlignment="Left" Height="209" VerticalAlignment="Top" Width="915"  Background="{x:Null}" BorderBrush="#FF0176C9" BorderThickness="0,3,0,0" Margin="-3,7,-3,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Visible"  Style="{StaticResource ListViewStyle}" Foreground="#FF9198AC">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn x:Name="ifChoosePGVCH" Header="勾选" Width="50"/>
-                                    <GridViewColumn x:Name="callTradingTypePGVCH" Header="看涨期权交易方向" Width="120"/>
-                                    <GridViewColumn x:Name="exercisePricePGVCH" Header="行权价" Width="80"/>
-                                    <GridViewColumn x:Name="putTradingTypePGVCH" Header="看跌期权交易方向" Width="120"/>
-                                    <GridViewColumn x:Name="ifPossibleTGVCH" Header="有效性评价" Width="80"/>
-
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
-                        <Button x:Name="placeOrderPBtn" Content="下单" HorizontalAlignment="Right" Margin="0,0,21,4" VerticalAlignment="Bottom" Width="75" Style="{StaticResource darkButton}" Background="#FF2A3044" BorderBrush="{x:Null}" Foreground="White" Height="21" Click="placeOrderTBtn_Click" Grid.Column="1"/>
-
-                    </Grid>
-                </TabItem>
+               
 
             </TabControl>
         </Grid>
@@ -3072,7 +3097,14 @@
             <TextBlock x:Name="maxLotBIPTextBlock" Text="最大可交易手数：" Grid.ColumnSpan="2" Grid.Row="1" Margin="5,76,-5,-13" Foreground="#FF8185A2"/>
             <TextBlock x:Name="showMaxLotBIPTextBlock" Text="{Binding MaxTradeNum,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1" Margin="5,76,-1,-13" Foreground="#FFBCBDCB"/>
         </Grid>
-        <Button x:Name="darkRectangle" HorizontalAlignment="Left" Margin="29,38,0,0" VerticalAlignment="Top" Width="1127" Height="627" Style="{StaticResource darkRectangleStyle}"  Visibility="Hidden" Click="darkRectangle_Click"/>
+        <Button x:Name="darkRectangle" HorizontalAlignment="Left" Margin="29,38,0,0" VerticalAlignment="Top" Width="1127" Height="627" Style="{StaticResource darkRectangleStyle}"  Visibility="Collapsed" Click="darkRectangle_Click"/>
+        <Button x:Name="strategyButton" Click="strategyButton_Click" Content="期权策略" RenderTransformOrigin="0.5,0.5" Style="{StaticResource strategySty}" Canvas.Left="-488" Canvas.Top="310" Foreground="White" Margin="718,216,242,249" Visibility="Collapsed" Width="226" Height="221" BorderBrush="{x:Null}">
+           
+        </Button>
+        <Button x:Name="arbitragyButton" Click="arbitragyButton_Click"  Content="期货套利" Style="{StaticResource arbitragySty}" Width="226" RenderTransformOrigin="0.5,0.5" Height="221" Canvas.Left="-23" Canvas.Top="438" Foreground="White" Margin="254,216,706,249" Visibility="Collapsed" BorderBrush="{x:Null}">
+            
+        </Button>
+
         <!--添加账户区-->
         <Canvas x:Name="addUserCanvas" Background="#FF22242B" HorizontalAlignment="Right" Height="245" Margin="0,0,29,21" VerticalAlignment="Bottom" Visibility="Collapsed" Width="213">
             <Label Canvas.Left="10" Canvas.Top="10" Height="57" MaxWidth="193">
@@ -3107,26 +3139,6 @@
                 </Button.RenderTransform>
             </Button>
             <Image x:Name="LeftImage" HorizontalAlignment="Left" Height="15" VerticalAlignment="Top" Width="20" Source="Resources/right.png" Canvas.Top="34" Canvas.Left="5" Stretch="Fill"/>
-            <Button x:Name="strategyButton" Style="{StaticResource leftAndRightButtom}" Click="strategyButton_Click" Content="期权策略" Width="76" RenderTransformOrigin="0.5,0.5" Height="28" Canvas.Left="-23" Canvas.Top="354" Foreground="White">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
-            <Button x:Name="arbitragyButton" Style="{StaticResource leftAndRightButtom}" Click="arbitragyButton_Click"  Content="期货套利" Width="76" RenderTransformOrigin="0.5,0.5" Height="28" Canvas.Left="-23" Canvas.Top="438" Foreground="White">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
 
             <Border x:Name="Canvas1Border1" BorderBrush="#FF0076C8" BorderThickness="4,1,0,1" Height="627" Width="292" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Hidden"/>
 

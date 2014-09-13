@@ -312,8 +312,10 @@ namespace qiquanui
         private DoubleAnimation closeAnimation1;
         private void CloseButton_Click_1(object sender, RoutedEventArgs e)
         {
-            pwindow.WindowState = WindowState.Normal;
-            pwindow.strategyAndProfitTabItem.Visibility = Visibility.Hidden;
+            pwindow.WindowState = WindowState.Maximized;
+            pwindow.MaxButton_Click_1(null, null);
+
+            pwindow.darkRectangleHidden();
             this.Close();
 
 
